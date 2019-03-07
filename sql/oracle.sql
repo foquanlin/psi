@@ -1,401 +1,401 @@
 -- 菜单
-CREATE TABLE sys_menu (
-  menu_id VARCHAR2(8) NOT NULL,
-  parent_id VARCHAR2(8) NOT NULL,
-  name varchar2(50),
-  url varchar2(200),
-  perms varchar2(500),
-  type NUMBER(2, 0),
-  icon varchar2(50),
-  order_num NUMBER(8, 0),
-  PRIMARY KEY (menu_id)
+CREATE TABLE SYS_MENU (
+  MENU_ID VARCHAR2(8) NOT NULL,
+  PARENT_ID VARCHAR2(8) NOT NULL,
+  NAME VARCHAR2(50),
+  URL VARCHAR2(200),
+  PERMS VARCHAR2(500),
+  TYPE NUMBER(2, 0),
+  ICON VARCHAR2(50),
+  ORDER_NUM NUMBER(8, 0),
+  PRIMARY KEY (MENU_ID)
 );
 ---表注释：
-comment on table sys_menu is '菜单管理';
+COMMENT ON TABLE SYS_MENU IS '菜单管理';
 ---添加字段注释：
-comment on column sys_menu.menu_id is '菜单ID';
-comment on column sys_menu.parent_id is '父菜单ID，一级菜单为0';
-comment on column sys_menu.name is '菜单名称';
-comment on column sys_menu.url is '菜单URL';
-comment on column sys_menu.perms is '授权(多个用逗号分隔，如：user:list,user:create)';
-comment on column sys_menu.type is '类型   0：目录   1：菜单   2：按钮';
-comment on column sys_menu.icon is '菜单图标';
-comment on column sys_menu.order_num is '排序';
+COMMENT ON COLUMN SYS_MENU.MENU_ID IS '菜单ID';
+COMMENT ON COLUMN SYS_MENU.PARENT_ID IS '父菜单ID，一级菜单为0';
+COMMENT ON COLUMN SYS_MENU.NAME IS '菜单名称';
+COMMENT ON COLUMN SYS_MENU.URL IS '菜单URL';
+COMMENT ON COLUMN SYS_MENU.PERMS IS '授权(多个用逗号分隔，如：USER:LIST,USER:CREATE)';
+COMMENT ON COLUMN SYS_MENU.TYPE IS '类型   0：目录   1：菜单   2：按钮';
+COMMENT ON COLUMN SYS_MENU.ICON IS '菜单图标';
+COMMENT ON COLUMN SYS_MENU.ORDER_NUM IS '排序';
 
 -- 系统用户
-CREATE TABLE sys_user (
-  user_id VARCHAR2(32) NOT NULL,
-  user_name varchar2(50) NOT NULL,
-  real_name varchar2(64) NOT NULL,
-  sex NUMBER(2, 0) NOT NULL,
-  org_no varchar2(50) NOT NULL,
-  password varchar2(100),
-  salt varchar2(20),
-  email varchar2(100),
-  mobile varchar2(100),
-  status NUMBER(2, 0) NOT NULL,
-  create_user_id VARCHAR2(32) NOT NULL,
-  create_user_org_no VARCHAR2(32) NOT NULL,
-  create_time timestamp,
-  PRIMARY KEY (user_id)
+CREATE TABLE SYS_USER (
+  USER_ID VARCHAR2(32) NOT NULL,
+  USER_NAME VARCHAR2(50) NOT NULL,
+  REAL_NAME VARCHAR2(64) NOT NULL,
+  SEX NUMBER(2, 0) NOT NULL,
+  ORG_NO VARCHAR2(50) NOT NULL,
+  PASSWORD VARCHAR2(100),
+  SALT VARCHAR2(20),
+  EMAIL VARCHAR2(100),
+  MOBILE VARCHAR2(100),
+  STATUS NUMBER(2, 0) NOT NULL,
+  CREATE_USER_ID VARCHAR2(32) NOT NULL,
+  CREATE_USER_ORG_NO VARCHAR2(32) NOT NULL,
+  CREATE_TIME TIMESTAMP,
+  PRIMARY KEY (USER_ID)
 );
-CREATE UNIQUE INDEX index_sys_user_user_name on sys_user(user_name);
+CREATE UNIQUE INDEX INDEX_SYS_USER_USER_NAME ON SYS_USER(USER_NAME);
 
 ---表注释：
-comment on table sys_user is '系统用户';
+COMMENT ON TABLE SYS_USER IS '系统用户';
 ---添加字段注释：
-comment on column sys_user.user_name is '用户名';
-comment on column sys_user.org_no is '机构编码';
-comment on column sys_user.salt is '盐';
-comment on column sys_user.email is '邮箱';
-comment on column sys_user.mobile is '手机号';
-comment on column sys_user.status is '状态  0：禁用   1：正常';
-comment on column sys_user.password is '密码';
-comment on column sys_user.create_user_id is '创建者ID';
-comment on column sys_user.create_user_org_no is '创建人所属机构';
-comment on column sys_user.create_time is '创建时间';
+COMMENT ON COLUMN SYS_USER.USER_NAME IS '用户名';
+COMMENT ON COLUMN SYS_USER.ORG_NO IS '机构编码';
+COMMENT ON COLUMN SYS_USER.SALT IS '盐';
+COMMENT ON COLUMN SYS_USER.EMAIL IS '邮箱';
+COMMENT ON COLUMN SYS_USER.MOBILE IS '手机号';
+COMMENT ON COLUMN SYS_USER.STATUS IS '状态  0：禁用   1：正常';
+COMMENT ON COLUMN SYS_USER.PASSWORD IS '密码';
+COMMENT ON COLUMN SYS_USER.CREATE_USER_ID IS '创建者ID';
+COMMENT ON COLUMN SYS_USER.CREATE_USER_ORG_NO IS '创建人所属机构';
+COMMENT ON COLUMN SYS_USER.CREATE_TIME IS '创建时间';
 
--- 系统用户Token
-CREATE TABLE sys_user_token (
-  user_id VARCHAR2(32) NOT NULL,
-  token varchar2(100) NOT NULL,
-  expire_time timestamp,
-  update_time timestamp,
-  PRIMARY KEY (user_id)
+-- 系统用户TOKEN
+CREATE TABLE SYS_USER_TOKEN (
+  USER_ID VARCHAR2(32) NOT NULL,
+  TOKEN VARCHAR2(100) NOT NULL,
+  EXPIRE_TIME TIMESTAMP,
+  UPDATE_TIME TIMESTAMP,
+  PRIMARY KEY (USER_ID)
 );
-CREATE UNIQUE INDEX index_token on sys_user_token(token);
+CREATE UNIQUE INDEX INDEX_TOKEN ON SYS_USER_TOKEN(TOKEN);
 
 ---表注释：
-comment on table sys_user_token is '系统用户Token';
+COMMENT ON TABLE SYS_USER_TOKEN IS '系统用户Token';
 ---添加字段注释：
-comment on column sys_user_token.token is 'token';
-comment on column sys_user_token.expire_time is '过期时间';
-comment on column sys_user_token.update_time is '更新时间';
+COMMENT ON COLUMN SYS_USER_TOKEN.TOKEN IS 'token';
+COMMENT ON COLUMN SYS_USER_TOKEN.EXPIRE_TIME IS '过期时间';
+COMMENT ON COLUMN SYS_USER_TOKEN.UPDATE_TIME IS '更新时间';
 
 -- 系统验证码
-CREATE TABLE sys_captcha (
-  uuid varchar2(36) NOT NULL,
-  code varchar2(6) NOT NULL,
-  expire_time timestamp,
-  PRIMARY KEY (uuid)
+CREATE TABLE SYS_CAPTCHA (
+  UUID VARCHAR2(36) NOT NULL,
+  CODE VARCHAR2(6) NOT NULL,
+  EXPIRE_TIME TIMESTAMP,
+  PRIMARY KEY (UUID)
 );
 
 ---表注释：
-comment on table sys_captcha is '系统验证码';
+COMMENT ON TABLE SYS_CAPTCHA IS '系统验证码';
 ---添加字段注释：
-comment on column sys_captcha.uuid is 'uuid';
-comment on column sys_captcha.code is '验证码';
-comment on column sys_captcha.expire_time is '过期时间';
+COMMENT ON COLUMN SYS_CAPTCHA.UUID IS 'uuid';
+COMMENT ON COLUMN SYS_CAPTCHA.CODE IS '验证码';
+COMMENT ON COLUMN SYS_CAPTCHA.EXPIRE_TIME IS '过期时间';
 
 --数据字典
-CREATE TABLE sys_dict (
-  id varchar2(32) NOT NULL,
-  group_id varchar2(32) DEFAULT NULL,
-  name varchar2(100) DEFAULT NULL,
-  value varchar2(64) DEFAULT NULL,
-  sort NUMBER(2, 0) DEFAULT 1,
-  status NUMBER(2, 0) DEFAULT 1,
-  remark varchar2(500),
-  PRIMARY KEY (id)
+CREATE TABLE SYS_DICT (
+  ID VARCHAR2(32) NOT NULL,
+  GROUP_ID VARCHAR2(32) DEFAULT NULL,
+  NAME VARCHAR2(100) DEFAULT NULL,
+  VALUE VARCHAR2(64) DEFAULT NULL,
+  SORT NUMBER(2, 0) DEFAULT 1,
+  STATUS NUMBER(2, 0) DEFAULT 1,
+  REMARK VARCHAR2(500),
+  PRIMARY KEY (ID)
 );
 
 ---表注释：
-comment on table sys_dict is '数据字典';
+COMMENT ON TABLE SYS_DICT IS '数据字典';
 ---添加字段注释：
-comment on column sys_dict.group_id is '所属分组ID';
-comment on column sys_dict.name is '字典名称';
-comment on column sys_dict.value is '字典值';
-comment on column sys_dict.sort is '排序号';
-comment on column sys_dict.status is '状态码';
-comment on column sys_dict.remark is '备注';
+COMMENT ON COLUMN SYS_DICT.GROUP_ID IS '所属分组ID';
+COMMENT ON COLUMN SYS_DICT.NAME IS '字典名称';
+COMMENT ON COLUMN SYS_DICT.VALUE IS '字典值';
+COMMENT ON COLUMN SYS_DICT.SORT IS '排序号';
+COMMENT ON COLUMN SYS_DICT.STATUS IS '状态码';
+COMMENT ON COLUMN SYS_DICT.REMARK IS '备注';
 
 -- 数据字典组
-CREATE TABLE sys_dict_group (
-  id varchar2(32) NOT NULL,
-  code varchar2(64) NOT NULL,
-  name varchar2(100) DEFAULT NULL,
-  create_time timestamp DEFAULT NULL,
-  remark varchar2(500),
-  PRIMARY KEY (id,code)
+CREATE TABLE SYS_DICT_GROUP (
+  ID VARCHAR2(32) NOT NULL,
+  CODE VARCHAR2(64) NOT NULL,
+  NAME VARCHAR2(100) DEFAULT NULL,
+  CREATE_TIME TIMESTAMP DEFAULT NULL,
+  REMARK VARCHAR2(500),
+  PRIMARY KEY (ID,CODE)
 );
 
 ---表注释：
-comment on table sys_dict_group is '数据字典分组';
+COMMENT ON TABLE SYS_DICT_GROUP IS '数据字典分组';
 ---添加字段注释：
-comment on column sys_dict_group.code is '分组编码';
-comment on column sys_dict_group.name is '分组名称';
-comment on column sys_dict_group.create_time is '创建时间';
-comment on column sys_dict_group.remark is '备注';
+COMMENT ON COLUMN SYS_DICT_GROUP.CODE IS '分组编码';
+COMMENT ON COLUMN SYS_DICT_GROUP.NAME IS '分组名称';
+COMMENT ON COLUMN SYS_DICT_GROUP.CREATE_TIME IS '创建时间';
+COMMENT ON COLUMN SYS_DICT_GROUP.REMARK IS '备注';
 
 -- 组织机构
-CREATE TABLE sys_org (
-  org_no varchar2(10) NOT NULL,
-  org_name varchar2(50) DEFAULT NULL,
-  parent_no varchar2(10) DEFAULT NULL,
-  org_type number(11) DEFAULT NULL,
-  status number(2,0) DEFAULT 1,
-  sort number(4,0) DEFAULT NULL,
-  create_user_id varchar2(32) DEFAULT NULL,
-  create_time timestamp DEFAULT NULL,
-  PRIMARY KEY (org_no)
+CREATE TABLE SYS_ORG (
+  ORG_NO VARCHAR2(10) NOT NULL,
+  ORG_NAME VARCHAR2(50) DEFAULT NULL,
+  PARENT_NO VARCHAR2(10) DEFAULT NULL,
+  ORG_TYPE NUMBER(11) DEFAULT NULL,
+  STATUS NUMBER(2,0) DEFAULT 1,
+  SORT NUMBER(4,0) DEFAULT NULL,
+  CREATE_USER_ID VARCHAR2(32) DEFAULT NULL,
+  CREATE_TIME TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (ORG_NO)
 );
 
 ---表注释：
-comment on table sys_org is '组织机构';
+COMMENT ON TABLE SYS_ORG IS '组织机构';
 ---添加字段注释：
-comment on column sys_org.org_no is '机构编码';
-comment on column sys_org.org_name is '机构名称';
-comment on column sys_org.parent_no is '上级机构ID，一级机构为0';
-comment on column sys_org.org_type is '级别';
-comment on column sys_org.status is '状态  0：无效   1：有效';
-comment on column sys_org.sort is '排序';
-comment on column sys_org.create_user_id is '创建者ID';
-comment on column sys_org.create_time is '创建时间';
+COMMENT ON COLUMN SYS_ORG.ORG_NO IS '机构编码';
+COMMENT ON COLUMN SYS_ORG.ORG_NAME IS '机构名称';
+COMMENT ON COLUMN SYS_ORG.PARENT_NO IS '上级机构ID，一级机构为0';
+COMMENT ON COLUMN SYS_ORG.ORG_TYPE IS '级别';
+COMMENT ON COLUMN SYS_ORG.STATUS IS '状态  0：无效   1：有效';
+COMMENT ON COLUMN SYS_ORG.SORT IS '排序';
+COMMENT ON COLUMN SYS_ORG.CREATE_USER_ID IS '创建者ID';
+COMMENT ON COLUMN SYS_ORG.CREATE_TIME IS '创建时间';
 
 -- 角色
-CREATE TABLE sys_role (
-  role_id VARCHAR2(32) NOT NULL,
-  role_name varchar2(100),
-  remark varchar2(500),
-  create_user_id VARCHAR2(32),
-  create_user_org_no VARCHAR2(32),
-  create_time timestamp,
-  PRIMARY KEY (role_id)
+CREATE TABLE SYS_ROLE (
+  ROLE_ID VARCHAR2(32) NOT NULL,
+  ROLE_NAME VARCHAR2(100),
+  REMARK VARCHAR2(500),
+  CREATE_USER_ID VARCHAR2(32),
+  CREATE_USER_ORG_NO VARCHAR2(32),
+  CREATE_TIME TIMESTAMP,
+  PRIMARY KEY (ROLE_ID)
 );
 
 ---表注释：
-comment on table sys_role is '角色';
+COMMENT ON TABLE SYS_ROLE IS '角色';
 ---添加字段注释：
-comment on column sys_role.role_name is '角色名称';
-comment on column sys_role.remark is '备注';
-comment on column sys_role.create_user_id is '创建者ID';
-comment on column sys_role.create_user_org_no is '创建者所属机构';
-comment on column sys_role.create_time is '创建时间';
+COMMENT ON COLUMN SYS_ROLE.ROLE_NAME IS '角色名称';
+COMMENT ON COLUMN SYS_ROLE.REMARK IS '备注';
+COMMENT ON COLUMN SYS_ROLE.CREATE_USER_ID IS '创建者ID';
+COMMENT ON COLUMN SYS_ROLE.CREATE_USER_ORG_NO IS '创建者所属机构';
+COMMENT ON COLUMN SYS_ROLE.CREATE_TIME IS '创建时间';
 
 -- 用户与角色对应关系
-CREATE TABLE sys_user_role (
-  id VARCHAR2(32) NOT NULL,
-  user_id VARCHAR2(32) NOT NULL,
-  role_id VARCHAR2(32) NOT NULL,
-  PRIMARY KEY (id)
+CREATE TABLE SYS_USER_ROLE (
+  ID VARCHAR2(32) NOT NULL,
+  USER_ID VARCHAR2(32) NOT NULL,
+  ROLE_ID VARCHAR2(32) NOT NULL,
+  PRIMARY KEY (ID)
 );
 
 ---表注释：
-comment on table sys_user_role is '用户与角色对应关系';
+COMMENT ON TABLE SYS_USER_ROLE IS '用户与角色对应关系';
 ---添加字段注释：
-comment on column sys_user_role.user_id is '用户ID';
-comment on column sys_user_role.role_id is '角色ID';
+COMMENT ON COLUMN SYS_USER_ROLE.USER_ID IS '用户ID';
+COMMENT ON COLUMN SYS_USER_ROLE.ROLE_ID IS '角色ID';
 
 -- 角色与菜单对应关系
-CREATE TABLE sys_role_menu (
-  id VARCHAR2(32) NOT NULL,
-  role_id VARCHAR2(32),
-  menu_id VARCHAR2(32),
-  PRIMARY KEY (id)
+CREATE TABLE SYS_ROLE_MENU (
+  ID VARCHAR2(32) NOT NULL,
+  ROLE_ID VARCHAR2(32),
+  MENU_ID VARCHAR2(32),
+  PRIMARY KEY (ID)
 );
 
 ---表注释：
-comment on table sys_role_menu is '角色与菜单对应关系';
+COMMENT ON TABLE SYS_ROLE_MENU IS '角色与菜单对应关系';
 ---添加字段注释：
-comment on column sys_role_menu.role_id is '角色ID';
-comment on column sys_role_menu.menu_id is '菜单ID';
+COMMENT ON COLUMN SYS_ROLE_MENU.ROLE_ID IS '角色ID';
+COMMENT ON COLUMN SYS_ROLE_MENU.MENU_ID IS '菜单ID';
 
 -- 角色与机构对应关系
-CREATE TABLE sys_role_org (
-  id VARCHAR2(32) NOT NULL,
-  role_id varchar2(32) DEFAULT NULL,
-  org_no varchar2(32) DEFAULT NULL,
-  PRIMARY KEY (id)
+CREATE TABLE SYS_ROLE_ORG (
+  ID VARCHAR2(32) NOT NULL,
+  ROLE_ID VARCHAR2(32) DEFAULT NULL,
+  ORG_NO VARCHAR2(32) DEFAULT NULL,
+  PRIMARY KEY (ID)
 );
 
 ---表注释：
-comment on table sys_role_org is '角色与机构对应关系';
+COMMENT ON TABLE SYS_ROLE_ORG IS '角色与机构对应关系';
 ---添加字段注释：
-comment on column sys_role_org.role_id is '角色ID';
-comment on column sys_role_org.org_no is '机构ID';
+COMMENT ON COLUMN SYS_ROLE_ORG.ROLE_ID IS '角色ID';
+COMMENT ON COLUMN SYS_ROLE_ORG.ORG_NO IS '机构ID';
 
 
 -- 系统配置信息
-CREATE TABLE sys_config (
-  id VARCHAR2(32) NOT NULL,
-  param_key varchar2(50),
-  param_value varchar2(4000),
-  status NUMBER(2, 0) DEFAULT 1 NOT NULL,
-  remark varchar2(500),
-  PRIMARY KEY (id)
+CREATE TABLE SYS_CONFIG (
+  ID VARCHAR2(32) NOT NULL,
+  PARAM_KEY VARCHAR2(50),
+  PARAM_VALUE VARCHAR2(4000),
+  STATUS NUMBER(2, 0) DEFAULT 1 NOT NULL,
+  REMARK VARCHAR2(500),
+  PRIMARY KEY (ID)
 );
-CREATE UNIQUE INDEX index_param_key on sys_config(param_key);
+CREATE UNIQUE INDEX INDEX_PARAM_KEY ON SYS_CONFIG(PARAM_KEY);
 
 ---表注释：
-comment on table sys_config is '系统配置信息表';
+COMMENT ON TABLE SYS_CONFIG IS '系统配置信息表';
 ---添加字段注释：
-comment on column sys_config.param_key is 'key';
-comment on column sys_config.param_value is 'value';
-comment on column sys_config.status is '状态   0：隐藏   1：显示';
-comment on column sys_config.remark is '备注';
+COMMENT ON COLUMN SYS_CONFIG.PARAM_KEY IS 'key';
+COMMENT ON COLUMN SYS_CONFIG.PARAM_VALUE IS 'value';
+COMMENT ON COLUMN SYS_CONFIG.STATUS IS '状态   0：隐藏   1：显示';
+COMMENT ON COLUMN SYS_CONFIG.REMARK IS '备注';
 
 
 -- 系统日志
-CREATE TABLE sys_log (
-  id VARCHAR2(32) NOT NULL,
-  user_name varchar2(50),
-  operation varchar2(50),
-  method varchar2(200),
-  params clob,
-  time NUMBER(20, 0) NOT NULL,
-  ip varchar2(64),
-  create_time timestamp,
-  PRIMARY KEY (id)
+CREATE TABLE SYS_LOG (
+  ID VARCHAR2(32) NOT NULL,
+  USER_NAME VARCHAR2(50),
+  OPERATION VARCHAR2(50),
+  METHOD VARCHAR2(200),
+  PARAMS CLOB,
+  TIME NUMBER(20, 0) NOT NULL,
+  IP VARCHAR2(64),
+  CREATE_TIME TIMESTAMP,
+  PRIMARY KEY (ID)
 );
 
 ---表注释：
-comment on table sys_log is '系统日志';
+COMMENT ON TABLE SYS_LOG IS '系统日志';
 ---添加字段注释：
-comment on column sys_log.user_name is '用户名';
-comment on column sys_log.operation is '用户操作';
-comment on column sys_log.method is '请求方法';
-comment on column sys_log.params is '请求参数';
-comment on column sys_log.time is '执行时长(毫秒)';
-comment on column sys_log.ip is 'IP地址';
-comment on column sys_log.create_time is '创建时间';
+COMMENT ON COLUMN SYS_LOG.USER_NAME IS '用户名';
+COMMENT ON COLUMN SYS_LOG.OPERATION IS '用户操作';
+COMMENT ON COLUMN SYS_LOG.METHOD IS '请求方法';
+COMMENT ON COLUMN SYS_LOG.PARAMS IS '请求参数';
+COMMENT ON COLUMN SYS_LOG.TIME IS '执行时长(毫秒)';
+COMMENT ON COLUMN SYS_LOG.IP IS 'IP地址';
+COMMENT ON COLUMN SYS_LOG.CREATE_TIME IS '创建时间';
 
 -- 文件上传
-CREATE TABLE sys_oss (
-  id VARCHAR2(32) NOT NULL,
-  url varchar2(200),
-  create_date timestamp,
-  PRIMARY KEY (id)
+CREATE TABLE SYS_OSS (
+  ID VARCHAR2(32) NOT NULL,
+  URL VARCHAR2(200),
+  CREATE_DATE TIMESTAMP,
+  PRIMARY KEY (ID)
 );
 
 ---表注释：
-comment on table sys_oss is '文件上传';
+COMMENT ON TABLE SYS_OSS IS '文件上传';
 ---添加字段注释：
-comment on column sys_oss.url is 'URL地址';
-comment on column sys_oss.create_date is '创建时间';
+COMMENT ON COLUMN SYS_OSS.URL IS 'URL地址';
+COMMENT ON COLUMN SYS_OSS.CREATE_DATE IS '创建时间';
 
 -- 定时任务
-CREATE TABLE schedule_job (
-  job_id VARCHAR2(32) NOT NULL,
-  bean_name varchar2(200),
-  method_name varchar2(100),
-  params varchar2(2000),
-  cron_expression varchar2(100),
-  status NUMBER(2, 0) NOT NULL,
-  remark varchar2(255),
-  create_time timestamp,
-  PRIMARY KEY (job_id)
+CREATE TABLE SCHEDULE_JOB (
+  JOB_ID VARCHAR2(32) NOT NULL,
+  BEAN_NAME VARCHAR2(200),
+  METHOD_NAME VARCHAR2(100),
+  PARAMS VARCHAR2(2000),
+  CRON_EXPRESSION VARCHAR2(100),
+  STATUS NUMBER(2, 0) NOT NULL,
+  REMARK VARCHAR2(255),
+  CREATE_TIME TIMESTAMP,
+  PRIMARY KEY (JOB_ID)
 );
 
 ---表注释：
-comment on table schedule_job is '定时任务';
+COMMENT ON TABLE SCHEDULE_JOB IS '定时任务';
 ---添加字段注释：
-comment on column schedule_job.job_id is '任务id';
-comment on column schedule_job.bean_name is 'spring bean名称';
-comment on column schedule_job.method_name is '方法名';
-comment on column schedule_job.params is '参数';
-comment on column schedule_job.cron_expression is 'cron表达式';
-comment on column schedule_job.status is '任务状态  0：正常  1：暂停';
-comment on column schedule_job.remark is '备注';
-comment on column schedule_job.create_time is '创建时间';
+COMMENT ON COLUMN SCHEDULE_JOB.JOB_ID IS '任务id';
+COMMENT ON COLUMN SCHEDULE_JOB.BEAN_NAME IS 'spring bean名称';
+COMMENT ON COLUMN SCHEDULE_JOB.METHOD_NAME IS '方法名';
+COMMENT ON COLUMN SCHEDULE_JOB.PARAMS IS '参数';
+COMMENT ON COLUMN SCHEDULE_JOB.CRON_EXPRESSION IS 'cron表达式';
+COMMENT ON COLUMN SCHEDULE_JOB.STATUS IS '任务状态  0：正常  1：暂停';
+COMMENT ON COLUMN SCHEDULE_JOB.REMARK IS '备注';
+COMMENT ON COLUMN SCHEDULE_JOB.CREATE_TIME IS '创建时间';
 
 -- 定时任务日志
-CREATE TABLE schedule_job_log (
-  log_id VARCHAR2(32) NOT NULL,
-  job_id VARCHAR2(32) NOT NULL,
-  bean_name varchar2(200),
-  method_name varchar2(100),
-  params varchar2(2000),
-  status NUMBER(2, 0) NOT NULL,
-  error varchar2(2000),
-  times NUMBER(10, 0) NOT NULL,
-  create_time timestamp,
-  PRIMARY KEY (log_id)
+CREATE TABLE SCHEDULE_JOB_LOG (
+  LOG_ID VARCHAR2(32) NOT NULL,
+  JOB_ID VARCHAR2(32) NOT NULL,
+  BEAN_NAME VARCHAR2(200),
+  METHOD_NAME VARCHAR2(100),
+  PARAMS VARCHAR2(2000),
+  STATUS NUMBER(2, 0) NOT NULL,
+  ERROR VARCHAR2(2000),
+  TIMES NUMBER(10, 0) NOT NULL,
+  CREATE_TIME TIMESTAMP,
+  PRIMARY KEY (LOG_ID)
 );
-CREATE INDEX index_job_id on schedule_job_log(job_id);
+CREATE INDEX INDEX_JOB_ID ON SCHEDULE_JOB_LOG(JOB_ID);
 
 ---表注释：
-comment on table schedule_job_log is '定时任务日志';
+COMMENT ON TABLE SCHEDULE_JOB_LOG IS '定时任务日志';
 ---添加字段注释：
-comment on column schedule_job_log.log_id is '任务日志id';
-comment on column schedule_job_log.job_id is '任务id';
-comment on column schedule_job_log.bean_name is 'spring bean名';
-comment on column schedule_job_log.method_name is '方法名';
-comment on column schedule_job_log.params is '参数';
-comment on column schedule_job_log.status is '任务状态  0：正常  1：暂停';
-comment on column schedule_job_log.error is '失败信息';
-comment on column schedule_job_log.times is '耗时(单位：毫秒)';
-comment on column schedule_job_log.create_time is '创建时间';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.LOG_ID IS '任务日志ID';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.JOB_ID IS '任务id';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.BEAN_NAME IS 'spring bean名';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.METHOD_NAME IS '方法名';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.PARAMS IS '参数';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.STATUS IS '任务状态  0：正常  1：暂停';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.ERROR IS '失败信息';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.TIMES IS '耗时(单位：毫秒)';
+COMMENT ON COLUMN SCHEDULE_JOB_LOG.CREATE_TIME IS '创建时间';
 
 
 -- 用户表
-CREATE TABLE tb_user (
-  user_id VARCHAR2(32) NOT NULL,
-  user_name varchar2(50),
-  subscribe NUMBER(2, 0),
-  subscribe_time varchar2(50),
-  open_id varchar2(100),
-  nickname varchar2(200),
-  head_img_url varchar2(200),
-  sex NUMBER(2, 0),
-  mobile varchar2(20) NOT NULL,
-  password varchar2(64),
-  create_time timestamp,
-  PRIMARY KEY (user_id)
+CREATE TABLE TB_USER (
+  USER_ID VARCHAR2(32) NOT NULL,
+  USER_NAME VARCHAR2(50),
+  SUBSCRIBE NUMBER(2, 0),
+  SUBSCRIBE_TIME VARCHAR2(50),
+  OPEN_ID VARCHAR2(100),
+  NICKNAME VARCHAR2(200),
+  HEAD_IMG_URL VARCHAR2(200),
+  SEX NUMBER(2, 0),
+  MOBILE VARCHAR2(20) NOT NULL,
+  PASSWORD VARCHAR2(64),
+  CREATE_TIME TIMESTAMP,
+  PRIMARY KEY (USER_ID)
 );
-CREATE UNIQUE INDEX index_tb_user_user_name on tb_user(user_name);
+CREATE UNIQUE INDEX INDEX_TB_USER_USER_NAME ON TB_USER(USER_NAME);
 
 ---表注释：
-comment on table tb_user is '用户';
+COMMENT ON TABLE TB_USER IS '用户';
 ---添加字段注释：
-comment on column tb_user.user_name is '用户名';
-comment on column tb_user.subscribe is '关注状态（1是关注，0是未关注），未关注时获取不到其余信息';
-comment on column tb_user.subscribe_time is '用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间';
-comment on column tb_user.open_id is '用户的标识';
-comment on column tb_user.nickname is '微信昵称';
-comment on column tb_user.head_img_url is '用户头像';
-comment on column tb_user.sex is '用户的性别（1是男性，2是女性，0是未知）';
-comment on column tb_user.mobile is '手机号';
-comment on column tb_user.password is '密码';
-comment on column tb_user.create_time is '创建时间';
+COMMENT ON COLUMN TB_USER.USER_NAME IS '用户名';
+COMMENT ON COLUMN TB_USER.SUBSCRIBE IS '关注状态（1是关注，0是未关注），未关注时获取不到其余信息';
+COMMENT ON COLUMN TB_USER.SUBSCRIBE_TIME IS '用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间';
+COMMENT ON COLUMN TB_USER.OPEN_ID IS '用户的标识';
+COMMENT ON COLUMN TB_USER.NICKNAME IS '微信昵称';
+COMMENT ON COLUMN TB_USER.HEAD_IMG_URL IS '用户头像';
+COMMENT ON COLUMN TB_USER.SEX IS '用户的性别（1是男性，2是女性，0是未知）';
+COMMENT ON COLUMN TB_USER.MOBILE IS '手机号';
+COMMENT ON COLUMN TB_USER.PASSWORD IS '密码';
+COMMENT ON COLUMN TB_USER.CREATE_TIME IS '创建时间';
 
-CREATE TABLE sys_sms_log (
-  id VARCHAR2(32) NOT NULL,
-  user_id VARCHAR2(32) DEFAULT NULL,
-  content clob,
-  mobile clob,
-  stime timestamp DEFAULT NULL,
-  sign VARCHAR2(32) DEFAULT NULL,
-  type VARCHAR2(32) DEFAULT NULL,
-  extno VARCHAR2(255) DEFAULT NULL,
-  send_status NUMBER(2, 0) ,
-  send_id VARCHAR2(32) DEFAULT NULL,
-  invalid_num NUMBER(8, 0) DEFAULT NULL,
-  success_num NUMBER(8, 0) DEFAULT NULL,
-  black_num NUMBER(8, 0) DEFAULT NULL,
-  return_msg VARCHAR2(50) DEFAULT NULL,
-  PRIMARY KEY (id)
+CREATE TABLE SYS_SMS_LOG (
+  ID VARCHAR2(32) NOT NULL,
+  USER_ID VARCHAR2(32) DEFAULT NULL,
+  CONTENT CLOB,
+  MOBILE CLOB,
+  STIME TIMESTAMP DEFAULT NULL,
+  SIGN VARCHAR2(32) DEFAULT NULL,
+  TYPE VARCHAR2(32) DEFAULT NULL,
+  EXTNO VARCHAR2(255) DEFAULT NULL,
+  SEND_STATUS NUMBER(2, 0) ,
+  SEND_ID VARCHAR2(32) DEFAULT NULL,
+  INVALID_NUM NUMBER(8, 0) DEFAULT NULL,
+  SUCCESS_NUM NUMBER(8, 0) DEFAULT NULL,
+  BLACK_NUM NUMBER(8, 0) DEFAULT NULL,
+  RETURN_MSG VARCHAR2(50) DEFAULT NULL,
+  PRIMARY KEY (ID)
 );
 
 ---表注释：
-comment on table sys_sms_log is '短信发送日志';
+COMMENT ON TABLE SYS_SMS_LOG IS '短信发送日志';
 ---添加字段注释：
-comment on column sys_sms_log.id is '主键';
-comment on column sys_sms_log.user_id is '操作人ID';
-comment on column sys_sms_log.content is '必填参数。发送内容（1-500 个汉字）UTF-8编码';
-comment on column sys_sms_log.mobile is '必填参数。手机号码。多个以英文逗号隔开';
-comment on column sys_sms_log.stime is '可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送';
-comment on column sys_sms_log.sign is '必填参数。用户签名';
-comment on column sys_sms_log.type is '必填参数。固定值 pt';
-comment on column sys_sms_log.extno is '可选参数。扩展码，用户定义扩展码，只能为数字';
-comment on column sys_sms_log.send_status is '提交状态 0：成功';
-comment on column sys_sms_log.send_id is '发送编号';
-comment on column sys_sms_log.invalid_num is '无效号码数';
-comment on column sys_sms_log.success_num is '成功提交数';
-comment on column sys_sms_log.black_num is '黑名单数';
-comment on column sys_sms_log.return_msg is '返回消息';
+COMMENT ON COLUMN SYS_SMS_LOG.ID IS '主键';
+COMMENT ON COLUMN SYS_SMS_LOG.USER_ID IS '操作人ID';
+COMMENT ON COLUMN SYS_SMS_LOG.CONTENT IS '必填参数。发送内容（1-500 个汉字）UTF-8编码';
+COMMENT ON COLUMN SYS_SMS_LOG.MOBILE IS '必填参数。手机号码。多个以英文逗号隔开';
+COMMENT ON COLUMN SYS_SMS_LOG.STIME IS '可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送';
+COMMENT ON COLUMN SYS_SMS_LOG.SIGN IS '必填参数。用户签名';
+COMMENT ON COLUMN SYS_SMS_LOG.TYPE IS '必填参数。固定值 pt';
+COMMENT ON COLUMN SYS_SMS_LOG.EXTNO IS '可选参数。扩展码，用户定义扩展码，只能为数字';
+COMMENT ON COLUMN SYS_SMS_LOG.SEND_STATUS IS '提交状态 0：成功';
+COMMENT ON COLUMN SYS_SMS_LOG.SEND_ID IS '发送编号';
+COMMENT ON COLUMN SYS_SMS_LOG.INVALID_NUM IS '无效号码数';
+COMMENT ON COLUMN SYS_SMS_LOG.SUCCESS_NUM IS '成功提交数';
+COMMENT ON COLUMN SYS_SMS_LOG.BLACK_NUM IS '黑名单数';
+COMMENT ON COLUMN SYS_SMS_LOG.RETURN_MSG IS '返回消息';
 
---  quartz自带表结构
-CREATE TABLE qrtz_job_details
+--  QUARTZ自带表结构
+CREATE TABLE QRTZ_JOB_DETAILS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   JOB_NAME  VARCHAR2(200) NOT NULL,
@@ -409,7 +409,7 @@ CREATE TABLE qrtz_job_details
   JOB_DATA BLOB NULL,
   CONSTRAINT QRTZ_JOB_DETAILS_PK PRIMARY KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
 );
-CREATE TABLE qrtz_triggers
+CREATE TABLE QRTZ_TRIGGERS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -431,7 +431,7 @@ CREATE TABLE qrtz_triggers
   CONSTRAINT QRTZ_TRIGGER_TO_JOBS_FK FOREIGN KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
   REFERENCES QRTZ_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP)
 );
-CREATE TABLE qrtz_simple_triggers
+CREATE TABLE QRTZ_SIMPLE_TRIGGERS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -443,7 +443,7 @@ CREATE TABLE qrtz_simple_triggers
   CONSTRAINT QRTZ_SIMPLE_TRIG_TO_TRIG_FK FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
   REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE qrtz_cron_triggers
+CREATE TABLE QRTZ_CRON_TRIGGERS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -454,7 +454,7 @@ CREATE TABLE qrtz_cron_triggers
   CONSTRAINT QRTZ_CRON_TRIG_TO_TRIG_FK FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
   REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE qrtz_simprop_triggers
+CREATE TABLE QRTZ_SIMPROP_TRIGGERS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -474,7 +474,7 @@ CREATE TABLE qrtz_simprop_triggers
   CONSTRAINT QRTZ_SIMPROP_TRIG_TO_TRIG_FK FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
   REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE qrtz_blob_triggers
+CREATE TABLE QRTZ_BLOB_TRIGGERS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   TRIGGER_NAME VARCHAR2(200) NOT NULL,
@@ -484,20 +484,20 @@ CREATE TABLE qrtz_blob_triggers
   CONSTRAINT QRTZ_BLOB_TRIG_TO_TRIG_FK FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
   REFERENCES QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE qrtz_calendars
+CREATE TABLE QRTZ_CALENDARS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   CALENDAR_NAME  VARCHAR2(200) NOT NULL,
   CALENDAR BLOB NOT NULL,
   CONSTRAINT QRTZ_CALENDARS_PK PRIMARY KEY (SCHED_NAME,CALENDAR_NAME)
 );
-CREATE TABLE qrtz_paused_trigger_grps
+CREATE TABLE QRTZ_PAUSED_TRIGGER_GRPS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   TRIGGER_GROUP  VARCHAR2(200) NOT NULL,
   CONSTRAINT QRTZ_PAUSED_TRIG_GRPS_PK PRIMARY KEY (SCHED_NAME,TRIGGER_GROUP)
 );
-CREATE TABLE qrtz_fired_triggers
+CREATE TABLE QRTZ_FIRED_TRIGGERS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   ENTRY_ID VARCHAR2(95) NOT NULL,
@@ -514,7 +514,7 @@ CREATE TABLE qrtz_fired_triggers
   REQUESTS_RECOVERY VARCHAR2(1) NULL,
   CONSTRAINT QRTZ_FIRED_TRIGGER_PK PRIMARY KEY (SCHED_NAME,ENTRY_ID)
 );
-CREATE TABLE qrtz_scheduler_state
+CREATE TABLE QRTZ_SCHEDULER_STATE
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   INSTANCE_NAME VARCHAR2(200) NOT NULL,
@@ -522,35 +522,35 @@ CREATE TABLE qrtz_scheduler_state
   CHECKIN_INTERVAL NUMBER(13) NOT NULL,
   CONSTRAINT QRTZ_SCHEDULER_STATE_PK PRIMARY KEY (SCHED_NAME,INSTANCE_NAME)
 );
-CREATE TABLE qrtz_locks
+CREATE TABLE QRTZ_LOCKS
 (
   SCHED_NAME VARCHAR2(120) NOT NULL,
   LOCK_NAME  VARCHAR2(40) NOT NULL,
   CONSTRAINT QRTZ_LOCKS_PK PRIMARY KEY (SCHED_NAME,LOCK_NAME)
 );
 
-create index idx_qrtz_j_req_recovery on qrtz_job_details(SCHED_NAME,REQUESTS_RECOVERY);
-create index idx_qrtz_j_grp on qrtz_job_details(SCHED_NAME,JOB_GROUP);
+CREATE INDEX IDX_QRTZ_J_REQ_RECOVERY ON QRTZ_JOB_DETAILS(SCHED_NAME,REQUESTS_RECOVERY);
+CREATE INDEX IDX_QRTZ_J_GRP ON QRTZ_JOB_DETAILS(SCHED_NAME,JOB_GROUP);
 
-create index idx_qrtz_t_j on qrtz_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_qrtz_t_jg on qrtz_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_qrtz_t_c on qrtz_triggers(SCHED_NAME,CALENDAR_NAME);
-create index idx_qrtz_t_g on qrtz_triggers(SCHED_NAME,TRIGGER_GROUP);
-create index idx_qrtz_t_state on qrtz_triggers(SCHED_NAME,TRIGGER_STATE);
-create index idx_qrtz_t_n_state on qrtz_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_qrtz_t_n_g_state on qrtz_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_qrtz_t_next_fire_time on qrtz_triggers(SCHED_NAME,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_st on qrtz_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_misfire on qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_st_misfire on qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
-create index idx_qrtz_t_nft_st_misfire_grp on qrtz_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
+CREATE INDEX IDX_QRTZ_T_J ON QRTZ_TRIGGERS(SCHED_NAME,JOB_NAME,JOB_GROUP);
+CREATE INDEX IDX_QRTZ_T_JG ON QRTZ_TRIGGERS(SCHED_NAME,JOB_GROUP);
+CREATE INDEX IDX_QRTZ_T_C ON QRTZ_TRIGGERS(SCHED_NAME,CALENDAR_NAME);
+CREATE INDEX IDX_QRTZ_T_G ON QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_GROUP);
+CREATE INDEX IDX_QRTZ_T_STATE ON QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_STATE);
+CREATE INDEX IDX_QRTZ_T_N_STATE ON QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+CREATE INDEX IDX_QRTZ_T_N_G_STATE ON QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+CREATE INDEX IDX_QRTZ_T_NEXT_FIRE_TIME ON QRTZ_TRIGGERS(SCHED_NAME,NEXT_FIRE_TIME);
+CREATE INDEX IDX_QRTZ_T_NFT_ST ON QRTZ_TRIGGERS(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
+CREATE INDEX IDX_QRTZ_T_NFT_MISFIRE ON QRTZ_TRIGGERS(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
+CREATE INDEX IDX_QRTZ_T_NFT_ST_MISFIRE ON QRTZ_TRIGGERS(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
+CREATE INDEX IDX_QRTZ_T_NFT_ST_MISFIRE_GRP ON QRTZ_TRIGGERS(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
 
-create index idx_qrtz_ft_trig_inst_name on qrtz_fired_triggers(SCHED_NAME,INSTANCE_NAME);
-create index idx_qrtz_ft_inst_job_req_rcvry on qrtz_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
-create index idx_qrtz_ft_j_g on qrtz_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_qrtz_ft_jg on qrtz_fired_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_qrtz_ft_t_g on qrtz_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
-create index idx_qrtz_ft_tg on qrtz_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
+CREATE INDEX IDX_QRTZ_FT_TRIG_INST_NAME ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,INSTANCE_NAME);
+CREATE INDEX IDX_QRTZ_FT_INST_JOB_REQ_RCVRY ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
+CREATE INDEX IDX_QRTZ_FT_J_G ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,JOB_NAME,JOB_GROUP);
+CREATE INDEX IDX_QRTZ_FT_JG ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,JOB_GROUP);
+CREATE INDEX IDX_QRTZ_FT_T_G ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
+CREATE INDEX IDX_QRTZ_FT_TG ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,TRIGGER_GROUP);
 
 --初始化数据
 INSERT INTO SYS_ORG (ORG_NO, ORG_NAME, PARENT_NO, ORG_TYPE, STATUS, SORT, CREATE_USER_ID, CREATE_TIME) VALUES ('10', '安徽省', '0', 1, 1, 1, '1', TO_TIMESTAMP('2019-01-31 15:04:07.987000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
