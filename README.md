@@ -8,7 +8,7 @@
 
 #### 项目说明
 - platform-plus是一个轻量级的，前后端分离的Java快速开发平台
-- 代码生成工具已完美支持MySQL、Oracle
+- 前端地址：https://gitee.com/fuyang_lipengjun/platform-plus-ui
  
 #### 优势
 - 严格遵循阿里编码规约开发，便于阅读及二次开发
