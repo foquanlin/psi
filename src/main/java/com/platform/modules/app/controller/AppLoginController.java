@@ -55,10 +55,10 @@ public class AppLoginController {
      */
     @IgnoreAuth
     @PostMapping("login")
-    @ApiOperation(value = "登录", notes = "根据用户名密码登录")
+    @ApiOperation(value = "登录", notes = "根据手机号密码登录")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "mobile", value = "手机号", required = true, dataType = "string"),
-            @ApiImplicitParam(paramType = "query", name = "password", value = "密码", required = true, dataType = "string")
+            @ApiImplicitParam(paramType = "query", name = "mobile", value = "手机号", required = true, dataType = "string", example = "15209831990"),
+            @ApiImplicitParam(paramType = "query", name = "password", value = "密码", required = true, dataType = "string", example = "admin")
     })
     public RestResponse login(String mobile, String password) {
 

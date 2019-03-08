@@ -27,6 +27,7 @@ import com.platform.modules.oss.cloud.UploadFactory;
 import com.platform.modules.oss.entity.SysOssEntity;
 import com.platform.modules.oss.service.SysOssService;
 import com.platform.modules.sys.service.SysConfigService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -42,6 +44,7 @@ import java.util.Map;
  * @author 李鹏军
  * @date 2019-01-17 16:21:01
  */
+@Slf4j
 @RestController
 @RequestMapping("sys/oss")
 public class SysOssController {
@@ -49,6 +52,16 @@ public class SysOssController {
     private SysOssService sysOssService;
     @Autowired
     private SysConfigService sysConfigService;
+
+    /**
+     * UEditor后台配置请求
+     */
+    private static final String CONFIG_ACTION = "config";
+
+    /**
+     * 文件管理列表
+     */
+    private static final String LIST_ACTION = "listimage";
 
     /**
      * 分页查询
@@ -115,10 +128,29 @@ public class SysOssController {
      * @param file file
      * @return RestResponse
      */
-    @PostMapping("/upload")
+    @RequestMapping("/upload")
     @RequiresPermissions("sys:oss:upload")
-    public RestResponse upload(@RequestParam("file") MultipartFile file) throws Exception {
-        if (file.isEmpty()) {
+    public Object upload(@RequestParam(value = "file", required = false) MultipartFile file,
+                         @RequestParam(value = "action", required = false) String action,
+                         @RequestParam(value = "page", required = false) String page,
+                         @RequestParam(value = "limit", required = false) String limit) throws Exception {
+        if (null != action) {
+            switch (action) {
+                // 分页管理图片列表
+                case LIST_ACTION:
+                    Map<String, Object> params = new HashMap<>(4);
+                    params.put("page", page);
+                    params.put("limit", limit);
+                    return RestResponse.success().put("state", "SUCCESS").put("list", sysOssService.queryPage(params));
+                //获取UEditor后台配置
+                case CONFIG_ACTION:
+                    return getConfig();
+                default:
+                    // 其他的不处理
+                    log.debug(action);
+            }
+        }
+        if (null == file || file.isEmpty()) {
             throw new BusinessException("上传文件不能为空");
         }
 
@@ -132,7 +164,8 @@ public class SysOssController {
         ossEntity.setCreateDate(new Date());
         sysOssService.save(ossEntity);
 
-        return RestResponse.success().put("url", url);
+        //返回兼容UEditor的参数
+        return RestResponse.success().put("url", url).put("state", "SUCCESS").put("title", url).put("original", url);
     }
 
     /**
@@ -150,4 +183,85 @@ public class SysOssController {
         return RestResponse.success();
     }
 
+    /**
+     * Ueditor后台配置，前后端通信相关的配置,注释只允许使用多行方式
+     *
+     * @return
+     */
+    private String getConfig() {
+        return "{\n" +
+                "    /* 上传图片配置项 */\n" +
+                "    \"imageActionName\": \"uploadimage\", /* 执行上传图片的action名称 */\n" +
+                "    \"imageFieldName\": \"file\", /* 提交的图片表单名称 */\n" +
+                "    \"imageMaxSize\": 2048000, /* 上传大小限制，单位B */\n" +
+                "    \"imageAllowFiles\": [\".png\", \".jpg\", \".jpeg\", \".gif\", \".bmp\"], /* 上传图片格式显示 */\n" +
+                "    \"imageCompressEnable\": true, /* 是否压缩图片,默认是true */\n" +
+                "    \"imageCompressBorder\": 1600, /* 图片压缩最长边限制 */\n" +
+                "    \"imageInsertAlign\": \"none\", /* 插入的图片浮动方式 */\n" +
+                "    \"imageUrlPrefix\": \"\", /* 图片访问路径前缀 */\n" +
+                "    \"localSavePathPrefix\":\"upload/images/inform\",\n" +
+                "    \"imagePathFormat\": \"/ueditor/jsp/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}\", /* 上传保存路径,可以自定义保存路径和文件名格式 */\n" +
+                "    /* 涂鸦图片上传配置项 */\n" +
+                "    \"scrawlActionName\": \"uploadscrawl\", /* 执行上传涂鸦的action名称 */\n" +
+                "    \"scrawlFieldName\": \"file\", /* 提交的图片表单名称 */\n" +
+                "    \"scrawlPathFormat\": \"/ueditor/jsp/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}\", /* 上传保存路径,可以自定义保存路径和文件名格式 */\n" +
+                "    \"scrawlMaxSize\": 2048000, /* 上传大小限制，单位B */\n" +
+                "    \"scrawlUrlPrefix\": \"\", /* 图片访问路径前缀 */\n" +
+                "    \"scrawlInsertAlign\": \"none\",\n" +
+                "    /* 截图工具上传 */\n" +
+                "    \"snapscreenActionName\": \"uploadimage\", /* 执行上传截图的action名称 */\n" +
+                "    \"snapscreenPathFormat\": \"/ueditor/jsp/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}\", /* 上传保存路径,可以自定义保存路径和文件名格式 */\n" +
+                "    \"snapscreenUrlPrefix\": \"\", /* 图片访问路径前缀 */\n" +
+                "    \"snapscreenInsertAlign\": \"none\", /* 插入的图片浮动方式 */\n" +
+                "    /* 抓取远程图片配置 */\n" +
+                "    \"catcherLocalDomain\": [\"127.0.0.1\", \"localhost\", \"img.baidu.com\"],\n" +
+                "    \"catcherActionName\": \"catchimage\", /* 执行抓取远程图片的action名称 */\n" +
+                "    \"catcherFieldName\": \"file\", /* 提交的图片列表表单名称 */\n" +
+                "    \"catcherPathFormat\": \"/ueditor/jsp/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}\", /* 上传保存路径,可以自定义保存路径和文件名格式 */\n" +
+                "    \"catcherUrlPrefix\": \"\", /* 图片访问路径前缀 */\n" +
+                "    \"catcherMaxSize\": 2048000, /* 上传大小限制，单位B */\n" +
+                "    \"catcherAllowFiles\": [\".png\", \".jpg\", \".jpeg\", \".gif\", \".bmp\"], /* 抓取图片格式显示 */\n" +
+                "    /* 上传视频配置 */\n" +
+                "    \"videoActionName\": \"uploadvideo\", /* 执行上传视频的action名称 */\n" +
+                "    \"videoFieldName\": \"file\", /* 提交的视频表单名称 */\n" +
+                "    \"videoPathFormat\": \"/ueditor/jsp/upload/video/{yyyy}{mm}{dd}/{time}{rand:6}\", /* 上传保存路径,可以自定义保存路径和文件名格式 */\n" +
+                "    \"videoUrlPrefix\": \"\", /* 视频访问路径前缀 */\n" +
+                "    \"videoMaxSize\": 102400000, /* 上传大小限制，单位B，默认100MB */\n" +
+                "    \"videoAllowFiles\": [\n" +
+                "        \".flv\", \".swf\", \".mkv\", \".avi\", \".rm\", \".rmvb\", \".mpeg\", \".mpg\",\n" +
+                "        \".ogg\", \".ogv\", \".mov\", \".wmv\", \".mp4\", \".webm\", \".mp3\", \".wav\", \".mid\"], /* 上传视频格式显示 */\n" +
+                "    /* 上传文件配置 */\n" +
+                "    \"fileActionName\": \"uploadfile\", /* controller里,执行上传视频的action名称 */\n" +
+                "    \"fileFieldName\": \"file\", /* 提交的文件表单名称 */\n" +
+                "    \"filePathFormat\": \"/ueditor/jsp/upload/file/{yyyy}{mm}{dd}/{time}{rand:6}\", /* 上传保存路径,可以自定义保存路径和文件名格式 */\n" +
+                "    \"fileUrlPrefix\": \"\", /* 文件访问路径前缀 */\n" +
+                "    \"fileMaxSize\": 51200000, /* 上传大小限制，单位B，默认50MB */\n" +
+                "    \"fileAllowFiles\": [\n" +
+                "        \".png\", \".jpg\", \".jpeg\", \".gif\", \".bmp\",\n" +
+                "        \".flv\", \".swf\", \".mkv\", \".avi\", \".rm\", \".rmvb\", \".mpeg\", \".mpg\",\n" +
+                "        \".ogg\", \".ogv\", \".mov\", \".wmv\", \".mp4\", \".webm\", \".mp3\", \".wav\", \".mid\",\n" +
+                "        \".rar\", \".zip\", \".tar\", \".gz\", \".7z\", \".bz2\", \".cab\", \".iso\",\n" +
+                "        \".doc\", \".docx\", \".xls\", \".xlsx\", \".ppt\", \".pptx\", \".pdf\", \".txt\", \".md\", \".xml\"\n" +
+                "    ], /* 上传文件格式显示 */\n" +
+                "    /* 列出指定目录下的图片 */\n" +
+                "    \"imageManagerActionName\": \"listimage\", /* 执行图片管理的action名称 */\n" +
+                "    \"imageManagerListPath\": \"/ueditor/jsp/upload/image/\", /* 指定要列出图片的目录 */\n" +
+                "    \"imageManagerListSize\": 15, /* 每次列出文件数量 */\n" +
+                "    \"imageManagerUrlPrefix\": \"\", /* 图片访问路径前缀 */\n" +
+                "    \"imageManagerInsertAlign\": \"none\", /* 插入的图片浮动方式 */\n" +
+                "    \"imageManagerAllowFiles\": [\".png\", \".jpg\", \".jpeg\", \".gif\", \".bmp\"], /* 列出的文件类型 */\n" +
+                "    /* 列出指定目录下的文件 */\n" +
+                "    \"fileManagerActionName\": \"listimage\", /* 执行文件管理的action名称 */\n" +
+                "    \"fileManagerListPath\": \"/ueditor/jsp/upload/file/\", /* 指定要列出文件的目录 */\n" +
+                "    \"fileManagerUrlPrefix\": \"\", /* 文件访问路径前缀 */\n" +
+                "    \"fileManagerListSize\": 15, /* 每次列出文件数量 */\n" +
+                "    \"fileManagerAllowFiles\": [\n" +
+                "        \".png\", \".jpg\", \".jpeg\", \".gif\", \".bmp\",\n" +
+                "        \".flv\", \".swf\", \".mkv\", \".avi\", \".rm\", \".rmvb\", \".mpeg\", \".mpg\",\n" +
+                "        \".ogg\", \".ogv\", \".mov\", \".wmv\", \".mp4\", \".webm\", \".mp3\", \".wav\", \".mid\",\n" +
+                "        \".rar\", \".zip\", \".tar\", \".gz\", \".7z\", \".bz2\", \".cab\", \".iso\",\n" +
+                "        \".doc\", \".docx\", \".xls\", \".xlsx\", \".ppt\", \".pptx\", \".pdf\", \".txt\", \".md\", \".xml\"\n" +
+                "    ] /* 列出的文件类型 */\n" +
+                "}";
+    }
 }
