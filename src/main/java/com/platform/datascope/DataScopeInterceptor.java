@@ -123,6 +123,14 @@ public class DataScopeInterceptor extends SqlExplainInterceptor implements Inter
             for (Object val : ((Map<?, ?>) parameterObj).values()) {
                 if (val instanceof DataScope) {
                     return (DataScope) val;
+                } else {
+                    if (val instanceof Map) {
+                        for (Object v : ((Map<?, ?>) val).values()) {
+                            if (v instanceof DataScope) {
+                                return (DataScope) v;
+                            }
+                        }
+                    }
                 }
             }
         }
