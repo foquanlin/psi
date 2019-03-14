@@ -8,6 +8,7 @@
 
 #### 项目说明
 - platform-plus是一个轻量级的，前后端分离的Java快速开发平台
+- JavaDoc：https://apidoc.gitee.com/fuyang_lipengjun/platform-plus/
 - 前端地址：https://gitee.com/fuyang_lipengjun/platform-plus-ui
  
 #### 优势
