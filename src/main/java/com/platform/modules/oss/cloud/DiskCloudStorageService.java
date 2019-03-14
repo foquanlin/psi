@@ -87,11 +87,11 @@ public class DiskCloudStorageService extends AbstractCloudStorageService {
 
     @Override
     public String uploadSuffix(byte[] data, String suffix) {
-        return upload(data, getPath(config.getQcloudPrefix(), suffix));
+        return upload(data, getPath("", suffix));
     }
 
     @Override
     public String uploadSuffix(InputStream inputStream, String suffix) {
-        return upload(inputStream, getPath(config.getQcloudPrefix(), suffix));
+        return upload(inputStream, getPath("", suffix));
     }
 }

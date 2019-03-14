@@ -163,7 +163,11 @@ public class Constant {
         /**
          * 服务器存储
          */
-        DISCK(4);
+        DISCK(4),
+        /**
+         * FastDFS
+         */
+        FAST_DFS(5);
 
         private int value;
 
