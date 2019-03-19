@@ -461,15 +461,27 @@ INSERT INTO `SYS_MENU` VALUES ('130104', '1301', '立即执行', null, 'sys:sche
 INSERT INTO `SYS_MENU` VALUES ('130105', '1301', '日志列表', null, 'sys:schedule:log', 2, null, 0);
 INSERT INTO `SYS_MENU` VALUES ('130106', '1301', '新增', null, 'sys:schedule:save', 2, null, 0);
 INSERT INTO `SYS_MENU` VALUES ('130107', '1301', '修改', null, 'sys:schedule:update', 2, null, 0);
-INSERT INTO `SYS_MENU` VALUES ('14', '0', '开发工具', null, null, 0, 'dev', 4);
-INSERT INTO `SYS_MENU` VALUES ('1401', '14', '在线用户管理', 'sys/usertoken', 'sys:usertoken:list', 1, 'zaixian', 1);
-INSERT INTO `SYS_MENU` VALUES ('140101', '1401', '强制下线', null, 'sys:usertoken:offline', 2, null, 0);
-INSERT INTO `SYS_MENU` VALUES ('1402', '14', '缓存信息', 'sys/redis', 'sys:cache:queryAll', 1, 'redis', 2);
-INSERT INTO `SYS_MENU` VALUES ('140201', '1402', '删除', null, 'sys:cache:deleteCache', 2, null, 0);
-INSERT INTO `SYS_MENU` VALUES ('1403', '14', 'SQL监控', 'http://localhost:8888/platform-plus/druid/sql.html', null, 1, 'sql', 3);
-INSERT INTO `SYS_MENU` VALUES ('1404', '14', '接口文档', 'http://localhost:8888/platform-plus/doc.html', null, 1, 'interface', 4);
-INSERT INTO `SYS_MENU` VALUES ('1405', '14', '代码生成器', 'gen/generator', 'sys:generator:list', 1, 'code', 5);
-INSERT INTO `SYS_MENU` VALUES ('140501', '1405', '生成代码', null, 'sys:generator:code', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('14', '0', '工作流管理', null, null, 0, 'activiti', 4);
+INSERT INTO `SYS_MENU` VALUES ('1401', '14', '流程操作', 'act/reprocdef', 'act:reprocdef:list', 1, 'procdef', 1);
+INSERT INTO `SYS_MENU` VALUES ('140101', '1401', '激活,挂起', null, 'act:reprocdef:update', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('140102', '1401', '删除', null, 'act:reprocdef:delete', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('140103', '1401', '转为模型', null, 'act:reprocdef:convertToModel', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('140104', '1401', '部署流程', null, 'act:reprocdef:deploy', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('1402', '14', '模型管理', 'act/remodel', 'act:remodel:list', 1, 'model', 2);
+INSERT INTO `SYS_MENU` VALUES ('140201', '1402', '新增', null, 'act:remodel:save', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('140202', '1402', '编辑', null, 'act:remodel:update', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('140203', '1402', '部署', null, 'act:remodel:deploy', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('140204', '1402', '导出', null, 'act:remodel:export', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('140205', '1402', '删除', null, 'act:remodel:delete', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('15', '0', '开发工具', null, null, 0, 'dev', 5);
+INSERT INTO `SYS_MENU` VALUES ('1501', '15', '在线用户管理', 'sys/usertoken', 'sys:usertoken:list', 1, 'zaixian', 1);
+INSERT INTO `SYS_MENU` VALUES ('150101', '1501', '强制下线', null, 'sys:usertoken:offline', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('1502', '15', '缓存信息', 'sys/redis', 'sys:cache:queryAll', 1, 'redis', 2);
+INSERT INTO `SYS_MENU` VALUES ('150201', '1502', '删除', null, 'sys:cache:deleteCache', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('1503', '15', 'SQL监控', 'http://localhost:8888/platform-plus/druid/sql.html', null, 1, 'sql', 3);
+INSERT INTO `SYS_MENU` VALUES ('1504', '15', '接口文档', 'http://localhost:8888/platform-plus/doc.html', null, 1, 'interface', 4);
+INSERT INTO `SYS_MENU` VALUES ('1505', '15', '代码生成器', 'gen/generator', 'sys:generator:list', 1, 'code', 5);
+INSERT INTO `SYS_MENU` VALUES ('150501', '1505', '生成代码', null, 'sys:generator:code', 2, null, 0);
 
 -- ----------------------------
 -- Table structure for `SYS_ORG`
