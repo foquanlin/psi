@@ -31,6 +31,6 @@ public class LogConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(logInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/swagger-ui/**", "/swagger-resources", "/doc.html");
+                .excludePathPatterns("/swagger-ui/**", "/swagger-resources", "/editor-app/**", "/swagger-ui/**", "/doc.html");
     }
 }

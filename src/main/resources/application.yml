@@ -11,6 +11,8 @@ server:
     context-path: /platform-plus
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   # 环境 dev|prod
   profiles:
     active: dev

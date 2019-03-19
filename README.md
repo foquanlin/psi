@@ -119,6 +119,12 @@ platform-plus
 
 
 **效果图：**
+- 流程操作
+![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/reprocdef.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/reprocdef.png "流程操作")
+- 模型管理
+![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/remodel.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/remodel.png "模型管理")
+- 流程编辑
+![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/editor.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/editor.png "流程编辑")
 - 菜单管理
 ![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/platform-plus.jpg](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/platform-plus.jpg "菜单管理")
 - 字典管理
@@ -136,6 +142,15 @@ platform-plus
 - mysql执行sql/mysql.sql文件(oracle执行sql/oracle.sql)，初始化数据
 - 修改application-dev.yml，修改MySQL、Oracle驱动、账号和密码
 - Eclipse、IDEA运行PlatformPlusApplication.java，则可启动项目
+- docker部署
+```
+# 在centos7 ~ 创建一个文件夹docker，里面放置Dockerfile 和 mvn 打包的项目platform-plus.jar
+# 在该docker文件下 指令：
+docker build -t docker .
+
+# 运行 Docker Image
+docker run -d -p 8888:8888 docker
+```
 - Swagger路径：http://localhost:8888/platform-plus/doc.html
 
 #### 提交反馈

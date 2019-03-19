@@ -15,8 +15,6 @@ import com.platform.modules.swaggerbootstrapui.annotations.EnableSwaggerBootstra
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -63,13 +61,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @Configuration
 @EnableSwagger2
 @EnableSwaggerBootstrapUI
-public class SwaggerConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/static/swagger-ui/");
-    }
+public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {

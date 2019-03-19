@@ -60,6 +60,8 @@ public class Constant {
     public static final String STR_THREE = "3";
     public static final String STR_FOUR = "4";
 
+    public static final int ONE = 0;
+    public static final int TWO = 2;
     public static final int THREE = 3;
     /**
      * 空字符串
@@ -91,6 +93,16 @@ public class Constant {
     public static final String LINE_BREAK = "\\r\\n";
 
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+
+    public static final String BPMN20 = ".bpmn20.xml";
+
+    public static final String IMAGE = "image";
+
+    public static final String XML = "xml";
+    public static final String PNG = "png";
+    public static final String BAR = "bar";
+    public static final String ZIP = "zip";
+    public static final String BPMN = "bpmn";
 
     /**
      * 菜单类型
