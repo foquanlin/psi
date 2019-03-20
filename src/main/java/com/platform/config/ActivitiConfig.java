@@ -53,15 +53,15 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      */
     @Bean
     public ProcessEngine processEngine(PlatformTransactionManager transactionManager, DataSource dataSource) throws IOException {
-        SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
+        SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
         //自动部署已有的流程文件
         Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceLoader.CLASSPATH_URL_PREFIX + "processes/*.bpmn");
-        configuration.setDeploymentResources(resources);
-        configuration.setTransactionManager(transactionManager);
-        configuration.setDataSource(dataSource);
-        configuration.setDatabaseSchemaUpdate("true");
+        processEngineConfiguration.setDeploymentResources(resources);
+        processEngineConfiguration.setTransactionManager(transactionManager);
+        processEngineConfiguration.setDataSource(dataSource);
+        processEngineConfiguration.setDatabaseSchemaUpdate("true");
 
-        return configuration.buildProcessEngine();
+        return processEngineConfiguration.buildProcessEngine();
     }
 
     /**
