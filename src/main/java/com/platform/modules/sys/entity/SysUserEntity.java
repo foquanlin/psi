@@ -76,10 +76,20 @@ public class SysUserEntity implements Serializable {
     private String salt;
 
     /**
+     * 邮箱服务器地址
+     */
+    private String emailHost;
+
+    /**
      * 邮箱
      */
     @Email(message = "邮箱格式不正确", groups = {AddGroup.class, UpdateGroup.class})
     private String email;
+
+    /**
+     * 邮箱密码
+     */
+    private String emailPw;
 
     /**
      * 手机号

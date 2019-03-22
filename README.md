@@ -59,11 +59,13 @@ platform-plus
 │ 
 ├─datasources 多数据源
 │ 
-├─modules 功能模块
-│  ├─app API接口模块(APP调用)
-│  ├─gen 代码生成模块
-│  ├─job 定时任务模块
-│  ├─oss 文件服务模块
+├─modules  功能模块
+│  ├─act  工作流模块
+│  ├─app  API接口模块(APP调用)
+│  ├─gen  代码生成模块
+│  ├─job  定时任务模块
+│  ├─mail 邮件服务模块
+│  ├─oss  文件服务模块
 │  ├─swaggerbootstrapui 自定义swagger文档模块
 │  └─sys 权限模块
 │ 
@@ -93,12 +95,17 @@ platform-plus
     - 短信配置
 - 任务调度
     - 定时任务
+- 工作流管理
+    - 流程操作
+    - 模型管理
 - 开发工具
     - 在线用户管理
     - 缓存信息
     - SQL监控
     - 接口文档
     - 代码生成器
+- 邮件系统
+    - 发送记录
 ```
 
 **项目演示**

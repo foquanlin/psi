@@ -21,6 +21,10 @@ public class Constant {
      * 超级管理员ID
      */
     public static final String SUPER_ADMIN = "1";
+    /**
+     * 超级管理员所属机构
+     */
+    public static final String SUPER_ADMIN_ORG = "01";
 
     public static final String DEFAULT_PW = "888888";
 
@@ -103,6 +107,20 @@ public class Constant {
     public static final String BAR = "bar";
     public static final String ZIP = "zip";
     public static final String BPMN = "bpmn";
+
+    /**
+     * 系统邮件签名
+     */
+    public static final String SIGNATURE_STR = "<br><font color='red'>-------------------------------------------------------------------<br>以上内容为邮件系统自动发送，请勿直接回复。</font>";
+
+    /**
+     * 系统自动邮件
+     */
+    public static final int SYS_SEND = 0;
+    /**
+     * 操作人主动邮件
+     */
+    public static final int USER_SEND = 1;
 
     /**
      * 菜单类型

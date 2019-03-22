@@ -482,6 +482,10 @@ INSERT INTO `SYS_MENU` VALUES ('1503', '15', 'SQL监控', 'http://localhost:8888
 INSERT INTO `SYS_MENU` VALUES ('1504', '15', '接口文档', 'http://localhost:8888/platform-plus/doc.html', null, 1, 'interface', 4);
 INSERT INTO `SYS_MENU` VALUES ('1505', '15', '代码生成器', 'gen/generator', 'sys:generator:list', 1, 'code', 5);
 INSERT INTO `SYS_MENU` VALUES ('150501', '1505', '生成代码', null, 'sys:generator:code', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('16', '0', '邮件系统', null, null, 0, 'email', 6);
+INSERT INTO `SYS_MENU` VALUES ('1601', '16', '发送记录', 'sys/maillog', 'sys:maillog:list,sys:maillog:info', 1, 'job', 1);
+INSERT INTO `SYS_MENU` VALUES ('160101', '1601', '删除', null, 'sys:maillog:delete', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('160102', '1601', '邮箱配置', null, 'sys:maillog:config', 2, null, 0);
 
 -- ----------------------------
 -- Table structure for `SYS_ORG`
@@ -604,7 +608,9 @@ CREATE TABLE `SYS_USER` (
   `SEX` TINYINT(4) NOT NULL,
   `ORG_NO` VARCHAR(32) DEFAULT NULL COMMENT '机构编码',
   `SALT` VARCHAR(20) DEFAULT NULL COMMENT '盐',
+  `EMAIL_HOST` VARCHAR(32) DEFAULT NULL COMMENT '邮件服务器地址',
   `EMAIL` VARCHAR(100) DEFAULT NULL COMMENT '邮箱',
+  `EMAIL_PW` VARCHAR(64) DEFAULT NULL COMMENT '用户邮箱密码',
   `MOBILE` VARCHAR(100) DEFAULT NULL COMMENT '手机号',
   `STATUS` TINYINT(4) DEFAULT NULL COMMENT '状态  0：禁用   1：正常',
   `PASSWORD` VARCHAR(100) DEFAULT NULL COMMENT '密码',
@@ -618,7 +624,7 @@ CREATE TABLE `SYS_USER` (
 -- ----------------------------
 -- Records of SYS_USER
 -- ----------------------------
-INSERT INTO `SYS_USER` VALUES ('1', 'admin', '李鹏军', 1, '01', 'YzcmCZNvbXocrsz9dm8e', '939961241@qq.com', '15209831991', '1', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', null, null, '2016-11-11 11:11:11');
+INSERT INTO `SYS_USER` VALUES ('1', 'admin', '李鹏军', 1, '01', 'YzcmCZNvbXocrsz9dm8e', 'smtp.qq.com', '939961241@qq.com', '', '15209831991', '1', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', null, null, '2016-11-11 11:11:11');
 
 -- ----------------------------
 -- Table structure for `SYS_USER_ROLE`
@@ -676,3 +682,18 @@ CREATE TABLE `TB_USER` (
 -- Records of TB_USER
 -- ----------------------------
 INSERT INTO `TB_USER` VALUES ('1', '李鹏军', 1, '1550742648', 'oxaA11ulr9134oBL9Xscon5at_Gc', 'Boy Genius', 'http://thirdwx.qlogo.cn/mmopen/PiajxSqBRaEI3eTLaf64kP7sBrpXKbJ7l4h6BWOlJjAQUqibVbsKotVWbzH6QnkTHYmuTMZXuUiaXVo7Ba02XbCxA/132', 1, '15209831990', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '2019-03-06 02:33:16');
+
+DROP TABLE IF EXISTS `SYS_MAIL_LOG`;
+CREATE TABLE `SYS_MAIL_LOG` (
+  `ID` VARCHAR(32) NOT NULL,
+  `SENDER` VARCHAR(100) NOT NULL COMMENT '发送人',
+  `RECEIVER` VARCHAR(4000) NOT NULL COMMENT '接收人',
+  `SUBJECT` VARCHAR(500) NOT NULL COMMENT '邮件主题',
+  `CONTENT` VARCHAR(4000) DEFAULT NULL COMMENT '发送内容',
+  `SEND_DATE` DATETIME DEFAULT NULL COMMENT '发送时间',
+  `TYPE` TINYINT(4) DEFAULT NULL COMMENT '0：系统发送邮件 1：用户发送邮件',
+  `SEND_RESULT` TINYINT(4) DEFAULT NULL COMMENT '发送结果 0:发送成功 1:发送失败',
+  `CREATE_USER_ID` VARCHAR(32) DEFAULT NULL COMMENT '创建者ID',
+  `CREATE_USER_ORG_NO` VARCHAR(32) DEFAULT NULL COMMENT '创建人所属机构',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件发送日志';
