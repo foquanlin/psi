@@ -4,7 +4,7 @@
     <springProfile name="dev">
         <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
             <destination>127.0.0.1:9601</destination>
-            <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+            <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
         </appender>
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
@@ -13,8 +13,8 @@
         </appender>
 
         <root level="INFO">
-            <appender-ref ref="STDOUT" />
-            <appender-ref ref="LOGSTASH" />
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="LOGSTASH"/>
         </root>
     </springProfile>
 
@@ -22,7 +22,7 @@
     <springProfile name="prod">
         <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
             <destination>127.0.0.1:9601</destination>
-            <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+            <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
         </appender>
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder charset="UTF-8">
@@ -31,8 +31,8 @@
         </appender>
 
         <root level="ERROR">
-            <appender-ref ref="LOGSTASH" />
-            <appender-ref ref="STDOUT" />
+            <appender-ref ref="LOGSTASH"/>
+            <appender-ref ref="STDOUT"/>
         </root>
     </springProfile>
 
