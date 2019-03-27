@@ -15,6 +15,7 @@
 - 严格遵循阿里编码规约开发，便于阅读及二次开发
 - 支持 MySQL、MariaDB、Oracle、DB2、H2、HSQL、SQLite、Postgre、SQLServer2005、SQLServer 等多种数据库
 - 实现前后端分离，通过token进行数据交互，前端再也不用关注后端技术
+- 支持结合ELK实时日志分析系统，方便日志查询，问题排查，上线检查
 - 灵活的权限控制，可控制到页面和按钮，满足绝大部分的权限需求
 - 可在线生成vue、controller、entity、xml、dao、service、vue、sql代码，增删改查代码一键生成，减少80%以上的开发任务
 - 引入quartz定时任务，可动态完成任务的添加、修改、删除、暂停、恢复及日志查看等功能
@@ -74,6 +75,7 @@ platform-plus
 ├──resources 
 │  ├─gen 代码生成工具
 │  ├─mapper SQL对应的XML文件
+│  ├─processes 流程文件
 │  └─static 自定义swagger文档
 
 ```
@@ -126,6 +128,8 @@ platform-plus
 
 
 **效果图：**
+- ELK日志分析
+![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/elk.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/elk.png "ELK日志分析")
 - 流程操作
 ![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/reprocdef.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/reprocdef.png "流程操作")
 - 模型管理

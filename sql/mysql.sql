@@ -486,6 +486,7 @@ INSERT INTO `SYS_MENU` VALUES ('16', '0', '邮件系统', null, null, 0, 'email'
 INSERT INTO `SYS_MENU` VALUES ('1601', '16', '发送记录', 'sys/maillog', 'sys:maillog:list,sys:maillog:info', 1, 'job', 1);
 INSERT INTO `SYS_MENU` VALUES ('160101', '1601', '删除', null, 'sys:maillog:delete', 2, null, 0);
 INSERT INTO `SYS_MENU` VALUES ('160102', '1601', '邮箱配置', null, 'sys:maillog:config', 2, null, 0);
+INSERT INTO `SYS_MENU` VALUES ('17', '0', 'ELK平台', 'http://localhost:5601', null, '1', 'log', 7);
 
 -- ----------------------------
 -- Table structure for `SYS_ORG`
