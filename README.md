@@ -1,10 +1,35 @@
-#### [腾讯云2019新春采购节](https://cloud.tencent.com/redirect.php?redirect=1036&cps_key=30280f92fc381dfc9e1d9e0e23d25a18&from=console)：
-【开年好云 钜惠来袭】2019新春采购节，30款云产品感恩回馈。
-[![腾讯云2019新春采购节](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/active/tx/520_120.jpg)](https://cloud.tencent.com/redirect.php?redirect=1036&cps_key=30280f92fc381dfc9e1d9e0e23d25a18&from=console)
+## 服务器推荐配置
+### 服务器配置：
 
-#### [阿里云开年采购季](https://www.aliyun.com/acts/product-section-2019/new-users?userCode=i8s6n64p)：
-入门爆款云服务器，降低采购成本，开发者和小微企业首选。
-[![阿里云开年采购季](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/active/ali/540x250.jpg)](https://www.aliyun.com/acts/product-section-2019/new-users?userCode=i8s6n64p)
+    CPU：2核
+    内存：8G
+    实例规格：标准型S2机型
+    带宽：2M
+    价格：262 元/月 1768.5 元/年 4716 元/三年
+[点我购买](https://cloud.tencent.com/redirect.php?redirect=1014&cps_key=30280f92fc381dfc9e1d9e0e23d25a18&from=console)
+
+购买说明：如果业务量较大，推荐双机部署。
+
+### MySQL高可用版配置：
+    CPU：1核
+    内存：1G
+    硬盘：100G
+    价格：174元/月	1733.04元/年	1879.20元/三年
+[点我购买](https://cloud.tencent.com/redirect.php?redirect=10481&cps_key=30280f92fc381dfc9e1d9e0e23d25a18)
+
+购买说明：腾讯云产品购买时长越大折扣就越大，所有推荐选择3年时长，可以达到3折优惠。
+
+### COS资源包：
+    标准型存储容量：
+    100GB	1年	101元
+    200GB	1年	200元
+    下行流量：
+    100GB	3个月	43元
+    200GB	3个月	85元
+    500GB	3个月	213元
+[点我购买](https://cloud.tencent.com/redirect.php?redirect=10165&cps_key=30280f92fc381dfc9e1d9e0e23d25a18)
+
+购买说明：根据实际业务存储量购买，目前我的站点存储容量100G，下行流量100G，刚好够用！
 
 #### 项目说明
 - platform-plus是一个轻量级的，前后端分离的Java快速开发平台
@@ -167,17 +192,10 @@ docker run -d -p 8888:8888 docker
 #### 提交反馈
 1. 欢迎提交 issue，请写清楚遇到问题的原因，开发环境，复显步骤。
 
-2. 不接受`功能请求`的 issue，功能请求可能会被直接关闭。  
-
-3. 官方QQ群：
+2. 官方QQ群：
 - <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ac742b7481b95fac926a3f2196085108bceeebcdf14bd716cbea519751e69445"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="微同软件 ①群" title="微同软件 ①群"></a>
 - <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=dcb460bfa21213a2712677bab7292fd8eb2138a1914af5af397b58e7c02690c5"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="微同软件 ②群" title="微同软件 ②群"></a>
 - <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=c7657db5d4e65a40e46ee5998534f7b9b9fa56d0347c3af3157c7f6240c0d0dd"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="微同软件 ③群" title="微同软件 ③群"></a>
-
-#### 鸣谢
-- [renrenio](https://www.renren.io)
-- [mybatis-plus](http://mp.baomidou.com)
-- [easypoi](https://opensource.afterturn.cn)
 
 #### 常用API
 - [Mybatis-Plus](https://baomidou.gitee.io/mybatis-plus-doc/#/quick-start)
