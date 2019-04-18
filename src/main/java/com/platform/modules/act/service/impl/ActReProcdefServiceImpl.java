@@ -83,6 +83,11 @@ public class ActReProcdefServiceImpl extends ServiceImpl<ActReProcdefDao, ActReP
     }
 
     @Override
+    public void startProcessInstanceById(String processDefinitionId) {
+        runtimeService.startProcessInstanceById(processDefinitionId);
+    }
+
+    @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
         params.put("sidx", "T.KEY_");

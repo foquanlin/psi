@@ -41,6 +41,13 @@ public interface ActReProcdefService extends IService<ActReProcdefEntity> {
     InputStream resourceRead(String id, String proInsId, String resType);
 
     /**
+     * 启动流程实例，通过processDefinitionId
+     *
+     * @param processDefinitionId
+     */
+    void startProcessInstanceById(String processDefinitionId);
+
+    /**
      * 分页查询
      *
      * @param params 查询参数

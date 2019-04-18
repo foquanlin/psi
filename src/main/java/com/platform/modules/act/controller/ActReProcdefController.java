@@ -119,6 +119,24 @@ public class ActReProcdefController extends AbstractController {
     }
 
     /**
+     * 启动流程实例，通过processDefinitionId
+     *
+     * @param processDefinitionId processDefinitionId
+     * @return RestResponse
+     */
+    @SysLog("启动流程实例")
+    @RequestMapping("/startProcessInstanceById")
+    @RequiresPermissions("act:reprocdef:startProcessInstanceById")
+    public RestResponse startProcessInstanceById(String processDefinitionId) {
+        try {
+            actReProcdefService.startProcessInstanceById(processDefinitionId);
+        } catch (Exception e) {
+            return RestResponse.error(e.getMessage());
+        }
+        return RestResponse.success();
+    }
+
+    /**
      * 激活 / 挂起
      *
      * @param state
