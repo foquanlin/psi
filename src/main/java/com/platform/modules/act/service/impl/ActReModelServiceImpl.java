@@ -30,6 +30,7 @@ import org.activiti.engine.ActivitiException;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
+import org.activiti.engine.repository.ModelQuery;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -57,11 +58,19 @@ public class ActReModelServiceImpl extends ServiceImpl<ActReModelDao, ActReModel
 
     @Override
     public Page queryPage(Map<String, Object> params) {
-        //排序
-        params.put("sidx", "T.ID_");
-        params.put("asc", false);
-        Page<ActReModelEntity> page = new Query<ActReModelEntity>(params).getPage();
-        return page.setRecords(baseMapper.selectActReModelPage(page, params));
+        int currPage = Integer.parseInt((String) params.get("page"));
+        int limit = Integer.parseInt((String) params.get("limit"));
+
+        ModelQuery modelQuery = repositoryService.createModelQuery().latestVersion().orderByLastUpdateTime().desc();
+        String key = params.get("key").toString();
+        if (!"".equals(key)) {
+            modelQuery.modelKey(key);
+        }
+        List<Model> list = modelQuery.listPage((currPage - 1) * limit, limit);
+
+        Page<Model> page = new Query<Model>(params).getPage();
+        page.setTotal(modelQuery.count());
+        return page.setRecords(list);
     }
 
     @Override
@@ -82,8 +91,8 @@ public class ActReModelServiceImpl extends ServiceImpl<ActReModelDao, ActReModel
         description = StringUtils.defaultString(description);
         modelData.setKey(StringUtils.defaultString(key));
         modelData.setName(name);
-        modelData.setVersion(Integer.parseInt(String.valueOf(repositoryService.createModelQuery().modelKey(
-                modelData.getKey()).count() + 1)));
+        modelData.setVersion(Integer.parseInt(String.valueOf(repositoryService.createModelQuery()
+                .modelKey(modelData.getKey()).count() + 1)));
 
         ObjectNode modelObjectNode = objectMapper.createObjectNode();
         modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME, name);

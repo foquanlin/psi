@@ -97,5 +97,5 @@ public interface ActReProcdefService extends IService<ActReProcdefEntity> {
      * @param id    流程部署标识
      * @return 操作信息
      */
-    String updateState(Integer state, String id);
+    String updateState(int state, String id);
 }

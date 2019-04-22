@@ -146,7 +146,7 @@ public class ActReProcdefController extends AbstractController {
     @SysLog("激活 / 挂起")
     @RequestMapping("/update")
     @RequiresPermissions("act:reprocdef:update")
-    public RestResponse update(Integer state, String id) {
+    public RestResponse update(int state, String id) {
 
         String msg = actReProcdefService.updateState(state, id);
 

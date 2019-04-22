@@ -12,13 +12,8 @@
 package com.platform.modules.act.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.platform.modules.act.entity.ActReProcdefEntity;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Dao
@@ -29,12 +24,4 @@ import java.util.Map;
 @Mapper
 public interface ActReProcdefDao extends BaseMapper<ActReProcdefEntity> {
 
-    /**
-     * 自定义分页查询，只查出最新的版本
-     *
-     * @param page   分页参数
-     * @param params 查询参数
-     * @return List
-     */
-    List<ActReProcdefEntity> selectLatestVersion(IPage page, @Param("params") Map<String, Object> params);
 }

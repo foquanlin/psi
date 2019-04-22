@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.Lists;
 import com.platform.common.exception.BusinessException;
 import com.platform.common.utils.Constant;
 import com.platform.common.utils.Query;
@@ -30,6 +31,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -89,11 +91,45 @@ public class ActReProcdefServiceImpl extends ServiceImpl<ActReProcdefDao, ActReP
 
     @Override
     public Page queryPage(Map<String, Object> params) {
-        //排序
-        params.put("sidx", "T.KEY_");
-        params.put("asc", true);
+        int currPage = Integer.parseInt((String) params.get("page"));
+        int limit = Integer.parseInt((String) params.get("limit"));
+        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery().latestVersion().orderByProcessDefinitionKey().asc();
+
+        String category = params.get("category").toString();
+        if (!"".equals(category)) {
+            processDefinitionQuery.processDefinitionCategory(category);
+        }
+        String key = params.get("key").toString();
+        if (!"".equals(key)) {
+            processDefinitionQuery.processDefinitionKey(key);
+        }
+        List<ProcessDefinition> processDefinitionList = processDefinitionQuery.listPage((currPage - 1) * limit, limit);
+
+        List<ActReProcdefEntity> list = Lists.newArrayList();
+
+        for (ProcessDefinition processDefinition : processDefinitionList) {
+            ActReProcdefEntity entity = new ActReProcdefEntity();
+            String deploymentId = processDefinition.getDeploymentId();
+            Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(deploymentId).singleResult();
+            entity.setId(processDefinition.getId());
+            entity.setKey(processDefinition.getKey());
+            entity.setName(deployment == null ? "" : StringUtils.isBlank(deployment.getName()) ? processDefinition.getName() : deployment.getName());
+            entity.setDeployTime(deployment == null ? null : deployment.getDeploymentTime());
+            entity.setDeploymentId(processDefinition.getDeploymentId());
+            entity.setSuspensionState(processDefinition.isSuspended() ? Constant.TWO : Constant.ONE);
+            entity.setResourceName(processDefinition.getResourceName());
+            entity.setDgrmResourceName(processDefinition.getDiagramResourceName());
+            entity.setCategory(processDefinition.getCategory());
+            entity.setVersion(processDefinition.getVersion());
+            entity.setDescription(processDefinition.getDescription());
+            entity.setEngineVersion(processDefinition.getEngineVersion());
+            entity.setTenantId(processDefinition.getTenantId());
+            list.add(entity);
+        }
+
         Page<ActReProcdefEntity> page = new Query<ActReProcdefEntity>(params).getPage();
-        return page.setRecords(baseMapper.selectLatestVersion(page, params));
+        page.setTotal(processDefinitionQuery.count());
+        return page.setRecords(list);
     }
 
     @Override
@@ -176,7 +212,7 @@ public class ActReProcdefServiceImpl extends ServiceImpl<ActReProcdefDao, ActReP
     }
 
     @Override
-    public String updateState(Integer state, String id) {
+    public String updateState(int state, String id) {
         String msg = "无操作";
         if (state == Constant.ONE) {
             try {
