@@ -118,10 +118,10 @@
         this.dataListSelections = val
       },
       // 查看详情
-      showDetails ($pk.columnName) {
+      showDetails (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
-          this.$refs.addOrUpdate.init($pk.columnName, true)
+          this.$refs.addOrUpdate.init(id, true)
         })
       },
       // 新增 / 修改
