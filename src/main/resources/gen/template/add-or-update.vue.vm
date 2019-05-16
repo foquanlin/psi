@@ -1,20 +1,20 @@
 <template>
   <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
+    :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
     :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
       <el-form-item label="${column.comments}" prop="${column.attrname}">
-        <el-input v-model="dataForm.${column.attrname}" placeholder="${column.comments}"></el-input>
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}"></el-input>
       </el-form-item>
 #end
 #end
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
+      <el-button v-if="!disabled" type="primary" @click="dataFormSubmit()">确定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -23,6 +23,7 @@
   export default {
     data () {
       return {
+        disabled: false,
         visible: false,
         dataForm: {
 #foreach($column in $columns)
@@ -40,7 +41,8 @@
       }
     },
     methods: {
-      init (id) {
+      init (id, disabled) {
+        this.disabled = disabled
         this.dataForm.id = id || ''
         this.visible = true
         this.$nextTick(() => {
