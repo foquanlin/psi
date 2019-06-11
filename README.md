@@ -33,7 +33,7 @@
 
 #### 项目结构
 ```
-platform-boot
+platform-plus
 ├─sql  项目SQL语句
 │
 ├─platform-admin 管理后台
