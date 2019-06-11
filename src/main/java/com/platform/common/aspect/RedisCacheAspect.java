@@ -72,16 +72,16 @@ public class RedisCacheAspect {
         log.debug("生成的key[{}]", key);
 
         Object result;
-        if (!jedisUtil.exists(key)) {
+        if (!jedisUtil.hasKey(key)) {
             log.debug("缓存未命中");
             //缓存不存在，则调用原方法，并将结果放入缓存中
             result = pjp.proceed(args);
             redisResult = JSON.toJSONString(result);
-            jedisUtil.setObject(key, redisResult, cacheTime);
+            jedisUtil.set(key, redisResult, cacheTime);
         } else {
             //缓存命中
             log.debug("缓存命中");
-            redisResult = JSONObject.toJSON(jedisUtil.getObject(key)).toString();
+            redisResult = JSONObject.toJSON(jedisUtil.get(key)).toString();
             //得到被代理方法的返回值类型
             Class returnType = method.getReturnType();
             result = JSON.parseObject(redisResult, returnType);

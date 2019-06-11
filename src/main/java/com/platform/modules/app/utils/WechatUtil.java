@@ -189,7 +189,7 @@ public class WechatUtil {
 
         String strAccessToken = accessToken.getString("access_token");
         if (StringUtils.isNotBlank(strAccessToken)) {
-            jedisUtil.setObject(Constant.ACCESS_TOKEN, accessToken, 7200);
+            jedisUtil.set(Constant.ACCESS_TOKEN, accessToken, 7200);
         }
         return strAccessToken;
     }

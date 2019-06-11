@@ -43,7 +43,7 @@ public class SysCacheServiceImpl implements SysCacheService {
             sysCacheEntity = new SysCacheEntity();
             sysCacheEntity.setCacheKey(key);
             try {
-                sysCacheEntity.setValue(JSONObject.toJSON(jedisUtil.getObject(key)).toString());
+                sysCacheEntity.setValue(JSONObject.toJSON(jedisUtil.get(key)).toString());
             } catch (Exception e) {
                 sysCacheEntity.setValue("");
             }
@@ -57,7 +57,6 @@ public class SysCacheServiceImpl implements SysCacheService {
     public int deleteBatch(String[] keys) {
         for (String key : keys) {
             jedisUtil.del(key);
-            jedisUtil.delObject(key);
         }
         return keys.length;
     }

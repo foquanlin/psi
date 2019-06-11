@@ -59,7 +59,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     @Override
     public UserEntity getWxUserInfoByOpenId(String openId) {
         //从redis获取accessToken
-        String accessToken = ((Map) jedisUtil.getObject(Constant.ACCESS_TOKEN)).get("access_token").toString();
+        String accessToken = ((Map) jedisUtil.get(Constant.ACCESS_TOKEN)).get("access_token").toString();
         // 获取用户信息
         return wechatUtil.getUserInfo(openId, accessToken, 3);
     }
