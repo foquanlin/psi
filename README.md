@@ -33,42 +33,16 @@
 
 #### 项目结构
 ```
-platform-plus
+platform-boot
 ├─sql  项目SQL语句
 │
-├─common 公共模块
-│  ├─annotation 自定义注解
-│  ├─aspect 系统日志、redis存储
-│  ├─exception 异常处理
-│  ├─interceptor 日志拦截器
-│  ├─session 分布式session管理
-│  ├─utils 工具类
-│  ├─validator 后台校验
-│  └─xss XSS过滤
+├─platform-admin 管理后台
 │ 
-├─config 配置信息
+├─platform-api 接口服务
 │ 
-├─datascope 数据权限拦截器
+├─platform-biz 业务、数据处理
 │ 
-├─datasources 多数据源
-│ 
-├─modules  功能模块
-│  ├─act  工作流模块
-│  ├─app  API接口模块(APP调用)
-│  ├─gen  代码生成模块
-│  ├─job  定时任务模块
-│  ├─mail 邮件服务模块
-│  ├─oss  文件服务模块
-│  ├─swaggerbootstrapui 自定义swagger文档模块
-│  └─sys 权限模块
-│ 
-├─PlatformPlusApplication 项目启动类
-│  
-├──resources 
-│  ├─gen 代码生成工具
-│  ├─mapper SQL对应的XML文件
-│  ├─processes 流程文件
-│  └─static 自定义swagger文档
+└─platform-common 公共类
 
 ```
 
@@ -141,20 +115,11 @@ platform-plus
 
 #### 后端部署
 - 通过git下载源码
-- 创建数据库plaftorm-plus
+- 创建数据库plaftorm-boot
 - mysql执行sql/mysql.sql文件(oracle执行sql/oracle.sql)，初始化数据
 - 修改application-dev.yml，修改MySQL、Oracle驱动、账号和密码
 - Eclipse、IDEA运行PlatformPlusApplication.java，则可启动项目
-- docker部署
-```
-# 在centos7 ~ 创建一个文件夹docker，里面放置Dockerfile 和 mvn 打包的项目platform-plus.jar
-# 在该docker文件下 指令：
-docker build -t docker .
-
-# 运行 Docker Image
-docker run -d -p 8888:8888 docker
-```
-- Swagger路径：http://localhost:8888/platform-plus/doc.html
+- Swagger路径：http://localhost:8889/platform-api/doc.html
 
 #### 提交反馈
 1. 欢迎提交 issue，请写清楚遇到问题的原因，开发环境，复显步骤。
