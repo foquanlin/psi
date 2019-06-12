@@ -16,6 +16,7 @@
 - 引入云存储服务，已支持：七牛云、阿里云、腾讯云、本地存储
 - 自定义实现swagger文档支持，方便编写API接口文档
 - 使用Mybatis拦截器实现数据权限，对代码侵入小
+- 完成Activiti6集成，可实现在线流程编辑
 
 #### 技术选型：
 ```
@@ -29,6 +30,7 @@
 - swagger 2.9.2
 - jwt 0.9.1
 - easypoi 4.0.0
+- Activiti6.0.0
 ```
 
 #### 项目结构
@@ -36,9 +38,9 @@
 platform-plus
 ├─sql  项目SQL语句
 │
-├─platform-admin 管理后台
+├─platform-admin 管理后台(port:8888)
 │ 
-├─platform-api 接口服务
+├─platform-api 接口服务(port:8889)
 │ 
 ├─platform-biz 业务、数据处理
 │ 
@@ -74,6 +76,7 @@ platform-plus
     - 代码生成器
 - 邮件系统
     - 发送记录
+- ELK日志
 ```
 
 **项目演示**
@@ -117,8 +120,14 @@ platform-plus
 - 通过git下载源码
 - 创建数据库plaftorm-boot
 - mysql执行sql/mysql.sql文件(oracle执行sql/oracle.sql)，初始化数据
-- 修改application-dev.yml，修改MySQL、Oracle驱动、账号和密码
-- Eclipse、IDEA运行PlatformPlusApplication.java，则可启动项目
+- 修改admin、api模块下application-dev.yml，修改MySQL、Oracle驱动、账号和密码
+- 运行PlatformAdminApplication.java启动后台管理接口服务
+       
+       -接口：http://localhost:8888/platform-admin
+- 运行PlatformApiApplication.java启动api接口服务
+
+        -接口：http://localhost:8889/platform-api
+        
 - Swagger路径：http://localhost:8889/platform-api/doc.html
 
 #### 提交反馈
