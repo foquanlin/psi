@@ -1,5 +1,5 @@
 /*
- * 项目名称:platform-boot
+ * 项目名称:platform-plus
  * 类名称:SysOssController.java
  * 包名称:com.platform.modules.oss.controller
  *

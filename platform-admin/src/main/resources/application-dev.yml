@@ -6,14 +6,14 @@ spring:
 #    driverClassName: oracle.jdbc.driver.OracleDriver
     druid:
       first:  #数据源1
-        url: jdbc:mysql://localhost:3306/platform-boot?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/platform-plus?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
         username: root
         password: 123456
 #        url: jdbc:oracle:thin:@localhost:1521:platform
 #        username: platform
 #        password: 123456
       second:  #数据源2
-        url: jdbc:mysql://localhost:3306/platform-boot?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/platform-plus?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
         username: root
         password: 123456
 #        url: jdbc:oracle:thin:@localhost:1521:platform
