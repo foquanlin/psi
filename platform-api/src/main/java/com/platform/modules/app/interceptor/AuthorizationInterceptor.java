@@ -13,7 +13,7 @@ package com.platform.modules.app.interceptor;
 
 import com.platform.common.exception.BusinessException;
 import com.platform.modules.app.annotation.IgnoreAuth;
-import com.platform.utils.JwtUtils;
+import com.platform.common.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

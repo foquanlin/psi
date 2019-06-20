@@ -9,7 +9,7 @@
  *
  * Copyright (c) 2019-2019 微同软件
  */
-package com.platform.utils;
+package com.platform.common.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
