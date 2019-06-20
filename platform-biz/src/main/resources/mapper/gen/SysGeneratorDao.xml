@@ -3,7 +3,7 @@
 
 <mapper namespace="com.platform.modules.gen.dao.SysGeneratorDao">
 	<select id="queryPage" resultType="com.platform.modules.gen.entity.ResultMapEntity">
-		<if test="params.driverClassName != null and params.driverClassName == 'com.mysql.jdbc.Driver'">
+		<if test="params.driverClassName != null and params.driverClassName == 'com.mysql.cj.jdbc.Driver'">
 			SELECT TABLE_NAME, ENGINE, TABLE_COMMENT, CREATE_TIME FROM INFORMATION_SCHEMA.TABLES
 			WHERE TABLE_SCHEMA = (select database())
 			<if test="params.tableName != null and params.tableName.trim() != ''">
@@ -26,7 +26,7 @@
 	</select>
 
 	<select id="queryTable" resultType="com.platform.modules.gen.entity.ResultMapEntity">
-		<if test="driverClassName != null and driverClassName == 'com.mysql.jdbc.Driver'">
+		<if test="driverClassName != null and driverClassName == 'com.mysql.cj.jdbc.Driver'">
 			SELECT TABLE_NAME TABLENAME, ENGINE, TABLE_COMMENT TABLECOMMENT, CREATE_TIME CREATETIME FROM INFORMATION_SCHEMA.TABLES
 				WHERE TABLE_SCHEMA = (SELECT database()) AND TABLE_NAME = #{tableName}
 		</if>
@@ -40,10 +40,10 @@
 			ON USER_TABLES.TABLE_NAME = USER_TAB_COMMENTS.TABLE_NAME
 			WHERE USER_TAB_COMMENTS.table_name = #{tableName}
 		</if>
-	</select> 
-	
+	</select>
+
 	<select id="queryColumns" resultType="com.platform.modules.gen.entity.ColumnEntity">
-		<if test="driverClassName != null and driverClassName == 'com.mysql.jdbc.Driver'">
+		<if test="driverClassName != null and driverClassName == 'com.mysql.cj.jdbc.Driver'">
 			SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT COMMENTS, COLUMN_KEY, EXTRA FROM INFORMATION_SCHEMA.COLUMNS
 				WHERE TABLE_NAME = #{tableName} AND TABLE_SCHEMA = (SELECT database()) ORDER BY ORDINAL_POSITION
 		</if>

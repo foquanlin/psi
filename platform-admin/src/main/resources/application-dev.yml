@@ -2,7 +2,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
 #    代码生成通过读取driverClassName来判断数据库类型
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
 #    driverClassName: oracle.jdbc.driver.OracleDriver
     druid:
       first:  #数据源1
