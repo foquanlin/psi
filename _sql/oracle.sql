@@ -673,8 +673,6 @@ INSERT INTO SYS_MENU (MENU_ID, PARENT_ID, NAME, URL, PERMS, TYPE, ICON, ORDER_NU
 INSERT INTO SYS_MENU (MENU_ID, PARENT_ID, NAME, URL, PERMS, TYPE, ICON, ORDER_NUM) VALUES ('160102', '1601', '邮箱配置', null, 'sys:maillog:config', 2, null, 0);
 INSERT INTO SYS_MENU (MENU_ID, PARENT_ID, NAME, URL, PERMS, TYPE, ICON, ORDER_NUM) VALUES ('17', '0', 'ELK平台', 'http://localhost:5601', null, '1', 'log', 7);
 
-INSERT INTO SCHEDULE_JOB (JOB_ID, BEAN_NAME, METHOD_NAME, PARAMS, CRON_EXPRESSION, STATUS, REMARK, CREATE_TIME) VALUES ('1', 'tokenTask', 'refreshToken', null, '0 0/30 * * * ?', 1, '刷新微信access_token', TO_TIMESTAMP('2019-01-31 15:00:36.000000', 'YYYY-MM-DD HH24:MI:SS.FF6'));
-
 INSERT INTO SYS_CONFIG (ID, PARAM_KEY, PARAM_VALUE, STATUS, REMARK) VALUES ('1', 'CLOUD_STORAGE_CONFIG_KEY', '{"aliyunAccessKeyId":"","aliyunAccessKeySecret":"","aliyunBucketName":"","aliyunDomain":"","aliyunEndPoint":"","aliyunPrefix":"","qcloudBucketName":"","qcloudDomain":"","qcloudPrefix":"","qcloudSecretId":"","qcloudSecretKey":"","qiniuAccessKey":"NrgMfABZxWLo5B-YYSjoE8-AZ1EISdi1Z3ubLOeZ","qiniuBucketName":"ios-app","qiniuDomain":"http://7xlij2.com1.z0.glb.clouddn.com","qiniuPrefix":"upload","qiniuSecretKey":"uIwJHevMRWU0VLxFvgy0tAcOdGqasdtVlJkdy6vV","type":1}', 0, '云存储配置信息');
 INSERT INTO SYS_CONFIG (ID, PARAM_KEY, PARAM_VALUE, STATUS, REMARK) VALUES ('2', 'SMS_CONFIG_KEY', '{\"domain\":\"http://web.cr6868.com/asmx/smsservice.aspx?\",\"name\":\"lipengjun\",\"pwd\":\"\",\"sign\":\"【微同工作室】\",\"type\":1}', 0, '短信配置');
 
