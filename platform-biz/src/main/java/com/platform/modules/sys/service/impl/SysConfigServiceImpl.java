@@ -109,7 +109,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
             return;
         }
         String key = Constant.SYS_CACHE + config.getParamKey();
-        jedisUtils.set(key, config);
+        jedisUtils.setObject(key, config);
     }
 
     private void deleteFromRedis(String configKey) {
@@ -119,6 +119,6 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
 
     private SysConfigEntity getFromRedis(String configKey) {
         String key = Constant.SYS_CACHE + configKey;
-        return (SysConfigEntity) jedisUtils.get(key);
+        return (SysConfigEntity) jedisUtils.getObject(key);
     }
 }

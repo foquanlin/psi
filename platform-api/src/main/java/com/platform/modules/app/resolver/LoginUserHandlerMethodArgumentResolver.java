@@ -14,7 +14,7 @@ package com.platform.modules.app.resolver;
 import com.platform.modules.app.annotation.LoginUser;
 import com.platform.modules.app.entity.UserEntity;
 import com.platform.modules.app.interceptor.AuthorizationInterceptor;
-import com.platform.modules.app.service.UserService;
+import com.platform.modules.tb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

@@ -271,7 +271,6 @@ CREATE TABLE `SCHEDULE_JOB` (
 -- ----------------------------
 -- Records of SCHEDULE_JOB
 -- ----------------------------
-INSERT INTO `SCHEDULE_JOB` VALUES ('f4330210e5664ebda4d56878236b572f', 'tokenTask', 'refreshToken', null, '0 0/30 * * * ?', '1', null, '2019-01-22 17:02:34');
 
 -- ----------------------------
 -- Table structure for `SCHEDULE_JOB_log`

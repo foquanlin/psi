@@ -9,10 +9,11 @@
  *
  * Copyright (c) 2019-2019 微同软件
  */
-package com.platform.modules.app.service;
+package com.platform.modules.tb.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.platform.modules.app.entity.UserEntity;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 
 /**
  * 用户service
@@ -38,15 +39,6 @@ public interface UserService extends IService<UserEntity> {
      */
     String login(String mobile, String password);
 
-
-    /**
-     * 获取微信用户信息
-     *
-     * @param openId openId
-     * @return UserEntity
-     */
-    UserEntity getWxUserInfoByOpenId(String openId);
-
     /**
      * 根据openId获取用户
      *
@@ -61,5 +53,5 @@ public interface UserService extends IService<UserEntity> {
      * @param user user
      * @return UserEntity
      */
-    UserEntity saveOrUpdateByOpenId(UserEntity user);
+    UserEntity saveOrUpdateByOpenId(WxMpUser user);
 }

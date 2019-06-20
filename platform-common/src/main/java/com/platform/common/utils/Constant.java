@@ -67,6 +67,15 @@ public class Constant {
     public static final int ONE = 1;
     public static final int TWO = 2;
     public static final int THREE = 3;
+
+    /**
+     * 未关注
+     */
+    public static final int UNSUBSCRIBE = 0;
+    /**
+     * 关注
+     */
+    public static final int SUBSCRIBE = 1;
     /**
      * 空字符串
      */

@@ -1,5 +1,5 @@
 /*
- * 项目名称:platform-plus
+ * 项目名称:platform-boot
  * 类名称:AppLoginController.java
  * 包名称:com.platform.modules.app.controller
  *
@@ -15,13 +15,17 @@ import com.platform.common.utils.RestResponse;
 import com.platform.modules.app.annotation.IgnoreAuth;
 import com.platform.modules.app.entity.UserEntity;
 import com.platform.modules.app.entity.WxOauth2Token;
-import com.platform.modules.app.service.UserService;
+import com.platform.modules.tb.service.UserService;
 import com.platform.utils.JwtUtils;
-import com.platform.common.utils.WechatUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +40,7 @@ import java.util.Map;
  * @author 李鹏军
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/app")
 @Api(tags = "AppLoginController|APP登录接口")
 public class AppLoginController {
@@ -43,8 +48,7 @@ public class AppLoginController {
     private UserService userService;
     @Autowired
     private JwtUtils jwtUtils;
-    @Autowired
-    private WechatUtil wechatUtil;
+    private final WxMpService wxService;
 
     /**
      * 用户名密码登录
@@ -87,17 +91,19 @@ public class AppLoginController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "code", value = "code", required = true, dataType = "string", example = "011g526m1UaFqp0ixb9m1PhX5m1g526x")
     })
-    public RestResponse loginByCode(String code) {
-        WxOauth2Token weixinOauth2Token = wechatUtil.getOauth2AccessToken(code);
-        String openId = weixinOauth2Token.getOpenId();
+    public RestResponse loginByCode(String code) throws WxErrorException {
+        WxMpOAuth2AccessToken auth2AccessToken = wxService.oauth2getAccessToken(code);
+
+        String openId = auth2AccessToken.getOpenId();
 
         //生成token
         String token = jwtUtils.generateToken(openId);
 
         //获取微信用户信息
-        UserEntity wxUser = userService.getWxUserInfoByOpenId(openId);
+        WxMpUser wxMpUser = wxService.oauth2getUserInfo(auth2AccessToken, null);
 
-        UserEntity user = userService.saveOrUpdateByOpenId(wxUser);
+        //保存或者更新
+        UserEntity user = userService.saveOrUpdateByOpenId(wxMpUser);
 
         Map<String, Object> map = new HashMap<>(8);
         map.put("token", token);

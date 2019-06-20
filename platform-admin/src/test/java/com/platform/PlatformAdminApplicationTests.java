@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-/**
- * Created by summer on 2017/5/4.
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MailServiceTest {
+public class PlatformAdminApplicationTests {
 
     @Autowired
     private MailService mailService;
@@ -44,4 +41,5 @@ public class MailServiceTest {
         mailService.sendInlineResourceMail("lipengjun.3713469@163.com,740129569@qq.com", "主题：这是有图片的邮件", content, imgPath, rscId);
         mailService.sendInlineResourceMail("1", "lipengjun.3713469@163.com,740129569@qq.com", "主题：这是有图片的邮件", content, imgPath, rscId);
     }
+
 }

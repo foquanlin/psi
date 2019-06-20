@@ -9,7 +9,7 @@
  *
  * Copyright (c) 2019-2019 微同软件
  */
-package com.platform.modules.app.dao;
+package com.platform.modules.tb.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.platform.modules.app.entity.UserEntity;

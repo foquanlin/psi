@@ -5,7 +5,7 @@ import com.platform.common.utils.RestResponse;
 import com.platform.modules.app.annotation.IgnoreAuth;
 import com.platform.modules.app.annotation.LoginUser;
 import com.platform.modules.app.entity.UserEntity;
-import com.platform.modules.app.service.UserService;
+import com.platform.modules.tb.service.UserService;
 import com.platform.modules.sys.entity.SysOrgEntity;
 import com.platform.modules.sys.service.SysOrgService;
 import io.swagger.annotations.Api;

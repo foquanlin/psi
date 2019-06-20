@@ -5,10 +5,10 @@ server:
     max-threads: 1024
     min-spare-threads: 30
     accept-count: 5000
-  port: 8888
+  port: 8890
   connection-timeout: 1000ms
   servlet:
-    context-path: /platform-plus
+    context-path: /platform-mp
 
 spring:
   main:
@@ -43,12 +43,6 @@ spring:
     static-path-pattern: /static/**
   resources:
     add-mappings: false
-  # 系统邮件配置一般不会有改动，所以采用硬编码
-  mail:
-    host: smtp.qq.com
-    username: 939961241@qq.com
-    password:
-    default-encoding: UTF-8
 
 #mybatis
 mybatis-plus:
@@ -79,3 +73,10 @@ mybatis-plus:
       logic-delete-value: 0
       #逻辑未删除值
       logic-not-delete-value: 1
+
+wx:
+  mp:
+    appId: wxd2e1d4d5f89cb860
+    secret: 4c4b6c632ac3a826f48f6bc45accdb68
+    token: 63c3cf184553c0d9
+    aesKey: auT54csN5N2jeKTrSyxpDbUfBq1QXyddPVpNb73IVhJ

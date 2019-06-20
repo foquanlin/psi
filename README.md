@@ -24,6 +24,7 @@
 - Apache Shiro 1.4.0
 - Spring MVC 5.1.2
 - MyBatis 3.5.0、MyBatis-Plus 3.1.0
+- weixin-java-mp 3.4.0
 - Quartz 2.3.0
 - Druid 1.1.10
 - lombok 1.18.4
@@ -41,6 +42,8 @@ platform-plus
 ├─platform-admin 管理后台(port:8888)
 │ 
 ├─platform-api 接口服务(port:8889)
+│ 
+├─platform-mp 公众号服务(port:8890)
 │ 
 ├─platform-biz 业务、数据处理
 │ 
@@ -118,7 +121,7 @@ platform-plus
 
 #### 后端部署
 - 通过git下载源码
-- 创建数据库plaftorm-boot
+- 创建数据库plaftorm-plus
 - mysql执行sql/mysql.sql文件(oracle执行sql/oracle.sql)，初始化数据
 - 修改admin、api模块下application-dev.yml，修改MySQL、Oracle驱动、账号和密码
 - 运行PlatformAdminApplication.java启动后台管理接口服务

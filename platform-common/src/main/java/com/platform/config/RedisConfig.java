@@ -1,5 +1,5 @@
 /*
- * 项目名称:platform-plus
+ * 项目名称:platform-boot
  * 类名称:RedisConfig.java
  * 包名称:com.platform.config
  *
@@ -11,48 +11,68 @@
  */
 package com.platform.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
+import com.platform.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Redis配置
  *
  * @author 李鹏军
  */
+@Slf4j
 @Configuration
-@EnableCaching
-public class RedisConfig extends CachingConfigurerSupport {
-    /**
-     * 选择redis作为默认缓存工具
-     *
-     * @param redisConnectionFactory
-     * @return
-     */
-    @Bean
-    @ConditionalOnMissingBean(name = "redisTemplate")
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+public class RedisConfig {
 
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(redisConnectionFactory);
-        template.setKeySerializer(jackson2JsonRedisSerializer);
-        template.setValueSerializer(jackson2JsonRedisSerializer);
-        template.setHashKeySerializer(jackson2JsonRedisSerializer);
-        template.setHashValueSerializer(jackson2JsonRedisSerializer);
-        template.afterPropertiesSet();
-        return template;
+    @Value("${spring.redis.host}")
+    private String host;
+
+    @Value("${spring.redis.port}")
+    private Integer port;
+
+    @Value("${spring.redis.timeout}")
+    private String strTimeout;
+
+    @Value("${spring.redis.password}")
+    private String password;
+
+    @Value("${spring.redis.database}")
+    private Integer database;
+
+    @Value("${spring.redis.jedis.pool.max-active}")
+    private int maxActive;
+
+    @Value("${spring.redis.jedis.pool.max-wait}")
+    private String strMaxWaitMillis;
+
+    @Value("${spring.redis.jedis.pool.max-idle}")
+    private Integer maxIdle;
+
+    @Value("${spring.redis.jedis.pool.min-idle}")
+    private int minIdle;
+
+    @Bean
+    public JedisPool jedisPool() {
+        long maxWaitMillis = Long.parseLong(strMaxWaitMillis.replace("ms", ""));
+        Integer timeout = Integer.parseInt(strTimeout.replace("ms", ""));
+
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        jedisPoolConfig.setMaxTotal(maxActive);
+        jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
+        jedisPoolConfig.setMaxIdle(maxIdle);
+        jedisPoolConfig.setMinIdle(minIdle);
+        jedisPoolConfig.setTestOnBorrow(true);
+        if (StringUtils.isBlank(password)) {
+            password = null;
+        }
+        JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password, database);
+
+        log.info("------------------------------------------------JedisPool注入成功！------------------------------------------------");
+        log.info("redis地址：" + host + ":" + port);
+        return jedisPool;
     }
 }
