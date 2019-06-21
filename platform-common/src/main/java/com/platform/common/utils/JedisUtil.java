@@ -12,7 +12,7 @@
 package com.platform.common.utils;
 
 import com.google.common.collect.Sets;
-import com.mysql.jdbc.StringUtils;
+import com.mysql.cj.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
