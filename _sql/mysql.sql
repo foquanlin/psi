@@ -671,7 +671,6 @@ CREATE TABLE `TB_USER` (
 	REGISTER_TIME DATETIME NULL COMMENT '注册时间',
 	LAST_LOGIN_TIME DATETIME NULL COMMENT '最后登录时间',
 	LAST_LOGIN_IP VARCHAR(32) DEFAULT '' NULL COMMENT '最后登录IP',
-	USER_LEVEL_ID VARCHAR(32) NULL COMMENT '会员等级ID',
 	NICKNAME VARCHAR(60) DEFAULT '' NULL COMMENT '微信昵称',
 	MOBILE VARCHAR(32) DEFAULT '' NULL COMMENT '手机号',
 	REGISTER_IP VARCHAR(64) DEFAULT '' NULL COMMENT '注册ip',
@@ -689,7 +688,7 @@ CREATE TABLE `TB_USER` (
 -- ----------------------------
 -- Records of TB_USER
 -- ----------------------------
-INSERT INTO `TB_USER` VALUES ('1', 'A Boy Genius 专业小程序开发', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 1, '1992-07-04 02:31:09', '2019-04-12 12:03:48', '2019-06-18 15:37:58', '223.104.35.49', '1', 'A Boy Genius 专业小程序开发', '15209831990', '117.136.100.200', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eo62pttzxBohpF0AKAtJpnWiayaMYfRZ4j3pyxf8fYkMwz3icKiaDiboQW0UmzbtegcDIfHBYiaFkM8SibQ/132', null, 'ok8KW5GEIwAYTa-Z92JfbzxkVNpA', null, null, 1, '', 7.20, 0.00, 2202.00);
+INSERT INTO `TB_USER` VALUES ('1', 'A Boy Genius 专业小程序开发', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 1, '1992-07-04 02:31:09', '2019-04-12 12:03:48', '2019-06-18 15:37:58', '223.104.35.49', 'A Boy Genius 专业小程序开发', '15209831990', '117.136.100.200', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eo62pttzxBohpF0AKAtJpnWiayaMYfRZ4j3pyxf8fYkMwz3icKiaDiboQW0UmzbtegcDIfHBYiaFkM8SibQ/132', null, 'ok8KW5GEIwAYTa-Z92JfbzxkVNpA', null, null, 1, '');
 
 DROP TABLE IF EXISTS `SYS_MAIL_LOG`;
 CREATE TABLE `SYS_MAIL_LOG` (

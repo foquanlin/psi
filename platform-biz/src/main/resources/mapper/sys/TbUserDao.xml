@@ -13,7 +13,6 @@
         T.REGISTER_TIME,
         T.LAST_LOGIN_TIME,
         T.LAST_LOGIN_IP,
-        T.USER_LEVEL_ID,
         T.NICKNAME,
         T.MOBILE,
         T.REGISTER_IP,

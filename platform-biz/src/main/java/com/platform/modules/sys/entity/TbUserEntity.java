@@ -71,11 +71,6 @@ public class TbUserEntity implements Serializable {
     @ApiModelProperty(hidden = true)
     private String lastLoginIp;
     /**
-     * 会员等级ID
-     */
-    @ApiModelProperty(hidden = true)
-    private String userLevelId;
-    /**
      * 微信昵称
      */
     @ApiModelProperty(hidden = true)
