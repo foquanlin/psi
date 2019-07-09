@@ -1015,17 +1015,4 @@ public class JedisUtil {
     public Object toObject(byte[] bytes) {
         return ObjectUtils.unserialize(bytes);
     }
-
-    /**
-     * 删除缓存
-     *
-     * @param className  类名
-     * @param methodName 方法名
-     */
-    public void delByClass(String className, String methodName) {
-        String key = com.platform.common.utils.StringUtils.genKey(Constant.SYS_CACHE, className, methodName);
-
-        del(key);
-        delObject(key);
-    }
 }

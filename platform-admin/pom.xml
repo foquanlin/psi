@@ -5,12 +5,12 @@
     <parent>
         <artifactId>platform-plus</artifactId>
         <groupId>com.platform</groupId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>platform-admin</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>platform-admin</name>
@@ -52,6 +52,12 @@
             <version>${batik.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+
         <!-- 定时任务 -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -68,7 +74,7 @@
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-biz</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 

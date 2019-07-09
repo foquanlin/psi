@@ -1,13 +1,14 @@
 package com.platform.modules.app.controller;
 
+import com.platform.annotation.IgnoreAuth;
+import com.platform.annotation.LoginUser;
 import com.platform.common.exception.BusinessException;
 import com.platform.common.utils.RestResponse;
-import com.platform.modules.app.annotation.IgnoreAuth;
-import com.platform.modules.app.annotation.LoginUser;
-import com.platform.modules.app.entity.UserEntity;
-import com.platform.modules.tb.service.UserService;
-import com.platform.modules.sys.entity.SysOrgEntity;
-import com.platform.modules.sys.service.SysOrgService;
+import com.platform.modules.oss.cloud.UploadFactory;
+import com.platform.modules.oss.entity.SysOssEntity;
+import com.platform.modules.oss.service.SysOssService;
+import com.platform.modules.sys.entity.TbUserEntity;
+import com.platform.modules.sys.service.TbUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -16,23 +17,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author 李鹏军
  */
 @RestController
-@RequestMapping("/app")
-@Api(tags = "AppLoginController|APP用户接口")
+@RequestMapping("/app/user")
+@Api(tags = "AppUserController|APP用户接口")
 public class AppUserController {
 
     @Autowired
-    SysOrgService sysOrgService;
-
+    private TbUserService userService;
     @Autowired
-    private UserService userService;
+    private SysOssService sysOssService;
 
     /**
      * 根据token获取用户信息
@@ -43,9 +42,9 @@ public class AppUserController {
     @GetMapping("userInfo")
     @ApiOperation(value = "获取用户信息", notes = "根据token获取用户信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "token", value = "token", required = true, dataType = "string")
+            @ApiImplicitParam(paramType = "header", name = "token", value = "用户token", required = true, dataType = "string"),
     })
-    public RestResponse userInfo(@LoginUser UserEntity user) {
+    public RestResponse userInfo(@LoginUser TbUserEntity user) {
         return RestResponse.success().put("user", user);
     }
 
@@ -71,33 +70,29 @@ public class AppUserController {
      * @param file file
      * @return RestResponse
      */
-    @IgnoreAuth
     @PostMapping("/upload")
     @ApiOperation(value = "上传文件", notes = "上传文件，form表单提交")
     public RestResponse upload(@RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
+        if (null == file || file.isEmpty()) {
             throw new BusinessException("上传文件不能为空");
         }
-        return RestResponse.success();
-    }
 
-    /**
-     * 根据级别获取机构
-     *
-     * @param orgType 机构级别
-     * @return RestResponse
-     */
-    @IgnoreAuth
-    @GetMapping("queryOrg")
-    @ApiOperation(value = "根据级别获取供电单位", tags = "根据级别获取供电单位，不传查询所有")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "orgType", value = "机构级别", dataType = "int", example = "2")
-    })
-    public RestResponse queryOrg(@RequestParam(required = false) Integer orgType) {
+        //上传文件
+        String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 
-        Map<String, Object> params = new HashMap<>(2);
-        params.put("orgType", orgType);
-        List<SysOrgEntity> list = sysOrgService.queryAll(params);
-        return RestResponse.success().put("list", list);
+        String url;
+        try {
+            url = UploadFactory.build().uploadSuffix(file.getBytes(), suffix);
+        } catch (IOException e) {
+            return RestResponse.error("上传文件失败");
+        }
+
+        //保存文件信息
+        SysOssEntity ossEntity = new SysOssEntity();
+        ossEntity.setUrl(url);
+        ossEntity.setCreateDate(new Date());
+        sysOssService.save(ossEntity);
+
+        return RestResponse.success().put("url", url);
     }
 }

@@ -226,7 +226,6 @@ public final class HtmlFilter {
     }
 
     /**
-     *
      * @param s s
      * @return String
      */

@@ -436,6 +436,9 @@ INSERT INTO `SYS_MENU` VALUES ('100501', '1005', '云存储配置', null, 'sys:o
 INSERT INTO `SYS_MENU` VALUES ('100502', '1005', '上传文件', null, 'sys:oss:upload', 2, null, 0);
 INSERT INTO `SYS_MENU` VALUES ('100503', '1005', '删除', null, 'sys:oss:delete', 2, null, 0);
 INSERT INTO `SYS_MENU` VALUES ('1006', '10', '系统日志', 'sys/log', 'sys:log:list', 1, 'log', 6);
+INSERT INTO `SYS_MENU` VALUES ('1007', '10', '邮件系统', 'sys/maillog', 'sys:maillog:list,sys:maillog:info', '1', 'email', 7);
+INSERT INTO `SYS_MENU` VALUES ('100701', '1007', '删除', null, 'sys:maillog:delete', '2', null, 0);
+INSERT INTO `SYS_MENU` VALUES ('100702', '1007', '邮箱配置', null, 'sys:maillog:config', '2', null, 0);
 INSERT INTO `SYS_MENU` VALUES ('11', '0', '权限管理', null, null, 0, 'auth', 1);
 INSERT INTO `SYS_MENU` VALUES ('1101', '11', '管理员列表', 'sys/user', 'sys:user:list,sys:user:info', 1, 'admin', 1);
 INSERT INTO `SYS_MENU` VALUES ('110101', '1101', '重置密码', null, 'sys:user:resetPw', 2, null, 0);
@@ -481,11 +484,8 @@ INSERT INTO `SYS_MENU` VALUES ('1503', '15', 'SQL监控', 'http://localhost:8888
 INSERT INTO `SYS_MENU` VALUES ('1504', '15', '接口文档', 'http://localhost:8889/platform-api/doc.html', null, 1, 'interface', 4);
 INSERT INTO `SYS_MENU` VALUES ('1505', '15', '代码生成器', 'gen/generator', 'sys:generator:list', 1, 'code', 5);
 INSERT INTO `SYS_MENU` VALUES ('150501', '1505', '生成代码', null, 'sys:generator:code', 2, null, 0);
-INSERT INTO `SYS_MENU` VALUES ('16', '0', '邮件系统', null, null, 0, 'email', 6);
-INSERT INTO `SYS_MENU` VALUES ('1601', '16', '发送记录', 'sys/maillog', 'sys:maillog:list,sys:maillog:info', 1, 'job', 1);
-INSERT INTO `SYS_MENU` VALUES ('160101', '1601', '删除', null, 'sys:maillog:delete', 2, null, 0);
-INSERT INTO `SYS_MENU` VALUES ('160102', '1601', '邮箱配置', null, 'sys:maillog:config', 2, null, 0);
-INSERT INTO `SYS_MENU` VALUES ('17', '0', 'ELK平台', 'http://localhost:5601', null, '1', 'log', 7);
+INSERT INTO `SYS_MENU` VALUES ('16', '0', 'ELK平台', 'http://localhost:5601', null, '1', 'log', 7);
+
 
 -- ----------------------------
 -- Table structure for `SYS_ORG`
@@ -663,25 +663,33 @@ CREATE TABLE `SYS_USER_TOKEN` (
 -- ----------------------------
 DROP TABLE IF EXISTS `TB_USER`;
 CREATE TABLE `TB_USER` (
-  `USER_ID` VARCHAR(32) NOT NULL,
-  `USER_NAME` VARCHAR(50) NOT NULL COMMENT '用户名',
-  `SUBSCRIBE` INT(1) COMMENT '关注状态（1是关注，0是未关注），未关注时获取不到其余信息',
-  `SUBSCRIBE_TIME` VARCHAR(50) COMMENT '用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间',
-  `OPEN_ID` VARCHAR(100) COMMENT '用户的标识',
-  `NICKNAME` VARCHAR(200) COMMENT '微信昵称',
-  `HEAD_IMG_URL` VARCHAR(200) COMMENT '用户头像',
-  `SEX` INT(1) COMMENT '用户的性别（1是男性，2是女性，0是未知）',
-  `MOBILE` VARCHAR(20) NOT NULL COMMENT '手机号',
-  `PASSWORD` VARCHAR(64) COMMENT '密码',
-  `CREATE_TIME` DATETIME COMMENT '创建时间',
-  PRIMARY KEY (`USER_ID`),
-  UNIQUE KEY `USER_NAME` (`USER_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';
+	ID VARCHAR(32) NOT NULL COMMENT '用户ID',
+	USER_NAME VARCHAR(128) DEFAULT '' NOT NULL COMMENT '用户名',
+	PASSWORD VARCHAR(128) DEFAULT '' NULL COMMENT '密码',
+	GENDER TINYINT NULL COMMENT '用户的性别（1是男性，2是女性，0是未知）',
+	BIRTHDAY DATETIME NULL COMMENT '生日',
+	REGISTER_TIME DATETIME NULL COMMENT '注册时间',
+	LAST_LOGIN_TIME DATETIME NULL COMMENT '最后登录时间',
+	LAST_LOGIN_IP VARCHAR(32) DEFAULT '' NULL COMMENT '最后登录IP',
+	USER_LEVEL_ID VARCHAR(32) NULL COMMENT '会员等级ID',
+	NICKNAME VARCHAR(60) DEFAULT '' NULL COMMENT '微信昵称',
+	MOBILE VARCHAR(32) DEFAULT '' NULL COMMENT '手机号',
+	REGISTER_IP VARCHAR(64) DEFAULT '' NULL COMMENT '注册ip',
+	HEAD_IMG_URL VARCHAR(255) DEFAULT '' NULL COMMENT '用户头像',
+	ALI_USER_ID VARCHAR(64) DEFAULT '' NULL COMMENT '支付宝用户标识',
+	OPEN_ID VARCHAR(64) DEFAULT '' NULL COMMENT '用户的标识',
+	MP_OPEN_ID VARCHAR(64) NULL COMMENT '公众号用户的标识',
+	UNION_ID VARCHAR(128) NULL COMMENT '用户唯一标识',
+	SUBSCRIBE TINYINT DEFAULT 0 COMMENT '公众号关注状态（1是关注，0是未关注），未关注时获取不到其余信息',
+	SUBSCRIBE_TIME VARCHAR(32) NULL COMMENT '用户关注公众号时间，为时间戳。如果用户曾多次关注，则取最后关注时间',
+  PRIMARY KEY (`ID`),
+  KEY `OPEN_ID` (`OPEN_ID`) USING BTREE
+) ENGINE=INNODB DEFAULT CHARSET=UTF8 COMMENT='会员';
 
 -- ----------------------------
 -- Records of TB_USER
 -- ----------------------------
-INSERT INTO `TB_USER` VALUES ('1', '李鹏军', 1, '1550742648', 'oxaA11ulr9134oBL9Xscon5at_Gc', 'Boy Genius', 'http://thirdwx.qlogo.cn/mmopen/PiajxSqBRaEI3eTLaf64kP7sBrpXKbJ7l4h6BWOlJjAQUqibVbsKotVWbzH6QnkTHYmuTMZXuUiaXVo7Ba02XbCxA/132', 1, '15209831990', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '2019-03-06 02:33:16');
+INSERT INTO `TB_USER` VALUES ('1', 'A Boy Genius 专业小程序开发', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 1, '1992-07-04 02:31:09', '2019-04-12 12:03:48', '2019-06-18 15:37:58', '223.104.35.49', '1', 'A Boy Genius 专业小程序开发', '15209831990', '117.136.100.200', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eo62pttzxBohpF0AKAtJpnWiayaMYfRZ4j3pyxf8fYkMwz3icKiaDiboQW0UmzbtegcDIfHBYiaFkM8SibQ/132', null, 'ok8KW5GEIwAYTa-Z92JfbzxkVNpA', null, null, 1, '', 7.20, 0.00, 2202.00);
 
 DROP TABLE IF EXISTS `SYS_MAIL_LOG`;
 CREATE TABLE `SYS_MAIL_LOG` (

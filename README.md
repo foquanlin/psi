@@ -2,9 +2,7 @@
 ### 服务器配置：
     CPU：2核
     内存：8G
-    实例规格：标准型S2机型
     带宽：10M
-    价格：3999元/三年
 
 购买说明：如果业务量较大，推荐双机部署。
 
@@ -12,7 +10,6 @@
     CPU：1核
     内存：1G
     硬盘：100G
-    价格：423元/三年
 
 ### COS资源包：
     标准型存储容量：
@@ -22,7 +19,9 @@
     100GB	3个月	37元
     200GB	3个月	71元
     500GB	3个月	177元
-[抢购地址：https://cloud.tencent.com](https://cloud.tencent.com/redirect.php?redirect=10562&cps_key=30280f92fc381dfc9e1d9e0e23d25a18)
+### [【阿里云助力企业上云】性能级主机2-5折，首次购买高性能云服务器，享低至2折优惠：https://www.aliyun.com](https://www.aliyun.com/acts/hi618/index?userCode=i8s6n64p)
+
+### [腾讯云新客户无门槛领取总价值高达2860元代金券，每种代金券限量500张，先到先得：https://cloud.tencent.com](https://cloud.tencent.com/redirect.php?redirect=1040&cps_key=30280f92fc381dfc9e1d9e0e23d25a18&from=console)
 
 #### 项目说明
 - platform-plus是一个轻量级的，前后端分离的Java快速开发平台
@@ -43,6 +42,8 @@
 - 自定义实现swagger文档支持，方便编写API接口文档
 - 使用Mybatis拦截器实现数据权限，对代码侵入小
 - 完成Activiti6集成，可实现在线流程编辑
+- 接口支持微信开放平台、微信公众平台、微信小程序、微信公众号开发
+- 移动端已支持微信小程序登录、微信公众号登录、支付宝小程序登录
 
 #### 技术选型：
 ```
@@ -51,6 +52,10 @@
 - Spring MVC 5.1.2
 - MyBatis 3.5.0、MyBatis-Plus 3.1.0
 - weixin-java-mp 3.4.0
+- weixin-java-miniapp 3.4.0
+- weixin-java-pay 3.4.0
+- weixin-java-open 3.4.0
+- alipay-sdk 3.7.110.ALL
 - Quartz 2.3.0
 - Druid 1.1.10
 - lombok 1.18.4
@@ -68,8 +73,6 @@ platform-plus
 ├─platform-admin 管理后台(port:8888)
 │ 
 ├─platform-api 接口服务(port:8889)
-│ 
-├─platform-mp 公众号服务(port:8890)
 │ 
 ├─platform-biz 业务、数据处理
 │ 
@@ -111,7 +114,6 @@ platform-plus
 **项目演示**
 - 演示地址：http://fly2you.cn/platform-plus/#/login
 - 账号密码：
-  - admin/admin
   - test/888888
   - test1/888888
   - test2/888888

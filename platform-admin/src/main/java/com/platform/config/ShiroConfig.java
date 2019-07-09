@@ -11,7 +11,6 @@
  */
 package com.platform.config;
 
-import com.platform.datascope.DataScopeInterceptor;
 import com.platform.modules.sys.oauth2.Oauth2Filter;
 import com.platform.modules.sys.oauth2.Oauth2Realm;
 import org.apache.shiro.mgt.SecurityManager;
@@ -96,15 +95,5 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(securityManager);
         return advisor;
-    }
-
-    /**
-     * 数据权限插件
-     *
-     * @return DataScopeInterceptor
-     */
-    @Bean
-    public DataScopeInterceptor dataScopeInterceptor() {
-        return new DataScopeInterceptor();
     }
 }

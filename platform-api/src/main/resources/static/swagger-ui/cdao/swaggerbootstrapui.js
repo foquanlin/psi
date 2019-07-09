@@ -1652,6 +1652,10 @@
                                     that.updateRequestParameter(trdata.name, value, apiInfo);
                                 }
                                 formData.append(key, value);
+                                //判断是否是header
+                                if (trdata["in"] == "header") {
+                                  headerparams[key] = value;
+                                }
                                 //queryStringParameterArr.push(key+"="+value)
                             }
                         }
@@ -1814,7 +1818,10 @@
             if (that.currentInstance.securityArrs != null && that.currentInstance.securityArrs.length > 0) {
                 $.each(that.currentInstance.securityArrs, function (i, sa) {
                     if (sa.in == "header") {
-                        headerparams[sa.name] = sa.value;
+                        //传递参数就不在使用全局参数
+                        if(!headerparams[sa.name]){
+                          headerparams[sa.name] = sa.value;
+                        }
                     }
                 })
             }

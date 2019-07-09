@@ -1,13 +1,13 @@
 /*
- * 项目名称:platform-plus
+ * 项目名称:material
  * 类名称:ExcelUtils.java
- * 包名称:com.platform.common.utils
+ * 包名称:cn.zertone.sgcc.common.utils
  *
  * 修改履历:
  *      日期                修正者      主要内容
  *      2019/1/30 15:44    李鹏军      初版完成
  *
- * Copyright (c) 2019-2019 微同软件
+ * Copyright (c) 2017-2019 咨同科技
  */
 package com.platform.common.utils;
 
@@ -60,9 +60,9 @@ public class EasyPoiUtils {
         Workbook workbook = getWorkBook(file);
         //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
         Map<String, List<String[]>> map = new HashMap<>(16);
-        List<String[]> list = new ArrayList<>();
         if (workbook != null) {
             for (int sheetNum = 0; sheetNum < workbook.getNumberOfSheets(); sheetNum++) {
+                List<String[]> list = new ArrayList<>();
                 //获得当前sheet工作表
                 Sheet sheet = workbook.getSheetAt(sheetNum);
                 String sheetName = workbook.getSheetName(sheetNum);
@@ -92,7 +92,9 @@ public class EasyPoiUtils {
                     }
                     list.add(cells);
                 }
-                map.put(sheetName, list);
+                if (list.size() > 0) {
+                    map.put(sheetName, list);
+                }
             }
             try {
                 workbook.close();

@@ -82,4 +82,33 @@ platform-api:
     # token有效时长，7天，单位秒
     expire: 604800
     header: token
+ali:
+  ma: #支付宝小程序
+    appId:
+    privateKey:
+    pubKey:
 
+wx:
+  open: #微信开发平台
+    componentAppId: ""
+    componentSecret: ""
+    componentToken: ""
+    componentAesKey: ""
+  mp: #微信公众号
+    appId:
+    secret:
+    token:
+    aesKey:
+  miniapp:
+    appid:  #微信小程序的appid
+    secret:  #微信小程序的Secret
+    token: #微信小程序消息服务器配置的token
+    aesKey: #微信小程序消息服务器配置的EncodingAESKey
+    msgDataFormat: JSON
+  pay:
+    appId:  #微信公众号或者小程序等的appid
+    mchId:  #微信支付商户号
+    mchKey:  #微信支付商户密钥
+    subAppId: #服务商模式下的子商户公众账号ID
+    subMchId: #服务商模式下的子商户号
+    keyPath: # p12证书的位置，可以指定绝对路径，也可以指定类路径（以classpath:开头）
