@@ -154,7 +154,6 @@ public class AppLoginController extends AppBaseController {
                 //性别 0：未知、1：男、2：女
                 user.setGender(Integer.parseInt(wxMaUserInfo.getGender()));
                 user.setNickname(wxMaUserInfo.getNickName());
-                user.setUserLevelId("1");
                 userService.save(user);
             } else {
                 user.setLastLoginIp(this.getClientIp());
