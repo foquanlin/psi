@@ -1,5 +1,5 @@
 /*
- * 项目名称:platform-boot
+ * 项目名称:platform-plus
  * 类名称:UserServiceImpl.java
  * 包名称:com.platform.modules.app.service.impl
  *
@@ -9,7 +9,7 @@
  *
  * Copyright (c) 2019-2019 微同软件
  */
-package com.platform.modules.sys.service.impl;
+package com.platform.modules.mall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -18,9 +18,9 @@ import com.platform.common.exception.BusinessException;
 import com.platform.common.utils.JedisUtil;
 import com.platform.common.utils.Query;
 import com.platform.common.validator.AbstractAssert;
-import com.platform.modules.sys.dao.TbUserDao;
-import com.platform.modules.sys.entity.TbUserEntity;
-import com.platform.modules.sys.service.TbUserService;
+import com.platform.modules.mall.dao.MallUserDao;
+import com.platform.modules.mall.entity.MallUserEntity;
+import com.platform.modules.mall.service.MallUserService;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,31 +36,31 @@ import java.util.Map;
  * @author 李鹏军
  */
 @Service("userService")
-public class TbUserServiceImpl extends ServiceImpl<TbUserDao, TbUserEntity> implements TbUserService {
+public class MallUserServiceImpl extends ServiceImpl<MallUserDao, MallUserEntity> implements MallUserService {
     @Autowired
     JedisUtil jedisUtil;
 
     @Override
-    public List<TbUserEntity> queryAll(Map<String, Object> params) {
+    public List<MallUserEntity> queryAll(Map<String, Object> params) {
         return baseMapper.queryAll(params);
     }
 
     @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.id");
+        params.put("sidx", "T.REGISTER_TIME");
         params.put("asc", false);
-        Page<TbUserEntity> page = new Query<TbUserEntity>(params).getPage();
+        Page<MallUserEntity> page = new Query<MallUserEntity>(params).getPage();
         return page.setRecords(baseMapper.selectMallUserPage(page, params));
     }
 
     @Override
-    public boolean add(TbUserEntity mallUser) {
+    public boolean add(MallUserEntity mallUser) {
         return this.save(mallUser);
     }
 
     @Override
-    public boolean update(TbUserEntity mallUser) {
+    public boolean update(MallUserEntity mallUser) {
         return this.updateById(mallUser);
     }
 
@@ -76,35 +76,35 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserDao, TbUserEntity> impl
     }
 
     @Override
-    public TbUserEntity queryByMobile(String mobile) {
-        return baseMapper.selectOne(new QueryWrapper<TbUserEntity>().eq("MOBILE", mobile));
+    public MallUserEntity queryByMobile(String mobile) {
+        return this.getOne(new QueryWrapper<MallUserEntity>().eq("MOBILE", mobile), false);
     }
 
     @Override
-    public String loginByMobile(String mobile, String password) {
-        TbUserEntity user = queryByMobile(mobile);
-        AbstractAssert.isNull(user, "手机号或密码错误");
+    public MallUserEntity loginByMobile(String mobile, String password) {
+        MallUserEntity user = queryByMobile(mobile);
+        AbstractAssert.isNull(user, "该手机暂未绑定用户");
 
         //密码错误
         if (!user.getPassword().equals(DigestUtils.sha256Hex(password))) {
             throw new BusinessException("手机号或密码错误");
         }
 
-        return user.getId();
+        return user;
     }
 
     @Override
-    public TbUserEntity selectByOpenId(String openId) {
-        TbUserEntity userEntity = new TbUserEntity();
+    public MallUserEntity selectByOpenId(String openId) {
+        MallUserEntity userEntity = new MallUserEntity();
         userEntity.setOpenId(openId);
-        return baseMapper.selectOne(new QueryWrapper<TbUserEntity>().eq("OPEN_ID", openId));
+        return baseMapper.selectOne(new QueryWrapper<MallUserEntity>().eq("OPEN_ID", openId));
     }
 
     @Override
-    public TbUserEntity saveOrUpdateByOpenId(WxMpUser userWxInfo) {
-        TbUserEntity entity = this.getOne(new QueryWrapper<TbUserEntity>().eq("OPEN_ID", userWxInfo.getOpenId()));
+    public MallUserEntity saveOrUpdateByOpenId(WxMpUser userWxInfo) {
+        MallUserEntity entity = this.getOne(new QueryWrapper<MallUserEntity>().eq("OPEN_ID", userWxInfo.getOpenId()));
         if (entity == null) {
-            entity = new TbUserEntity();
+            entity = new MallUserEntity();
             entity.setRegisterTime(new Date());
         }
         entity.setNickname(userWxInfo.getNickname());

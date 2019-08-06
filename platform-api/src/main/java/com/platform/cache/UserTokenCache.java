@@ -5,8 +5,8 @@ import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.platform.common.utils.Constant;
 import com.platform.common.utils.JedisUtil;
 import com.platform.common.utils.StringUtils;
+import com.platform.modules.mall.entity.MallUserEntity;
 import com.platform.modules.sys.entity.SysUserTokenEntity;
-import com.platform.modules.sys.entity.TbUserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -94,23 +94,23 @@ public class UserTokenCache {
         return XCX_USER_INFO_PREFIXX + userId;
     }
 
-    public TbUserEntity getUserInfo(String userId) {
+    public MallUserEntity getUserInfo(String userId) {
         log.error("getUserInfo key:" + toUserInfoKey(userId));
         String temp = jedisUtil.get(toUserInfoKey(userId));
         log.error("getUserInfo temp:" + temp);
         if (!org.springframework.util.StringUtils.isEmpty(temp)) {
-            TbUserEntity d = JSON.parseObject(temp, TbUserEntity.class);
+            MallUserEntity d = JSON.parseObject(temp, MallUserEntity.class);
             return d;
         } else {
             return null;
         }
     }
 
-    public void putUserInfo(TbUserEntity userEntity) {
+    public void putUserInfo(MallUserEntity userEntity) {
         jedisUtil.set(toUserInfoKey(userEntity.getId()), fromUserCacheString(userEntity), Constant.EXPIRE);
     }
 
-    private String fromUserCacheString(TbUserEntity d) {
+    private String fromUserCacheString(MallUserEntity d) {
         if (d == null) {
             return null;
         }

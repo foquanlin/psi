@@ -35,7 +35,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authorizationInterceptor).addPathPatterns("/app/**");
+        registry.addInterceptor(authorizationInterceptor)
+                .addPathPatterns("/app/**")
+                .excludePathPatterns("/app/wx/mp/portal", "/app/wx/ma/portal", "/app/wx/menu/create");
     }
 
     @Override

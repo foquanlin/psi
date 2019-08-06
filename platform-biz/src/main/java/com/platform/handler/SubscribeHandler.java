@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.platform.builder.TextBuilder;
 import com.platform.common.utils.Constant;
 import com.platform.common.utils.DateUtils;
-import com.platform.modules.sys.entity.TbUserEntity;
-import com.platform.modules.sys.service.TbUserService;
+import com.platform.modules.mall.entity.MallUserEntity;
+import com.platform.modules.mall.service.MallUserService;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -26,7 +26,7 @@ import java.util.Map;
 @Component
 public class SubscribeHandler extends AbstractHandler {
     @Autowired
-    private TbUserService userService;
+    private MallUserService userService;
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
@@ -39,24 +39,24 @@ public class SubscribeHandler extends AbstractHandler {
         try {
             WxMpUser userWxInfo = weixinService.getUserService()
                     .userInfo(wxMessage.getFromUser(), null);
-            this.logger.info("用户: " + userWxInfo.toString());
             if (userWxInfo != null) {
-                TbUserEntity entity = userService.getOne(new QueryWrapper<TbUserEntity>().eq("OPEN_ID", userWxInfo.getOpenId()));
+                this.logger.info("用户: " + userWxInfo.toString());
+                MallUserEntity entity = userService.getOne(new QueryWrapper<MallUserEntity>().eq("OPEN_ID", userWxInfo.getOpenId()));
                 if (entity == null) {
-                    entity = new TbUserEntity();
+                    entity = new MallUserEntity();
+                    entity.setRegisterTime(new Date());
                 }
+                entity.setUserName(userWxInfo.getNickname());
                 entity.setNickname(userWxInfo.getNickname());
                 entity.setHeadImgUrl(userWxInfo.getHeadImgUrl());
-                entity.setOpenId(userWxInfo.getOpenId());
+                entity.setMpOpenId(userWxInfo.getOpenId());
                 entity.setGender(userWxInfo.getSex());
                 entity.setSubscribe(Constant.SUBSCRIBE);
                 entity.setSubscribeTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
                 userService.saveOrUpdate(entity);
             }
         } catch (WxErrorException e) {
-            if (e.getError().getErrorCode() == 48001) {
-                this.logger.info("该公众号没有获取用户信息权限！");
-            }
+            this.logger.error(e.getLocalizedMessage());
         }
 
 
@@ -72,7 +72,7 @@ public class SubscribeHandler extends AbstractHandler {
         }
 
         try {
-            return new TextBuilder().build("感谢您的关注，我们将竭诚为您服务！", wxMessage, weixinService);
+            return new TextBuilder().build("您好，欢迎关注安徽微同科技有限公司微信公众号，您可以直接回复消息发现更多服务（如：文档、官网）。", wxMessage, weixinService);
         } catch (Exception e) {
             this.logger.error(e.getMessage(), e);
         }

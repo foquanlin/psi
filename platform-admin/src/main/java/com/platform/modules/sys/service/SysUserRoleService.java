@@ -26,7 +26,7 @@ public interface SysUserRoleService extends IService<SysUserRoleEntity> {
     /**
      * saveOrUpdate
      *
-     * @param userId 用户Id
+     * @param userId     用户Id
      * @param roleIdList roleIdList
      */
     void saveOrUpdate(String userId, List<String> roleIdList);

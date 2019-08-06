@@ -70,6 +70,14 @@ public interface SysConfigService extends IService<SysConfigEntity> {
     String getValue(String key);
 
     /**
+     * 根据key，获取配置的value值
+     *
+     * @param key          key
+     * @param defaultValue 缺省值
+     */
+    String getValue(String key, String defaultValue);
+
+    /**
      * 根据key，获取value的Object对象
      *
      * @param key   key

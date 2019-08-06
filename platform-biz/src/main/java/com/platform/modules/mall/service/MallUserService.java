@@ -1,5 +1,5 @@
 /*
- * 项目名称:platform-boot
+ * 项目名称:platform-plus
  * 类名称:UserService.java
  * 包名称:com.platform.modules.app.service
  *
@@ -9,11 +9,11 @@
  *
  * Copyright (c) 2019-2019 微同软件
  */
-package com.platform.modules.sys.service;
+package com.platform.modules.mall.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.platform.modules.sys.entity.TbUserEntity;
+import com.platform.modules.mall.entity.MallUserEntity;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * @author 李鹏军
  */
-public interface TbUserService extends IService<TbUserEntity> {
+public interface MallUserService extends IService<MallUserEntity> {
 
 
     /**
@@ -33,7 +33,7 @@ public interface TbUserService extends IService<TbUserEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<TbUserEntity> queryAll(Map<String, Object> params);
+    List<MallUserEntity> queryAll(Map<String, Object> params);
 
     /**
      * 分页查询
@@ -49,7 +49,7 @@ public interface TbUserService extends IService<TbUserEntity> {
      * @param mallUser
      * @return 新增结果
      */
-    boolean add(TbUserEntity mallUser);
+    boolean add(MallUserEntity mallUser);
 
     /**
      * 根据主键更新
@@ -57,7 +57,7 @@ public interface TbUserService extends IService<TbUserEntity> {
      * @param mallUser
      * @return 更新结果
      */
-    boolean update(TbUserEntity mallUser);
+    boolean update(MallUserEntity mallUser);
 
     /**
      * 根据主键删除
@@ -81,7 +81,7 @@ public interface TbUserService extends IService<TbUserEntity> {
      * @param mobile 手机号
      * @return UserEntity
      */
-    TbUserEntity queryByMobile(String mobile);
+    MallUserEntity queryByMobile(String mobile);
 
     /**
      * 登录
@@ -90,7 +90,7 @@ public interface TbUserService extends IService<TbUserEntity> {
      * @param password 密码
      * @return String
      */
-    String loginByMobile(String mobile, String password);
+    MallUserEntity loginByMobile(String mobile, String password);
 
     /**
      * 根据openId获取用户
@@ -98,7 +98,7 @@ public interface TbUserService extends IService<TbUserEntity> {
      * @param openId openId
      * @return UserEntity
      */
-    TbUserEntity selectByOpenId(String openId);
+    MallUserEntity selectByOpenId(String openId);
 
     /**
      * 新增或者修改
@@ -106,5 +106,5 @@ public interface TbUserService extends IService<TbUserEntity> {
      * @param user user
      * @return UserEntity
      */
-    TbUserEntity saveOrUpdateByOpenId(WxMpUser user);
+    MallUserEntity saveOrUpdateByOpenId(WxMpUser user);
 }

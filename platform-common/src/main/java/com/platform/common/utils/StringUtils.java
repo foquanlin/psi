@@ -11,7 +11,10 @@
  */
 package com.platform.common.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -110,4 +113,25 @@ public class StringUtils {
         return false;
     }
 
+
+    /**
+     * 支付交易ID
+     */
+    public static String getBundleId() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        String tradeno = dateFormat.format(new Date());
+        String str = "000000" + (int) (Math.random() * 1000000);
+        tradeno = tradeno + str.substring(str.length() - 6);
+        return tradeno;
+    }
+
+    /**
+     * 生成订单的编号order_sn
+     */
+    public static String generateOrderNumber() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        String timeStr = DateUtils.format(cal.getTime(), DateUtils.DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS_SSS);
+        return timeStr + CharUtil.getRandomNum(6);
+    }
 }

@@ -9,12 +9,6 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * 微信公众号菜单管理
@@ -30,82 +24,6 @@ public class WxMenuController {
     /**
      * <pre>
      * 自定义菜单创建接口
-     * 详情请见：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141013&token=&lang=zh_CN
-     * 如果要创建个性化菜单，请设置matchrule属性
-     * 详情请见：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296&token=&lang=zh_CN
-     * </pre>
-     *
-     * @return 如果是个性化菜单，则返回menuid，否则返回null
-     */
-    @PostMapping("/create")
-    public String menuCreate(@RequestBody WxMenu menu) throws WxErrorException {
-        return this.wxService.getMenuService().menuCreate(menu);
-    }
-
-    @GetMapping("/create")
-    public String menuCreateSample(@PathVariable String appid) throws WxErrorException, MalformedURLException {
-        WxMenu menu = new WxMenu();
-        WxMenuButton button1 = new WxMenuButton();
-        button1.setType(WxConsts.MenuButtonType.VIEW);
-        button1.setName("官网");
-        button1.setUrl("https://www.fly2you.cn");
-
-        WxMenuButton button2 = new WxMenuButton();
-        button2.setType(WxConsts.MenuButtonType.MINIPROGRAM);
-        button2.setName("商业版");
-        button2.setAppId("wx59ee37cea6e05c08");
-        button2.setPagePath("pages/index/index");
-        button2.setUrl("http://mp.weixin.qq.com");
-
-        WxMenuButton button3 = new WxMenuButton();
-        button3.setName("菜单");
-
-        menu.getButtons().add(button1);
-        menu.getButtons().add(button2);
-        menu.getButtons().add(button3);
-
-        WxMenuButton button31 = new WxMenuButton();
-        button31.setType(WxConsts.MenuButtonType.VIEW);
-        button31.setName("搜索");
-        button31.setUrl("http://www.baidu.com/");
-
-        WxMenuButton button32 = new WxMenuButton();
-        button32.setType(WxConsts.MenuButtonType.VIEW);
-        button32.setName("视频");
-        button32.setUrl("http://v.qq.com/");
-
-        WxMenuButton button33 = new WxMenuButton();
-        button33.setType(WxConsts.MenuButtonType.VIEW);
-        button33.setName("开源地址");
-        button33.setUrl("https://gitee.com/fuyang_lipengjun/platform-plus");
-
-        WxMenuButton button34 = new WxMenuButton();
-        button34.setType(WxConsts.MenuButtonType.VIEW);
-        button34.setName("获取用户信息");
-
-        ServletRequestAttributes servletRequestAttributes =
-                (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (servletRequestAttributes != null) {
-            HttpServletRequest request = servletRequestAttributes.getRequest();
-            URL requestURL = new URL(request.getRequestURL().toString());
-            String url = this.wxService.switchoverTo(appid).oauth2buildAuthorizationUrl(
-                    String.format("%s://%s/wx/redirect/%s/greet", requestURL.getProtocol(), requestURL.getHost(), appid),
-                    WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
-            button34.setUrl(url);
-        }
-
-        button3.getSubButtons().add(button31);
-        button3.getSubButtons().add(button32);
-        button3.getSubButtons().add(button33);
-        button3.getSubButtons().add(button34);
-
-        this.wxService.switchover(appid);
-        return this.wxService.getMenuService().menuCreate(menu);
-    }
-
-    /**
-     * <pre>
-     * 自定义菜单创建接口
      * 详情请见： https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141013&token=&lang=zh_CN
      * 如果要创建个性化菜单，请设置matchrule属性
      * 详情请见：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296&token=&lang=zh_CN
@@ -113,9 +31,52 @@ public class WxMenuController {
      *
      * @return 如果是个性化菜单，则返回menuid，否则返回null
      */
-    @PostMapping("/createByJson")
+    @PostMapping("/create")
     public String menuCreate(@RequestBody String json) throws WxErrorException {
         return this.wxService.getMenuService().menuCreate(json);
+    }
+
+    @GetMapping("/create")
+    public String menuCreateSample() throws WxErrorException {
+        WxMenuButton mainBtn1 = new WxMenuButton();
+        mainBtn1.setName("公众号商城");
+        mainBtn1.setType(WxConsts.MenuButtonType.VIEW);
+        mainBtn1.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb340c435ee3873dc&redirect_uri=https%3a%2f%2ffly2you.cn%2fgzh%2f%23%2findex%2fhome&response_type=code&scope=snsapi_userinfo&state=STAT#wechat_redirect");
+
+        WxMenuButton mainBtn2 = new WxMenuButton();
+        mainBtn2.setName("小程序商城");
+        mainBtn2.setType(WxConsts.MenuButtonType.MINIPROGRAM);
+        mainBtn2.setUrl("http://mp.weixin.qq.com");
+        mainBtn2.setAppId("wxeca4341756496160");
+        mainBtn2.setPagePath("/pages/index/index");
+
+        WxMenuButton btn31 = new WxMenuButton();
+        btn31.setName("历史消息");
+        btn31.setType(WxConsts.MenuButtonType.VIEW);
+        btn31.setUrl("https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=Mzg4MTIzNjM2OQ==#wechat_redirect");
+
+        WxMenuButton btn32 = new WxMenuButton();
+        btn32.setType(WxConsts.MenuButtonType.VIEW);
+        btn32.setName("开源地址");
+        btn32.setUrl("https://gitee.com/fuyang_lipengjun/platform-plus");
+
+        WxMenuButton btn33 = new WxMenuButton();
+        btn33.setName("微信点餐");
+        btn33.setType(WxConsts.MenuButtonType.VIEW);
+        btn33.setUrl("https://fly2you.cn/mp");
+
+        WxMenuButton mainBtn3 = new WxMenuButton();
+        mainBtn3.setName("更多");
+        mainBtn3.getSubButtons().add(btn31);
+        mainBtn3.getSubButtons().add(btn32);
+        mainBtn3.getSubButtons().add(btn33);
+
+        WxMenu menu = new WxMenu();
+        menu.getButtons().add(mainBtn1);
+        menu.getButtons().add(mainBtn2);
+        menu.getButtons().add(mainBtn3);
+
+        return this.wxService.getMenuService().menuCreate(menu);
     }
 
     /**

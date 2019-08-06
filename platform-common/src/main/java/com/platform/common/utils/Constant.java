@@ -17,6 +17,22 @@ package com.platform.common.utils;
  * @author 李鹏军
  */
 public class Constant {
+    public static final String WEBSOCKET_USER = "WEBSOCKET_USER";
+
+    public static final String SUCCESS = "SUCCESS";
+    public static final String FAIL = "FAIL";
+    /**
+     * 商城订单
+     */
+    public static final Integer NORMAL_ORDER = 1;
+    /**
+     * 店铺自提订单
+     */
+    public static final Integer SHOPS_ORDER = 2;
+    /**
+     * 秒杀订单
+     */
+    public static final Integer SECKILL_ORDER = 3;
     /**
      * 超级管理员ID
      */
@@ -34,6 +50,11 @@ public class Constant {
     public static final int EXPIRE = 3600 * 6;
 
     /**
+     * 下单支付过期时间，单位分
+     */
+    public static final String ORDER_EXPIRE = "ORDER_EXPIRE";
+
+    /**
      * 云存储配置KEY
      */
     public final static String CLOUD_STORAGE_CONFIG_KEY = "CLOUD_STORAGE_CONFIG_KEY";
@@ -42,6 +63,14 @@ public class Constant {
      * 短信配置KEY
      */
     public final static String SMS_CONFIG_KEY = "SMS_CONFIG_KEY";
+    /**
+     * 邮费
+     */
+    public final static String SHIPPING_FEE = "SHIPPING_FEE";
+    /**
+     * 短信
+     */
+    public final static String PRE_SMS = "PRE_SMS:";
 
     /**
      * 权限前缀
@@ -219,4 +248,164 @@ public class Constant {
         }
     }
 
+    /**
+     * 订单状态
+     */
+    public enum OrderStatus {
+
+        /**
+         * 秒杀成功，待下单补充信息
+         */
+        DXD(-1),
+        /**
+         * 0:订单创建成功等待付款
+         */
+        DFK(0),
+        /**
+         * 100:已过期
+         */
+        YGQ(100),
+        /**
+         * 101:订单已取消
+         */
+        YQX(101),
+        /**
+         * 102:订单已删除
+         */
+        YSC(102),
+        /**
+         * 201:订单已付款,等待发货
+         */
+        YFK(201),
+        /**
+         * 300:订单已发货
+         */
+        YFH(300),
+        /**
+         * 301:用户确认收货
+         */
+        QRSH(301),
+        /**
+         * 401:没发货，退款
+         */
+        TK(401),
+        /**
+         * 402:已收货，退款退货
+         */
+        THTK(402);
+
+        private Integer value;
+
+        OrderStatus(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * 发货状态，商品配送情况
+     */
+    public enum ShippingStatus {
+        /**
+         * 1:未发货
+         */
+        WFH(1),
+        /**
+         * 2:已发货
+         */
+        YFH(2),
+        /**
+         * 3:已收货
+         */
+        YSH(3),
+        /**
+         * 4:退货
+         */
+        TH(4);
+
+        private Integer value;
+
+        ShippingStatus(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * 付款状态
+     */
+    public enum PayStatus {
+        /**
+         * 1:未付款
+         */
+        WFK(1),
+        /**
+         * 2:付款中
+         */
+        FKZ(2),
+        /**
+         * 3:已付款
+         */
+        YFK(3),
+        /**
+         * 4:退款
+         */
+        TK(4);
+
+        private Integer value;
+
+        PayStatus(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * 用户下单来源类型
+     */
+    public enum FromType {
+        /**
+         * 1:微信小程序
+         */
+        MA(1),
+        /**
+         * 2:微信公众号
+         */
+        MP(2),
+        /**
+         * 3:app
+         */
+        APP(3),
+        /**
+         * 4:H5
+         */
+        H5(4),
+        /**
+         * 支付宝小程序
+         */
+        ALI(5),
+        /**
+         * QQ小程序
+         */
+        QQ(6);
+
+        private Integer value;
+
+        FromType(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+    }
 }

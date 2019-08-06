@@ -88,6 +88,7 @@ public class SysDictController {
 
     /**
      * 保存
+     *
      * @return RestResponse
      */
     @SysLog("保存数据字典")
@@ -102,6 +103,7 @@ public class SysDictController {
 
     /**
      * 修改
+     *
      * @return RestResponse
      */
     @SysLog("修改数据字典")

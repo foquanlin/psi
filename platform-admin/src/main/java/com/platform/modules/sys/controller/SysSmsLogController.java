@@ -168,7 +168,7 @@ public class SysSmsLogController extends AbstractController {
     @RequestMapping("/sendSms")
     @ResponseBody
     public RestResponse sendSms(@RequestBody SysSmsLogEntity smsLog) {
-        SysSmsLogEntity sysSmsLogEntity = sysSmsLogService.sendSms(smsLog);
+        SysSmsLogEntity sysSmsLogEntity = sysSmsLogService.sendSms(getUserId(), smsLog);
         return RestResponse.success().put("result", sysSmsLogEntity);
     }
 }

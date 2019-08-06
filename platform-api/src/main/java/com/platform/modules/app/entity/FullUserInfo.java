@@ -24,6 +24,10 @@ public class FullUserInfo implements Serializable {
      */
     private String rawData;
     /**
+     * data(QQ)
+     */
+    private String data;
+    /**
      * userInfo
      */
     private WxMaUserInfo userInfo;

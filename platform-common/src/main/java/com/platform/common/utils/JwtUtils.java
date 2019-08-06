@@ -1,7 +1,7 @@
 /*
  * 项目名称:platform-plus
  * 类名称:JwtUtils.java
- * 包名称:com.platform.modules.app.utils
+ * 包名称:com.platform.common.utils
  *
  * 修改履历:
  *      日期                修正者      主要内容

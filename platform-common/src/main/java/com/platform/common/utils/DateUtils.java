@@ -11,6 +11,7 @@
  */
 package com.platform.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -25,6 +26,7 @@ import java.util.Date;
  *
  * @author 李鹏军
  */
+@Slf4j
 public class DateUtils {
     /**
      * 时间格式(yyyy-MM-dd)
@@ -38,6 +40,27 @@ public class DateUtils {
      * 无分隔符日期格式 "yyyyMMddHHmmssSSS"
      */
     public static String DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS_SSS = "yyyyMMddHHmmssSSS";
+    /**
+     * 不带秒的标准日期格式 "yyyy.MM.dd HH:mm"
+     */
+    public static String PATTERN_YYYY_MM_DD_HH_MM = "yyyy.MM.dd HH:mm";
+
+    // 日期转换格式数组
+    public static String[][] regularExp = new String[][]{
+
+            // 默认格式
+            {"\\d{4}-((([0][1,3-9]|[1][0-2]|[1-9])-([0-2]\\d|[3][0,1]|[1-9]))|((02|2)-(([1-9])|[0-2]\\d)))\\s+([0,1]\\d|[2][0-3]|\\d):([0-5]\\d|\\d):([0-5]\\d|\\d)",
+                    DATE_TIME_PATTERN},
+            // 仅日期格式 年月日 时 分 秒
+            {"\\d{4}.((([0][1,3-9]|[1][0-2]|[1-9]).([0-2]\\d|[3][0,1]|[1-9]))|((02|2).(([1-9])|[0-2]\\d)))\\s+([0,1]\\d|[2][0-3]|\\d):([0-5]\\d|\\d)",
+                    PATTERN_YYYY_MM_DD_HH_MM},
+            // 仅日期格式 年月日
+            {"\\d{4}-((([0][1,3-9]|[1][0-2]|[1-9])-([0-2]\\d|[3][0,1]|[1-9]))|((02|2)-(([1-9])|[0-2]\\d)))",
+                    DATE_PATTERN},
+            //  带毫秒格式
+            {"\\d{4}((([0][1,3-9]|[1][0-2]|[1-9])([0-2]\\d|[3][0,1]|[1-9]))|((02|2)(([1-9])|[0-2]\\d)))([0,1]\\d|[2][0-3])([0-5]\\d|\\d)([0-5]\\d|\\d)\\d{1,3}",
+                    DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS_SSS}
+    };
 
     /**
      * 日期格式化 日期格式为：yyyy-MM-dd
@@ -77,6 +100,52 @@ public class DateUtils {
 
         DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
         return fmt.parseLocalDateTime(strDate).toDate();
+    }
+
+
+    /**
+     * 根据传入的日期格式字符串，获取日期的格式
+     *
+     * @return 秒
+     */
+    public static String getDateFormat(String date_str) {
+        String style = null;
+        if (org.springframework.util.StringUtils.isEmpty(date_str)) {
+            return null;
+        }
+        boolean b = false;
+        for (int i = 0; i < regularExp.length; i++) {
+            b = date_str.matches(regularExp[i][0]);
+            if (b) {
+                style = regularExp[i][1];
+            }
+        }
+        if (org.springframework.util.StringUtils.isEmpty(style)) {
+            log.info("date_str:" + date_str);
+            log.info("日期格式获取出错，未识别的日期格式");
+        }
+        return style;
+    }
+
+    /**
+     * 转换为时间类型格式
+     *
+     * @param strDate 日期
+     * @return
+     */
+    public static Date strToDate(String strDate) {
+        try {
+            String strType = getDateFormat(strDate);
+            SimpleDateFormat sf = new SimpleDateFormat(strType);
+            return new Date((sf.parse(strDate).getTime()));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static long strToTime(String timeStr) {
+        Date time = strToDate(timeStr);
+        return time.getTime() / 1000;
     }
 
     /**

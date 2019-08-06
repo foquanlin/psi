@@ -1,6 +1,8 @@
 package com.platform.config;
 
+import cn.binarywang.wx.miniapp.api.WxMaMsgService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.impl.WxMaMsgServiceImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
@@ -41,8 +43,14 @@ public class WxMaConfiguration {
         wxMaInMemoryConfig.setSecret(properties.getSecret());
         wxMaInMemoryConfig.setToken(properties.getToken());
         wxMaInMemoryConfig.setAesKey(properties.getAesKey());
+        wxMaInMemoryConfig.setMsgDataFormat(properties.getMsgDataFormat());
         wxMaService.setWxMaConfig(wxMaInMemoryConfig);
         return wxMaService;
+    }
+
+    @Bean
+    public WxMaMsgService wxMaMsgService(WxMaService service) {
+        return new WxMaMsgServiceImpl(service);
     }
 
     @Bean

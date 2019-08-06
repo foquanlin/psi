@@ -15,7 +15,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.platform.common.annotation.SysLog;
 import com.platform.common.utils.RestResponse;
-import com.platform.modules.sys.controller.AbstractController;
 import com.platform.modules.sys.entity.SysMailLogEntity;
 import com.platform.modules.sys.entity.SysUserEntity;
 import com.platform.modules.sys.service.SysMailLogService;
@@ -24,7 +23,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 /**

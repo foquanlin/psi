@@ -1,6 +1,8 @@
 package com.platform.config;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,6 +12,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author Binary Wang
  */
+@Setter
+@Getter
 @ConfigurationProperties(prefix = "wx.pay")
 public class WxPayProperties {
     /**
@@ -41,54 +45,6 @@ public class WxPayProperties {
      * apiclient_cert.p12文件的绝对路径，或者如果放在项目中，请以classpath:开头指定
      */
     private String keyPath;
-
-    public String getAppId() {
-        return this.appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMchId() {
-        return mchId;
-    }
-
-    public void setMchId(String mchId) {
-        this.mchId = mchId;
-    }
-
-    public String getMchKey() {
-        return mchKey;
-    }
-
-    public void setMchKey(String mchKey) {
-        this.mchKey = mchKey;
-    }
-
-    public String getSubAppId() {
-        return subAppId;
-    }
-
-    public void setSubAppId(String subAppId) {
-        this.subAppId = subAppId;
-    }
-
-    public String getSubMchId() {
-        return subMchId;
-    }
-
-    public void setSubMchId(String subMchId) {
-        this.subMchId = subMchId;
-    }
-
-    public String getKeyPath() {
-        return this.keyPath;
-    }
-
-    public void setKeyPath(String keyPath) {
-        this.keyPath = keyPath;
-    }
 
     @Override
     public String toString() {

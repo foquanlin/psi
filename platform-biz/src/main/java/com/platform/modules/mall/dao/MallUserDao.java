@@ -1,5 +1,5 @@
 /*
- * 项目名称:platform-boot
+ * 项目名称:platform-plus
  * 类名称:UserDao.java
  * 包名称:com.platform.modules.app.dao
  *
@@ -9,11 +9,11 @@
  *
  * Copyright (c) 2019-2019 微同软件
  */
-package com.platform.modules.sys.dao;
+package com.platform.modules.mall.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.platform.modules.sys.entity.TbUserEntity;
+import com.platform.modules.mall.entity.MallUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,7 +26,7 @@ import java.util.Map;
  * @author 李鹏军
  */
 @Mapper
-public interface TbUserDao extends BaseMapper<TbUserEntity> {
+public interface MallUserDao extends BaseMapper<MallUserEntity> {
 
 
     /**
@@ -35,7 +35,7 @@ public interface TbUserDao extends BaseMapper<TbUserEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<TbUserEntity> queryAll(@Param("params") Map<String, Object> params);
+    List<MallUserEntity> queryAll(@Param("params") Map<String, Object> params);
 
     /**
      * 自定义分页查询
@@ -44,5 +44,5 @@ public interface TbUserDao extends BaseMapper<TbUserEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<TbUserEntity> selectMallUserPage(IPage page, @Param("params") Map<String, Object> params);
+    List<MallUserEntity> selectMallUserPage(IPage page, @Param("params") Map<String, Object> params);
 }

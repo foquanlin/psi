@@ -60,7 +60,7 @@ public interface SysUserService extends IService<SysUserEntity> {
     /**
      * 保存用户
      *
-     * @param user 用户
+     * @param user   用户
      * @param params 查询参数
      */
     void add(SysUserEntity user, Map<String, Object> params);
@@ -68,7 +68,7 @@ public interface SysUserService extends IService<SysUserEntity> {
     /**
      * 修改用户
      *
-     * @param user 用户
+     * @param user   用户
      * @param params 查询参数
      */
     void update(SysUserEntity user, Map<String, Object> params);
@@ -83,8 +83,8 @@ public interface SysUserService extends IService<SysUserEntity> {
     /**
      * 修改密码
      *
-     * @param userId 用户Id
-     * @param password 原密码
+     * @param userId      用户Id
+     * @param password    原密码
      * @param newPassword 新密码
      * @return boolean
      */

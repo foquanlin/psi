@@ -76,5 +76,5 @@ public interface SysSmsLogService extends IService<SysSmsLogEntity> {
      * @param smsLog smsLog
      * @return SysSmsLogEntity
      */
-    SysSmsLogEntity sendSms(SysSmsLogEntity smsLog);
+    SysSmsLogEntity sendSms(String userId, SysSmsLogEntity smsLog);
 }

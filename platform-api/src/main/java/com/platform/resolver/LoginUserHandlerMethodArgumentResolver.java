@@ -13,8 +13,8 @@ package com.platform.resolver;
 
 import com.platform.annotation.LoginUser;
 import com.platform.interceptor.AuthorizationInterceptor;
-import com.platform.modules.sys.entity.TbUserEntity;
-import com.platform.modules.sys.service.TbUserService;
+import com.platform.modules.mall.entity.MallUserEntity;
+import com.platform.modules.mall.service.MallUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -32,11 +32,11 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
     @Autowired
-    private TbUserService userService;
+    private MallUserService userService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(TbUserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
+        return parameter.getParameterType().isAssignableFrom(MallUserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
     }
 
     @Override

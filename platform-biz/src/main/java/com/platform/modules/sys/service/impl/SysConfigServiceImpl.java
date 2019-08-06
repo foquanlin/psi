@@ -112,6 +112,15 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
         jedisUtils.setObject(key, config);
     }
 
+    @Override
+    public String getValue(String key, String defaultValue) {
+        String value = getValue(key);
+        if (StringUtils.isBlank(value)) {
+            return defaultValue;
+        }
+        return value;
+    }
+
     private void deleteFromRedis(String configKey) {
         String key = Constant.SYS_CACHE + configKey;
         jedisUtils.del(key);

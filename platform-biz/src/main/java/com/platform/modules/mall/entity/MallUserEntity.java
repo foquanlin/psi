@@ -1,5 +1,5 @@
 /*
- * 项目名称:platform-boot
+ * 项目名称:platform-plus
  * 类名称:UserEntity.java
  * 包名称:com.platform.modules.app.entity
  *
@@ -9,7 +9,7 @@
  *
  * Copyright (c) 2019-2019 微同软件
  */
-package com.platform.modules.sys.entity;
+package com.platform.modules.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -26,7 +27,7 @@ import java.util.Date;
  */
 @Data
 @TableName("MALL_USER")
-public class TbUserEntity implements Serializable {
+public class MallUserEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -96,10 +97,15 @@ public class TbUserEntity implements Serializable {
     @ApiModelProperty(hidden = true)
     private String aliUserId;
     /**
-     * 小程序用户的标识
+     * 微信小程序用户的标识
      */
     @ApiModelProperty(hidden = true)
     private String openId;
+    /**
+     * QQ小程序用户的标识
+     */
+    @ApiModelProperty(hidden = true)
+    private String qqOpenId;
     /**
      * 公众号用户的标识
      */

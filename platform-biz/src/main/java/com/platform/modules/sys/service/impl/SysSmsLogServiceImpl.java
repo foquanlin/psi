@@ -78,7 +78,7 @@ public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogDao, SysSmsLogEnt
     }
 
     @Override
-    public SysSmsLogEntity sendSms(SysSmsLogEntity smsLog) {
+    public SysSmsLogEntity sendSms(String userId, SysSmsLogEntity smsLog) {
         smsLog.setType(SmsUtil.TYPE);
         String result = Constant.BLANK;
         //获取云存储配置信息
@@ -121,12 +121,7 @@ public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogDao, SysSmsLogEnt
                 smsLog.setReturnMsg(arr[1]);
             }
             smsLog.setSendStatus(Integer.parseInt(arr[0]));
-            try {
-                smsLog.setUserId(ShiroUtils.getUserId());
-            } catch (Exception e) {
-                //外部发送短信
-                smsLog.setUserId("1");
-            }
+            smsLog.setUserId(userId);
             smsLog.setSign(config.getSign());
             if (null == smsLog.getStime()) {
                 smsLog.setStime(new Date());
