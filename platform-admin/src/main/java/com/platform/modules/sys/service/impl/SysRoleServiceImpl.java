@@ -17,6 +17,7 @@ import com.platform.common.exception.BusinessException;
 import com.platform.common.utils.Constant;
 import com.platform.common.utils.Query;
 import com.platform.modules.sys.dao.SysRoleDao;
+import com.platform.modules.sys.dao.SysUserDao;
 import com.platform.modules.sys.entity.SysRoleEntity;
 import com.platform.modules.sys.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     @Autowired
     private SysRoleMenuService sysRoleMenuService;
     @Autowired
-    private SysUserService sysUserService;
+    private SysUserDao sysUserService;
     @Autowired
     private SysUserRoleService sysUserRoleService;
     @Autowired

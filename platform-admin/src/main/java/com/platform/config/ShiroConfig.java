@@ -73,6 +73,7 @@ public class ShiroConfig {
         filterMap.put("/diagram-viewer/**", "anon");
         filterMap.put("/editor-app/**", "anon");
         filterMap.put("/service/**", "anon");
+        filterMap.put("/actuator/**", "anon");
         filterMap.put("/**", "oauth2");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
