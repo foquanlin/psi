@@ -11,16 +11,17 @@
  */
 package com.platform.modules.oss.cloud;
 
-import com.alibaba.fastjson.JSONObject;
 import com.platform.common.exception.BusinessException;
 import com.platform.common.utils.Constant;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
-import com.qcloud.cos.request.UploadFileRequest;
-import com.qcloud.cos.sign.Credentials;
-import org.apache.commons.io.IOUtils;
+import com.qcloud.cos.auth.BasicCOSCredentials;
+import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.model.ObjectMetadata;
+import com.qcloud.cos.model.PutObjectRequest;
+import com.qcloud.cos.region.Region;
 
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
@@ -40,43 +41,35 @@ public class QcloudCloudStorageService extends AbstractCloudStorageService {
     }
 
     private void init() {
-        Credentials credentials = new Credentials(config.getQcloudAppId(), config.getQcloudSecretId(),
-                config.getQcloudSecretKey());
+        COSCredentials cred = new BasicCOSCredentials(config.getQcloudSecretId(), config.getQcloudSecretKey());
 
-        //初始化客户端配置
-        ClientConfig clientConfig = new ClientConfig();
-        //设置bucket所在的区域，华南：gz 华北：tj 华东：sh
-        clientConfig.setRegion(config.getQcloudRegion());
+        // 2 设置 bucket 的区域, COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
+        // clientConfig 中包含了设置 region, https(默认 http), 超时, 代理等 set 方法, 使用可参见源码或者常见问题 Java SDK 部分。
+        Region region = new Region(config.getQcloudRegion());
+        ClientConfig clientConfig = new ClientConfig(region);
 
-        client = new COSClient(clientConfig, credentials);
+        // 3 生成 cos 客户端。
+        client = new COSClient(cred, clientConfig);
     }
 
     @Override
     public String upload(byte[] data, String path) {
-        String strCode = "code";
+        return this.upload(new ByteArrayInputStream(data), path);
+    }
+
+    @Override
+    public String upload(InputStream inputStream, String path) {
         //腾讯云必需要以"/"开头
         if (!path.startsWith(Constant.SLASH)) {
             path = "/" + path;
         }
 
-        //上传到腾讯云
-        UploadFileRequest request = new UploadFileRequest(config.getQcloudBucketName(), path, data);
-        String response = client.uploadFile(request);
-
-        JSONObject jsonObject = JSONObject.parseObject(response);
-        if (jsonObject.getInteger(strCode) != 0) {
-            throw new BusinessException("文件上传失败，" + jsonObject.getString("message"));
-        }
-
-        return config.getQcloudDomain() + path;
-    }
-
-    @Override
-    public String upload(InputStream inputStream, String path) {
         try {
-            byte[] data = IOUtils.toByteArray(inputStream);
-            return this.upload(data, path);
-        } catch (IOException e) {
+            //上传到腾讯云
+            PutObjectRequest putObjectRequest = new PutObjectRequest(config.getQcloudBucketName(), path, inputStream, new ObjectMetadata());
+            client.putObject(putObjectRequest);
+            return config.getQcloudDomain() + path;
+        } catch (Exception e) {
             throw new BusinessException("上传文件失败", e);
         }
     }
