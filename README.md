@@ -28,6 +28,14 @@
 - JavaDoc：https://apidoc.gitee.com/fuyang_lipengjun/platform-plus/
 - 前端地址：https://gitee.com/fuyang_lipengjun/platform-plus-ui
  
+### 使用案例
+完整案例登记列表，请[【访问这里】](https://gitee.com/fuyang_lipengjun/platform-plus/issues/I10MHD)查看，欢迎登记更多的案例。
+
+以下为部分案例：
+- 江西省教育缴费云平台：https://edu.bstj.com/edupay-charge/#/login
+- 内务管理系统：http://interiorpc.etg.test.thinkinpower.net/#/login
+
+
 #### 优势
 - 严格遵循阿里编码规约开发，便于阅读及二次开发
 - 支持 MySQL、MariaDB、Oracle、DB2、H2、HSQL、SQLite、Postgre、SQLServer2005、SQLServer 等多种数据库
