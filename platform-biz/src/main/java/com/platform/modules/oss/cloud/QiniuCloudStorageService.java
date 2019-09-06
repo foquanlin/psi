@@ -12,9 +12,9 @@
 package com.platform.modules.oss.cloud;
 
 import com.platform.common.exception.BusinessException;
-import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
+import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import org.apache.commons.io.IOUtils;
@@ -40,7 +40,7 @@ public class QiniuCloudStorageService extends AbstractCloudStorageService {
     }
 
     private void init() {
-        uploadManager = new UploadManager(new Configuration(Zone.autoZone()));
+        uploadManager = new UploadManager(new Configuration(Region.region0()));
         token = Auth.create(config.getQiniuAccessKey(), config.getQiniuSecretKey()).
                 uploadToken(config.getQiniuBucketName());
     }
