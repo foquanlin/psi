@@ -1,27 +1,15 @@
 ## 服务器推荐配置
-### 服务器配置：
-    CPU：2核
-    内存：8G
-    带宽：10M
+| 名称        | CPU    |  内存  |  硬盘  |  价格  |
+| --------    | -----:   | :----: | :----: | :----: |
+| 服务器(标准型S2机型 5M 双机)       | 2核      |   8G    |   50G    |   2970元/三年    |
+| MySQL高可用版| 1核      |   1G    |   100G    | 423元/三年    |
 
-购买说明：如果业务量较大，推荐双机部署。
+| COS资源包     | 大小     |  价格     |
+| --------     | -----:   | :----:   |
+| 标准型存储容量 |200GB	  |1年	171元|
+| 下行流量      | 500GB	  |3个月	177元|
 
-### MySQL高可用版配置：
-    CPU：1核
-    内存：1G
-    硬盘：100G
-
-### COS资源包：
-    标准型存储容量：
-    100GB	1年	88元
-    200GB	1年	171元
-    下行流量：
-    100GB	3个月	37元
-    200GB	3个月	71元
-    500GB	3个月	177元
-### [【阿里云助力企业上云】性能级主机2-5折，首次购买高性能云服务器，享低至2折优惠：https://www.aliyun.com](https://www.aliyun.com/acts/hi618/index?userCode=i8s6n64p)
-
-### [腾讯云新客户无门槛领取总价值高达2860元代金券，每种代金券限量500张，先到先得：https://cloud.tencent.com](https://cloud.tencent.com/redirect.php?redirect=1040&cps_key=30280f92fc381dfc9e1d9e0e23d25a18&from=console)
+[抢购地址：https://cloud.tencent.com](https://cloud.tencent.com/act/cps/redirect?redirect=1044&cps_key=30280f92fc381dfc9e1d9e0e23d25a18&from=console)
 
 #### 项目说明
 - platform-plus是一个轻量级的，前后端分离的Java快速开发平台
