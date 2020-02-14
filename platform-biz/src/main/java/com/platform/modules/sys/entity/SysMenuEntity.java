@@ -81,6 +81,8 @@ public class SysMenuEntity implements Serializable {
      */
     private Integer orderNum;
 
+    private Integer shows;
+
     /**
      * ztree属性
      */

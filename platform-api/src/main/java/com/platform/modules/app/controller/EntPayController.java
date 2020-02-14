@@ -99,7 +99,7 @@ public class EntPayController {
      */
     @ApiOperation(value = "企业付款到银行卡")
     @PostMapping("/payBank")
-    public EntPayBankResult payBank(EntPayBankRequest request) throws WxPayException {
+    public EntPayBankResult payBank(@RequestBody EntPayBankRequest request) throws WxPayException {
         return this.wxPayService.getEntPayService().payBank(request);
     }
 
