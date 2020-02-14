@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Import;
  *
  * @author 李鹏军
  */
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, DataSourceAutoConfiguration.class})
-@Import({DynamicDataSourceConfig.class})
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+//@Import({DynamicDataSourceConfig.class})
 public class PlatformApiApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

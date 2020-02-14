@@ -31,8 +31,8 @@ import java.lang.reflect.Method;
  * @author 李鹏军
  */
 @Slf4j
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class DataSourceAspect implements Ordered {
 
     @Pointcut("@annotation(com.platform.datasources.annotation.DataSource)")

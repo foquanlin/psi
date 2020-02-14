@@ -11,7 +11,7 @@
  */
 package com.platform.common.utils;
 
-import com.alibaba.druid.util.StringUtils;
+//import com.alibaba.druid.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;

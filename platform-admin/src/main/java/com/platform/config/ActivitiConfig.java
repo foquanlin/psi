@@ -29,7 +29,7 @@ import java.io.IOException;
  *
  * @author 李鹏军
  */
-@Configuration
+//@Configuration
 public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
 
     /**
@@ -51,7 +51,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param dataSource         dataSource
      * @return ProcessEngine
      */
-    @Bean
+    //@Bean
     public ProcessEngine processEngine(PlatformTransactionManager transactionManager, DataSource dataSource) throws IOException {
         SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
         //自动部署已有的流程文件
@@ -70,7 +70,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param processEngine processEngine
      * @return RepositoryService
      */
-    @Bean
+    //@Bean
     public RepositoryService repositoryService(ProcessEngine processEngine) {
         return processEngine.getRepositoryService();
     }
@@ -81,7 +81,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param processEngine processEngine
      * @return RuntimeService
      */
-    @Bean
+    //@Bean
     public RuntimeService runtimeService(ProcessEngine processEngine) {
         return processEngine.getRuntimeService();
     }
@@ -92,7 +92,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param processEngine processEngine
      * @return TaskService
      */
-    @Bean
+    //@Bean
     public TaskService taskService(ProcessEngine processEngine) {
         return processEngine.getTaskService();
     }
@@ -103,7 +103,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param processEngine processEngine
      * @return HistoryService
      */
-    @Bean
+    //@Bean
     public HistoryService historyService(ProcessEngine processEngine) {
         return processEngine.getHistoryService();
     }
@@ -114,7 +114,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param processEngine processEngine
      * @return ManagementService
      */
-    @Bean
+    //@Bean
     public ManagementService managementService(ProcessEngine processEngine) {
         return processEngine.getManagementService();
     }
@@ -125,7 +125,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param processEngine processEngine
      * @return IdentityService
      */
-    @Bean
+    //@Bean
     public IdentityService identityService(ProcessEngine processEngine) {
         return processEngine.getIdentityService();
     }
@@ -136,7 +136,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param processEngine processEngine
      * @return FormService
      */
-    @Bean
+    //@Bean
     public FormService formService(ProcessEngine processEngine) {
         return processEngine.getFormService();
     }
@@ -147,7 +147,7 @@ public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
      * @param processEngine processEngine
      * @return DynamicBpmnService
      */
-    @Bean
+    //@Bean
     public DynamicBpmnService dynamicBpmnService(ProcessEngine processEngine) {
         return processEngine.getDynamicBpmnService();
     }

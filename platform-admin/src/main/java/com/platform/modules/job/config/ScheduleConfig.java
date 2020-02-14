@@ -23,7 +23,7 @@ import java.util.Properties;
  *
  * @author 李鹏军
  */
-@Configuration
+//@Configuration
 public class ScheduleConfig {
 
     @Bean

@@ -19,7 +19,7 @@
         <mybatisplus.boot.version>3.1.0</mybatisplus.boot.version>
         <mysql.version>8.0.13</mysql.version>
         <oracle.version>11.2.0.3</oracle.version>
-        <druid.version>1.1.10</druid.version>
+<!--        <druid.version>1.1.10</druid.version>-->
         <quartz.version>2.3.0</quartz.version>
         <commons.lang.version>2.6</commons.lang.version>
         <commons.fileupload.version>1.3.3</commons.fileupload.version>
@@ -48,6 +48,10 @@
         <weixin-java-pay.version>3.4.0</weixin-java-pay.version>
         <weixin-java-open.version>3.4.0</weixin-java-open.version>
         <alipay-sdk.version>3.7.110.ALL</alipay-sdk.version>
+        <dist.release.server>release-server</dist.release.server>
+        <dist.snapshot.server>snapshot-server</dist.snapshot.server>
+        <dist.release.url>http://nexus.meilyhome.com/nexus/content/repositories/releases</dist.release.url>
+        <dist.snapshot.url>http://nexus.meilyhome.com/nexus/content/repositories/snapshots</dist.snapshot.url>
     </properties>
 
     <dependencies>
@@ -123,27 +127,40 @@
         </pluginManagement>
     </build>
 
-    <repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>public</id>-->
+<!--            <name>aliyun nexus</name>-->
+<!--            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+<!--    <pluginRepositories>-->
+<!--        <pluginRepository>-->
+<!--            <id>public</id>-->
+<!--            <name>aliyun nexus</name>-->
+<!--            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </pluginRepository>-->
+<!--    </pluginRepositories>-->
+
+    <distributionManagement>
         <repository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <name>Release Respository</name>
+            <id>${dist.release.server}</id>
+            <url>${dist.release.url}</url>
         </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
+        <snapshotRepository>
+            <name>Snapshot Respository</name>
+            <id>${dist.snapshot.server}</id>
+            <url>${dist.snapshot.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
