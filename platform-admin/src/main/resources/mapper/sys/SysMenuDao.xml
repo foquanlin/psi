@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="queryList" resultType="com.platform.modules.sys.entity.SysMenuEntity">
-		SELECT A.*,B.NAME PARENT_NAME FROM SYS_MENU A LEFT JOIN SYS_MENU B ON A.PARENT_ID = B.MENU_ID AND A.SHOWS = 1 AND B.SHOWS = 1 ORDER BY A.MENU_ID,A.ORDER_NUM
+		SELECT A.*,B.NAME PARENT_NAME FROM SYS_MENU A LEFT JOIN SYS_MENU B ON A.PARENT_ID = B.MENU_ID WHERE A.SHOWS = 1 ORDER BY A.MENU_ID,A.ORDER_NUM
 	</select>
     <select id="queryMaxIdByParentId" resultType="string">
 		SELECT MAX(MENU_ID) FROM SYS_MENU WHERE SHOWS = 1 AND PARENT_ID = #{parentId}
