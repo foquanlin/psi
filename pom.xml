@@ -65,7 +65,13 @@
 
     <modules>
         <module>platform-common</module>
+        <module>platform-sms</module>
+        <module>platform-sys</module>
+        <module>platform-act</module>
+        <module>platform-job</module>
+        <module>platform-gencode</module>
         <module>platform-wechat</module>
+        <module>platform-mail</module>
         <module>platform-admin</module>
         <module>platform-api</module>
         <module>platform-biz</module>

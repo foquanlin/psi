@@ -9,12 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>platform-api</artifactId>
-    <version>2.0.0</version>
+    <artifactId>platform-job</artifactId>
     <packaging>jar</packaging>
+    <version>2.0.0</version>
 
-    <name>platform-api</name>
-    <url>http://www.meilyhome.com</url>
+    <name>platform-job</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,19 +22,23 @@
     </properties>
 
     <dependencies>
+        <!-- 定时任务 -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.mchange</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>com.platform</groupId>
-            <artifactId>platform-biz</artifactId>
+            <artifactId>platform-common</artifactId>
             <version>2.0.0</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
