@@ -14,6 +14,9 @@ package com.platform.config;
 import org.activiti.engine.*;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.activiti.spring.boot.ProcessEngineConfigurationConfigurer;
+import org.activiti.spring.boot.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -27,7 +30,8 @@ import java.io.IOException;
  *
  * @author 李鹏军
  */
-//@Configuration
+@Configuration
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 public class ActivitiConfig implements ProcessEngineConfigurationConfigurer {
 
     /**
