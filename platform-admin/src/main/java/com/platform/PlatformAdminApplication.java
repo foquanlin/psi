@@ -2,7 +2,7 @@ package com.platform;
 
 import com.platform.config.ActivitiConfig;
 import com.platform.datasources.DynamicDataSourceConfig;
-import com.platform.modules.job.config.ScheduleConfig;
+//import com.platform.modules.job.config.ScheduleConfig;
 import org.activiti.spring.boot.SecurityAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

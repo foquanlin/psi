@@ -9,12 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>platform-api</artifactId>
-    <version>2.0.0</version>
+    <artifactId>platform-sms</artifactId>
     <packaging>jar</packaging>
+    <version>2.0.0</version>
 
-    <name>platform-api</name>
-    <url>http://www.meilyhome.com</url>
+    <name>platform-sms</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,22 +24,13 @@
     <dependencies>
         <dependency>
             <groupId>com.platform</groupId>
-            <artifactId>platform-biz</artifactId>
+            <artifactId>platform-sys</artifactId>
             <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.platform</groupId>
-            <artifactId>platform-sys</artifactId>
+            <artifactId>platform-common</artifactId>
             <version>2.0.0</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
