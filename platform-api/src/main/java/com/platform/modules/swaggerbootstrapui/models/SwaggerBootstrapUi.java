@@ -3,7 +3,7 @@ package com.platform.modules.swaggerbootstrapui.models;
 import java.util.List;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 public class SwaggerBootstrapUi {
 

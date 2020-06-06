@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 公众号验证服务器
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @Slf4j
 @RestController

@@ -4,7 +4,7 @@ import io.swagger.models.Swagger;
 import org.springframework.beans.BeanUtils;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 public class SwaggerExt extends Swagger {
 

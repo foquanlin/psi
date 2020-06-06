@@ -4,7 +4,7 @@ package com.platform.modules.swaggerbootstrapui.models;
 import io.swagger.models.Tag;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 public class SwaggerBootstrapUiTag extends Tag {
 

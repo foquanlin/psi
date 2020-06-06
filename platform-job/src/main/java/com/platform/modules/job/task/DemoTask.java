@@ -5,9 +5,9 @@
  *
  * 修改履历:
  *      日期                修正者      主要内容
- *      2019/7/19 11:04    李鹏军      初版完成
+ *      2019/7/19 11:04    林佛权      初版完成
  *
- * Copyright (c) 2019-2019 微同软件
+ * Copyright (c) 2019-2019 酷天科技
  */
 package com.platform.modules.job.task;
 
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 定时任务
  * demoTask为spring bean的名称
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @Slf4j
 @Component("demoTask")

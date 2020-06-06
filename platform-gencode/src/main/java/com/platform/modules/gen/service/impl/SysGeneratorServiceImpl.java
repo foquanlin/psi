@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.zip.ZipOutputStream;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 @Service("sysGeneratorService")
 public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, ResultMapEntity> implements SysGeneratorService {

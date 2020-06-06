@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 @Data
 @ConfigurationProperties(prefix = "wx.mp")

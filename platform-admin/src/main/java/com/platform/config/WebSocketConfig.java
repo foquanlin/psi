@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 /**
  * WebSocket配置
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @Slf4j
 @Configuration

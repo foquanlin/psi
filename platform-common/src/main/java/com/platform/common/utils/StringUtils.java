@@ -5,9 +5,9 @@
  *
  * 修改履历:
  *      日期                修正者      主要内容
- *      2019/1/10 19:18    李鹏军      初版完成
+ *      2019/1/10 19:18    林佛权      初版完成
  *
- * Copyright (c) 2019-2019 微同软件
+ * Copyright (c) 2019-2019 酷天科技
  */
 package com.platform.common.utils;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * String工具类
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 public class StringUtils {
 

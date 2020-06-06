@@ -5,16 +5,16 @@
  *
  * 修改履历:
  *      日期                修正者      主要内容
- *      2019/1/17 16:49    李鹏军      初版完成
+ *      2019/1/17 16:49    林佛权      初版完成
  *
- * Copyright (c) 2019-2019 微同软件
+ * Copyright (c) 2019-2019 酷天科技
  */
 package com.platform.common.validator.group;
 
 /**
  * 服务器存储
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 public interface DiskGroup {
 }

@@ -5,9 +5,9 @@
  *
  * 修改履历:
  *      日期                修正者      主要内容
- *      2019/1/22 16:30    李鹏军      初版完成
+ *      2019/1/22 16:30    林佛权      初版完成
  *
- * Copyright (c) 2019-2019 微同软件
+ * Copyright (c) 2019-2019 酷天科技
  */
 package com.platform.common.utils;
 
@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
 /**
  * 对象操作工具类, 继承org.apache.commons.lang.ObjectUtils类
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 public class ObjectUtils extends org.apache.commons.lang.ObjectUtils {
 

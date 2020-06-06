@@ -52,7 +52,7 @@ import static springfox.documentation.swagger.common.HostNameProvider.components
 
 /***
  * SwaggerBootstrapUiZ增强接口
- * @author 李鹏军
+ * @author 林佛权
  */
 @Slf4j
 @Controller

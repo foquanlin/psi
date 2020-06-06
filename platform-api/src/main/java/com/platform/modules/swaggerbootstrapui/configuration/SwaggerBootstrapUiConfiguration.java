@@ -4,7 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 @Configuration
 @ComponentScan(

@@ -5,9 +5,9 @@
  *
  * 修改履历:
  *     日期                       修正者        主要内容
- *     2019-03-18 09:47:54        李鹏军     初版做成
+ *     2019-03-18 09:47:54        林佛权     初版做成
  *
- * Copyright (c) 2019-2019 微同软件
+ * Copyright (c) 2019-2019 酷天科技
  */
 package com.platform.modules.act.controller;
 
@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * Controller
  *
- * @author 李鹏军
+ * @author 林佛权
  * @date 2019-03-18 09:47:54
  */
 @RestController

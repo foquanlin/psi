@@ -23,7 +23,7 @@ import java.io.File;
 /**
  * wechat ma configuration
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @Configuration
 @EnableConfigurationProperties(WxMaProperties.class)

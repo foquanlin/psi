@@ -1,7 +1,7 @@
 package com.platform.modules.swaggerbootstrapui.models;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 public class SwaggerBootstrapUiPath {
 

@@ -5,9 +5,9 @@
  *
  * 修改履历:
  *      日期                修正者      主要内容
- *      2018/11/21 16:04    李鹏军      初版完成
+ *      2018/11/21 16:04    林佛权      初版完成
  *
- * Copyright (c) 2019-2019 微同软件
+ * Copyright (c) 2019-2019 酷天科技
  */
 package com.platform.modules.job.service.impl;
 
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 @Service("scheduleJobLogService")
 public class ScheduleJobLogServiceImpl extends ServiceImpl<ScheduleJobLogDao, ScheduleJobLogEntity> implements ScheduleJobLogService {

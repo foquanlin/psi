@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 微信公众号菜单管理
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @AllArgsConstructor
 @RestController

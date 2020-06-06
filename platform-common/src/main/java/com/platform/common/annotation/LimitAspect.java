@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * 限流
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @Component
 @Scope

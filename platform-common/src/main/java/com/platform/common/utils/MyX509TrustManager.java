@@ -4,7 +4,7 @@ import javax.net.ssl.X509TrustManager;
 import java.security.cert.X509Certificate;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 public class MyX509TrustManager implements X509TrustManager {
 

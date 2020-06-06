@@ -17,7 +17,7 @@ import redis.clients.jedis.JedisPool;
 /**
  * wechat mp configuration
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @AllArgsConstructor
 @Configuration

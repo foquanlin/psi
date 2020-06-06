@@ -14,7 +14,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 import java.util.Map;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 @Slf4j
 @Service

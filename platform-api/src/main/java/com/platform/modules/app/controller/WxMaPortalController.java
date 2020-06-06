@@ -17,7 +17,7 @@ import java.util.Objects;
 /**
  * 小程序验证服务器
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @Slf4j
 @RestController

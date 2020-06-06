@@ -5,9 +5,9 @@
  *
  * 修改履历:
  *      日期                修正者      主要内容
- *      2019/3/21 11:04    李鹏军      初版完成
+ *      2019/3/21 11:04    林佛权      初版完成
  *
- * Copyright (c) 2019-2019 微同软件
+ * Copyright (c) 2019-2019 酷天科技
  */
 package com.platform.modules.sys.service;
 
@@ -15,7 +15,7 @@ package com.platform.modules.sys.service;
  * 邮件相关接口
  * 系统发送：使用application.yml文件中的mail配置
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 public interface MailService {
 

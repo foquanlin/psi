@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * 同步锁 AOP
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @Component
 @Scope

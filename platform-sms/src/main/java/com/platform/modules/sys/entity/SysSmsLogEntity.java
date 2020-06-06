@@ -5,9 +5,9 @@
  *
  * 修改履历:
  *     日期                       修正者        主要内容
- *     2019-02-12 09:51:15        李鹏军     初版做成
+ *     2019-02-12 09:51:15        林佛权     初版做成
  *
- * Copyright (c) 2018-2019 微同软件
+ * Copyright (c) 2018-2019 酷天科技
  */
 package com.platform.modules.sys.entity;
 
@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * 短信发送日志实体
  *
- * @author 李鹏军
+ * @author 林佛权
  * @date 2019-02-12 09:51:15
  */
 @Data

@@ -5,7 +5,7 @@
  *
  * 修改履历:
  *      日期                修正者      主要内容
- *      2019/1/30 15:44    李鹏军      初版完成
+ *      2019/1/30 15:44    林佛权      初版完成
  *
  * Copyright (c) 2017-2019 咨同科技
  */
@@ -30,7 +30,7 @@ import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 /**
  * 操作excel、word、pdf、csv、excel与html互相转换
  *
- * @author 李鹏军
+ * @author 林佛权
  */
 @Slf4j
 public class EasyPoiUtils {

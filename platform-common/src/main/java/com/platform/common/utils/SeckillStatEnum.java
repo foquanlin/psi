@@ -1,7 +1,7 @@
 package com.platform.common.utils;
 
 /**
- * @author 李鹏军
+ * @author 林佛权
  */
 
 public enum SeckillStatEnum {
