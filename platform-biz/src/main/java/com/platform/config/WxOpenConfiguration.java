@@ -2,6 +2,7 @@ package com.platform.config;
 
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.open.api.WxOpenService;
+import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenInRedisConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenMessageRouter;
 import me.chanjar.weixin.open.api.impl.WxOpenServiceImpl;
@@ -32,7 +33,7 @@ public class WxOpenConfiguration {
     @Bean
     public WxOpenService wxOpenService() {
         WxOpenService wxOpenService = new WxOpenServiceImpl();
-        WxOpenInRedisConfigStorage wxMpInRedisConfigStorage = new WxOpenInRedisConfigStorage(jedisPool);
+        WxOpenInMemoryConfigStorage wxMpInRedisConfigStorage = new WxOpenInMemoryConfigStorage();
         wxMpInRedisConfigStorage.setComponentAppId(properties.getComponentAppId());
         wxMpInRedisConfigStorage.setComponentAppSecret(properties.getComponentSecret());
         wxMpInRedisConfigStorage.setComponentToken(properties.getComponentToken());

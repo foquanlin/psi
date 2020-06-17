@@ -3,10 +3,11 @@ package com.platform.config;
 import com.platform.handler.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.mp.api.WxMpInRedisConfigStorage;
+//import me.chanjar.weixin.mp.api.WxMpInRedisConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.constant.WxMpEventConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -34,13 +35,13 @@ public class WxMpConfiguration {
     private final SubscribeHandler subscribeHandler;
     private final ScanHandler scanHandler;
     private final WxMpProperties properties;
-    @Autowired
-    private JedisPool jedisPool;
+//    @Autowired
+//    private JedisPool jedisPool;
 
     @Bean
     public WxMpService wxMpService() {
         WxMpService wxMpService = new WxMpServiceImpl();
-        WxMpInRedisConfigStorage wxMpInRedisConfigStorage = new WxMpInRedisConfigStorage(jedisPool);
+        WxMpDefaultConfigImpl wxMpInRedisConfigStorage = new WxMpDefaultConfigImpl();
         wxMpInRedisConfigStorage.setAppId(properties.getAppId());
         wxMpInRedisConfigStorage.setSecret(properties.getSecret());
         wxMpInRedisConfigStorage.setToken(properties.getToken());

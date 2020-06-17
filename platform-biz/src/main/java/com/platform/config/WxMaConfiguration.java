@@ -7,12 +7,13 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
-import cn.binarywang.wx.miniapp.config.WxMaInMemoryConfig;
+import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
 import com.google.common.collect.Lists;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +39,7 @@ public class WxMaConfiguration {
     @Bean
     public WxMaService wxMaService() {
         WxMaService wxMaService = new WxMaServiceImpl();
-        WxMaInMemoryConfig wxMaInMemoryConfig = new WxMaInMemoryConfig();
+        WxMaDefaultConfigImpl wxMaInMemoryConfig = new WxMaDefaultConfigImpl();
         wxMaInMemoryConfig.setAppid(properties.getAppid());
         wxMaInMemoryConfig.setSecret(properties.getSecret());
         wxMaInMemoryConfig.setToken(properties.getToken());
@@ -64,25 +65,28 @@ public class WxMaConfiguration {
         return router;
     }
 
-    private final WxMaMessageHandler templateMsgHandler = (wxMessage, context, service, sessionManager) ->
-            service.getMsgService().sendTemplateMsg(WxMaTemplateMessage.builder()
-                    .templateId("此处更换为自己的模板id")
-                    .formId("自己替换可用的formid")
-                    .data(Lists.newArrayList(
-                            new WxMaTemplateData("keyword1", "339208499", "#173177")))
-                    .toUser(wxMessage.getFromUser())
-                    .build());
-
+    private final WxMaMessageHandler templateMsgHandler = (wxMessage, context, service, sessionManager) -> {
+        service.getMsgService().sendTemplateMsg(WxMaTemplateMessage.builder()
+                .templateId("此处更换为自己的模板id")
+                .formId("自己替换可用的formid")
+                .data(Lists.newArrayList(
+                        new WxMaTemplateData("keyword1", "339208499", "#173177")))
+                .toUser(wxMessage.getFromUser())
+                .build());
+        return null;
+    };
     private final WxMaMessageHandler logHandler = (wxMessage, context, service, sessionManager) -> {
         System.out.println("收到消息：" + wxMessage.toString());
         service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("收到信息为：" + wxMessage.toJson())
                 .toUser(wxMessage.getFromUser()).build());
+        return null;
     };
 
-    private final WxMaMessageHandler textHandler = (wxMessage, context, service, sessionManager) ->
-            service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("回复文本消息")
-                    .toUser(wxMessage.getFromUser()).build());
-
+    private final WxMaMessageHandler textHandler = (wxMessage, context, service, sessionManager) -> {
+        service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("回复文本消息")
+                .toUser(wxMessage.getFromUser()).build());
+        return null;
+    };
     private final WxMaMessageHandler picHandler = (wxMessage, context, service, sessionManager) -> {
         try {
             WxMediaUploadResult uploadResult = service.getMediaService()
@@ -97,6 +101,7 @@ public class WxMaConfiguration {
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
+        return null;
     };
 
     private final WxMaMessageHandler qrcodeHandler = (wxMessage, context, service, sessionManager) -> {
@@ -112,6 +117,7 @@ public class WxMaConfiguration {
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
+        return null;
     };
 
 }

@@ -1,7 +1,7 @@
 package com.platform.modules.sys.entity;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
+//import org.hibernate.validator.constraints.Range;
 
 import java.io.Serializable;
 
@@ -20,7 +20,7 @@ public class SmsConfig implements Serializable {
     /**
      * 类型 1：创瑞
      */
-    @Range(min = 1, max = 3, message = "类型错误")
+//    @Range(min = 1, max = 3, message = "类型错误")
     private Integer type;
 
     /**

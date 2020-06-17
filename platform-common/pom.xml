@@ -79,6 +79,7 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.8.2</version>
+<!--            <version>3.3.0</version>-->
         </dependency>
 
         <!-- commons工具包 -->
@@ -172,11 +173,11 @@
         </dependency>
 
         <!-- fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>fastjson</artifactId>-->
+<!--            <version>${fastjson.version}</version>-->
+<!--        </dependency>-->
 
         <!-- Velocity视图所需 -->
         <dependency>

@@ -11,8 +11,8 @@
  */
 package com.platform.modules.sys.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
 import com.platform.common.annotation.SysLog;
 import com.platform.common.utils.Constant;
 import com.platform.common.utils.RestResponse;
@@ -40,7 +40,7 @@ public class SysSmsLogController extends AbstractController {
     private SysSmsLogService sysSmsLogService;
     @Autowired
     private SysConfigService sysConfigService;
-
+    private Gson gson = new Gson();
     /**
      * 查看所有列表
      *
@@ -153,7 +153,7 @@ public class SysSmsLogController extends AbstractController {
     @RequiresPermissions("sys:smslog:config")
     @RequestMapping("/saveConfig")
     public RestResponse saveConfig(@RequestBody SmsConfig config) {
-        sysConfigService.updateValueByKey(Constant.SMS_CONFIG_KEY, JSON.toJSONString(config));
+        sysConfigService.updateValueByKey(Constant.SMS_CONFIG_KEY, gson.toJson(config));
         return RestResponse.success();
     }
 

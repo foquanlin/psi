@@ -11,7 +11,7 @@
  */
 package com.platform.modules.sys.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import com.platform.common.utils.JedisUtil;
 import com.platform.modules.sys.entity.SysCacheEntity;
 import com.platform.modules.sys.service.SysCacheService;
@@ -30,7 +30,7 @@ import java.util.Set;
 public class SysCacheServiceImpl implements SysCacheService {
     @Autowired
     private JedisUtil jedisUtil;
-
+    private Gson gson = new Gson();
     @Override
     public List<SysCacheEntity> queryAll(Map<String, String> params) {
         SysCacheEntity sysCacheEntity;
@@ -43,7 +43,7 @@ public class SysCacheServiceImpl implements SysCacheService {
             sysCacheEntity = new SysCacheEntity();
             sysCacheEntity.setCacheKey(key);
             try {
-                sysCacheEntity.setValue(JSONObject.toJSON(jedisUtil.get(key)).toString());
+                sysCacheEntity.setValue(gson.toJson(jedisUtil.get(key)));
             } catch (Exception e) {
                 sysCacheEntity.setValue("");
             }
