@@ -4,7 +4,7 @@ package com.platform.modules.gen.entity;
  * 列的属性
  *
  * @author lipengjun
- * @email 939961241@qq.com
+ * @email 147657060@qq.com
  * @date 2016年12月20日 上午12:01:45
  */
 public class ColumnEntity {

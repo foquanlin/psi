@@ -72,7 +72,7 @@ public class SubscribeHandler extends AbstractHandler {
         }
 
         try {
-            return new TextBuilder().build("您好，欢迎关注安徽微同科技有限公司微信公众号，您可以直接回复消息发现更多服务（如：文档、官网）。", wxMessage, weixinService);
+            return new TextBuilder().build("您好，欢迎关注酷天科技有限公司微信公众号，您可以直接回复消息发现更多服务（如：文档、官网）。", wxMessage, weixinService);
         } catch (Exception e) {
             this.logger.error(e.getMessage(), e);
         }

@@ -80,7 +80,7 @@ public class SwaggerConfig {
                 .title("酷天科技")
                 .description("酷天科技APP接口文档")
                 .version("1.0.0")
-                .contact(new Contact("林佛权", "https://fly2you.cn/my/u/1", "939961241@qq.com"))
+                .contact(new Contact("林佛权", "https://fly2you.cn/my/u/1", "147657060@qq.com"))
                 .build();
     }
 

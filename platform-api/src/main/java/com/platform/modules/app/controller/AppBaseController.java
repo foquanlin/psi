@@ -1,6 +1,6 @@
 package com.platform.modules.app.controller;
 
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;
@@ -60,20 +60,20 @@ public class AppBaseController {
         return xff;
     }
 
-    public JSONObject getJsonRequest() {
-        JSONObject result = null;
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = request.getReader();) {
-            char[] buff = new char[1024];
-            int len;
-            while ((len = reader.read(buff)) != -1) {
-                sb.append(buff, 0, len);
-            }
-            result = JSONObject.parseObject(sb.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
+//    public JSONObject getJsonRequest() {
+//        JSONObject result = null;
+//        StringBuilder sb = new StringBuilder();
+//        try (BufferedReader reader = request.getReader();) {
+//            char[] buff = new char[1024];
+//            int len;
+//            while ((len = reader.read(buff)) != -1) {
+//                sb.append(buff, 0, len);
+//            }
+//            result = JSONObject.parseObject(sb.toString());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return result;
+//    }
 }

@@ -10,7 +10,7 @@
         //文档id
         this.docId = "content";
         this.title = "swagger-bootstrap-ui";
-        this.titleOfUrl = "https://fly2you.cn";
+        this.titleOfUrl = "https://www.meilyhome.com";
         this.load = 1;
         //tabid
         this.tabId = "tabUl";

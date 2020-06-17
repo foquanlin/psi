@@ -1,7 +1,8 @@
 package com.platform.cache;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
+//import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
+import com.google.gson.Gson;
 import com.platform.common.utils.Constant;
 import com.platform.common.utils.JedisUtil;
 import com.platform.common.utils.StringUtils;
@@ -21,8 +22,8 @@ import org.springframework.stereotype.Component;
 public class UserTokenCache {
     @Autowired
     private JedisUtil jedisUtil;
-    static SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
-
+//    static SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
+    private Gson gson = new Gson();
     /**
      * 存放user和token的关联关系
      */
@@ -39,7 +40,7 @@ public class UserTokenCache {
     public SysUserTokenEntity getUserTokenByUserId(String userId) {
         String temp = jedisUtil.get(toUserTokenKey(userId));
         if (!org.springframework.util.StringUtils.isEmpty(temp)) {
-            SysUserTokenEntity d = JSON.parseObject(temp, SysUserTokenEntity.class);
+            SysUserTokenEntity d = gson.fromJson(temp, SysUserTokenEntity.class);
             return d;
         } else {
             return null;
@@ -79,7 +80,7 @@ public class UserTokenCache {
         if (d == null) {
             return null;
         }
-        return JSON.toJSONString(d, filter);
+        return gson.toJson(d);
     }
 
     private String toUserTokenKey(String userId) {
@@ -99,7 +100,7 @@ public class UserTokenCache {
         String temp = jedisUtil.get(toUserInfoKey(userId));
         log.error("getUserInfo temp:" + temp);
         if (!org.springframework.util.StringUtils.isEmpty(temp)) {
-            MallUserEntity d = JSON.parseObject(temp, MallUserEntity.class);
+            MallUserEntity d = gson.fromJson(temp, MallUserEntity.class);
             return d;
         } else {
             return null;
@@ -114,6 +115,6 @@ public class UserTokenCache {
         if (d == null) {
             return null;
         }
-        return JSON.toJSONString(d, filter);
+        return gson.toJson(d);
     }
 }

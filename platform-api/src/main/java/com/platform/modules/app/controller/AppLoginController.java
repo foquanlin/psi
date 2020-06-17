@@ -14,7 +14,6 @@ package com.platform.modules.app.controller;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -94,11 +93,11 @@ public class AppLoginController extends AppBaseController {
                     @ExampleProperty(mediaType = "password", value = "admin")
             }), required = true, dataType = "string")
     })
-    public RestResponse loginByMobile(@RequestBody JSONObject jsonObject) {
-        String mobile = jsonObject.getString("mobile");
+    public RestResponse loginByMobile(@RequestBody LoginRequest jsonObject) {
+        String mobile = jsonObject.getMobile();
         AbstractAssert.isBlank(mobile, "手机号不能为空");
 
-        String password = jsonObject.getString("password");
+        String password = jsonObject.getPassword();
         AbstractAssert.isBlank(password, "密码不能为空");
         //用户登录
         MallUserEntity user = userService.loginByMobile(mobile, password);
@@ -127,13 +126,13 @@ public class AppLoginController extends AppBaseController {
                     @ExampleProperty(mediaType = "userInfo", value = "wx.login()返回的userInfo信息，JSON格式参数")
             }), required = true, dataType = "string")
     })
-    public RestResponse LoginByMa(@RequestBody JSONObject jsonObject) {
+    public RestResponse LoginByMa(@RequestBody LoginRequest jsonObject) {
         FullUserInfo fullUserInfo = null;
-        String code = jsonObject.getString("code");
+        String code = jsonObject.getCode();
         AbstractAssert.isBlank(code, "登录失败：code为空");
 
-        if (null != jsonObject.get("userInfo")) {
-            fullUserInfo = jsonObject.getObject("userInfo", FullUserInfo.class);
+        if (null != jsonObject.getUserInfo()) {
+            fullUserInfo = jsonObject.getUserInfo();
         }
         AbstractAssert.isNull(fullUserInfo, "登录失败：userInfo为空");
 
@@ -200,8 +199,8 @@ public class AppLoginController extends AppBaseController {
                     @ExampleProperty(mediaType = "code", value = "oxaA11ulr9134oBL9Xscon5at_Gc")
             }), required = true, dataType = "string")
     })
-    public RestResponse loginByMp(@RequestBody JSONObject jsonObject) {
-        String code = jsonObject.getString("code");
+    public RestResponse loginByMp(@RequestBody LoginRequest jsonObject) {
+        String code = jsonObject.getCode();
 
         AbstractAssert.isBlank(code, "登录失败：code为空");
 
@@ -243,8 +242,8 @@ public class AppLoginController extends AppBaseController {
                     @ExampleProperty(mediaType = "code", value = "oxaA11ulr9134oBL9Xscon5at_Gc")
             }), required = true, dataType = "string")
     })
-    public RestResponse LoginByAli(@RequestBody JSONObject jsonObject) {
-        String code = jsonObject.getString("code");
+    public RestResponse LoginByAli(@RequestBody LoginRequest jsonObject) {
+        String code = jsonObject.getCode();
 
         AbstractAssert.isBlank(code, "登录失败：code为空");
 
@@ -316,13 +315,13 @@ public class AppLoginController extends AppBaseController {
                     @ExampleProperty(mediaType = "userInfo", value = "qq.login()返回的userInfo信息，JSON格式参数")
             }), required = true, dataType = "string")
     })
-    public RestResponse LoginByQQ(@RequestBody JSONObject jsonObject) {
+    public RestResponse LoginByQQ(@RequestBody LoginRequest jsonObject) {
         FullUserInfo fullUserInfo = null;
-        String code = jsonObject.getString("code");
+        String code = jsonObject.getCode();
         AbstractAssert.isBlank(code, "登录失败：code为空");
 
-        if (null != jsonObject.get("userInfo")) {
-            fullUserInfo = jsonObject.getObject("userInfo", FullUserInfo.class);
+        if (null != jsonObject.getUserInfo()) {
+            fullUserInfo = jsonObject.getUserInfo();
         }
         AbstractAssert.isNull(fullUserInfo, "登录失败：userInfo为空");
 
@@ -396,8 +395,8 @@ public class AppLoginController extends AppBaseController {
                     @ExampleProperty(mediaType = "openId", value = "ok8KW5GEIwAYTa-Z92JfbzxkVNpA")
             }), required = true, dataType = "string")
     })
-    public RestResponse loginByOpenId(@RequestBody JSONObject jsonObject) {
-        String openId = jsonObject.getString("openId");
+    public RestResponse loginByOpenId(@RequestBody LoginRequest jsonObject) {
+        String openId = jsonObject.getOpenId();
         MallUserEntity user = userService.selectByOpenId(openId);
         AbstractAssert.isNull(user, "登录失败：用户为空");
 

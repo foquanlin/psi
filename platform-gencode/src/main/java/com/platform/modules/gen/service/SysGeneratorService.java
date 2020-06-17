@@ -12,7 +12,7 @@ import java.util.Map;
  * 代码生成器
  *
  * @author lipengjun
- * @email 939961241@qq.com
+ * @email 147657060@qq.com
  * @date 2016年12月19日 下午3:33:38
  */
 public interface SysGeneratorService extends IService<ResultMapEntity> {

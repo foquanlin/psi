@@ -40,19 +40,10 @@ public class MsgHandler extends AbstractHandler {
                         return WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE()
                                 .fromUser(wxMessage.getToUser())
                                 .toUser(wxMessage.getFromUser()).build();
-                    } else if (StringUtils.equalsAny(content, "官网")) {
-                        WxMpXmlOutNewsMessage.Item item = new WxMpXmlOutNewsMessage.Item();
-                        item.setTitle("微同商城官网");
-                        item.setPicUrl("https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/pwm/logo.png");
-                        item.setUrl("http://fly2you.cn");
-                        return WxMpXmlOutMessage.NEWS().addArticle(item)
-                                .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
-                                .build();
                     } else if (StringUtils.equals(content, "文档")) {
                         WxMpXmlOutNewsMessage.Item item = new WxMpXmlOutNewsMessage.Item();
-                        item.setTitle("platform-wechat-mall开发文档1.0.4.pdf");
-                        item.setPicUrl("https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/pwm/logo.png");
-                        item.setUrl("http://fly2you.cn/guide/index");
+                        item.setTitle("欢迎关注");
+                        item.setUrl("http://www.meilyhome.com");
                         return WxMpXmlOutMessage.NEWS().addArticle(item)
                                 .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
                                 .build();

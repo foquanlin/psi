@@ -63,7 +63,7 @@ public class WxMenuController {
         WxMenuButton btn33 = new WxMenuButton();
         btn33.setName("微信点餐");
         btn33.setType(WxConsts.MenuButtonType.VIEW);
-        btn33.setUrl("https://fly2you.cn/mp");
+        btn33.setUrl("https://www.meilyhome.com");
 
         WxMenuButton mainBtn3 = new WxMenuButton();
         mainBtn3.setName("更多");
