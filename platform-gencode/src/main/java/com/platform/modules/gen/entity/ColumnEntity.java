@@ -43,6 +43,67 @@ public class ColumnEntity {
      * 属性的get方法
      */
     private String getMethod;
+    ///////////////新增的数据类型///////////////////////////////
+    /**
+     * 必填属性
+     */
+    private boolean required;
+    private String ordinalPosition;
+    private String columnDefault;
+    private String numericPrecision;
+    private String numericScale;
+    private String datetimePrecision;
+    private String isNullable;
+
+    //ORDINAL_POSITION,COLUMN_DEFAULT,NUMERIC_PRECISION,NUMERIC_SCALE,DATETIME_PRECISION,IS_NULLABLE
+
+    public String getOrdinalPosition() {
+        return ordinalPosition;
+    }
+
+    public void setOrdinalPosition(String ordinalPosition) {
+        this.ordinalPosition = ordinalPosition;
+    }
+
+    public String getColumnDefault() {
+        return columnDefault;
+    }
+
+    public void setColumnDefault(String columnDefault) {
+        this.columnDefault = columnDefault;
+    }
+
+    public String getNumericPrecision() {
+        return numericPrecision;
+    }
+
+    public void setNumericPrecision(String numericPrecision) {
+        this.numericPrecision = numericPrecision;
+    }
+
+    public String getNumericScale() {
+        return numericScale;
+    }
+
+    public void setNumericScale(String numericScale) {
+        this.numericScale = numericScale;
+    }
+
+    public String getDatetimePrecision() {
+        return datetimePrecision;
+    }
+
+    public void setDatetimePrecision(String datetimePrecision) {
+        this.datetimePrecision = datetimePrecision;
+    }
+
+    public String getIsNullable() {
+        return isNullable;
+    }
+
+    public void setIsNullable(String isNullable) {
+        this.isNullable = isNullable;
+    }
 
     public String getGetMethod() {
         return getMethod;
@@ -114,5 +175,13 @@ public class ColumnEntity {
 
     public void setColumnKey(String columnKey) {
         this.columnKey = columnKey;
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
     }
 }

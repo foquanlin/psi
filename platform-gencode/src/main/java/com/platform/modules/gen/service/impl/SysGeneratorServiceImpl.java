@@ -9,6 +9,8 @@ import com.platform.modules.gen.entity.ResultMapEntity;
 import com.platform.modules.gen.service.SysGeneratorService;
 import com.platform.modules.gen.utils.GenUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +53,13 @@ public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, Result
         params.put("tableName", tableName);
         params.put("driverClassName", driverClassName);
 
-        return baseMapper.queryColumns(params);
+        List<ColumnEntity> columns = baseMapper.queryColumns(params);
+        for(ColumnEntity entity:columns){
+            entity.setColumnDefault(entity.getColumnDefault()==null?"''":entity.getColumnDefault());
+            entity.setRequired("YES".equalsIgnoreCase(entity.getIsNullable())?false:true);
+        }
+        System.out.println(ReflectionToStringBuilder.reflectionToString(columns, ToStringStyle.SIMPLE_STYLE));
+        return columns;
     }
 
     @Override

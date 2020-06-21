@@ -1,13 +1,29 @@
 <template>
   <el-dialog
     :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
-    :close-on-click-modal="false"
+    :close-on-click-modal="false" width="71%"
     :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+    <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
       <el-form-item label="${column.comments}" prop="${column.attrname}">
-        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}"></el-input>
+#if($column.attrType=='Integer')
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable type="number"></el-input>
+    #elseif($column.attrType=='Long')
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable type="number"></el-input>
+    #elseif($column.attrType=='Float')
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable type="number"></el-input>
+    #elseif($column.attrType=='Double')
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable type="number"></el-input>
+    #elseif($column.attrType=='BigDecimal')
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable type="number"></el-input>
+    #elseif($column.attrType=='Boolean')
+        <el-switch v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否"></el-switch>
+    #elseif($column.attrType=='String')
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable></el-input>
+    #elseif($column.attrType=='Date')
+        <el-date-picker v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" type="date"></el-date-picker>
+#end
       </el-form-item>
 #end
 #end
@@ -30,13 +46,17 @@
 #if($column.columnName == $pk.columnName)
           ${column.attrname}: 0,
 #else
-          ${column.attrname}: ''#if($velocityCount != $columns.size()),
-#end#end#end
+          ${column.attrname}: ${column.columnDefault}#if($velocityCount != $columns.size()),
+#end#end
+#end
 },
         dataRule: {
-          name: [
-            {required: true, message: '名称不能为空', trigger: 'blur'}
-          ]
+#foreach($column in $columns)
+    #if($column.columnName != $pk.columnName)
+        #if($column.required)
+    ${column.attrname}: [{required: true, message: '${column.comments}不能为空', trigger: 'blur'}]#if($velocityCount != $columns.size()),
+#end#end#end#end
+        other: []
         }
       }
     },

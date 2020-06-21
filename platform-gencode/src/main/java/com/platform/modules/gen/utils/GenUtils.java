@@ -70,7 +70,13 @@ public class GenUtils {
             columnEntity.setColumnName(column.getColumnName().toUpperCase());
             columnEntity.setDataType(column.getDataType());
             columnEntity.setComments(null == column.getComments() ? column.getColumnName() : column.getComments());
-
+            columnEntity.setColumnDefault(column.getColumnDefault());
+            columnEntity.setRequired(column.isRequired());
+            columnEntity.setIsNullable(column.getIsNullable());
+            columnEntity.setDatetimePrecision(column.getDatetimePrecision());
+            columnEntity.setOrdinalPosition(column.getOrdinalPosition());
+            columnEntity.setNumericPrecision(column.getNumericPrecision());
+            columnEntity.setNumericScale(column.getNumericScale());
             //列名转换成Java属性名
             String attrName = columnToJava(columnEntity.getColumnName());
             columnEntity.setGetMethod("get" + attrName + "()");
@@ -160,6 +166,7 @@ public class GenUtils {
             try {
                 //添加到zip
                 zip.putNextEntry(new ZipEntry(Objects.requireNonNull(getFileName(template, tableEntity.getClassName(), packageName, pre))));
+                System.out.println(sw.toString());
                 IOUtils.write(sw.toString(), zip, "UTF-8");
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();

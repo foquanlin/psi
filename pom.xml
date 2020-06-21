@@ -72,6 +72,7 @@
         <module>platform-gencode</module>
         <module>platform-wechat</module>
         <module>platform-mail</module>
+        <module>modules-old</module>
         <module>platform-admin</module>
         <module>platform-api</module>
         <module>platform-biz</module>

@@ -133,7 +133,7 @@ public class SysMenuController extends AbstractController {
     @PostMapping("/save")
     @RequiresPermissions("sys:menu:save")
     public RestResponse save(@RequestBody SysMenuEntity menu) {
-        ValidatorUtils.validateEntity(menu, AddGroup.class);
+//        ValidatorUtils.validateEntity(menu, AddGroup.class);
         //数据校验
         verifyForm(menu);
 

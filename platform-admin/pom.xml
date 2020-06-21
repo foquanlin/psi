@@ -29,6 +29,11 @@
             <artifactId>itext</artifactId>
             <version>2.1.7</version>
         </dependency>
+        <dependency>
+            <groupId>com.platform</groupId>
+            <artifactId>modules-old</artifactId>
+            <version>2.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.platform</groupId>
@@ -54,6 +59,11 @@
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-sys</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.platform</groupId>
+            <artifactId>platform-common</artifactId>
             <version>2.0.0</version>
         </dependency>
 

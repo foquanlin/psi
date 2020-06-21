@@ -108,7 +108,7 @@ platform-plus
 ```
 
 **项目演示**
-- 演示地址：http://fly2you.cn/platform-plus/#/login
+- 演示地址：http://www.meilyhome.com/platform-plus/#/login
 - 账号密码：
   - test/888888
   - test1/888888
