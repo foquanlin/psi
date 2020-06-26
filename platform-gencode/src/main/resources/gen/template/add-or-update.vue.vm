@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
+    :title="!dataForm.$pk.attrname ? '新增' : !disabled ? '修改' : '查看'"
     :close-on-click-modal="false" width="71%"
     :visible.sync="visible">
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
@@ -60,15 +60,15 @@
         }
       }
     },
-#set($id='${this.dataForm.'+$pk.columnName+'}')
+#set($id='${this.dataForm.'+$pk.attrname+'}')
     methods: {
       init (id, disabled) {
         this.disabled = disabled
-        this.dataForm.$pk.columnName = id || ''
+        this.dataForm.$pk.attrname = id || ''
         this.visible = true
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
-          if (this.dataForm.$pk.columnName) {
+          if (this.dataForm.$pk.attrname) {
             this.$http({
               url: `/${pre}/${pathName}/info/$id`,
               method: 'get'
@@ -86,7 +86,7 @@
           .validate((valid) => {
             if (valid) {
               this.$http({
-                url: `/${pre}/${pathName}/${!this.dataForm.$pk.columnName ? 'save' : 'update'}`,
+                url: `/${pre}/${pathName}/${!this.dataForm.$pk.attrname ? 'save' : 'update'}`,
                 method: 'post',
                 data: this.dataForm
               }).then(({data}) => {
