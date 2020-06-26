@@ -77,6 +77,7 @@ public class GenUtils {
             columnEntity.setOrdinalPosition(column.getOrdinalPosition());
             columnEntity.setNumericPrecision(column.getNumericPrecision());
             columnEntity.setNumericScale(column.getNumericScale());
+            columnEntity.setExtra(column.getExtra());
             //列名转换成Java属性名
             String attrName = columnToJava(columnEntity.getColumnName());
             columnEntity.setGetMethod("get" + attrName + "()");

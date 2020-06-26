@@ -44,7 +44,7 @@
         dataForm: {
 #foreach($column in $columns)
 #if($column.columnName == $pk.columnName)
-          ${column.attrname}: 0,
+          ${column.attrname}: '',
 #else
           ${column.attrname}: ${column.columnDefault}#if($velocityCount != $columns.size()),
 #end#end
@@ -60,16 +60,17 @@
         }
       }
     },
+  #set($id='${this.dataForm.'+$pk.columnName+'}')
     methods: {
       init (id, disabled) {
         this.disabled = disabled
-        this.dataForm.id = id || ''
+        this.dataForm.$pk.columnName = id || ''
         this.visible = true
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
-          if (this.dataForm.id) {
+          if (this.dataForm.$pk.columnName) {
             this.$http({
-              url: `/${pre}/${pathName}/info/${this.dataForm.id}`,
+              url: `/${pre}/${pathName}/info/$id`,
               method: 'get'
             }).then(({data}) => {
               if (data && data.code === 0) {
@@ -85,7 +86,7 @@
           .validate((valid) => {
             if (valid) {
               this.$http({
-                url: `/${pre}/${pathName}/${!this.dataForm.id ? 'save' : 'update'}`,
+                url: `/${pre}/${pathName}/${!this.dataForm.$pk.columnName ? 'save' : 'update'}`,
                 method: 'post',
                 data: this.dataForm
               }).then(({data}) => {

@@ -39,7 +39,11 @@ public class ${className}Entity implements Serializable {
     /**
      * $column.comments
      */
+#if($column.extra == 'auto_increment')
+    @TableId(type=IdType.AUTO)
+#else
     @TableId
+#end
     private $column.attrType $column.attrname;
 #else
     /**
