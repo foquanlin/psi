@@ -22,7 +22,7 @@
     #elseif($column.attrType=='String')
         <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable></el-input>
     #elseif($column.attrType=='Date')
-        <el-date-picker v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" type="date"></el-date-picker>
+        <el-date-picker v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" type="date" format="yyyy-MM-dd"></el-date-picker>
 #end
       </el-form-item>
 #end

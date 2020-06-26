@@ -48,16 +48,19 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${clas
     }
 
     @Override
+    @Transactional
     public boolean add(${className}Entity ${classname}) {
         return this.save(${classname});
     }
 
     @Override
+    @Transactional
     public boolean update(${className}Entity ${classname}) {
         return this.updateById(${classname});
     }
 
     @Override
+    @Transactional
     public boolean delete(${pk.attrType} ${pk.attrname}) {
         return this.removeById(${pk.attrname});
     }

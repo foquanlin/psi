@@ -27,7 +27,7 @@
         prop="${column.attrname}"
         header-align="center"
         align="center"
-        label="${column.comments}">
+        label="${column.comments}" #if($column.attrType=='Date') :formatter="formatDate"#end>
       </el-table-column>
 #end
 #end
@@ -82,6 +82,15 @@
       this.getDataList()
     },
     methods: {
+      formatSex: function (row, column, cellValue, index) {
+        return cellValue === 1 ? '男' : cellValue === 0 ? '女' : '未知'
+      },
+      formatDate (row, column, cellValue, index) {
+        if (cellValue === null || cellValue === undefined) {
+          return ''
+        }
+        return cellValue.split('T')[0]
+      },
       // 获取数据列表
       getDataList () {
         this.$http({
