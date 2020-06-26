@@ -52,15 +52,15 @@
 },
         dataRule: {
 #foreach($column in $columns)
-    #if($column.columnName != $pk.columnName)
-        #if($column.required)
-    ${column.attrname}: [{required: true, message: '${column.comments}不能为空', trigger: 'blur'}]#if($velocityCount != $columns.size()),
+#if($column.columnName != $pk.columnName)
+#if($column.required)
+          ${column.attrname}: [{required: true, message: '${column.comments}不能为空', trigger: 'blur'}]#if($velocityCount != $columns.size()),
 #end#end#end#end
-        other: []
+          other: []
         }
       }
     },
-  #set($id='${this.dataForm.'+$pk.columnName+'}')
+#set($id='${this.dataForm.'+$pk.columnName+'}')
     methods: {
       init (id, disabled) {
         this.disabled = disabled
