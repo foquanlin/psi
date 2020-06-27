@@ -490,11 +490,11 @@ INSERT INTO `SYS_MENU` VALUES ('150101', '1501', '强制下线', null, 'sys:user
 INSERT INTO `SYS_MENU` VALUES ('1502', '15', '缓存信息', 'sys/redis', 'sys:cache:queryAll', 1, 'redis', 2,1);
 INSERT INTO `SYS_MENU` VALUES ('150201', '1502', '删除', null, 'sys:cache:deleteCache', 2, null, 0,1);
 
-INSERT INTO `SYS_MENU` VALUES ('1503', '15', 'SQL监控', 'http://localhost:8888/platform-admin/druid/sql.html', null, 1, 'sql', 3,0);
-INSERT INTO `SYS_MENU` VALUES ('1504', '15', '接口文档', 'http://localhost:8889/platform-api/doc.html', null, 1, 'interface', 4,1);
+-- INSERT INTO `SYS_MENU` VALUES ('1503', '15', 'SQL监控', 'http://localhost:8888/platform-admin/druid/sql.html', null, 1, 'sql', 3,0);
+-- INSERT INTO `SYS_MENU` VALUES ('1504', '15', '接口文档', 'http://localhost:8889/platform-api/doc.html', null, 1, 'interface', 4,1);
 INSERT INTO `SYS_MENU` VALUES ('1505', '15', '代码生成器', 'gen/generator', 'sys:generator:list', 1, 'code', 5,1);
 INSERT INTO `SYS_MENU` VALUES ('150501', '1505', '生成代码', null, 'sys:generator:code', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('16', '0', 'ELK平台', 'http://localhost:5601', null, '1', 'log', 7,0);
+-- INSERT INTO `SYS_MENU` VALUES ('16', '0', 'ELK平台', 'http://localhost:5601', null, '1', 'log', 7,0);
 
 
 -- ----------------------------

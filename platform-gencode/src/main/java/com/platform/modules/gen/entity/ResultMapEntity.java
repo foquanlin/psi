@@ -9,7 +9,7 @@ import java.util.Date;
  * 名称：ResultMap <br>
  * 描述：查询表信息返回的BaseResultMap<br>
  *
- * @author lipengjun
+ * @author 林佛权
  * @date 2019-01-24 14:20
  */
 @Data

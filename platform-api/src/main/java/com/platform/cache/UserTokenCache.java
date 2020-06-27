@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 /**
  * 司机经纬度存储
  *
- * @author Lipengjun
+ * @author 林佛权
  */
 @Slf4j
 @Component

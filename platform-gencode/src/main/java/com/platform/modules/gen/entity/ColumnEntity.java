@@ -3,7 +3,7 @@ package com.platform.modules.gen.entity;
 /**
  * 列的属性
  *
- * @author lipengjun
+ * @author 林佛权
  * @email 147657060@qq.com
  * @date 2016年12月20日 上午12:01:45
  */

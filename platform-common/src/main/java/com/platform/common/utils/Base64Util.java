@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
- * 作者: @author Lipengjun <br>
+ * 作者: @author 林佛权 <br>
  * 时间: 2017-08-11 16:17<br>
  * 描述: Base64 <br>
  */

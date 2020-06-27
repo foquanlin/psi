@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 作者: @author Lipengjun <br>
+ * 作者: @author 林佛权 <br>
  * 时间: 2018-01-30 18:04<br>
  * 描述: 二维码生成工具类 <br>
  */

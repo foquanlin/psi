@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 角色与机构对应关系
  *
- * @author lipengjun
+ * @author 林佛权
  * @date 2017年9月18日 上午9:18:38
  */
 @Service("sysRoleOrgService")

@@ -25,7 +25,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * 代码生成器   工具类
  *
- * @author lipengjun
+ * @author 林佛权
  * @email 147657060@qq.com
  * @date 2017年1月3日 下午6:35:28
  */
