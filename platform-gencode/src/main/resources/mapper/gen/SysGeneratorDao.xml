@@ -59,4 +59,16 @@
 				WHERE USER_TAB_COLUMNS.TABLE_NAME = #{tableName}
 		</if>
 	</select>
+
+	<select id="queryForeign" resultType="com.platform.modules.gen.entity.ForeignEntity">
+			SELECT F.ID as id,
+			substring_index(F.FOR_NAME,'/',-1) as forName,
+			substring_index(F.REF_NAME,'/',-1) as refName
+			,R.FOR_COL_NAME as forColName,
+			R.REF_COL_NAME as refColName,
+			F.N_COLS as cols,F.TYPE as type ,R.POS as pos
+			FROM INFORMATION_SCHEMA.INNODB_SYS_FOREIGN F,INFORMATION_SCHEMA.INNODB_SYS_FOREIGN_COLS R
+			where F.ID=R.ID AND F.REF_NAME LIKE concat(database(),'/%') and F.FOR_NAME =CONCAT(database(),'/',#{tableName});
+	</select>
+
 </mapper>

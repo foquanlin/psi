@@ -5,12 +5,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.platform.common.utils.Query;
 import com.platform.modules.gen.dao.SysGeneratorDao;
 import com.platform.modules.gen.entity.ColumnEntity;
+import com.platform.modules.gen.entity.ForeignEntity;
 import com.platform.modules.gen.entity.ResultMapEntity;
+import com.platform.modules.gen.entity.TableEntity;
 import com.platform.modules.gen.service.SysGeneratorService;
 import com.platform.modules.gen.utils.GenUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,8 @@ import java.util.zip.ZipOutputStream;
  */
 @Service("sysGeneratorService")
 public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, ResultMapEntity> implements SysGeneratorService {
+    private static Logger logger = LoggerFactory.getLogger(SysGeneratorServiceImpl.class);
+
     @Value("${spring.datasource.driverClassName}")
     private String driverClassName;
 
@@ -58,7 +64,17 @@ public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, Result
             entity.setColumnDefault(entity.getColumnDefault()==null?"''":entity.getColumnDefault());
             entity.setRequired("YES".equalsIgnoreCase(entity.getIsNullable())?false:true);
         }
-        System.out.println(ReflectionToStringBuilder.reflectionToString(columns, ToStringStyle.SIMPLE_STYLE));
+        logger.info(ReflectionToStringBuilder.reflectionToString(columns, ToStringStyle.SIMPLE_STYLE));
+        return columns;
+    }
+
+    private List<ForeignEntity> queryForeigns(String tableName){
+        Map<String, Object> params = new HashMap<>(4);
+
+        params.put("tableName", tableName);
+        params.put("driverClassName", driverClassName);
+        List<ForeignEntity> columns = baseMapper.queryForeign(params);
+        logger.info(ReflectionToStringBuilder.reflectionToString(columns, ToStringStyle.SIMPLE_STYLE));
         return columns;
     }
 
@@ -72,9 +88,11 @@ public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, Result
             ResultMapEntity table = queryTable(tableName);
             //查询列信息
             List<ColumnEntity> columns = queryColumns(tableName);
+            List<ForeignEntity> foreigns = queryForeigns(tableName);
             //生成代码
             String tablePrefix = tableName.split("_")[0];
-            GenUtils.generatorCode(table, columns, zip, projectName, packageName, author, tablePrefix);
+            TableEntity tableEntity = GenUtils.builder(table,columns,foreigns);
+            GenUtils.generatorCode(tableEntity, zip, projectName, packageName, author, tablePrefix);
         }
         IOUtils.closeQuietly(zip);
         return outputStream.toByteArray();

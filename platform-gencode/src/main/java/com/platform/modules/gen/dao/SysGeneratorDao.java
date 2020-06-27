@@ -3,6 +3,7 @@ package com.platform.modules.gen.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.platform.modules.gen.entity.ColumnEntity;
+import com.platform.modules.gen.entity.ForeignEntity;
 import com.platform.modules.gen.entity.ResultMapEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -44,4 +45,11 @@ public interface SysGeneratorDao extends BaseMapper<ResultMapEntity> {
      * @return List
      */
     List<ColumnEntity> queryColumns(Map<String, Object> params);
+
+    /**
+     * 查询关联外键的字段
+     * @param params
+     * @return
+     */
+    List<ForeignEntity> queryForeign(Map<String, Object> params);
 }

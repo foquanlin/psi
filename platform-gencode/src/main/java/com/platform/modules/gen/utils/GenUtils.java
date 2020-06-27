@@ -3,6 +3,7 @@ package com.platform.modules.gen.utils;
 import com.platform.common.exception.BusinessException;
 import com.platform.common.utils.DateUtils;
 import com.platform.modules.gen.entity.ColumnEntity;
+import com.platform.modules.gen.entity.ForeignEntity;
 import com.platform.modules.gen.entity.ResultMapEntity;
 import com.platform.modules.gen.entity.TableEntity;
 import org.apache.commons.configuration.Configuration;
@@ -44,11 +45,9 @@ public class GenUtils {
         return templates;
     }
 
-    /**
-     * 生成代码
-     */
-    public static void generatorCode(ResultMapEntity table,
-                                     List<ColumnEntity> columns, ZipOutputStream zip, String projectName, String packageName, String author, String tablePrefix) {
+    public static TableEntity builder(ResultMapEntity table,
+                               List<ColumnEntity> columns,
+                               List<ForeignEntity> foreigns){
         //配置信息
         Configuration config = getConfig();
 
@@ -60,11 +59,11 @@ public class GenUtils {
         String className = tableToJava(tableEntity.getTableName());
         tableEntity.setClassName(className);
         tableEntity.setClassname(StringUtils.uncapitalize(className));
-
+        tableEntity.setForeigns(foreigns);
         //列信息
         List<ColumnEntity> columsList = new ArrayList<>();
-        boolean hasDate = false;
-        boolean hasBigDecimal = false;
+//        boolean hasDate = false;
+//        boolean hasBigDecimal = false;
         for (ColumnEntity column : columns) {
             ColumnEntity columnEntity = new ColumnEntity();
             columnEntity.setColumnName(column.getColumnName().toUpperCase());
@@ -92,10 +91,12 @@ public class GenUtils {
             columnEntity.setAttrType(attrType);
 
             if ("Date".equals(attrType)) {
-                hasDate = true;
+//                hasDate = true;
+                tableEntity.setHasDate(true);
             }
             if ("BigDecimal".equals(attrType)) {
-                hasBigDecimal = true;
+//                hasBigDecimal = true;
+                tableEntity.setHasBigDecimal(true);
             }
             //是否主键
             if ((column.getColumnName().equalsIgnoreCase(column.getColumnKey()) && tableEntity.getPk() == null)) {
@@ -122,10 +123,18 @@ public class GenUtils {
                 tableEntity.setPk(tableEntity.getColumns().get(0));
             }
         }
-        codeFactory(tablePrefix, tableEntity, packageName, projectName, author, hasDate, hasBigDecimal, zip);
+        return tableEntity;
     }
 
-    private static void codeFactory(String tablePrefix, TableEntity tableEntity, String packageName, String projectName, String author, boolean hasDate, boolean hasBigDecimal, ZipOutputStream zip) {
+    /**
+     * 生成代码
+     */
+    public static void generatorCode(TableEntity tableEntity,
+                                     ZipOutputStream zip,
+                                     String projectName,
+                                     String packageName,
+                                     String author,
+                                     String tablePrefix) {
 
         String pre = tablePrefix.replace("_", "").toLowerCase();
         //设置velocity资源加载器
@@ -152,8 +161,14 @@ public class GenUtils {
         map.put("author", author);
         map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
         map.put("pre", pre);
-        map.put("hasDate", hasDate);
-        map.put("hasBigDecimal", hasBigDecimal);
+        map.put("hasDate", tableEntity.isHasDate());
+        map.put("hasBigDecimal", tableEntity.isHasBigDecimal());
+
+        codeFactory(map,tablePrefix, tableEntity, packageName, zip);
+    }
+
+    public static void codeFactory(Map<String, Object> map,String tablePrefix, TableEntity tableEntity, String packageName, ZipOutputStream zip) {
+        String pre = tablePrefix.replace("_", "").toLowerCase();
         VelocityContext context = new VelocityContext(map);
 
         //获取模板列表

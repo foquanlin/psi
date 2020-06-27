@@ -26,6 +26,7 @@ public class TableEntity {
      * 表的列名(不包含主键)
      */
     private List<ColumnEntity> columns;
+    private List<ForeignEntity> foreigns;
 
     /**
      * 类名(第一个字母大写)，如：sys_user => SysUser
@@ -35,6 +36,24 @@ public class TableEntity {
      * 类名(第一个字母小写)，如：sys_user => sysUser
      */
     private String classname;
+    private boolean hasDate;
+    private boolean hasBigDecimal;
+
+    public boolean isHasDate() {
+        return hasDate;
+    }
+
+    public void setHasDate(boolean hasDate) {
+        this.hasDate = hasDate;
+    }
+
+    public boolean isHasBigDecimal() {
+        return hasBigDecimal;
+    }
+
+    public void setHasBigDecimal(boolean hasBigDecimal) {
+        this.hasBigDecimal = hasBigDecimal;
+    }
 
     public String getTableName() {
         return tableName;
@@ -82,5 +101,13 @@ public class TableEntity {
 
     public void setClassname(String classname) {
         this.classname = classname;
+    }
+
+    public List<ForeignEntity> getForeigns() {
+        return foreigns;
+    }
+
+    public void setForeigns(List<ForeignEntity> foreigns) {
+        this.foreigns = foreigns;
     }
 }
