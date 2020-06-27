@@ -60,7 +60,7 @@
 
 <script>
   import AddOrUpdate from './${pathName}-add-or-update'
-
+  import Options from '../sys/options'
   export default {
     data () {
       return {
@@ -76,24 +76,16 @@
       }
     },
     components: {
-      AddOrUpdate
+      AddOrUpdate,
+      Options
     },
     activated () {
       this.getDataList()
     },
     methods: {
-      formatBool (row, column, cellValue, index) {
-        return cellValue === true ? '是' : '否'
-      },
-      formatSex: function (row, column, cellValue, index) {
-        return cellValue === 1 ? '男' : cellValue === 0 ? '女' : '未知'
-      },
-      formatDate (row, column, cellValue, index) {
-        if (cellValue === null || cellValue === undefined) {
-          return ''
-        }
-        return cellValue.split('T')[0]
-      },
+      formatBool: (row, column, cellValue, index) => Options.formatArray(Options.yesno, cellValue),
+      formatSex: (row, column, cellValue, index) => Options.formatArray(Options.genders, cellValue),
+      formatDate: (row, column, cellValue, index) => Options.formatDate(row, column, cellValue, index),
       // 获取数据列表
       getDataList () {
         this.$http({
