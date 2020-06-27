@@ -54,7 +54,7 @@ public class ColumnEntity {
     private String numericScale;
     private String datetimePrecision;
     private String isNullable;
-
+    private boolean select;
     //ORDINAL_POSITION,COLUMN_DEFAULT,NUMERIC_PRECISION,NUMERIC_SCALE,DATETIME_PRECISION,IS_NULLABLE
 
     public String getOrdinalPosition() {
@@ -183,5 +183,13 @@ public class ColumnEntity {
 
     public void setRequired(boolean required) {
         this.required = required;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
     }
 }

@@ -2,12 +2,24 @@ package com.platform;
 
 import static org.junit.Assert.assertTrue;
 
+import com.google.gson.Gson;
+import com.platform.modules.oss.entity.SysOssEntity;
 import com.qcloud.cos.utils.Jackson;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.boot.json.JacksonJsonParser;
+import org.springframework.core.env.PropertySources;
+import org.springframework.core.io.Resource;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -15,6 +27,12 @@ import java.util.TimeZone;
  * Unit test for simple App.
  */
 public class AppTest{
+    @Test
+    public void testYaml() throws IOException {
+        ClasspathResourceLoader loader = new ClasspathResourceLoader();
+        SysOssEntity entity = new Gson().fromJson(new InputStreamReader(loader.getResourceStream("*.json")), SysOssEntity.class);
+        System.out.println(entity.getUrl());
+    }
     /**
      * Rigorous Test :-)
      */
