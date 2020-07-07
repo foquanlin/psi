@@ -1,9 +1,15 @@
 -- 菜单
-name: ${comments}
-url: ${pre}/${pathName}
-perms: ${pre}:${pathName}:list,${pre}:${pathName}:info
+-- name: ${comments}
+-- url: ${pre}/${pathName}
+-- perms: ${pre}:${pathName}:list,${pre}:${pathName}:info
 
 -- 按钮权限
-新增: ${pre}:${pathName}:save
-修改: ${pre}:${pathName}:update
-删除: ${pre}:${pathName}:delete
+-- 新增: ${pre}:${pathName}:save
+-- 修改: ${pre}:${pathName}:update
+-- 删除: ${pre}:${pathName}:delete
+
+insert into SYS_MENU(MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS) values ('20','0','${comments}管理','${pre}/${pathName}','${pre}:${pathName}:list,${pre}:${pathName}:info',0,null,0,1);
+insert into SYS_MENU(MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS) values ('2001','0','新增',null,'${pre}:${pathName}:save',0,null,0,1);
+insert into SYS_MENU(MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS) values ('2002','0','修改',null,'${pre}:${pathName}:update',0,null,0,1);
+insert into SYS_MENU(MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS) values ('2003','0','删除',null,'${pre}:${pathName}:delete',0,null,0,1);
+
