@@ -13,8 +13,8 @@ package com.platform.resolver;
 
 import com.platform.annotation.LoginUser;
 import com.platform.interceptor.AuthorizationInterceptor;
-import com.platform.modules.mall.entity.MallUserEntity;
-import com.platform.modules.mall.service.MallUserService;
+import com.platform.modules.user.IUserEntity;
+import com.platform.modules.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -31,12 +31,12 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  */
 @Component
 public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
-    @Autowired
-    private MallUserService userService;
+//    @Autowired
+//    private IUserService<IUserEntity> userService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(MallUserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
+        return parameter.getParameterType().isAssignableFrom(IUserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
         }
 
         //获取用户信息
-
-        return userService.getById((String) object);
+        return null;
+//        return userService.getById((String) object);
     }
 }

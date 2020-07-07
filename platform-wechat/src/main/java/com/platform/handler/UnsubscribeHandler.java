@@ -2,8 +2,6 @@ package com.platform.handler;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.platform.common.utils.Constant;
-import com.platform.modules.mall.entity.MallUserEntity;
-import com.platform.modules.mall.service.MallUserService;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -20,8 +18,8 @@ import java.util.Map;
  */
 @Component
 public class UnsubscribeHandler extends AbstractHandler {
-    @Autowired
-    private MallUserService userService;
+//    @Autowired
+//    private IUserService<IUserEntity> userService;
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
@@ -30,10 +28,10 @@ public class UnsubscribeHandler extends AbstractHandler {
         String openId = wxMessage.getFromUser();
         this.logger.info("取消关注用户 OPENID: " + openId);
 
-        MallUserEntity entity = userService.getOne(new QueryWrapper<MallUserEntity>().eq("OPEN_ID", openId));
-
-        entity.setSubscribe(Constant.UNSUBSCRIBE);
-        userService.updateById(entity);
+//        IUserEntity entity = userService.getOne(new QueryWrapper<IUserEntity>().eq("OPEN_ID", openId));
+//
+//        entity.setSubscribe(Constant.UNSUBSCRIBE);
+//        userService.updateById(entity);
         return null;
     }
 

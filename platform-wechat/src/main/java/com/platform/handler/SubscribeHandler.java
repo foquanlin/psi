@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.platform.builder.TextBuilder;
 import com.platform.common.utils.Constant;
 import com.platform.common.utils.DateUtils;
-import com.platform.modules.mall.entity.MallUserEntity;
-import com.platform.modules.mall.service.MallUserService;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -25,8 +23,8 @@ import java.util.Map;
  */
 @Component
 public class SubscribeHandler extends AbstractHandler {
-    @Autowired
-    private MallUserService userService;
+//    @Autowired
+//    private IUserService<IUserEntity> userService;
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
@@ -36,28 +34,28 @@ public class SubscribeHandler extends AbstractHandler {
         this.logger.info("新关注用户 OPENID: " + wxMessage.getFromUser());
 
         // 获取微信用户基本信息
-        try {
-            WxMpUser userWxInfo = weixinService.getUserService()
-                    .userInfo(wxMessage.getFromUser(), null);
-            if (userWxInfo != null) {
-                this.logger.info("用户: " + userWxInfo.toString());
-                MallUserEntity entity = userService.getOne(new QueryWrapper<MallUserEntity>().eq("OPEN_ID", userWxInfo.getOpenId()));
-                if (entity == null) {
-                    entity = new MallUserEntity();
-                    entity.setRegisterTime(new Date());
-                }
-                entity.setUserName(userWxInfo.getNickname());
-                entity.setNickname(userWxInfo.getNickname());
-                entity.setHeadImgUrl(userWxInfo.getHeadImgUrl());
-                entity.setMpOpenId(userWxInfo.getOpenId());
-                entity.setGender(userWxInfo.getSex());
-                entity.setSubscribe(Constant.SUBSCRIBE);
-                entity.setSubscribeTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
-                userService.saveOrUpdate(entity);
-            }
-        } catch (WxErrorException e) {
-            this.logger.error(e.getLocalizedMessage());
-        }
+//        try {
+//            WxMpUser userWxInfo = weixinService.getUserService()
+//                    .userInfo(wxMessage.getFromUser(), null);
+//            if (userWxInfo != null) {
+//                this.logger.info("用户: " + userWxInfo.toString());
+//                IUserEntity entity = userService.getOne(new QueryWrapper<IUserEntity>().eq("OPEN_ID", userWxInfo.getOpenId()));
+//                if (entity == null) {
+//                    //entity = new MallUserEntity();
+//                    entity.setRegisterTime(new Date());
+//                }
+//                entity.setUserName(userWxInfo.getNickname());
+//                entity.setNickname(userWxInfo.getNickname());
+//                entity.setHeadImgUrl(userWxInfo.getHeadImgUrl());
+//                entity.setMpOpenId(userWxInfo.getOpenId());
+//                entity.setGender(userWxInfo.getSex());
+//                entity.setSubscribe(Constant.SUBSCRIBE);
+//                entity.setSubscribeTime(DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
+//                userService.saveOrUpdate(entity);
+//            }
+//        } catch (WxErrorException e) {
+//            this.logger.error(e.getLocalizedMessage());
+//        }
 
 
         WxMpXmlOutMessage responseResult = null;
