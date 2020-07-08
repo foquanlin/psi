@@ -39,6 +39,7 @@ public class GenUtils {
         templates.add("gen/template/Service.java.vm");
         templates.add("gen/template/ServiceImpl.java.vm");
         templates.add("gen/template/Controller.java.vm");
+        templates.add("gen/template/MockTest.java.vm");
         templates.add("gen/template/menu.sql.vm");
         templates.add("gen/template/vue.vm");
         templates.add("gen/template/add-or-update.vue.vm");
@@ -187,6 +188,7 @@ public class GenUtils {
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new BusinessException("渲染模板失败，表名：" + tableEntity.getTableName(), e);
             }
         }
@@ -228,13 +230,16 @@ public class GenUtils {
         String strSJV = "Service.java.vm";
         String strSIJV = "ServiceImpl.java.vm";
         String strCJV = "Controller.java.vm";
+        String strTest = "MockTest.java.vm";
         String strAouVV = "add-or-update.vue.vm";
         String strVV = "vue.vm";
         String strMSV = "menu.sql.vm";
 
         String packagePath = "main" + File.separator + "java" + File.separator;
+        String testPath = "test" + File.separator + "java" + File.separator;
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator + tablePrefix + File.separator;
+            testPath += packageName.replace(".", File.separator) + File.separator + tablePrefix + File.separator;
         }
 
         if (template.contains(strEJV)) {
@@ -243,10 +248,6 @@ public class GenUtils {
 
         if (template.contains(strDJV)) {
             return packagePath + "dao" + File.separator + className + "Dao.java";
-        }
-
-        if (template.contains(strDXV)) {
-            return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + tablePrefix + File.separator + className + "Dao.xml";
         }
 
         if (template.contains(strSJV)) {
@@ -261,16 +262,24 @@ public class GenUtils {
             return packagePath + "controller" + File.separator + className + "Controller.java";
         }
 
+        if (template.contains(strTest)) {
+            return testPath  + File.separator + className + "MockTest.java";
+        }
+
+        if (template.contains(strDXV)) {
+            return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + tablePrefix + File.separator + className + "Dao.xml";
+        }
+
         if (template.contains(strAouVV)) {
-            return "main" + File.separator + "modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + "-add-or-update.vue";
+            return "modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + "-add-or-update.vue";
         }
 
         if (template.contains(strVV)) {
-            return "main" + File.separator + "modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + ".vue";
+            return "modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + ".vue";
         }
 
         if (template.contains(strMSV)) {
-            return className + ".sql";
+            return "sql" + File.separator + className + ".sql";
         }
 
         return null;

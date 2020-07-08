@@ -27,10 +27,10 @@ public class CodegenTests {
     @Autowired
     private SysGeneratorService generatorService;
     @Test
-    public void test() throws IOException {
-        String[] tables = new String[]{"VIS_USER"};
+    public void generatorCode() throws IOException {
+        String[] tables = new String[]{"VIS_USER","VIS_QUESTION"};
         String project = "wx";
-        String pkgName = "com.tongyi.wechat";
+        String pkgName = "com.platform.modules";
         String author = "林佛权";
         byte[] data = generatorService.generatorCode(tables,project,pkgName,author);
         String date = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(new Date());

@@ -1,0 +1,109 @@
+/*
+ * 项目名称:${projectName}
+ * 类名称:${className}MockTest.java
+ * 包名称:${package}.Mocktest
+ *
+ * 修改履历:
+ *     日期                       修正者        主要内容
+ *     ${datetime}        ${author}     初版做成
+ *
+ * Copyright (c) 2019-2019 酷天科技
+ */
+package ${package};
+import ${package}.controller.${className}Controller;
+import ${package}.entity.${className}Entity;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Date;
+import java.math.BigDecimal;
+
+/**
+ * ${comments}Controller
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest()
+@ActiveProfiles("junit")
+public class ${className}MockTest {
+    @Autowired
+    protected WebApplicationContext wac;
+
+    protected MockMvc mockMvc;
+
+    @Autowired
+    protected ${className}Controller controller; // 把要测试的controller注入进来
+
+    @Before
+    public void setup() throws Exception {
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
+    }
+    @Test
+    public void testAdd() {
+        for(int i=0;i<100;i++) {
+            int idx = new Random().nextInt(1000000);
+            String id = "id-" + idx;
+            ${className}Entity item = new ${className}Entity();
+#foreach($column in $columns)
+#if ($column.attrName == $pk.attrName)
+            item.setId(id);
+#elseif($column.attrType=='Date')
+            item.set$column.attrName (new Date());
+#elseif($column.attrType=='Integer')
+            item.set$column.attrName (idx);
+#elseif($column.attrType=='Boolean')
+            item.set$column.attrName (idx % 2 == 1);
+#elseif($column.attrType=='BigDecimal')
+            item.set$column.attrName (new BigDecimal(idx));
+#elseif($column.attrType=='byte[]')
+            item.set$column.attrName (id.getBytes());
+#else
+            item.set$column.attrName (id);
+#end
+#end
+            controller.save(item);
+        }
+    }
+
+    @Test
+    public void testAll() {
+        int idx = new Random().nextInt(1000000);
+        String id = "id-" + idx;
+        ${className}Entity item = new ${className}Entity();
+#foreach($column in $columns)
+#if ($column.attrName == $pk.attrName)
+        item.setId(id);
+#elseif($column.attrType=='Date')
+        item.set$column.attrName (new Date());
+#elseif($column.attrType=='Integer')
+        item.set$column.attrName (idx);
+#elseif($column.attrType=='Boolean')
+        item.set$column.attrName (idx % 2 == 1);
+#elseif($column.attrType=='BigDecimal')
+        item.set$column.attrName (new BigDecimal(idx));
+#elseif($column.attrType=='byte[]')
+        item.set$column.attrName (id.getBytes());
+#else
+        item.set$column.attrName (id);
+#end
+#end
+        controller.save(item);
+        controller.update(item);
+        controller.info(id);
+        controller.queryAll(new HashMap<>());
+        controller.list(new HashMap<>());
+        controller.delete(new String[]{id});
+    }
+}
