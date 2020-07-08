@@ -10,7 +10,7 @@
  * Copyright (c) 2019-2019 酷天科技
  */
 package ${package}.controller;
-
+import io.swagger.annotations.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.platform.common.annotation.SysLog;
 import com.platform.common.utils.RestResponse;
@@ -42,6 +42,7 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
+    @ApiOperation(value = "查看所有列表")
     @RequestMapping("/queryAll")
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
@@ -56,6 +57,7 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
+    @ApiOperation(value = "查询参数")
     @GetMapping("/list")
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse list(@RequestParam Map<String, Object> params) {
@@ -70,6 +72,7 @@ public class ${className}Controller extends AbstractController {
      * @param ${pk.attrname} 主键
      * @return RestResponse
      */
+    @ApiOperation(value = "根据主键查询详情")
     @RequestMapping("/info/{${pk.attrname}}")
     @RequiresPermissions("${pre}:${pathName}:info")
     public RestResponse info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
@@ -84,6 +87,7 @@ public class ${className}Controller extends AbstractController {
      * @param ${classname} ${classname}
      * @return RestResponse
      */
+    @ApiOperation(value = "新增${comments}")
     @SysLog("新增${comments}")
     @RequestMapping("/save")
     @RequiresPermissions("${pre}:${pathName}:save")
@@ -100,6 +104,7 @@ public class ${className}Controller extends AbstractController {
      * @param ${classname} ${classname}
      * @return RestResponse
      */
+    @ApiOperation(value = "修改${comments}")
     @SysLog("修改${comments}")
     @RequestMapping("/update")
     @RequiresPermissions("${pre}:${pathName}:update")
@@ -116,6 +121,7 @@ public class ${className}Controller extends AbstractController {
      * @param ${pk.attrname}s ${pk.attrname}s
      * @return RestResponse
      */
+    @ApiOperation(value = "删除${comments}")
     @SysLog("删除${comments}")
     @RequestMapping("/delete")
     @RequiresPermissions("${pre}:${pathName}:delete")

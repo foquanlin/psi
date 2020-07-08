@@ -28,7 +28,7 @@ public class CodegenTests {
     private SysGeneratorService generatorService;
     @Test
     public void test() throws IOException {
-        String[] tables = new String[]{"VIS_QUESTION"};
+        String[] tables = new String[]{"VIS_USER"};
         String project = "wx";
         String pkgName = "com.tongyi.wechat";
         String author = "林佛权";
