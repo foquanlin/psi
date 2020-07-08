@@ -20,7 +20,11 @@ import org.apache.commons.lang.StringUtils;
  * @author 林佛权
  */
 public abstract class AbstractAssert {
-
+    public static void exists(Object object, String message) {
+        if (null!=object) {
+            throw new BusinessException(message);
+        }
+    }
     public static void isBlank(String str, String message) {
         if (StringUtils.isBlank(str)) {
             throw new BusinessException(message);
