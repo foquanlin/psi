@@ -12,9 +12,36 @@
 
         FROM ${tableName} T
         WHERE 1=1
-        <if test="params.name != null and params.name.trim() != ''">
-            AND T.NAME LIKE '%${params.name}%'
-        </if>
+#foreach($column in $columns)
+    #set($param='${params.'+$column.attrname+'}')
+#if($column.attrType=='String')
+    <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
+    AND T.$column.columnName LIKE '%$param%'
+    </if>
+#elseif($column.attrType=='Integer')
+    <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
+    AND T.$column.columnName = $param
+    </if>
+#elseif($column.attrType=='Boolean')
+    <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
+    AND T.$column.columnName = $param
+    </if>
+#elseif($column.attrType=='Long')
+    <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
+    AND T.$column.columnName = $param
+    </if>
+#elseif($column.attrType=='Float')
+    <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
+    AND T.$column.columnName = $param
+    </if>
+#elseif($column.attrType=='Date')
+    #set($sparam='${params.'+$column.attrname+'Start}')
+    #set($eparam='${params.'+$column.attrname+'End}')
+    <if test="params.$sparam != null and params.$sparam != '' and params.$eparam != null and params.$eparam != ''">
+    AND T.$column.columnName BETWEEN $sparam $eparam
+    </if>
+#end
+#end
     </sql>
 
     <select id="select${className}Page" resultType="${package}.entity.${className}Entity">
