@@ -14,6 +14,7 @@ package com.platform.common.utils;
 import org.springframework.http.HttpStatus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,6 +64,13 @@ public class RestResponse extends HashMap<String, Object> {
     @Override
     public RestResponse put(String key, Object value) {
         super.put(key, value);
+        return this;
+    }
+    public RestResponse put(long total, long current,long size, List items) {
+        super.put("total",total);
+        super.put("current",current);
+        super.put("items",items);
+        super.put("size",size);
         return this;
     }
 }
