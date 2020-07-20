@@ -9,7 +9,7 @@
     <name>platform-plus</name>
     <packaging>pom</packaging>
 
-    <description>platform-boot后台管理系统</description>
+    <description>酷天后台管理系统</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,7 +19,6 @@
         <mybatisplus.boot.version>3.1.0</mybatisplus.boot.version>
         <mysql.version>8.0.13</mysql.version>
         <oracle.version>11.2.0.3</oracle.version>
-<!--        <druid.version>1.1.10</druid.version>-->
         <quartz.version>2.3.0</quartz.version>
         <commons.lang.version>2.6</commons.lang.version>
         <commons.fileupload.version>1.3.3</commons.fileupload.version>
@@ -34,7 +33,6 @@
         <qcloud.cos.version>5.6.3</qcloud.cos.version>
         <swagger.version>2.9.2</swagger.version>
         <joda.time.version>2.9.9</joda.time.version>
-<!--        <fastjson.version>1.2.68</fastjson.version>-->
         <gson.version>2.8.5</gson.version>
         <velocity-version>1.7</velocity-version>
         <velocity-tools-version>2.0</velocity-tools-version>
@@ -74,7 +72,6 @@
         <module>platform-mail</module>
         <module>platform-admin</module>
         <module>platform-api</module>
-<!--        <module>platform-biz</module>-->
     </modules>
 
     <dependencyManagement>

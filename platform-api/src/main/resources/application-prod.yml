@@ -2,7 +2,7 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://devdb.meilyhome.com:3305/platform-plus?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://mysql.meilyhome.com:3307/platform-plus?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: sendmiss
     hikari:
