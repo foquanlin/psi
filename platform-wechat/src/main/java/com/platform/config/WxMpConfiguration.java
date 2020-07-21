@@ -3,17 +3,14 @@ package com.platform.config;
 import com.platform.handler.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.api.WxConsts;
-//import me.chanjar.weixin.mp.api.WxMpInRedisConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.constant.WxMpEventConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.JedisPool;
 
 /**
  * wechat mp configuration
@@ -35,8 +32,6 @@ public class WxMpConfiguration {
     private final SubscribeHandler subscribeHandler;
     private final ScanHandler scanHandler;
     private final WxMpProperties properties;
-//    @Autowired
-//    private JedisPool jedisPool;
 
     @Bean
     public WxMpService wxMpService() {

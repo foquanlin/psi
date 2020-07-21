@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import com.google.gson.Gson;
 import com.platform.modules.oss.entity.SysOssEntity;
 import com.qcloud.cos.utils.Jackson;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.env.YamlPropertySourceLoader;
@@ -27,12 +26,7 @@ import java.util.TimeZone;
  * Unit test for simple App.
  */
 public class AppTest{
-    @Test
-    public void testYaml() throws IOException {
-        ClasspathResourceLoader loader = new ClasspathResourceLoader();
-        SysOssEntity entity = new Gson().fromJson(new InputStreamReader(loader.getResourceStream("*.json")), SysOssEntity.class);
-        System.out.println(entity.getUrl());
-    }
+
     /**
      * Rigorous Test :-)
      */

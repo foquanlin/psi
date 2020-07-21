@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.JedisPool;
+
 
 /**
  * @author <a href="https://github.com/007gzs">
@@ -22,8 +22,7 @@ import redis.clients.jedis.JedisPool;
 @EnableConfigurationProperties(WxOpenProperties.class)
 public class WxOpenConfiguration {
     private WxOpenProperties properties;
-    @Autowired
-    private JedisPool jedisPool;
+
 
     @Autowired
     public WxOpenConfiguration(WxOpenProperties properties) {

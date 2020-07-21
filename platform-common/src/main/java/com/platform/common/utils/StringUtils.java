@@ -134,4 +134,8 @@ public class StringUtils {
         String timeStr = DateUtils.format(cal.getTime(), DateUtils.DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS_SSS);
         return timeStr + CharUtil.getRandomNum(6);
     }
+    public static String toString(Object obj){
+        return obj.toString();
+
+    }
 }

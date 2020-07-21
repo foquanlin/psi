@@ -11,9 +11,8 @@
  */
 package com.platform.common.utils;
 
-import com.google.common.collect.Sets;
-import com.mysql.cj.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,6 +20,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisException;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -50,7 +50,7 @@ public class JedisUtil {
             jedis = getResource();
             if (jedis.exists(key)) {
                 value = jedis.get(key);
-                value = org.apache.commons.lang.StringUtils.isNotBlank(value) && !"nil".equalsIgnoreCase(value) ? value : null;
+                value = StringUtils.isNotBlank(value) && !"nil".equalsIgnoreCase(value) ? value : null;
                 log.debug("get {} = {}", key, value);
             }
         } catch (Exception e) {
@@ -199,7 +199,7 @@ public class JedisUtil {
      * @return result
      */
     public Set<String> keys(String pattern) {
-        Set<String> result = Sets.newHashSet();
+        Set<String> result = new HashSet();
         Jedis jedis = null;
         try {
             jedis = getResource();
@@ -625,7 +625,7 @@ public class JedisUtil {
                 value = new HashMap<>(1);
                 Map<byte[], byte[]> map = jedis.hgetAll(getBytesKey(key));
                 for (Map.Entry<byte[], byte[]> e : map.entrySet()) {
-                    value.put(StringUtils.toString(e.getKey()),
+                    value.put(toString(e.getKey()),
                             toObject(e.getValue()));
                 }
                 log.debug("getObjectMap {} ", key, value);
@@ -967,9 +967,14 @@ public class JedisUtil {
      */
     public byte[] getBytesKey(Object object) {
         if (object instanceof String) {
-            return StringUtils.getBytes((String) object);
+            try {
+                return StringUtils.getBytes((String) object,"utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                return null;
+            }
         } else {
-            return ObjectUtils.serialize(object);
+            return serialize(object);
         }
     }
 
@@ -981,7 +986,7 @@ public class JedisUtil {
      */
     public Object getObjectKey(byte[] key) {
         try {
-            return StringUtils.toString(key);
+            return toString(key);
         } catch (UnsupportedOperationException uoe) {
             try {
                 return toObject(key);
@@ -1003,7 +1008,7 @@ public class JedisUtil {
      * @return
      */
     public byte[] toBytes(Object object) {
-        return ObjectUtils.serialize(object);
+        return serialize(object);
     }
 
     /**
@@ -1013,6 +1018,50 @@ public class JedisUtil {
      * @return
      */
     public Object toObject(byte[] bytes) {
-        return ObjectUtils.unserialize(bytes);
+        return unserialize(bytes);
+    }
+
+    /**
+     * 序列化对象
+     *
+     * @param object object
+     * @return byte[]
+     */
+    public byte[] serialize(Object object) {
+        try {
+            if (object != null) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(baos);
+                oos.writeObject(object);
+                return baos.toByteArray();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 反序列化对象
+     *
+     * @param bytes bytes
+     * @return Object
+     */
+    public Object unserialize(byte[] bytes) {
+        ByteArrayInputStream bais;
+        try {
+            if (bytes != null && bytes.length > 0) {
+                bais = new ByteArrayInputStream(bytes);
+                ObjectInputStream ois = new ObjectInputStream(bais);
+                return ois.readObject();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public String toString(Object obj){
+        return obj.toString();
+
     }
 }

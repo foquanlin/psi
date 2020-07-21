@@ -49,11 +49,6 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>druid-spring-boot-starter</artifactId>-->
-<!--            <version>${druid.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -73,14 +68,6 @@
 <!--            <artifactId>ojdbc6</artifactId>-->
 <!--            <version>${oracle.version}</version>-->
 <!--        </dependency>-->
-
-        <!-- redis clients -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.8.2</version>
-<!--            <version>3.3.0</version>-->
-        </dependency>
 
         <!-- commons工具包 -->
         <dependency>
@@ -142,91 +129,11 @@
             <version>${swagger.version}</version>
         </dependency>
 
-        <!-- 第三方图片存储 -->
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <version>${qiniu.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>${aliyun.oss.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.qcloud</groupId>
-            <artifactId>cos_api</artifactId>
-            <version>${qcloud.cos.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <!-- 处理时间库 -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>${joda.time.version}</version>
-        </dependency>
-
-        <!-- fastjson -->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>fastjson</artifactId>-->
-<!--            <version>${fastjson.version}</version>-->
-<!--        </dependency>-->
-
-        <!-- Velocity视图所需 -->
-        <dependency>
-            <artifactId>velocity</artifactId>
-            <groupId>org.apache.velocity</groupId>
-            <version>${velocity-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-tools</artifactId>
-            <version>${velocity-tools-version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>dom4j</artifactId>
-                    <groupId>dom4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>oro</artifactId>
-                    <groupId>oro</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>sslext</artifactId>
-                    <groupId>sslext</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>struts-core</artifactId>
-                    <groupId>org.apache.struts</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>struts-taglib</artifactId>
-                    <groupId>org.apache.struts</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>struts-tiles</artifactId>
-                    <groupId>org.apache.struts</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-beanutils</artifactId>
-                    <groupId>commons-beanutils</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-chain</artifactId>
-                    <groupId>commons-chain</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-collections</artifactId>
-                    <groupId>commons-collections</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- easypoi依赖 ，处理EXCEL WORD  PDF-->
@@ -246,6 +153,11 @@
             <version>${easypoi.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.2.1</version>
+        </dependency>
         <!-- lombok可使代码更简洁 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -258,34 +170,6 @@
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>${logstash.version}</version>
-        </dependency>
-
-        <!-- weixin-java-mp -->
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-mp</artifactId>
-            <version>${weixin-java-mp.version}</version>
-        </dependency>
-
-        <!-- 微信小程序 -->
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-miniapp</artifactId>
-            <version>${weixin-java-miniapp.version}</version>
-        </dependency>
-
-        <!-- 微信支付 -->
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-pay</artifactId>
-            <version>${weixin-java-pay.version}</version>
-        </dependency>
-
-        <!-- 微信开放平台 -->
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-open</artifactId>
-            <version>${weixin-java-open.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
@@ -313,6 +197,11 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>

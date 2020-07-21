@@ -67,11 +67,11 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static void main(String[] args) throws Exception {
-
-        String path = "D:/file/";
-        String filename = "new.jpg";
-        byte[] qrcodeData = QRCodeUtil.zxingCodeCreate("shopsSn=80001", 300, 300, "jpg");
-        FileUtils.writeByteArrayToFile(new File(path + filename), qrcodeData, false);
-    }
+//    public static void main(String[] args) throws Exception {
+//
+//        String path = "D:/file/";
+//        String filename = "new.jpg";
+//        byte[] qrcodeData = QRCodeUtil.zxingCodeCreate("shopsSn=80001", 300, 300, "jpg");
+//        FileUtils.writeByteArrayToFile(new File(path + filename), qrcodeData, false);
+//    }
 }

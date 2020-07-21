@@ -70,6 +70,9 @@
         <module>platform-gencode</module>
         <module>platform-wechat</module>
         <module>platform-mail</module>
+        <module>platform-elasticsearch</module>
+        <module>platform-redis</module>
+        <module>platform-thirdstorage</module>
         <module>platform-admin</module>
         <module>platform-api</module>
     </modules>
