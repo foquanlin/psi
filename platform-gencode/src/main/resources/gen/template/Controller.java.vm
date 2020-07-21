@@ -30,6 +30,7 @@ import java.util.Map;
  * @author ${author}
  * @date ${datetime}
  */
+@Api(tags = "${comments}接口")
 @RestController
 @RequestMapping("${pre}/${pathName}")
 public class ${className}Controller extends AbstractController {
@@ -57,7 +58,7 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @ApiOperation(value = "查询参数")
+    @ApiOperation(value = "分页查询")
     @GetMapping("/list")
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse list(@RequestParam Map<String, Object> params) {
