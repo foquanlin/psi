@@ -59,8 +59,9 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <maintainer>foquanlin@163.com</maintainer>
                     <imageName>coding/${project.artifactId}:${project.version}</imageName>
-                    <dockerDirectory>.</dockerDirectory>
+<!--                    <dockerDirectory>.</dockerDirectory>-->
 <!--                    <dockerHost>http://192.168.3.101:2375</dockerHost>-->
                     <baseImage>java:8</baseImage>
                     <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>
