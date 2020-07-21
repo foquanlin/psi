@@ -2,9 +2,10 @@
 server:
   tomcat:
     uri-encoding: UTF-8
-    max-threads: 1024
-    min-spare-threads: 30
     accept-count: 5000
+    threads:
+      max: 1024
+      min-spare: 30
   port: 8888
   connection-timeout: 1000ms
   servlet:
