@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active: test
+  #原始数据kafka读取
+  kafka:
+    consumer:
+      servers: IP:9092,IP:9092 #(kafka消费集群ip+port端口)
+      enable:
+        auto:
+          commit: true #(是否自动提交)
+      session:
+        timeout: 20000 #(连接超时时间)
+      auto:
+        commit:
+          interval: 100
+        offset:
+          reset: latest #(实时生产，实时消费，不会从头开始消费)
+      topic: result #(消费的topic)
+      group:
+        id: test #(消费组)
+      concurrency: 10 #(设置消费线程数)
+    #协议转换后存储kafka
+    producer:
+      servers: IP:9092,IP:9092 #(kafka生产集群ip+port端口)
+      topic: result #(生产的topic)
+      retries: 0
+      batch:
+        size: 4096
+      linger: 1
+      buffer:
+        memory: 40960

@@ -72,6 +72,8 @@
         <module>platform-mail</module>
         <module>platform-elasticsearch</module>
         <module>platform-redis</module>
+        <module>platform-activemq</module>
+        <module>platform-kafka</module>
         <module>platform-thirdstorage</module>
         <module>platform-admin</module>
         <module>platform-api</module>
