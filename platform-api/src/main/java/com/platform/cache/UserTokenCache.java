@@ -1,7 +1,5 @@
 package com.platform.cache;
 
-//import com.alibaba.fastjson.JSON;
-//import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.google.gson.Gson;
 import com.platform.common.utils.Constant;
 import com.platform.common.utils.JedisUtil;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @author 林佛权
  */
 @Slf4j
-@Component
+//@Component
 public class UserTokenCache {
     @Autowired
     private JedisUtil jedisUtil;
