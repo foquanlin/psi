@@ -1,0 +1,19 @@
+spring:
+  es:
+    transport: 127.0.0.1:9300
+    cluster:
+      name: elasticsearch
+
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      client:
+        reactive:
+          username:
+          password:
+          endpoints: 127.0.0.1:9300
+          connection-timeout:
+          max-in-memory-size:
+          socket-timeout:
+          use-ssl: false
