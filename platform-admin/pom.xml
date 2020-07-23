@@ -67,10 +67,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>com.spotify</groupId>-->
-<!--                <artifactId>docker-maven-plugin</artifactId>-->
-<!--&lt;!&ndash;                <version>1.1.0</version>&ndash;&gt;-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
 <!--                <executions>-->
 <!--                    <execution>-->
 <!--                        <id>build-image</id>-->
@@ -80,22 +79,22 @@
 <!--                        </goals>-->
 <!--                    </execution>-->
 <!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <maintainer>foquanlin@163.com</maintainer>-->
-<!--                    <imageName>coding/${project.artifactId}:${project.version}</imageName>-->
-<!--&lt;!&ndash;                    <dockerDirectory>${project.basedir}</dockerDirectory>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <dockerHost>http://192.168.3.101:2375</dockerHost>&ndash;&gt;-->
-<!--                    <baseImage>java:8</baseImage>-->
-<!--                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>-->
-<!--                    <resources>-->
-<!--                        <resource>-->
-<!--                            <targetPath>/</targetPath>-->
-<!--                            <directory>${project.build.directory}</directory>-->
-<!--                            <include>${project.build.finalName}.jar</include>-->
-<!--                        </resource>-->
-<!--                    </resources>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+                <configuration>
+                    <maintainer>foquanlin@163.com</maintainer>
+                    <imageName>coding/${project.artifactId}:${project.version}</imageName>
+<!--                    <dockerDirectory>${project.basedir}</dockerDirectory>-->
+<!--                    <dockerHost>http://192.168.3.101:2375</dockerHost>-->
+                    <baseImage>java:8</baseImage>
+                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
