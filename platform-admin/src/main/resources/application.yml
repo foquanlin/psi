@@ -117,3 +117,7 @@ wx:
     keyPath: # p12证书的位置，可以指定绝对路径，也可以指定类路径（以classpath:开头）
     spbillCreateIp:  #APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
     baseNotifyUrl:  #支付回调通知地址
+
+platform:
+  file:
+    path: file:D:/usr/local/nginx/html/upload/

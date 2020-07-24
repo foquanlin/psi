@@ -11,6 +11,7 @@
  */
 package com.platform.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,12 +23,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Component
 public class ActResourceHandlerConfig implements WebMvcConfigurer {
-
+    @Value("${platform.file.path}")
+    private String filePath;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //activiti
         registry.addResourceHandler("modeler.html").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/diagram-viewer/**").addResourceLocations("classpath:/static/diagram-viewer/");
         registry.addResourceHandler("/editor-app/**").addResourceLocations("classpath:/static/editor-app/");
+        if (!registry.hasMappingForPattern("/upload/**")){
+            registry.addResourceHandler("/upload/**").addResourceLocations("file:"+filePath);
+        }
     }
 }
