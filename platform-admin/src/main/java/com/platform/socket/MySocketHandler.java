@@ -57,7 +57,7 @@ public class MySocketHandler implements WebSocketHandler {
             sendMessageToUsers(new TextMessage(gson.toJson(obj)));
         } else {
             //指定人发送
-            List<String> to = (List)msg.get("to");
+            List<String> to = (List<String>)msg.get("to");
             Map<String,Object> obj = new HashMap<>();
             obj.put("msg", msg.get("msg"));
             to.forEach(item -> sendMessageToUser(item, new TextMessage(gson.toJson(obj))));

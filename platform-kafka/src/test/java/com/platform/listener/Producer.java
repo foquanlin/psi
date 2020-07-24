@@ -14,7 +14,7 @@ public class Producer {
     @Value("${spring.kafka.producer.topic}")
     private String topic;
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String,Object> kafkaTemplate;
 
     @Test
     public void test() throws IOException{
