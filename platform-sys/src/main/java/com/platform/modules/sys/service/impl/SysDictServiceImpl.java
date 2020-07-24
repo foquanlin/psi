@@ -41,7 +41,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictDao, SysDictEntity> i
     @Override
     public IPage queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "d.SORT");
+        params.put("sidx", "D.SORT");
         IPage<SysDictEntity> page = new Query<SysDictEntity>(params).getPage();
         return page.setRecords(baseMapper.selectDictPage(page, params));
     }
