@@ -75,6 +75,7 @@
         <module>platform-activemq</module>
         <module>platform-kafka</module>
         <module>platform-thirdstorage</module>
+        <module>platform-mssql</module>
         <module>platform-admin</module>
         <module>platform-api</module>
     </modules>
