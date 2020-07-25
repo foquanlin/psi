@@ -50,6 +50,11 @@ public class RestResponse extends HashMap<String, Object> {
         restResponse.put("msg", msg);
         return restResponse;
     }
+    public static RestResponse success(Object msg) {
+        RestResponse restResponse = new RestResponse();
+        restResponse.put("data", msg);
+        return restResponse;
+    }
 
     public static RestResponse success(Map<String, Object> map) {
         RestResponse restResponse = new RestResponse();
