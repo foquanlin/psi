@@ -58,6 +58,11 @@
             <artifactId>platform-common</artifactId>
             <version>${platform.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.platform</groupId>
+            <artifactId>platform-wechatmp</artifactId>
+            <version>${platform.version}</version>
+        </dependency>
 
     </dependencies>
 

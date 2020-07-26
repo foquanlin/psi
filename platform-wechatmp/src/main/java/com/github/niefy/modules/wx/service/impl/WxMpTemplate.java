@@ -1,1 +1,0 @@
-package com.github.niefy.modules.wx.service.impl;

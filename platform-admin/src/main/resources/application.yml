@@ -54,7 +54,7 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.platform.modules.*.entity
+  typeAliasesPackage: com.platform.modules.*.entity;com.github.niefy.modules.*.entity
   check-config-location: true
   configuration:
     #是否开启自动驼峰命名规则（camel case）映射
