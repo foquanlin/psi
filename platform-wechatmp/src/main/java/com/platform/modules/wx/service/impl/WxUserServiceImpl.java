@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -29,10 +30,10 @@ import java.util.stream.Collectors;
  * @date 2017-9-27
  */
 @Service
+@Transactional
 public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> implements WxUserService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    private WxUserMapper userMapper;
+
     @Autowired
     private WxMpService wxService;
     private volatile static  boolean syncWxUserTaskRunning=false;
@@ -62,6 +63,7 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
      * @return
      */
     @Override
+	@Transactional
     public WxUser refreshUserInfo(String openid,String appid) {
         try {
 			// 获取微信用户基本信息
@@ -103,15 +105,15 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
      */
     @Override
     public void updateOrInsert(WxUser user) {
-        int updateCount = userMapper.updateById(user);
+        int updateCount = this.baseMapper.updateById(user);
         if (updateCount < 1) {
-            userMapper.insert(user);
+			this.baseMapper.insert(user);
         }
     }
 
     @Override
     public void unsubscribe(String openid) {
-        userMapper.unsubscribe(openid);
+		this.baseMapper.unsubscribe(openid);
     }
     
     /**
@@ -151,6 +153,7 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
 	 * @param openids
 	 */
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void syncWxUsers(List<String> openids,String appid) {
 		if(openids.size()<1) {
             return;

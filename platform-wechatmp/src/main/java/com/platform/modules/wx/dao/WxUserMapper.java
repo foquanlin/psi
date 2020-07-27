@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.platform.modules.wx.entity.WxUser;
 import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.transaction.annotation.Transactional;
 
 @Mapper
 @CacheNamespace(flushInterval = 300000L)//缓存五分钟过期

@@ -12,6 +12,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  *
  * @author 林佛权
  */
-@CrossOrigin(origins = {"http://127.0.0.1:8000", "null"})
+//@CrossOrigin(origins = {"http://127.0.0.1:8000", "null"})
+@EnableTransactionManagement
 @SpringBootApplication()
 //@Import({DynamicDataSourceConfig.class})
 public class AdminApplication extends SpringBootServletInitializer {

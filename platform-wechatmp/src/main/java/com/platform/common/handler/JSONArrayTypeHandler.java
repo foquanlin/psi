@@ -15,21 +15,35 @@ import java.sql.SQLException;
 public class JSONArrayTypeHandler extends BaseTypeHandler<JsonArray> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, JsonArray array, JdbcType jdbcType) throws SQLException {
-        ps.setString(i,array.getAsString());
+//        System.out.println(array.toString());
+//        System.out.println(array.getAsString());
+        ps.setString(i,array.toString());
     }
 
     @Override
     public JsonArray getNullableResult(ResultSet resultSet, String columnName) throws SQLException {
-        return JsonParser.parseString(resultSet.getString(columnName)).getAsJsonArray();
+        String val = "[]";
+        if (null!=resultSet.getString(columnName)){
+            val = resultSet.getString(columnName);
+        }
+        return JsonParser.parseString(val).getAsJsonArray();
     }
 
     @Override
     public JsonArray getNullableResult(ResultSet resultSet, int columnIndex) throws SQLException {
-        return JsonParser.parseString(resultSet.getString(columnIndex)).getAsJsonArray();
+        String val = "[]";
+        if (null!=resultSet.getString(resultSet.getString(columnIndex))){
+            val = resultSet.getString(resultSet.getString(columnIndex));
+        }
+        return JsonParser.parseString(val).getAsJsonArray();
     }
 
     @Override
     public JsonArray getNullableResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
-        return JsonParser.parseString(callableStatement.getString(columnIndex)).getAsJsonArray();
+        String val = "[]";
+        if (null!=callableStatement.getString(columnIndex)){
+            val = callableStatement.getString(columnIndex);
+        }
+        return JsonParser.parseString(val).getAsJsonArray();
     }
 }

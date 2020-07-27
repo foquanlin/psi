@@ -1,5 +1,6 @@
 package com.platform.modules.wx.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -24,7 +25,7 @@ public class WxQrCode implements Serializable {
     /**
      * ID
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
     private String appid;
     /**
