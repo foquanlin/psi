@@ -135,9 +135,12 @@ public class WxAssetsManageController {
      * @throws WxErrorException
      * @throws IOException
      */
-    @PostMapping("/materialFileUpload")
+    @PostMapping(value = "/materialFileUpload")//,headers = "Content-Type:multipart/form-data"
     @RequiresPermissions("wx:wxassets:save")
-    public RestResponse materialFileUpload(@CookieValue String appid,MultipartFile file, String fileName, String mediaType) throws WxErrorException, IOException {
+    public RestResponse materialFileUpload(@CookieValue String appid,
+                                           @RequestParam("file")MultipartFile file,
+                                           @RequestParam("fileName")String fileName,
+                                           @RequestParam("mediaType")String mediaType) throws WxErrorException, IOException {
         if (file == null) {
             return RestResponse.error("文件不得为空");
         }

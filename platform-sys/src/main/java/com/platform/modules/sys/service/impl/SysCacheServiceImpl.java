@@ -16,6 +16,7 @@ import com.platform.common.utils.JedisUtil;
 import com.platform.modules.sys.entity.SysCacheEntity;
 import com.platform.modules.sys.service.SysCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ import java.util.Set;
 @Service("sysCacheService")
 public class SysCacheServiceImpl implements SysCacheService {
     @Autowired
-    private JedisUtil jedisUtil;
+    private RedisTemplate<String,Object> redisTemplate;
+//    @Autowired
+//    private JedisUtil jedisUtil;
     private Gson gson = new Gson();
     @Override
     public List<SysCacheEntity> queryAll(Map<String, String> params) {
@@ -38,16 +41,19 @@ public class SysCacheServiceImpl implements SysCacheService {
 
         String pattern = params.get("pattern");
         // 获取所有key
-        Set<String> keySet = jedisUtil.keys(pattern);
+        // Set<String> keySet = jedisUtil.keys(pattern);
+        Set<String> keySet = redisTemplate.keys(pattern);
         for (String key : keySet) {
             sysCacheEntity = new SysCacheEntity();
             sysCacheEntity.setCacheKey(key);
             try {
-                sysCacheEntity.setValue(gson.toJson(jedisUtil.get(key)));
+//                sysCacheEntity.setValue(gson.toJson(jedisUtil.get(key)));
+                sysCacheEntity.setValue(gson.toJson(redisTemplate.opsForValue().get(key)));
             } catch (Exception e) {
                 sysCacheEntity.setValue("");
             }
-            sysCacheEntity.setSeconds(jedisUtil.ttl(key));
+            sysCacheEntity.setSeconds(redisTemplate.getExpire(key));
+//            sysCacheEntity.setSeconds(jedisUtil.ttl(key));
             result.add(sysCacheEntity);
         }
         return result;
@@ -56,7 +62,8 @@ public class SysCacheServiceImpl implements SysCacheService {
     @Override
     public int deleteBatch(String[] keys) {
         for (String key : keys) {
-            jedisUtil.del(key);
+            redisTemplate.delete(key);
+//            jedisUtil.del(key);
         }
         return keys.length;
     }

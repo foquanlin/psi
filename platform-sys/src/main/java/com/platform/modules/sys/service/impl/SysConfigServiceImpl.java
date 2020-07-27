@@ -24,6 +24,7 @@ import com.platform.modules.sys.entity.SysConfigEntity;
 import com.platform.modules.sys.service.SysConfigService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,8 +36,10 @@ import java.util.Map;
  */
 @Service("sysConfigService")
 public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEntity> implements SysConfigService {
+//    @Autowired
+//    private JedisUtil jedisUtils;
     @Autowired
-    private JedisUtil jedisUtils;
+    private RedisTemplate<String,Object> redisTemplate;
 
     @Override
     public Page queryPage(Map<String, Object> params) {
@@ -109,7 +112,8 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
             return;
         }
         String key = Constant.SYS_CACHE + config.getParamKey();
-        jedisUtils.setObject(key, config);
+        redisTemplate.opsForValue().set(key,config);
+//        jedisUtils.setObject(key, config);
     }
 
     @Override
@@ -123,11 +127,13 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
 
     private void deleteFromRedis(String configKey) {
         String key = Constant.SYS_CACHE + configKey;
-        jedisUtils.del(key);
+//        jedisUtils.del(key);
+        redisTemplate.delete(key);
     }
 
     private SysConfigEntity getFromRedis(String configKey) {
         String key = Constant.SYS_CACHE + configKey;
-        return (SysConfigEntity) jedisUtils.getObject(key);
+        return (SysConfigEntity) redisTemplate.opsForValue().get(key);
+//        return (SysConfigEntity) jedisUtils.getObject(key);
     }
 }

@@ -12,6 +12,8 @@ server:
     context-path: /admin
 
 spring:
+  cache:
+    type: NONE
   main:
     allow-bean-definition-overriding: true
   # 环境 dev|prod

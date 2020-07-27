@@ -15,6 +15,8 @@ package com.platform.config.redis;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,7 +55,8 @@ import java.lang.reflect.Method;
 @Configuration
 @EnableCaching
 public class RedisConfig {
-
+    @Value("${spring.cache.type}")
+    private String type;
     @Value("${spring.redis.host}")
     private String host;
 
@@ -81,11 +84,18 @@ public class RedisConfig {
     @Value("${spring.redis.jedis.pool.min-idle}")
     private int minIdle;
 
-    @Bean
-    public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        RedisCacheManager rcm= RedisCacheManager.create(connectionFactory);
-        return rcm;
-    }
+//    @ConditionalOnBean（仅仅在当前上下文中存在某个对象时，才会实例化一个Bean）
+//    @ConditionalOnClass（某个class位于类路径上，才会实例化一个Bean）
+//    @ConditionalOnExpression（当表达式为true的时候，才会实例化一个Bean）
+//    @ConditionalOnMissingBean（仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean）
+//    @ConditionalOnMissingClass（某个class类路径上不存在的时候，才会实例化一个Bean）
+//    @ConditionalOnNotWebApplication（不是web应用）
+//    @Bean
+//    @ConditionalOnBean(RedisTemplate.class)
+//    public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+//        RedisCacheManager rcm= RedisCacheManager.create(connectionFactory);
+//        return rcm;
+//    }
 //    //    @RefreshScope
 //    @Bean
 //    public CacheManager cacheManager(RedisTemplate redisTemplate) {

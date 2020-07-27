@@ -8,6 +8,7 @@ import com.platform.common.utils.StringUtils;
 import com.platform.modules.sys.entity.SysUserTokenEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +20,9 @@ import org.springframework.stereotype.Component;
 //@Component
 public class UserTokenCache {
     @Autowired
-    private JedisUtil jedisUtil;
+    private RedisTemplate<String,Object> redisTemplate;
+//    @Autowired
+//    private JedisUtil jedisUtil;
 //    static SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
     private Gson gson = new Gson();
     /**
@@ -36,7 +39,8 @@ public class UserTokenCache {
      * @return
      */
     public SysUserTokenEntity getUserTokenByUserId(String userId) {
-        String temp = jedisUtil.get(toUserTokenKey(userId));
+//        String temp = jedisUtil.get(toUserTokenKey(userId));
+        String temp = (String)redisTemplate.opsForValue().get(toUserTokenKey(userId));
         if (!org.springframework.util.StringUtils.isEmpty(temp)) {
             SysUserTokenEntity d = gson.fromJson(temp, SysUserTokenEntity.class);
             return d;
@@ -53,7 +57,8 @@ public class UserTokenCache {
      */
 
     public SysUserTokenEntity getUserInfoByToken(String token) {
-        String temp = jedisUtil.get(toTokenUserKey(token));
+//        String temp = jedisUtil.get(toTokenUserKey(token));
+        String temp = (String)redisTemplate.opsForValue().get(toUserTokenKey(token));
         if (StringUtils.isNullOrEmpty(temp)) {
             return null;
         }
@@ -61,7 +66,8 @@ public class UserTokenCache {
     }
 
     public void del(String userId) {
-        jedisUtil.del(toUserTokenKey(userId));
+//        jedisUtil.del(toUserTokenKey(userId));
+        redisTemplate.delete(toUserTokenKey(userId));
     }
 
     /**
@@ -70,8 +76,10 @@ public class UserTokenCache {
      * @param SysUserTokenEntity
      */
     public void putUserToken(SysUserTokenEntity SysUserTokenEntity) {
-        jedisUtil.set(toUserTokenKey(SysUserTokenEntity.getUserId()), fromTokenCacheString(SysUserTokenEntity), Constant.EXPIRE);
-        jedisUtil.set(toTokenUserKey(SysUserTokenEntity.getToken()), SysUserTokenEntity.getUserId().toString(), Constant.EXPIRE);
+//        jedisUtil.set(toUserTokenKey(SysUserTokenEntity.getUserId()), fromTokenCacheString(SysUserTokenEntity), Constant.EXPIRE);
+//        jedisUtil.set(toTokenUserKey(SysUserTokenEntity.getToken()), SysUserTokenEntity.getUserId().toString(), Constant.EXPIRE);
+        redisTemplate.opsForValue().set(toUserTokenKey(SysUserTokenEntity.getUserId()), fromTokenCacheString(SysUserTokenEntity), Constant.EXPIRE);
+        redisTemplate.opsForValue().set(toTokenUserKey(SysUserTokenEntity.getToken()), SysUserTokenEntity.getUserId().toString(), Constant.EXPIRE);
     }
 
     private String fromTokenCacheString(SysUserTokenEntity d) {
