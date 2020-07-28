@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>platform-admin</artifactId>
-    <version>${platform.version}</version>
+    <version>2.1.0</version>
     <packaging>jar</packaging>
 
     <name>platform-admin</name>
@@ -35,38 +35,38 @@
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-gencode</artifactId>
-            <version>${platform.version}</version>
+            <version>2.1.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-mail</artifactId>
-            <version>${platform.version}</version>
+            <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-sms</artifactId>
-            <version>${platform.version}</version>
+            <version>2.1.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-sys</artifactId>
-            <version>${platform.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-common</artifactId>
-            <version>${platform.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.platform</groupId>-->
+<!--            <artifactId>platform-sys</artifactId>-->
+<!--            <version>2.1.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.platform</groupId>-->
+<!--            <artifactId>platform-common</artifactId>-->
+<!--            <version>2.1.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-wechatmp</artifactId>
-            <version>${platform.version}</version>
+            <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-thirdstorage</artifactId>
-            <version>${platform.version}</version>
+            <version>2.1.0</version>
         </dependency>
 
     </dependencies>
@@ -77,34 +77,35 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>build-image</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>build</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-                <configuration>
-                    <maintainer>foquanlin@163.com</maintainer>
-                    <imageName>coding/${project.artifactId}:${project.version}</imageName>
-<!--                    <dockerDirectory>${project.basedir}</dockerDirectory>-->
-<!--                    <dockerHost>http://192.168.3.101:2375</dockerHost>-->
-                    <baseImage>java:8</baseImage>
-                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>com.spotify</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <version>1.1.0</version>-->
+<!--&lt;!&ndash;                <executions>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <execution>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <id>build-image</id>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <phase>package</phase>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <goals>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <goal>build</goal>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </goals>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </execution>&ndash;&gt;-->
+<!--&lt;!&ndash;                </executions>&ndash;&gt;-->
+<!--                <configuration>-->
+<!--                    <maintainer>foquanlin@163.com</maintainer>-->
+<!--                    <imageName>codeing/${project.artifactId}:${project.version}</imageName>-->
+<!--&lt;!&ndash;                    <dockerDirectory>${project.basedir}</dockerDirectory>&ndash;&gt;-->
+<!--                    <dockerHost>http://127.0.0.1:2375</dockerHost>-->
+<!--                    <baseImage>java:8</baseImage>-->
+<!--                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>-->
+<!--                    <resources>-->
+<!--                        <resource>-->
+<!--                            <targetPath>/</targetPath>-->
+<!--                            <directory>${project.build.directory}</directory>-->
+<!--                            <include>${project.build.finalName}.jar</include>-->
+<!--                        </resource>-->
+<!--                    </resources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>
