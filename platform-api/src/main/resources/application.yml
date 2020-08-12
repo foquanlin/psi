@@ -40,7 +40,8 @@ spring:
     static-path-pattern: /static/**
   resources:
     add-mappings: false
-
+  cache:
+    type: redis
 #mybatis
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
