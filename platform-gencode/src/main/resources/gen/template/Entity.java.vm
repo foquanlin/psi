@@ -14,7 +14,6 @@ package ${package}.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -51,9 +50,6 @@ public class ${className}Entity implements Serializable {
     /**
      * $column.comments
      */
-#if($column.attrType=='Date')
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-#end
     private $column.attrType $column.attrname;
 #end#end
 }
