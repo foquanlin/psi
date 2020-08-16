@@ -40,7 +40,7 @@
     #set($params=$column.attrname+'Start')
     #set($parame=$column.attrname+'End')
     <if test="params.$params != null and params.$params != '' and params.$parame != null and params.$parame != ''">
-    AND T.$column.columnName BETWEEN $sparam AND $eparam
+    AND T.$column.columnName BETWEEN '$sparam' AND '$eparam'
     </if>
 #end
 #end
