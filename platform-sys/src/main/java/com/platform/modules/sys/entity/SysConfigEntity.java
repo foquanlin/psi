@@ -35,4 +35,5 @@ public class SysConfigEntity implements Serializable {
     @NotBlank(message = "参数值不能为空")
     private String paramValue;
     private String remark;
+    private int status;
 }

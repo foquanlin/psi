@@ -46,7 +46,7 @@ spring:
     desc: 酷天科技APP接口文档
     version: 2.0.0
     contact:
-      name: 联系我们-----------
+      name: 联系我们
       url: http://meilyhome.com
       email: foquanlin@163.com
 #mybatis
