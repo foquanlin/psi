@@ -7,7 +7,6 @@ server:
       max: 1024
       min-spare: 30
   port: 8889
-  connection-timeout: 1000ms
   servlet:
     context-path: /api
 
@@ -42,6 +41,14 @@ spring:
     add-mappings: false
   cache:
     type: redis
+  swagger:
+    title: 酷天科技
+    desc: 酷天科技APP接口文档
+    version: 2.0.0
+    contact:
+      name: 联系我们-----------
+      url: http://meilyhome.com
+      email: foquanlin@163.com
 #mybatis
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
