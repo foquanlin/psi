@@ -73,6 +73,7 @@ public class SysConfigController extends AbstractController {
     @RequiresPermissions("sys:config:save")
     public RestResponse save(@RequestBody SysConfigEntity config) {
         ValidatorUtils.validateEntity(config);
+        config.setStatus(1);
 
         sysConfigService.add(config);
 
@@ -90,6 +91,7 @@ public class SysConfigController extends AbstractController {
     @RequiresPermissions("sys:config:update")
     public RestResponse update(@RequestBody SysConfigEntity config) {
         ValidatorUtils.validateEntity(config);
+        config.setStatus(1);
 
         sysConfigService.update(config);
 
