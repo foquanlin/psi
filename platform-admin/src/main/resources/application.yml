@@ -7,7 +7,6 @@ server:
       max: 1024
       min-spare: 30
   port: 8888
-  connection-timeout: 1000ms
   servlet:
     context-path: /admin
 

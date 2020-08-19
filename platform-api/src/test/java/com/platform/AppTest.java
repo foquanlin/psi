@@ -3,7 +3,6 @@ package com.platform;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
-import com.platform.modules.oss.entity.SysOssEntity;
 import com.qcloud.cos.utils.Jackson;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
