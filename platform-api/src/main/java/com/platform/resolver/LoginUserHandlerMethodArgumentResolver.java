@@ -13,8 +13,6 @@ package com.platform.resolver;
 
 import com.platform.annotation.LoginUser;
 import com.platform.interceptor.AuthorizationInterceptor;
-import com.platform.modules.user.IUserEntity;
-import com.platform.modules.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -36,7 +34,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(IUserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
+        return true;//parameter.getParameterType().isAssignableFrom(IUserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
     }
 
     @Override

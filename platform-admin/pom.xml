@@ -48,16 +48,6 @@
             <artifactId>platform-sms</artifactId>
             <version>2.1.0</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.platform</groupId>-->
-<!--            <artifactId>platform-sys</artifactId>-->
-<!--            <version>2.1.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.platform</groupId>-->
-<!--            <artifactId>platform-common</artifactId>-->
-<!--            <version>2.1.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-wechatmp</artifactId>

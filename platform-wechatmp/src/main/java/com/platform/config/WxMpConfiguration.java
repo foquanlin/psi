@@ -1,6 +1,6 @@
 package com.platform.config;
 
-import com.platform.handler.*;
+import com.platform.modules.wx.handler.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
