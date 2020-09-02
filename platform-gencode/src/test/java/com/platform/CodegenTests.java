@@ -28,19 +28,19 @@ public class CodegenTests {
     private SysGeneratorService generatorService;
     @Test
     public void generatorCode() throws IOException {
-        String[] tables = new String[]{"VIS_USER","VIS_QUESTION"};
-        String project = "wx";
-        String pkgName = "com.platform.modules";
-        String author = "林佛权";
-        byte[] data = generatorService.generatorCode(tables,project,pkgName,author);
-        String date = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(new Date());
-        File file = new File("C:/temp/"+date+".zip");
-        if (file.exists()){
-            logger.info("文件已存在:"+file.getAbsolutePath());
-        }
-        OutputStream writer = new FileOutputStream(file);
-        writer.write(data);
-        writer.flush();
-        writer.close();
+//        String[] tables = new String[]{"VIS_USER","VIS_QUESTION"};
+//        String project = "wx";
+//        String pkgName = "com.platform.modules";
+//        String author = "林佛权";
+//        byte[] data = generatorService.generatorCode(tables,project,pkgName,author);
+//        String date = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(new Date());
+//        File file = new File("C:/temp/"+date+".zip");
+//        if (file.exists()){
+//            logger.info("文件已存在:"+file.getAbsolutePath());
+//        }
+//        OutputStream writer = new FileOutputStream(file);
+//        writer.write(data);
+//        writer.flush();
+//        writer.close();
     }
 }

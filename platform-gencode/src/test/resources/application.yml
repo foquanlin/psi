@@ -48,3 +48,11 @@ mybatis-plus:
       logic-delete-value: 0
       #逻辑未删除值
       logic-not-delete-value: 1
+
+mybatis:
+  table:
+    auto: update
+  model:
+    pack: com.platform
+  database:
+    type: mssql

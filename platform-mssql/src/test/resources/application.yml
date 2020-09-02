@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;DatabaseName=数据库名
+    url: jdbc:sqlserver://localhost:1433;DatabaseName=master
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
     username: sa
     password: sendmiss

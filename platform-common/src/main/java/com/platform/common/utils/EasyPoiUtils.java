@@ -13,6 +13,7 @@ package com.platform.common.utils;
 
 import com.platform.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,14 +151,24 @@ public class EasyPoiUtils {
         }
         //把数字当成String来读，避免出现1读成1.0的情况
         if (cell.getCellType() == NUMERIC) {
-            cell.setCellType(CellType.STRING);
+            if (!HSSFDateUtil.isCellDateFormatted(cell)) {
+                cell.setCellType(CellType.STRING);
+            }
         }
         //判断数据的类型
         switch (cell.getCellType()) {
             //数字
-            case NUMERIC:
-                cellValue = String.valueOf(cell.getNumericCellValue());
+            case NUMERIC: {
+                int format = cell.getCellStyle().getDataFormat();
+                if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                    cellValue = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cell.getDateCellValue());
+                } else if (format > 176 && format < 185) {
+                    cellValue = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cell.getDateCellValue());
+                } else {
+                    cellValue = String.valueOf(cell.getNumericCellValue());
+                }
                 break;
+            }
             //字符串
             case STRING:
                 cellValue = String.valueOf(cell.getStringCellValue());
