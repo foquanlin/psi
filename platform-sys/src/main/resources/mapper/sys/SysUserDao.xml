@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="selectListPage" resultType="com.platform.modules.sys.entity.SysUserEntity">
-		SELECT T.USER_ID, T.SEX, T.REAL_NAME, T.USER_NAME, T.ORG_NO, T.EMAIL_HOST, T.EMAIL, T.EMAIL_PW, T.MOBILE, T.STATUS, T.CREATE_TIME,T.CREATE_USER_ID,T.CREATE_USER_ORG_NO FROM SYS_USER T
+		SELECT T.USER_ID, T.SEX, T.REAL_NAME, T.USER_NAME, T.ORG_NO, T.EMAIL_HOST,T.EMAIL_PORT, T.EMAIL, T.EMAIL_PW, T.MOBILE, T.STATUS, T.CREATE_TIME,T.CREATE_USER_ID,T.CREATE_USER_ORG_NO FROM SYS_USER T
 		WHERE 1=1
 		<if test="params.userName != null and params.userName != ''">
 			AND T.USER_NAME LIKE '%${params.userName}%'
