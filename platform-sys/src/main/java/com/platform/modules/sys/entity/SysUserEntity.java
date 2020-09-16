@@ -79,7 +79,10 @@ public class SysUserEntity implements Serializable {
      * 邮箱服务器地址
      */
     private String emailHost;
-
+    /**
+     * 邮箱端口
+     */
+    private int emailPort;
     /**
      * 邮箱
      */

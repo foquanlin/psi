@@ -74,6 +74,7 @@ public class MailServiceImpl implements MailService {
                 senderImpl.setHost(user.getEmailHost());
                 senderImpl.setUsername(user.getEmail());
                 senderImpl.setPassword(user.getEmailPw());
+                senderImpl.setPort(user.getEmailPort());
                 senderImpl.setDefaultEncoding("UTF-8");
                 senderImpl.setJavaMailProperties(props);
                 MimeMessage message = senderImpl.createMimeMessage();
