@@ -47,6 +47,11 @@
             <artifactId>platform-swagger</artifactId>
             <version>2.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.platform</groupId>
+            <artifactId>platform-mail</artifactId>
+            <version>2.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

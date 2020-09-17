@@ -71,6 +71,9 @@ public class MailServiceImpl implements MailService {
                 JavaMailSenderImpl senderImpl = new JavaMailSenderImpl();
                 Properties props = new Properties();
                 props.put("mail.smtp.auth", "true");
+                if (user.getEmailPort()==465||user.getEmailPort()==994) {
+                    props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                }
                 senderImpl.setHost(user.getEmailHost());
                 senderImpl.setUsername(user.getEmail());
                 senderImpl.setPassword(user.getEmailPw());
