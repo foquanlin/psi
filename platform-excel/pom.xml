@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>platform-job</artifactId>
+    <artifactId>platform-excel</artifactId>
     <packaging>jar</packaging>
     <version>2.2.0</version>
 
-    <name>platform-job</name>
+    <name>platform-excel</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,23 +23,27 @@
     </properties>
 
     <dependencies>
-        <!-- 定时任务 -->
+        <!-- lombok可使代码更简洁 -->
         <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>${quartz.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.mchange</groupId>
-                    <artifactId>c3p0</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
-
+        <!-- easypoi依赖 ，处理EXCEL WORD  PDF-->
         <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-common</artifactId>
-            <version>${platform.version}</version>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>${easypoi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>${easypoi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>${easypoi.version}</version>
         </dependency>
     </dependencies>
 </project>

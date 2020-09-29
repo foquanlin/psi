@@ -126,3 +126,10 @@ wx:
 platform:
   file:
     path: file:D:/usr/local/nginx/html/upload/
+logging:
+  level:
+    com:
+      platform:
+        modules:
+          vis:
+            dao: debug

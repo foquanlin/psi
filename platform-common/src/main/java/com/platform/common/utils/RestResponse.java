@@ -11,8 +11,6 @@
  */
 package com.platform.common.utils;
 
-import org.springframework.http.HttpStatus;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +29,11 @@ public class RestResponse extends HashMap<String, Object> {
     }
 
     public static RestResponse error() {
-        return error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "未知异常，请联系管理员");
+        return error(500, "未知异常，请联系管理员");
     }
 
     public static RestResponse error(String msg) {
-        return error(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg);
+        return error(500, msg);
     }
 
     public static RestResponse error(int code, String msg) {

@@ -1,7 +1,5 @@
 package com.platform.socket;
 
-//import com.alibaba.fastjson.JSON;
-//import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.platform.common.utils.Constant;
 import com.platform.modules.sys.entity.SysUserEntity;

@@ -11,23 +11,21 @@
  */
 package com.platform.common.utils;
 
-import com.platform.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 
 /**
  * 操作excel、word、pdf、csv、excel与html互相转换
@@ -35,7 +33,8 @@ import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
  * @author 林佛权
  */
 @Slf4j
-public class EasyPoiUtils {
+@Component
+public class EasyPoiService {
     /**
      * 2003
      */
@@ -45,9 +44,6 @@ public class EasyPoiUtils {
      */
     private static final String EXCEL_XLSX = "xlsx";
 
-    private EasyPoiUtils() {
-    }
-
     /**
      * 读入excel文件，解析后返回
      * 多sheet页，
@@ -55,7 +51,7 @@ public class EasyPoiUtils {
      * @param file
      * @return key:sheetName value:sheet内容
      */
-    public static Map<String, List<String[]>> readExcel(MultipartFile file) {
+    public Map<String, List<String[]>> readExcel(MultipartFile file) throws Exception {
         //检查文件
         checkFile(file);
         //获得Workbook工作薄对象
@@ -107,36 +103,68 @@ public class EasyPoiUtils {
         return map;
     }
 
-    private static void checkFile(MultipartFile file) {
+    private void checkFile(MultipartFile file) throws Exception {
         //判断文件是否存在
         if (null == file) {
             log.error("文件不存在！");
-            throw new BusinessException("文件不存在！");
+            throw new Exception("文件不存在！");
         }
         //获得文件名
         String fileName = file.getOriginalFilename();
         //判断文件是否是excel文件
         if (!fileName.endsWith(EXCEL_XLS) && !fileName.endsWith(EXCEL_XLSX)) {
             log.error(fileName + "不是excel文件");
-            throw new BusinessException(fileName + "不是excel文件");
+            throw new Exception(fileName + "不是excel文件");
         }
     }
 
-    private static Workbook getWorkBook(MultipartFile file) {
+    private void checkFile(File file) throws FileNotFoundException {
+        //判断文件是否存在
+        if (null == file) {
+            log.error("文件不存在！");
+            throw new FileNotFoundException("文件不存在！");
+        }
+        if (!file.exists()) {
+            log.error("文件不存在！");
+            throw new FileNotFoundException("文件不存在！");
+        }
+        checkFile(file.getName());
+    }
+    private void checkFile(String fileName) throws FileNotFoundException {
+        //判断文件是否存在
+        if (null == fileName) {
+            log.error("文件不存在！");
+            throw new FileNotFoundException("文件不存在！");
+        }
+        //获得文件名
+        //判断文件是否是excel文件
+        if (!fileName.endsWith(EXCEL_XLS) && !fileName.endsWith(EXCEL_XLSX)) {
+            log.error(fileName + "不是excel文件");
+            throw new FileNotFoundException(fileName + "不是excel文件");
+        }
+    }
+    private Workbook getWorkBook(MultipartFile file) throws IOException {
         //获得文件名
         String fileName = file.getOriginalFilename();
+        return getWorkBook(fileName,file.getInputStream());
+    }
+    private Workbook getWorkBook(File file) throws FileNotFoundException {
+        return getWorkBook(file.getName(),new FileInputStream(file));
+    }
+    private Workbook getWorkBook(String fileName, InputStream in){
+        //获得文件名
         //创建Workbook工作薄对象，表示整个excel
         Workbook workbook = null;
         try {
             //获取excel文件的io流
-            InputStream is = file.getInputStream();
+
             //根据文件后缀名不同(xls和xlsx)获得不同的Workbook实现类对象
             if (fileName.endsWith(EXCEL_XLS)) {
                 //2003
-                workbook = new HSSFWorkbook(is);
+                workbook = new HSSFWorkbook(in);
             } else if (fileName.endsWith(EXCEL_XLSX)) {
                 //2007
-                workbook = new XSSFWorkbook(is);
+                workbook = new XSSFWorkbook(in);
             }
         } catch (IOException e) {
             log.info(e.getMessage());
@@ -144,13 +172,13 @@ public class EasyPoiUtils {
         return workbook;
     }
 
-    private static String getCellValue(Cell cell) {
+    private String getCellValue(Cell cell) {
         String cellValue = "";
         if (cell == null) {
             return cellValue;
         }
         //把数字当成String来读，避免出现1读成1.0的情况
-        if (cell.getCellType() == NUMERIC) {
+        if (cell.getCellType() == CellType.NUMERIC) {
             if (!HSSFDateUtil.isCellDateFormatted(cell)) {
                 cell.setCellType(CellType.STRING);
             }
@@ -195,4 +223,49 @@ public class EasyPoiUtils {
         }
         return cellValue;
     }
+
+    /**
+     * 开始导出数据信息
+     *
+     */
+    public void exportToExcel(String sheetName, String[] headers, int rows, RowHandler callback, OutputStream out) throws IOException {
+        //检查参数配置信息
+        //创建工作簿
+        XSSFWorkbook wb = new XSSFWorkbook ();
+        //创建工作表
+        XSSFSheet wbSheet = wb.createSheet();
+        wb.setSheetName(0, sheetName);
+        //设置默认行宽
+        wbSheet.setDefaultColumnWidth(20);
+
+        // 标题样式（加粗，垂直居中）
+        XSSFCellStyle cellStyle = wb.createCellStyle();
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);//水平居中
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);//垂直居中
+
+        //在第1行创建rows
+        XSSFRow row = wbSheet.createRow(0);
+        //设置列头元素
+        XSSFCell cellHead = null;
+        for (int i = 0; i < headers.length; i++) {
+            cellHead = row.createCell(i);
+            cellHead.setCellType(CellType.STRING);
+            cellHead.setCellValue(headers[i]);
+        }
+
+        //开始写入实体数据信息
+        for (int i = 0; i < rows; i++) {
+            XSSFRow roww = wbSheet.createRow(i+1);
+            if (null!=callback) {
+                callback.newRow(roww, i + 1);
+            }
+        }
+        wb.write(out);
+        wb.close();
+    }
+//    private void newCell(XSSFRow roww,int index,String value){
+//        XSSFCell cell = roww.createCell(index);
+//        cell.setCellType(CellType.STRING);
+//        cell.setCellValue(Strings.isNullOrEmpty(value) ? "" : value);
+//    }
 }
