@@ -15,7 +15,7 @@ spring:
     allow-bean-definition-overriding: true
   # 环境 dev|prod
   profiles:
-    active: dev
+    active: @package.environment@
   servlet:
     multipart:
       max-file-size: 100MB
