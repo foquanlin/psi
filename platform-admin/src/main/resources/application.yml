@@ -46,11 +46,31 @@ spring:
     add-mappings: false
   # 系统邮件配置一般不会有改动，所以采用硬编码
   mail:
-    host: smtp.qq.com
-    username: 147657060@qq.com
-    password:
     default-encoding: UTF-8
-
+    properties.mail.smtp.auth: true
+    #    properties.mail.smtp.port: 465 #465或者994
+    #    properties.mail.display.sendmail: aaa #可以任意
+    #    properties.mail.display.sendname: bbb #可以任意
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+    properties.mail.smtp.ssl.enable: true #开启SSL
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 25
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: ExpendHikariCP
+      max-lifetime: 28700000 #1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
 #mybatis
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml

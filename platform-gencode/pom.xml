@@ -87,6 +87,11 @@
             <artifactId>platform-mssql</artifactId>
             <version>${platform.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.platform</groupId>
+            <artifactId>platform-webconfig</artifactId>
+            <version>${platform.version}</version>
+        </dependency>
     </dependencies>
 <!--    <build>-->
 <!--        <plugins>-->
