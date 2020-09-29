@@ -6,7 +6,7 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaMsgServiceImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
-import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
@@ -66,11 +66,10 @@ public class WxMaConfiguration {
     }
 
     private final WxMaMessageHandler templateMsgHandler = (wxMessage, context, service, sessionManager) -> {
-        service.getMsgService().sendTemplateMsg(WxMaTemplateMessage.builder()
+        service.getMsgService().sendSubscribeMsg(WxMaSubscribeMessage.builder()
                 .templateId("此处更换为自己的模板id")
-                .formId("自己替换可用的formid")
                 .data(Lists.newArrayList(
-                        new WxMaTemplateData("keyword1", "339208499", "#173177")))
+                        new WxMaSubscribeMessage.Data("keyword1", "339208499")))
                 .toUser(wxMessage.getFromUser())
                 .build());
         return null;

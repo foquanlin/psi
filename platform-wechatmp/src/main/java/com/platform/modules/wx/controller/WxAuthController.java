@@ -44,7 +44,7 @@ public class WxAuthController {
                                      @CookieValue String appid, @RequestBody WxH5OuthrizeForm form) {
         try {
             this.wxMpService.switchoverTo(appid);
-            WxMpOAuth2AccessToken token = wxMpService.oauth2getAccessToken(form.getCode());
+            WxMpOAuth2AccessToken token = wxMpService.getOAuth2Service().getAccessToken(form.getCode());
             String openid = token.getOpenId();
             CookieUtil.setCookie(response, "openid", openid, 365 * 24 * 60 * 60);
             String openidToken = MD5Util.getMd5AndSalt(openid);
@@ -70,8 +70,8 @@ public class WxAuthController {
                             @CookieValue String appid,  @RequestBody WxH5OuthrizeForm form) {
         try {
             this.wxMpService.switchoverTo(appid);
-            WxMpOAuth2AccessToken token = wxMpService.oauth2getAccessToken(form.getCode());
-            WxMpUser userInfo = wxMpService.oauth2getUserInfo(token,"zh_CN");
+            WxMpOAuth2AccessToken token = wxMpService.getOAuth2Service().getAccessToken(form.getCode());
+            WxMpUser userInfo = wxMpService.getOAuth2Service().getUserInfo(token,"zh_CN");
             String openid = userInfo.getOpenId();
             CookieUtil.setCookie(response, "openid", openid, 365 * 24 * 60 * 60);
             String openidToken = MD5Util.getMd5AndSalt(openid);
