@@ -5,15 +5,14 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaMsgServiceImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
-import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
 import com.google.common.collect.Lists;
+import com.platform.common.utils.StringUtils;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -40,12 +39,14 @@ public class WxMaConfiguration {
     public WxMaService wxMaService() {
         WxMaService wxMaService = new WxMaServiceImpl();
         WxMaDefaultConfigImpl wxMaInMemoryConfig = new WxMaDefaultConfigImpl();
-        wxMaInMemoryConfig.setAppid(properties.getAppid());
-        wxMaInMemoryConfig.setSecret(properties.getSecret());
-        wxMaInMemoryConfig.setToken(properties.getToken());
-        wxMaInMemoryConfig.setAesKey(properties.getAesKey());
-        wxMaInMemoryConfig.setMsgDataFormat(properties.getMsgDataFormat());
-        wxMaService.setWxMaConfig(wxMaInMemoryConfig);
+        if (null!=properties&& !StringUtils.isEmpty(properties.getAppid())) {
+            wxMaInMemoryConfig.setAppid(properties.getAppid());
+            wxMaInMemoryConfig.setSecret(properties.getSecret());
+            wxMaInMemoryConfig.setToken(properties.getToken());
+            wxMaInMemoryConfig.setAesKey(properties.getAesKey());
+            wxMaInMemoryConfig.setMsgDataFormat(properties.getMsgDataFormat());
+            wxMaService.setWxMaConfig(wxMaInMemoryConfig);
+        }
         return wxMaService;
     }
 

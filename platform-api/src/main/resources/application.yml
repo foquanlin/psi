@@ -113,46 +113,46 @@ platform-api:
     # token有效时长，7天，单位秒
     expire: 604800
     header: token
-ali:
-  ma: #支付宝小程序
-    appId:
-    privateKey:
-    pubKey:
+#ali:
+#  ma: #支付宝小程序
+#    appId:
+#    privateKey:
+#    pubKey:
 
-qq:
-  miniapp: #QQ小程序配置
-    appid:
-    secret:
-  pay:
-    mchId:  #QQ支付商户号
-    mchKey:  #QQ支付商户密钥
+#qq:
+#  miniapp: #QQ小程序配置
+#    appid:
+#    secret:
+#  pay:
+#    mchId:  #QQ支付商户号
+#    mchKey:  #QQ支付商户密钥
 
-wx:
-  open: #微信开放平台配置
-    componentAppId:
-    componentSecret:
-    componentToken:
-    componentAesKey:
-  mp: #微信公众号配置
-    appId:
-    secret:
-    token:
-    aesKey:
-  miniapp: #微信小程序配置
-    appid:  #微信小程序的appid
-    secret:  #微信小程序的Secret
-    token: #微信小程序消息服务器配置的token
-    aesKey: #微信小程序消息服务器配置的EncodingAESKey
-    msgDataFormat: JSON
-  pay: #微信支付配置
-    appId:  #微信公众号或者小程序等的appid
-    mchId:  #微信支付商户号
-    mchKey:  #微信支付商户密钥
-    subAppId: #服务商模式下的子商户公众账号ID
-    subMchId: #服务商模式下的子商户号
-    keyPath: # p12证书的位置，可以指定绝对路径，也可以指定类路径（以classpath:开头）
-    spbillCreateIp: #APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
-    baseNotifyUrl:  #支付回调通知地址
+#wx:
+#  open: #微信开放平台配置
+#    componentAppId:
+#    componentSecret:
+#    componentToken:
+#    componentAesKey:
+#  mp: #微信公众号配置
+#    appId:
+#    secret:
+#    token:
+#    aesKey:
+#  miniapp: #微信小程序配置
+#    appid:  #微信小程序的appid
+#    secret:  #微信小程序的Secret
+#    token: #微信小程序消息服务器配置的token
+#    aesKey: #微信小程序消息服务器配置的EncodingAESKey
+#    msgDataFormat: JSON
+#  pay: #微信支付配置
+#    appId:  #微信公众号或者小程序等的appid
+#    mchId:  #微信支付商户号
+#    mchKey:  #微信支付商户密钥
+#    subAppId: #服务商模式下的子商户公众账号ID
+#    subMchId: #服务商模式下的子商户号
+#    keyPath: # p12证书的位置，可以指定绝对路径，也可以指定类路径（以classpath:开头）
+#    spbillCreateIp: #APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
+#    baseNotifyUrl:  #支付回调通知地址
 logging:
   level:
     com:

@@ -84,6 +84,7 @@
         <module>platform-mail</module>
         <module>platform-webconfig</module>
         <module>platform-wechatmp</module>
+        <module>platform-alibaba</module>
         <module>platform-admin</module>
         <module>platform-api</module>
     </modules>

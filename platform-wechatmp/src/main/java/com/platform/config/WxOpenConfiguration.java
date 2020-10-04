@@ -1,5 +1,6 @@
 package com.platform.config;
 
+import com.platform.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.open.api.WxOpenService;
 import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
@@ -33,11 +34,13 @@ public class WxOpenConfiguration {
     public WxOpenService wxOpenService() {
         WxOpenService wxOpenService = new WxOpenServiceImpl();
         WxOpenInMemoryConfigStorage wxMpInRedisConfigStorage = new WxOpenInMemoryConfigStorage();
-        wxMpInRedisConfigStorage.setComponentAppId(properties.getComponentAppId());
-        wxMpInRedisConfigStorage.setComponentAppSecret(properties.getComponentSecret());
-        wxMpInRedisConfigStorage.setComponentToken(properties.getComponentToken());
-        wxMpInRedisConfigStorage.setComponentAesKey(properties.getComponentAesKey());
-        wxOpenService.setWxOpenConfigStorage(wxMpInRedisConfigStorage);
+        if (null!=properties&& !StringUtils.isEmpty(properties.getComponentAppId())) {
+            wxMpInRedisConfigStorage.setComponentAppId(properties.getComponentAppId());
+            wxMpInRedisConfigStorage.setComponentAppSecret(properties.getComponentSecret());
+            wxMpInRedisConfigStorage.setComponentToken(properties.getComponentToken());
+            wxMpInRedisConfigStorage.setComponentAesKey(properties.getComponentAesKey());
+            wxOpenService.setWxOpenConfigStorage(wxMpInRedisConfigStorage);
+        }
         return wxOpenService;
     }
 
