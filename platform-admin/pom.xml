@@ -68,6 +68,12 @@
             <artifactId>platform-thirdstorage</artifactId>
             <version>${platform.version}</version>
         </dependency>
+        <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
 
     </dependencies>
     <profiles>

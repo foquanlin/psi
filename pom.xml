@@ -70,6 +70,7 @@
         <module>platform-swagger</module>
         <module>platform-elasticsearch</module>
         <module>platform-elk</module>
+        <module>platform-mybatis</module>
         <module>platform-redis</module>
         <module>platform-activemq</module>
         <module>platform-kafka</module>
@@ -83,6 +84,7 @@
         <module>platform-gencode</module>
         <module>platform-mail</module>
         <module>platform-webconfig</module>
+        <module>platform-shiro</module>
         <module>platform-wechatmp</module>
         <module>platform-alibaba</module>
         <module>platform-admin</module>

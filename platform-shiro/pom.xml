@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>platform-sys</artifactId>
+    <artifactId>platform-shiro</artifactId>
     <packaging>jar</packaging>
     <version>2.2.0</version>
 
-    <name>platform-sys</name>
+    <name>platform-shiro</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,25 +24,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-common</artifactId>
-            <version>${platform.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-redis</artifactId>
-            <version>${platform.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-webconfig</artifactId>
-            <version>${platform.version}</version>
-        </dependency>
-        <!-- 验证码 -->
-        <dependency>
-            <groupId>com.github.axet</groupId>
-            <artifactId>kaptcha</artifactId>
-            <version>${kaptcha.version}</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
         <!-- shiro权限 -->
         <dependency>
@@ -55,5 +43,6 @@
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
+
     </dependencies>
 </project>
