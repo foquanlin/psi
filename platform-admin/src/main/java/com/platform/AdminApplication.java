@@ -1,7 +1,7 @@
 package com.platform;
 
 //import com.platform.modules.job.config.ScheduleConfig;
-import com.platform.config.redis.RedisConfig;
+//import com.platform.config.redis.RedisConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

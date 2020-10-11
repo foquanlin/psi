@@ -28,11 +28,11 @@
             <artifactId>platform-common</artifactId>
             <version>${platform.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.platform</groupId>
-            <artifactId>platform-redis</artifactId>
-            <version>${platform.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.platform</groupId>-->
+<!--            <artifactId>platform-redis</artifactId>-->
+<!--            <version>${platform.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.platform</groupId>
             <artifactId>platform-webconfig</artifactId>

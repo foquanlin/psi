@@ -22,10 +22,7 @@ import com.platform.modules.sys.service.SysUserTokenService;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -54,7 +51,7 @@ public class SysLoginController extends AbstractController {
      * @param uuid     uuid
      */
     @GetMapping("captcha.jpg")
-    public void captcha(HttpServletResponse response, String uuid) throws IOException {
+    public void captcha(HttpServletResponse response, @RequestParam("uuid") String uuid) throws IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
 

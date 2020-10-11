@@ -17,14 +17,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import com.platform.common.exception.BusinessException;
 import com.platform.common.utils.Constant;
-import com.platform.common.utils.JedisUtil;
+//import com.platform.common.utils.JedisUtil;
 import com.platform.common.utils.Query;
 import com.platform.modules.sys.dao.SysConfigDao;
 import com.platform.modules.sys.entity.SysConfigEntity;
 import com.platform.modules.sys.service.SysConfigService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+//import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +39,12 @@ import java.util.Map;
  * @author 林佛权
  */
 @Service("sysConfigService")
+@CacheConfig(cacheNames = "config")
 public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEntity> implements SysConfigService {
 //    @Autowired
 //    private JedisUtil jedisUtils;
-    @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+//    @Autowired
+//    private RedisTemplate<String,Object> redisTemplate;
 
     @Override
     public Page queryPage(Map<String, Object> params) {
@@ -50,49 +55,52 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
                         .like(StringUtils.isNotBlank(paramKey), "PARAM_KEY", paramKey)
                         .eq("STATUS", 1));
     }
-
+    @CachePut()
     @Override
     public void add(SysConfigEntity config) {
         this.save(config);
-        saveOrUpdateFromRedis(config);
+//        saveOrUpdateFromRedis(config);
     }
 
+    @CachePut()
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysConfigEntity config) {
         baseMapper.updateById(config);
-        saveOrUpdateFromRedis(config);
+//        saveOrUpdateFromRedis(config);
     }
 
+    @CacheEvict(key = "#key")
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateValueByKey(String key, String value) {
         baseMapper.updateValueByKey(key, value);
-        deleteFromRedis(key);
+//        deleteFromRedis(key);
     }
 
+    @CacheEvict()
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteBatch(String[] ids) {
-        for (String id : ids) {
-            SysConfigEntity config = this.getById(id);
-            deleteFromRedis(config.getParamKey());
-        }
+//        for (String id : ids) {
+//            SysConfigEntity config = this.getById(id);
+//            deleteFromRedis(config.getParamKey());
+//        }
 
         this.removeByIds(Arrays.asList(ids));
     }
-
+    @Cacheable(key = "#key")
     @Override
     public String getValue(String key) {
-        SysConfigEntity config = getFromRedis(key);
+        SysConfigEntity config = null;//getFromRedis(key);
         if (config == null) {
             config = baseMapper.queryByKey(key);
-            saveOrUpdateFromRedis(config);
+//            saveOrUpdateFromRedis(config);
         }
 
         return config == null ? null : config.getParamValue();
     }
-
+    @Cacheable(key = "#key")
     @Override
     public <T> T getConfigObject(String key, Class<T> clazz) {
         String value = getValue(key);
@@ -107,15 +115,15 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
         }
     }
 
-    private void saveOrUpdateFromRedis(SysConfigEntity config) {
-        if (config == null) {
-            return;
-        }
-        String key = Constant.SYS_CACHE + config.getParamKey();
-        redisTemplate.opsForValue().set(key,config);
-//        jedisUtils.setObject(key, config);
-    }
-
+//    private void saveOrUpdateFromRedis(SysConfigEntity config) {
+//        if (config == null) {
+//            return;
+//        }
+//        String key = Constant.SYS_CACHE + config.getParamKey();
+//        redisTemplate.opsForValue().set(key,config);
+////        jedisUtils.setObject(key, config);
+//    }
+    @Cacheable(key = "#key")
     @Override
     public String getValue(String key, String defaultValue) {
         String value = getValue(key);
@@ -125,15 +133,15 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
         return value;
     }
 
-    private void deleteFromRedis(String configKey) {
-        String key = Constant.SYS_CACHE + configKey;
-//        jedisUtils.del(key);
-        redisTemplate.delete(key);
-    }
+//    private void deleteFromRedis(String configKey) {
+//        String key = Constant.SYS_CACHE + configKey;
+////        jedisUtils.del(key);
+//        redisTemplate.delete(key);
+//    }
 
-    private SysConfigEntity getFromRedis(String configKey) {
-        String key = Constant.SYS_CACHE + configKey;
-        return (SysConfigEntity) redisTemplate.opsForValue().get(key);
-//        return (SysConfigEntity) jedisUtils.getObject(key);
-    }
+//    private SysConfigEntity getFromRedis(String configKey) {
+//        String key = Constant.SYS_CACHE + configKey;
+//        return (SysConfigEntity) redisTemplate.opsForValue().get(key);
+////        return (SysConfigEntity) jedisUtils.getObject(key);
+//    }
 }

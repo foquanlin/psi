@@ -9,10 +9,14 @@
  *
  * Copyright (c) 2019-2019 酷天科技
  */
-package com.platform.config.redis;
+package com.platform;
 
 //import com.platform.common.utils.StringUtils;
-import lombok.extern.slf4j.Slf4j;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+//import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -20,49 +24,36 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.interceptor.KeyGenerator;
-import org.springframework.context.annotation.*;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.connection.RedisConfiguration;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.Assert;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-/**
- * @Author: JCccc
- * @CreateTime: 2018-09-11
- * @Description:
- */
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.*;
+//import redis.clients.jedis.JedisPool;
+//import redis.clients.jedis.JedisPoolConfig;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Redis配置
  *
  * @author 林佛权
  */
-@Slf4j
+//@Slf4j
 @Configuration
 @EnableCaching
 //@ConditionalOnClass(RedisConnectionFactory.class)
@@ -70,10 +61,45 @@ import java.util.List;
 //@ConditionalOnBean(RedisConnectionFactory.class)
 //@ConditionalOnMissingBean(CacheManager.class)
 //@Conditional(CacheCondition.class)
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfig {
+//    @Value("${spring.cache.type}")
+//    private String type;
+//    @Value("${spring.redis.host}")
+//    private String host;
+//
+//    @Value("${spring.redis.port}")
+//    private Integer port;
+//
+//    @Value("${spring.redis.timeout}")
+//    private String strTimeout;
+//
+//    @Value("${spring.redis.password}")
+//    private String password;
+//
+//    @Value("${spring.redis.database}")
+//    private Integer database;
+//
+//    @Value("${spring.redis.jedis.pool.max-active}")
+//    private int maxActive;
+//
+//    @Value("${spring.redis.jedis.pool.max-wait}")
+//    private String strMaxWaitMillis;
+//
+//    @Value("${spring.redis.jedis.pool.max-idle}")
+//    private Integer maxIdle;
+//
+//    @Value("${spring.redis.jedis.pool.min-idle}")
+//    private int minIdle;
     @Value("${spring.redis.expire-time}")
     private Duration expire;
 
+//    @ConditionalOnBean（仅仅在当前上下文中存在某个对象时，才会实例化一个Bean）
+//    @ConditionalOnClass（某个class位于类路径上，才会实例化一个Bean）
+//    @ConditionalOnExpression（当表达式为true的时候，才会实例化一个Bean）
+//    @ConditionalOnMissingBean（仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean）
+//    @ConditionalOnMissingClass（某个class类路径上不存在的时候，才会实例化一个Bean）
+//    @ConditionalOnNotWebApplication（不是web应用）
+//    @ConditionalOnBean(RedisTemplate.class)
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
@@ -92,22 +118,8 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer));
         RedisCacheManager rcm= RedisCacheManager.builder(connectionFactory).cacheDefaults(config).build();
-        log.info("------------------------------------------------JedisPool注入成功！------------------------------------------------");
         return rcm;
     }
-
-//    @ConditionalOnBean（仅仅在当前上下文中存在某个对象时，才会实例化一个Bean）
-//    @ConditionalOnClass（某个class位于类路径上，才会实例化一个Bean）
-//    @ConditionalOnExpression（当表达式为true的时候，才会实例化一个Bean）
-//    @ConditionalOnMissingBean（仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean）
-//    @ConditionalOnMissingClass（某个class类路径上不存在的时候，才会实例化一个Bean）
-//    @ConditionalOnNotWebApplication（不是web应用）
-//    @Bean
-//    @ConditionalOnBean(RedisTemplate.class)
-//    public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-//        RedisCacheManager rcm= RedisCacheManager.create(connectionFactory);
-//        return rcm;
-//    }
 //    //    @RefreshScope
 //    @Bean
 //    public CacheManager cacheManager(RedisTemplate redisTemplate) {
@@ -129,11 +141,13 @@ public class RedisConfig extends CachingConfigurerSupport {
 //        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 //        jackson2JsonRedisSerializer.setObjectMapper(om);
 //        //序列化设置 ，这样计算是正常显示的数据，也能正常存储和获取
+//        redisTemplate.setEnableDefaultSerializer(false);
+//        redisTemplate.setDefaultSerializer(jackson2JsonRedisSerializer);
 //        redisTemplate.setKeySerializer(jackson2JsonRedisSerializer);
 //        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
 //        redisTemplate.setHashKeySerializer(jackson2JsonRedisSerializer);
 //        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
-//
+//        redisTemplate.afterPropertiesSet();
 //        return redisTemplate;
 //    }
 //    @Bean
@@ -143,7 +157,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 //        return stringRedisTemplate;
 //    }
 
-        // @Bean
+//    @Bean
 //    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
 //        StringRedisTemplate template = new StringRedisTemplate(factory);
 //
@@ -151,11 +165,14 @@ public class RedisConfig extends CachingConfigurerSupport {
 //        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
 //        ObjectMapper om = new ObjectMapper();
 //        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+////        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 //        jackson2JsonRedisSerializer.setObjectMapper(om);
-//        // template.setKeySerializer(redisSerializer);
+//         template.setKeySerializer(jackson2JsonRedisSerializer);
+//        template.setDefaultSerializer(jackson2JsonRedisSerializer);
+//        template.setKeySerializer(jackson2JsonRedisSerializer);
 //        template.setValueSerializer(jackson2JsonRedisSerializer);
-//
+//        template.setHashKeySerializer(jackson2JsonRedisSerializer);
+//        template.setHashValueSerializer(jackson2JsonRedisSerializer);
 //        return template;
 //    }
 
@@ -202,8 +219,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 //        standaloneConfig.setPassword(password);
 //        return standaloneConfig;
 //    }
-
-//    @RefreshScope
+//
+////    @RefreshScope
 //    @Bean
 //    public JedisConnectionFactory redisConnectionFactory(RedisStandaloneConfiguration configuration) {
 //        JedisConnectionFactory factory = new JedisConnectionFactory(configuration);
@@ -248,4 +265,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 //        }
 //        return this.customizerInvoker.customize(builder.build());
 //    }
+
+
 }

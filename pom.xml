@@ -87,6 +87,7 @@
         <module>platform-shiro</module>
         <module>platform-wechatmp</module>
         <module>platform-alibaba</module>
+        <module>platform-tester</module>
         <module>platform-admin</module>
         <module>platform-api</module>
     </modules>

@@ -2,13 +2,14 @@ package com.platform.cache;
 
 import com.google.gson.Gson;
 import com.platform.common.utils.Constant;
-import com.platform.common.utils.JedisUtil;
+//import com.platform.common.utils.JedisUtil;
 import com.platform.common.utils.StringUtils;
 //import com.platform.modules.mall.entity.MallUserEntity;
 import com.platform.modules.sys.entity.SysUserTokenEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+//import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,8 +20,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 //@Component
 public class UserTokenCache {
-    @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+//    @Autowired
+//    private RedisTemplate<String,Object> redisTemplate;
 //    @Autowired
 //    private JedisUtil jedisUtil;
 //    static SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
@@ -38,15 +39,17 @@ public class UserTokenCache {
      * @param userId
      * @return
      */
+    @Cacheable(key = "#userId")
     public SysUserTokenEntity getUserTokenByUserId(String userId) {
 //        String temp = jedisUtil.get(toUserTokenKey(userId));
-        String temp = (String)redisTemplate.opsForValue().get(toUserTokenKey(userId));
-        if (!org.springframework.util.StringUtils.isEmpty(temp)) {
-            SysUserTokenEntity d = gson.fromJson(temp, SysUserTokenEntity.class);
-            return d;
-        } else {
-            return null;
-        }
+//        String temp = (String)redisTemplate.opsForValue().get(toUserTokenKey(userId));
+//        if (!org.springframework.util.StringUtils.isEmpty(temp)) {
+//            SysUserTokenEntity d = gson.fromJson(temp, SysUserTokenEntity.class);
+//            return d;
+//        } else {
+//            return null;
+//        }
+        return null;
     }
 
     /**
@@ -58,16 +61,17 @@ public class UserTokenCache {
 
     public SysUserTokenEntity getUserInfoByToken(String token) {
 //        String temp = jedisUtil.get(toTokenUserKey(token));
-        String temp = (String)redisTemplate.opsForValue().get(toUserTokenKey(token));
-        if (StringUtils.isNullOrEmpty(temp)) {
-            return null;
-        }
-        return getUserTokenByUserId(temp);
+//        String temp = (String)redisTemplate.opsForValue().get(toUserTokenKey(token));
+//        if (StringUtils.isNullOrEmpty(temp)) {
+//            return null;
+//        }
+//        return getUserTokenByUserId(temp);
+        return null;
     }
 
     public void del(String userId) {
 //        jedisUtil.del(toUserTokenKey(userId));
-        redisTemplate.delete(toUserTokenKey(userId));
+//        redisTemplate.delete(toUserTokenKey(userId));
     }
 
     /**
@@ -78,8 +82,8 @@ public class UserTokenCache {
     public void putUserToken(SysUserTokenEntity SysUserTokenEntity) {
 //        jedisUtil.set(toUserTokenKey(SysUserTokenEntity.getUserId()), fromTokenCacheString(SysUserTokenEntity), Constant.EXPIRE);
 //        jedisUtil.set(toTokenUserKey(SysUserTokenEntity.getToken()), SysUserTokenEntity.getUserId().toString(), Constant.EXPIRE);
-        redisTemplate.opsForValue().set(toUserTokenKey(SysUserTokenEntity.getUserId()), fromTokenCacheString(SysUserTokenEntity), Constant.EXPIRE);
-        redisTemplate.opsForValue().set(toTokenUserKey(SysUserTokenEntity.getToken()), SysUserTokenEntity.getUserId().toString(), Constant.EXPIRE);
+//        redisTemplate.opsForValue().set(toUserTokenKey(SysUserTokenEntity.getUserId()), fromTokenCacheString(SysUserTokenEntity), Constant.EXPIRE);
+//        redisTemplate.opsForValue().set(toTokenUserKey(SysUserTokenEntity.getToken()), SysUserTokenEntity.getUserId().toString(), Constant.EXPIRE);
     }
 
     private String fromTokenCacheString(SysUserTokenEntity d) {

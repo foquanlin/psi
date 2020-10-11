@@ -1,5 +1,8 @@
 spring:
+  cache:
+    type: redis # none| redis |mongdb? |ehcache?
   redis:
+    expire-time: 180000ms # redis过期时间是30分钟30*60
     host: 127.0.0.1
   #Redis服务器连接端口
     port: 6379
@@ -16,3 +19,10 @@ spring:
       min-idle: 0
   #连接超时时间（毫秒）
     timeout: 30000
+  data:
+    mongodb:
+      repositories:
+        enabled: false
+    redis:
+      repositories:
+        enabled: false
