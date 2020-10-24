@@ -32,7 +32,10 @@ public class WxMaConfiguration {
     public WxMaConfiguration(WxMaProperties properties) {
         this.properties = properties;
     }
-
+    @Bean
+    public WxMaMsgService wxMaMsgService(){
+        return new WxMaMsgServiceImpl(wxMaService());
+    }
     @Bean
     public WxMaService wxMaService() {
         WxMaService wxMaService = new WxMaServiceImpl();

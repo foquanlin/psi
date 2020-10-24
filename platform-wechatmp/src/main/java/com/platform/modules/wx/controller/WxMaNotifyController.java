@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/wxma/msg/{appid}")
-public class WxMaPortalController {
+public class WxMaNotifyController {
     private final WxMaService maService;
     private final WxMaMessageRouter messageRouter;
 
