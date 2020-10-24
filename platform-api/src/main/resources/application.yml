@@ -1,11 +1,11 @@
 # Tomcat
 server:
-  tomcat:
-    uri-encoding: UTF-8
-    accept-count: 5000
+  undertow:
     threads:
-      max: 1024
-      min-spare: 30
+      io: 2
+      worker: 5
+    buffer-size: 1024
+    direct-buffers: true
   port: 8889
   servlet:
     context-path: /api
