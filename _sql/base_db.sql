@@ -1293,24 +1293,10 @@ INSERT INTO `SYS_MENU` VALUES ('1503', '15', 'SQL监控', 'http://localhost:8888
 INSERT INTO `SYS_MENU` VALUES ('1504', '15', '接口文档', 'http://localhost:8889/platform-api/doc.html', null, '1', 'interface', '4', '0');
 INSERT INTO `SYS_MENU` VALUES ('1505', '15', '代码生成器', 'gen/generator', 'sys:generator:list', '1', 'code', '5', '1');
 INSERT INTO `SYS_MENU` VALUES ('150501', '1505', '生成代码', null, 'sys:generator:code', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('20', '0', '访客管理', 'vis/user', 'vis:user:list,vis:user:info', '1', 'admin', '20', '1');
-INSERT INTO `SYS_MENU` VALUES ('2001', '20', '新增', null, 'vis:user:save', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2002', '20', '修改', null, 'vis:user:update', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2003', '20', '删除', null, 'vis:user:delete', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2004', '20', '禁止访问', null, 'vis:user:disable', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('21', '0', '试题管理', 'vis/question', 'vis:question:list,vis:question:info', '1', 'admin', '21', '1');
-INSERT INTO `SYS_MENU` VALUES ('2101', '21', '新增', null, 'vis:question:save', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2102', '21', '修改', null, 'vis:question:update', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2103', '21', '删除', null, 'vis:question:delete', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('22', '0', '访客记录管理', 'vis/visitorrecord', 'vis:visitorrecord:list,vis:visitorrecord:info', '1', 'admin', '22', '1');
-INSERT INTO `SYS_MENU` VALUES ('2201', '22', '新增', null, 'vis:visitorrecord:save', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2202', '22', '修改', null, 'vis:visitorrecord:update', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2203', '22', '删除', null, 'vis:visitorrecord:delete', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('23', '0', '访客图片管理', 'vis/visitorimage', 'vis:vistorimage:list,vis:vistorimage:info', '1', 'admin', '23', '1');
-INSERT INTO `SYS_MENU` VALUES ('2301', '23', '新增', null, 'vis:vistorimage:save', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2302', '23', '修改', null, 'vis:vistorimage:update', '2', null, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('2303', '23', '删除', null, 'vis:vistorimage:delete', '2', null, '0', '1');
-
+INSERT INTO SYS_MENU(MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS) VALUES ('16','0','民族管理','sys/nation','sys:nation:list,sys:nation:info',0,'admin',0,1);
+INSERT INTO SYS_MENU(MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS) VALUES ('1601','16','新增',null,'sys:nation:save',0,null,0,1);
+INSERT INTO SYS_MENU(MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS) VALUES ('1602','16','修改',null,'sys:nation:update',0,null,0,1);
+INSERT INTO SYS_MENU(MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS) VALUES ('1603','16','删除',null,'sys:nation:delete',0,null,0,1);
 -- ----------------------------
 -- Table structure for SYS_NATION
 -- ----------------------------
@@ -1553,3 +1539,4 @@ CREATE TABLE `SYS_USER_TOKEN` (
 -- Records of SYS_USER_TOKEN
 -- ----------------------------
 INSERT INTO `SYS_USER_TOKEN` VALUES ('1', '9173d200b4df2b374dc2634971ada888', '2020-07-20 17:45:16', '2020-07-20 11:45:16');
+

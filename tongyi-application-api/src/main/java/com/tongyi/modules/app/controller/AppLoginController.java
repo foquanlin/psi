@@ -23,7 +23,7 @@ package com.tongyi.modules.app.controller;
 //import com.tongyi.modules.mall.service.MallUserService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
-        import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

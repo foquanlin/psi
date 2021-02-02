@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author 林佛权
  */
 @Data
-@TableName("wx_account")
+@TableName("WX_ACCOUNT")
 public class WxAccount implements Serializable {
 	private static final long serialVersionUID = 1L;
 
