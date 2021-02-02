@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.platform</groupId>
-    <artifactId>platform-plus</artifactId>
-    <version>2.2.0</version>
-    <name>platform-plus</name>
+    <groupId>com.tongyi</groupId>
+    <artifactId>tongyi-component</artifactId>
+    <version>1.0.0</version>
+    <name>tongyi-component</name>
     <packaging>pom</packaging>
 
     <description>酷天后台管理系统</description>
@@ -66,30 +66,31 @@
     </dependencies>
 
     <modules>
-        <module>platform-common</module>
-        <module>platform-swagger</module>
-        <module>platform-elasticsearch</module>
-        <module>platform-elk</module>
-        <module>platform-mybatis</module>
-        <module>platform-redis</module>
-        <module>platform-activemq</module>
-        <module>platform-kafka</module>
-        <module>platform-excel</module>
-        <module>platform-mssql</module>
-        <module>platform-thirdstorage</module>
-        <module>platform-sms</module>
-        <module>platform-sys</module>
-        <module>platform-act</module>
-        <module>platform-job</module>
-        <module>platform-gencode</module>
-        <module>platform-mail</module>
-        <module>platform-webconfig</module>
-        <module>platform-shiro</module>
-        <module>platform-wechatmp</module>
-        <module>platform-alibaba</module>
-        <module>platform-tester</module>
-        <module>platform-admin</module>
-        <module>platform-api</module>
+        <module>tongyi-component-utils</module>
+        <module>tongyi-component-common</module>
+        <module>tongyi-component-swagger</module>
+        <module>tongyi-component-elasticsearch</module>
+        <module>tongyi-component-elk</module>
+        <module>tongyi-component-mybatis</module>
+        <module>tongyi-component-redis</module>
+        <module>tongyi-component-activemq</module>
+        <module>tongyi-component-kafka</module>
+        <module>tongyi-component-excel</module>
+        <module>tongyi-component-mssql</module>
+        <module>tongyi-component-thirdstorage</module>
+        <module>tongyi-component-sms</module>
+        <module>tongyi-component-sys</module>
+        <module>tongyi-component-act</module>
+        <module>tongyi-component-job</module>
+        <module>tongyi-component-gencode</module>
+        <module>tongyi-component-mail</module>
+        <module>tongyi-component-webconfig</module>
+        <module>tongyi-component-shiro</module>
+        <module>tongyi-component-wechatmp</module>
+        <module>tongyi-component-alibaba</module>
+        <module>tongyi-component-tester</module>
+        <module>tongyi-application-admin</module>
+        <module>tongyi-application-api</module>
     </modules>
 
     <dependencyManagement>

@@ -4,7 +4,7 @@ Navicat MySQL Data Transfer
 Source Server         : devdb.meilyhome.com
 Source Server Version : 50721
 Source Host           : devdb.meilyhome.com:3305
-Source Database       : yanglao
+Source Database       : tongyi
 
 Target Server Type    : MYSQL
 Target Server Version : 50721
@@ -473,8 +473,8 @@ CREATE TABLE `ACT_RE_PROCDEF` (
 -- ----------------------------
 -- Records of ACT_RE_PROCDEF
 -- ----------------------------
-INSERT INTO `ACT_RE_PROCDEF` VALUES ('leave:1:4', '1', 'com.platform.modules.oa.leave', '请假流程', 'leave', '1', '1', 'D:\\workspace-webnapp\\weitong\\platform-plus\\platform-admin\\target\\classes\\processes\\leave.bpmn', 'D:\\workspace-webnapp\\weitong\\platform-plus\\platform-admin\\target\\classes\\processes\\leave.leave.png', '请假流程演示', '0', '1', '1', '', null);
-INSERT INTO `ACT_RE_PROCDEF` VALUES ('leave:2:2504', '1', 'com.platform.modules.oa.leave', '请假流程', 'leave', '2', '2501', 'D:\\workspace-webnapp\\weitong\\platform-plus\\platform-act\\target\\classes\\processes\\leave.bpmn', 'D:\\workspace-webnapp\\weitong\\platform-plus\\platform-act\\target\\classes\\processes\\leave.leave.png', '请假流程演示', '0', '1', '1', '', null);
+INSERT INTO `ACT_RE_PROCDEF` VALUES ('leave:1:4', '1', 'com.tongyi.modules.oa.leave', '请假流程', 'leave', '1', '1', 'D:\\workspace-webnapp\\weitong\\platform-plus\\platform-admin\\target\\classes\\processes\\leave.bpmn', 'D:\\workspace-webnapp\\weitong\\platform-plus\\platform-admin\\target\\classes\\processes\\leave.leave.png', '请假流程演示', '0', '1', '1', '', null);
+INSERT INTO `ACT_RE_PROCDEF` VALUES ('leave:2:2504', '1', 'com.tongyi.modules.oa.leave', '请假流程', 'leave', '2', '2501', 'D:\\workspace-webnapp\\weitong\\platform-plus\\platform-act\\target\\classes\\processes\\leave.bpmn', 'D:\\workspace-webnapp\\weitong\\platform-plus\\platform-act\\target\\classes\\processes\\leave.leave.png', '请假流程演示', '0', '1', '1', '', null);
 
 -- ----------------------------
 -- Table structure for ACT_RU_DEADLETTER_JOB

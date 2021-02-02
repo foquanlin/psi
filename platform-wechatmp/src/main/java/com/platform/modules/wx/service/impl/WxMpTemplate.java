@@ -1,1 +1,0 @@
-package com.platform.modules.wx.service.impl;

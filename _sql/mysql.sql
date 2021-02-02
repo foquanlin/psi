@@ -4,7 +4,7 @@ Navicat MySQL Data Transfer
 Source Server         :
 Source Server Version : 50722
 Source Host           :
-Source Database       : platform-plus
+Source Database       : tongyi
 
 Target Server Type    : MYSQL
 Target Server Version : 50722

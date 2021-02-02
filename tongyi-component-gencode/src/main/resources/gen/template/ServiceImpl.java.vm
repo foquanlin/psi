@@ -1,0 +1,69 @@
+/*
+ * 项目名称:${projectName}
+ * 类名称:${className}ServiceImpl.java
+ * 包名称:${package}.service.impl
+ * @author ${author}
+ * @date ${datetime}
+ * Copyright (c) 2019-2021 惠州市酷天科技有限公司
+ */
+package ${package}.service.impl;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.tongyi.common.utils.Query;
+import ${package}.dao.${className}Dao;
+import ${package}.entity.${className}Entity;
+import ${package}.service.${className}Service;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * ${comments}Service实现类
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service("${classname}Service")
+public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${className}Entity> implements ${className}Service {
+
+    @Override
+    public List<${className}Entity> queryAll(Map<String, Object> params) {
+        return baseMapper.queryAll(params);
+    }
+
+    @Override
+    public Page queryPage(Map<String, Object> params) {
+        //排序
+        params.put("sidx", "T.${pk.attrname}");
+        params.put("asc", false);
+        Page<${className}Entity> page = new Query<${className}Entity>(params).getPage();
+        return page.setRecords(baseMapper.select${className}Page(page, params));
+    }
+
+    @Override
+    @Transactional
+    public boolean add(${className}Entity ${classname}) {
+        return this.save(${classname});
+    }
+
+    @Override
+    @Transactional
+    public boolean update(${className}Entity ${classname}) {
+        return this.updateById(${classname});
+    }
+
+    @Override
+    @Transactional
+    public boolean delete(${pk.attrType} ${pk.attrname}) {
+        return this.removeById(${pk.attrname});
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(${pk.attrType}[] ${pk.attrname}s) {
+        return this.removeByIds(Arrays.asList(${pk.attrname}s));
+    }
+}
