@@ -1,9 +1,8 @@
 package com.tongyi;
 
-//import com.tongyi.modules.job.config.ScheduleConfig;
-//import com.tongyi.config.redis.RedisConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -15,8 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 //@CrossOrigin(origins = {"http://127.0.0.1:8000", "null"})
 @EnableTransactionManagement
-@SpringBootApplication()
-//@Import({DynamicDataSourceConfig.class})
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class AdminApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

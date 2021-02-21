@@ -635,7 +635,7 @@ CREATE TABLE `SYS_USER` (
 -- ----------------------------
 -- Records of SYS_USER
 -- ----------------------------
-INSERT INTO `SYS_USER` VALUES ('1', 'admin', '林佛权', 1, '01', 'YzcmCZNvbXocrsz9dm8e', 'smtp.qq.com', '147657060@qq.com', '', '13794384396', '1', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', null, null, '2016-11-11 11:11:11');
+INSERT INTO `SYS_USER` VALUES ('1', 'admin', '林佛权', 1, '01', 'YzcmCZNvbXocrsz9dm8e', 'smtp.qq.com','25', '147657060@qq.com', '', '13794384396', '1', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', null, null, '2016-11-11 11:11:11');
 
 -- ----------------------------
 -- Table structure for `SYS_USER_ROLE`
