@@ -69,6 +69,7 @@
         <module>tongyi-component-utils</module>
         <module>tongyi-component-common</module>
         <module>tongyi-component-swagger</module>
+        <module>tongyi-component-freemarker</module>
         <module>tongyi-component-elasticsearch</module>
         <module>tongyi-component-elk</module>
         <module>tongyi-component-mybatis</module>
@@ -89,6 +90,7 @@
         <module>tongyi-component-wechatmp</module>
         <module>tongyi-component-alibaba</module>
         <module>tongyi-component-tester</module>
+        <module>tongyi-component-cms</module>
         <module>tongyi-application-admin</module>
         <module>tongyi-application-api</module>
     </modules>

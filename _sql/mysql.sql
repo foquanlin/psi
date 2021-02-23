@@ -496,6 +496,11 @@ INSERT INTO `SYS_MENU` VALUES ('1505', '15', '代码生成器', 'gen/generator',
 INSERT INTO `SYS_MENU` VALUES ('150501', '1505', '生成代码', null, 'sys:generator:code', 2, null, 0,1);
 -- INSERT INTO `SYS_MENU` VALUES ('16', '0', 'ELK平台', 'http://localhost:5601', null, '1', 'log', 7,0);
 
+INSERT INTO `SYS_MENU` VALUES ('17', '0', '民族管理', 'sys/nation', 'sys:nation:list,sys:nation:info', '1', 'admin', '0', '1');
+INSERT INTO `SYS_MENU` VALUES ('1701', '17', '新增', NULL, 'sys:nation:save', '2', NULL, '0', '1');
+INSERT INTO `SYS_MENU` VALUES ('1702', '17', '修改', NULL, 'sys:nation:update', '2', NULL, '0', '1');
+INSERT INTO `SYS_MENU` VALUES ('1703', '17', '删除', NULL, 'sys:nation:delete', '2', NULL, '0', '1');
+
 
 -- ----------------------------
 -- Table structure for `SYS_ORG`
