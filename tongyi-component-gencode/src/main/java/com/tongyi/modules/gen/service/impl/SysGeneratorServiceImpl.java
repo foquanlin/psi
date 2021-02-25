@@ -61,7 +61,7 @@ public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, Result
 
         List<ColumnEntity> columns = baseMapper.queryColumns(params);
         for(ColumnEntity entity:columns){
-            entity.setColumnDefault(entity.getColumnDefault()==null?"''":entity.getColumnDefault());
+            entity.setColumnDefault(entity.getColumnDefault()==null?"''":String.format("'%s'",entity.getColumnDefault()));
             entity.setRequired("YES".equalsIgnoreCase(entity.getIsNullable())?false:true);
         }
         logger.info(ReflectionToStringBuilder.reflectionToString(columns, ToStringStyle.SIMPLE_STYLE));

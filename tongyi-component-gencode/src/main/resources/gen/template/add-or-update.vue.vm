@@ -60,8 +60,8 @@
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
 #if($column.required)
-          ${column.attrname}: [{required: true, message: '${column.comments}不能为空', trigger: 'blur'}]#if($velocityCount != $columns.size()),
-#end#end#end#end
+          ${column.attrname}: [{required: true, message: '${column.comments}不能为空', trigger: 'blur'}],
+#end#end#end
           other: []
         }
       }
