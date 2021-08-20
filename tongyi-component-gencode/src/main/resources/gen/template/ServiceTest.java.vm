@@ -52,24 +52,24 @@ public class ${className}MockTest {
         for(int i=0;i<100;i++) {
             int idx = new Random().nextInt(1000000);
             String id = "id-" + idx;
-                ${className}Entity item = new ${className}Entity();
-            #foreach($column in $columns)
-                #if ($column.attrName == $pk.attrName)
-                    item.setId(id);
-                #elseif($column.attrType=='Date')
-                    item.set$column.attrName (new Date());
-                #elseif($column.attrType=='Integer')
-                    item.set$column.attrName (idx);
-                #elseif($column.attrType=='Boolean')
-                    item.set$column.attrName (idx % 2 == 1);
-                #elseif($column.attrType=='BigDecimal')
-                    item.set$column.attrName (new BigDecimal(idx));
-                #elseif($column.attrType=='byte[]')
-                    item.set$column.attrName (id.getBytes());
-                #else
-                    item.set$column.attrName (id);
-                #end
-            #end
+            ${className}Entity item = new ${className}Entity();
+#foreach($column in $columns)
+#if ($column.attrName == $pk.attrName)
+            item.setId(id);
+#elseif($column.attrType=='Date')
+            item.set$column.attrName (new Date());
+#elseif($column.attrType=='Integer')
+            item.set$column.attrName (idx);
+#elseif($column.attrType=='Boolean')
+            item.set$column.attrName (idx % 2 == 1);
+#elseif($column.attrType=='BigDecimal')
+            item.set$column.attrName (new BigDecimal(idx));
+#elseif($column.attrType=='byte[]')
+            item.set$column.attrName (id.getBytes());
+#else
+            item.set$column.attrName (id);
+#end
+#end
             controller.save(item);
         }
     }
@@ -78,24 +78,24 @@ public class ${className}MockTest {
     public void testAll() {
         int idx = new Random().nextInt(1000000);
         String id = "id-" + idx;
-            ${className}Entity item = new ${className}Entity();
-        #foreach($column in $columns)
-            #if ($column.attrName == $pk.attrName)
-                item.setId(id);
-            #elseif($column.attrType=='Date')
-                item.set$column.attrName (new Date());
-            #elseif($column.attrType=='Integer')
-                item.set$column.attrName (idx);
-            #elseif($column.attrType=='Boolean')
-                item.set$column.attrName (idx % 2 == 1);
-            #elseif($column.attrType=='BigDecimal')
-                item.set$column.attrName (new BigDecimal(idx));
-            #elseif($column.attrType=='byte[]')
-                item.set$column.attrName (id.getBytes());
-            #else
-                item.set$column.attrName (id);
-            #end
-        #end
+        ${className}Entity item = new ${className}Entity();
+#foreach($column in $columns)
+#if ($column.attrName == $pk.attrName)
+        item.setId(id);
+#elseif($column.attrType=='Date')
+        item.set$column.attrName (new Date());
+#elseif($column.attrType=='Integer')
+        item.set$column.attrName (idx);
+#elseif($column.attrType=='Boolean')
+        item.set$column.attrName (idx % 2 == 1);
+#elseif($column.attrType=='BigDecimal')
+        item.set$column.attrName (new BigDecimal(idx));
+#elseif($column.attrType=='byte[]')
+        item.set$column.attrName (id.getBytes());
+#else
+        item.set$column.attrName (id);
+#end
+#end
         controller.save(item);
         controller.update(item);
         controller.info(id);
