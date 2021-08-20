@@ -29,7 +29,11 @@ import java.util.Map;
  * @date ${datetime}
  */
 @Service("${classname}Service")
-public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${className}Entity> implements ${className}Service {
+public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${className}Entity>{
+
+    public ${className}Entity getById(${pk.attrType} ${pk.attrname}){
+        return super.getById(${pk.attrname});
+    }
 
     @Override
     public List<${className}Entity> queryAll(Map<String, Object> params) {
@@ -38,9 +42,6 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${clas
 
     @Override
     public Page queryPage(Map<String, Object> params) {
-        //排序
-        params.put("sidx", "T.${pk.attrname}");
-        params.put("asc", false);
         Page<${className}Entity> page = new Query<${className}Entity>(params).getPage();
         return page.setRecords(baseMapper.select${className}Page(page, params));
     }

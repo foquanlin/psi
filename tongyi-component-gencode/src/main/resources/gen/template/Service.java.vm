@@ -9,7 +9,6 @@
 package ${package}.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import ${package}.entity.${className}Entity;
 
 import java.util.List;
@@ -21,7 +20,9 @@ import java.util.Map;
  * @author ${author}
  * @date ${datetime}
  */
-public interface ${className}Service extends IService<${className}Entity> {
+public interface ${className}Service{
+
+    public ${className}Entity getById(${pk.attrType} ${pk.attrname});
 
     /**
      * 查询所有列表
