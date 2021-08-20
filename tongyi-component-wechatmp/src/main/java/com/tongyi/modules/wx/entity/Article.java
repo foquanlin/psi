@@ -12,7 +12,7 @@ import java.util.Date;
  * cms文章
  */
 @Data
-@TableName("cms_article")
+@TableName("wx_article")
 public class Article implements Serializable {
     private static final long serialVersionUID = 1L;
     @TableId(type = IdType.AUTO)
