@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.freemarker.TongyiFreeMarkerViewResol
 @Configuration
 public class FreeMarkerConfig {
 
-    //    @Bean
+//    @Bean
     public FreeMarkerConfigurer newConfig(){
         FreeMarkerConfigurer config = new FreeMarkerConfigurer();
         config.getConfiguration().setTemplateUpdateDelayMilliseconds(0);
