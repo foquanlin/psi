@@ -39,6 +39,7 @@ public class GenUtils {
         templates.add("gen/template/ServiceImpl.java.vm");
         templates.add("gen/template/Controller.java.vm");
         templates.add("gen/template/MockTest.java.vm");
+        templates.add("gen/template/ServiceTest.java.vm");
         templates.add("gen/template/menu.sql.vm");
         templates.add("gen/template/vue.vm");
         templates.add("gen/template/add-or-update.vue.vm");
@@ -229,7 +230,8 @@ public class GenUtils {
         String strSJV = "Service.java.vm";
         String strSIJV = "ServiceImpl.java.vm";
         String strCJV = "Controller.java.vm";
-        String strTest = "MockTest.java.vm";
+        String strMockTest = "MockTest.java.vm";
+        String strServiceTest = "ServiceTest.java.vm";
         String strAouVV = "add-or-update.vue.vm";
         String strVV = "vue.vm";
         String strMSV = "menu.sql.vm";
@@ -261,8 +263,11 @@ public class GenUtils {
             return packagePath + "controller" + File.separator + className + "Controller.java";
         }
 
-        if (template.contains(strTest)) {
+        if (template.contains(strMockTest)) {
             return testPath  + File.separator + className + "MockTest.java";
+        }
+        if (template.contains(strServiceTest)) {
+            return testPath  + File.separator + className + "ServiceTest.java";
         }
 
         if (template.contains(strDXV)) {
