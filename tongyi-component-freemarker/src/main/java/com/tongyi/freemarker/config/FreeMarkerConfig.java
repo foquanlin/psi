@@ -34,7 +34,7 @@ public class FreeMarkerConfig {
         return resolver;
     }
 
-    //    @Bean
+//    @Bean
     public freemarker.template.Configuration newConfiguration(){
         freemarker.template.Configuration configuration = new freemarker.template.Configuration(freemarker.template.Configuration.getVersion());
         //设置默认生成文件编码
