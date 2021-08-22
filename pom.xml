@@ -66,6 +66,7 @@
     </dependencies>
 
     <modules>
+        <module>tongyi-core</module>
         <module>tongyi-component-utils</module>
         <module>tongyi-component-common</module>
         <module>tongyi-component-swagger</module>
