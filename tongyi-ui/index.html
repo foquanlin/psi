@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>酷天软件管理平台</title>
+  <% if (process.env.NODE_ENV === 'production') { %>
+  <!-- 生产环境 -->
+  <script>document.write('<script src="./config/index.js?t=' + new Date().getTime() + '"><\/script>')</script>
+  <script>
+  <!--  (function () {-->
+  <!--    var hm = document.createElement('script')-->
+  <!--    hm.src = 'https://hm.baidu.com/hm.js?13103c75f18a7c59e7cf9bf5c9944775'-->
+  <!--    var s = document.getElementsByTagName('script')[0]-->
+  <!--    s.parentNode.insertBefore(hm, s)-->
+  <!--  })()-->
+  <!--</script>-->
+  <% }else { %>
+  <!-- 开发环境 -->
+  <link rel="shortcut icon" type="image/x-icon" href="./static/img/favicon.ico">
+  <script src="./static/config/index.js"></script>
+  <% } %>
+</head>
+<body>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
+</html>
