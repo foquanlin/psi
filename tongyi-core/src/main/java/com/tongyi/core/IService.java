@@ -12,10 +12,10 @@ import java.util.Map;
  */
 public interface IService<T> {
     public T getById(Serializable id);
-    public boolean add(T entity);
-    public boolean update(T entity);
-    public boolean delete(Serializable id);
+    public boolean addEntity(T entity);
+    public boolean updateEntity(T entity);
+    public boolean deleteEntity(Serializable id);
     public boolean deleteBatch(Serializable[] ids);
-    public List<T> queryAll(Map<String, Object> params);
-    public PageInfo<T> listPage(long current, long size, Map<String,Object> params);
+    public List<T> listAll(Map<String, Object> params);
+    public PageInfo<T> listPage(int current, int size, Map<String,Object> params);
 }

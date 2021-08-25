@@ -7,9 +7,8 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package ${package}.service.impl;
-
+import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import ${package}.dao.${className}Dao;
@@ -21,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 
 /**
  * ${comments}Service实现类
@@ -29,44 +29,46 @@ import java.util.Map;
  * @date ${datetime}
  */
 @Service("${classname}Service")
-public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${className}Entity>{
+public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${className}Entity> implements ${className}Service{
 
-    public ${className}Entity getById(${pk.attrType} ${pk.attrname}){
-        return super.getById(${pk.attrname});
+    @Override
+    public ${className}Entity getById(Serializable id){
+        return super.getById(id);
     }
 
     @Override
-    public List<${className}Entity> queryAll(Map<String, Object> params) {
-        return baseMapper.queryAll(params);
+    public List<${className}Entity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
     }
 
     @Override
-    public Page queryPage(Map<String, Object> params) {
-        Page<${className}Entity> page = new Query<${className}Entity>(params).getPage();
-        return page.setRecords(baseMapper.select${className}Page(page, params));
-    }
-
-    @Override
-    @Transactional
-    public boolean add(${className}Entity ${classname}) {
-        return this.save(${classname});
-    }
-
-    @Override
-    @Transactional
-    public boolean update(${className}Entity ${classname}) {
-        return this.updateById(${classname});
-    }
-
-    @Override
-    @Transactional
-    public boolean delete(${pk.attrType} ${pk.attrname}) {
-        return this.removeById(${pk.attrname});
+    public PageInfo<${className}Entity> listPage(int current, int size,Map<String, Object> params) {
+        Page<${className}Entity> page = new Query<${className}Entity>(current,size,params).getPage();
+        List<${className}Entity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<${className}Entity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean deleteBatch(${pk.attrType}[] ${pk.attrname}s) {
-        return this.removeByIds(Arrays.asList(${pk.attrname}s));
+    public boolean addEntity(${className}Entity entity) {
+        return super.save(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateEntity(${className}Entity entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] ids) {
+        return super.removeByIds(Arrays.asList(${pk.attrname}s));
     }
 }

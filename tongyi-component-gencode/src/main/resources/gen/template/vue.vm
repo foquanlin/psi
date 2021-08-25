@@ -2,11 +2,11 @@
   <div class="mod-${pathName}">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="参数名" clearable></el-input>
+        <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('${pre}:${pathName}:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="isAuth('${pre}:${pathName}:save')" type="primary" @click="editHandle()">新增</el-button>
         <el-button v-if="isAuth('${pre}:${pathName}:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
@@ -14,13 +14,13 @@
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
-      <el-table-column prop="${column.attrname}" header-align="center" align="center" label="${column.comments}"#if($column.attrType=='Date') :formatter="formatDate"#end#if($column.attrType=='Boolean') :formatter="formatBool"#end/>
+      <el-table-column prop="${column.attrname}" header-align="center" align="center" label="${column.comments}"/>
 #end
 #end
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
           <el-button v-if="isAuth('${pre}:${pathName}:info')" type="text" size="small" @click="showDetails(scope.row.${pk.attrname})">查看</el-button>
-          <el-button v-if="isAuth('${pre}:${pathName}:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.${pk.attrname})">修改</el-button>
+          <el-button v-if="isAuth('${pre}:${pathName}:update')" type="text" size="small" @click="editHandle(scope.row.${pk.attrname})">修改</el-button>
           <el-button v-if="isAuth('${pre}:${pathName}:delete')" type="text" size="small" @click="deleteHandle(scope.row.${pk.attrname})">删除</el-button>
         </template>
       </el-table-column>
@@ -29,12 +29,12 @@
       :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <${pathName}-edit v-if="editVisible" ref="${className}Edit" @refreshDataList="getDataList"/>
   </div>
 </template>
 
 <script>
-  import AddOrUpdate from './${pathName}-add-or-update'
+  import ${className}Edit from './${pathName}-edit'
   import Options from '../sys/options'
   export default {
     data () {
@@ -47,11 +47,11 @@
         pageSize: 10,
         totalPage: 0,
         dataListSelections: [],
-        addOrUpdateVisible: false
+        editVisible: false
       }
     },
     components: {
-      AddOrUpdate,
+      ${className}Edit,
       Options
     },
     activated () {
@@ -73,7 +73,7 @@
           }
         }).then(({data}) => {
           if (data && data.code === 0) {
-            this.dataList = data.page.records
+            this.dataList = data.page.list
             this.totalPage = data.page.total
           } else {
             this.dataList = []
@@ -98,16 +98,16 @@
       },
       // 查看详情
       showDetails (id) {
-        this.addOrUpdateVisible = true
+        this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.addOrUpdate.init(id, true)
+          this.$refs.${className}Edit.init(id, true)
         })
       },
       // 新增 / 修改
-      addOrUpdateHandle (id) {
-        this.addOrUpdateVisible = true
+      editHandle (id) {
+        this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.addOrUpdate.init(id)
+          this.$refs.${className}Edit.init(id)
         })
       },
       // 删除
@@ -126,11 +126,7 @@
             data: ids
           }).then(({data}) => {
             if (data && data.code === 0) {
-              this.$message({
-                message: '操作成功',
-                type: 'success',
-                duration: 1500
-              })
+              this.$message({ message: '操作成功', type: 'success', duration: 1500 })
               this.getDataList()
             }
           })

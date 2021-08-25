@@ -11,6 +11,7 @@
  */
 package com.tongyi.common.utils;
 
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.LinkedHashMap;
@@ -38,6 +39,12 @@ public class Query<T> extends LinkedHashMap<String, Object> {
 
     private static final String ASC = "asc";
 
+    public Query(int page,int limit,Map<String, Object> params) {
+        this.currPage = page;
+        this.limit = limit;
+        init(params);
+    }
+    @Deprecated
     public Query(Map<String, Object> params) {
 
         String strPage = "page";
@@ -51,7 +58,9 @@ public class Query<T> extends LinkedHashMap<String, Object> {
         if (params.get(strLimit) != null) {
             limit = Integer.parseInt(params.get("limit").toString());
         }
-
+        init(params);
+    }
+    private void init(Map<String, Object> params){
         this.put("offset", (currPage - 1) * limit);
         this.put("page", currPage);
         this.put("limit", limit);
@@ -63,19 +72,17 @@ public class Query<T> extends LinkedHashMap<String, Object> {
             asc = (Boolean) params.get("asc");
         }
         //mybatis-plus分页
-        this.page = new Page<>(currPage, limit);
+        this.page = new Page<T>(currPage, limit);
 
         //排序
         if (StringUtils.isNotBlank(sidx)) {
             if (asc) {
-                this.page.setAsc(sidx);
+                this.page.addOrder(OrderItem.asc(sidx));
             } else {
-                this.page.setDesc(sidx);
+                this.page.addOrder(OrderItem.desc(sidx));
             }
         }
-
     }
-
     public Page<T> getPage() {
         return page;
     }

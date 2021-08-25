@@ -42,7 +42,7 @@ public class GenUtils {
         templates.add("gen/template/ServiceTest.java.vm");
         templates.add("gen/template/menu.sql.vm");
         templates.add("gen/template/vue.vm");
-        templates.add("gen/template/add-or-update.vue.vm");
+        templates.add("gen/template/edit.vue.vm");
         return templates;
     }
 
@@ -232,7 +232,7 @@ public class GenUtils {
         String strCJV = "Controller.java.vm";
         String strMockTest = "MockTest.java.vm";
         String strServiceTest = "ServiceTest.java.vm";
-        String strAouVV = "add-or-update.vue.vm";
+        String strAouVV = "edit.vue.vm";
         String strVV = "vue.vm";
         String strMSV = "menu.sql.vm";
 
@@ -275,7 +275,7 @@ public class GenUtils {
         }
 
         if (template.contains(strAouVV)) {
-            return "modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + "-add-or-update.vue";
+            return "modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + "-edit.vue";
         }
 
         if (template.contains(strVV)) {

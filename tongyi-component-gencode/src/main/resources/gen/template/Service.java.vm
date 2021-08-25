@@ -8,11 +8,8 @@
  */
 package ${package}.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.tongyi.core.IService;
 import ${package}.entity.${className}Entity;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * ${comments}Service接口
@@ -20,55 +17,6 @@ import java.util.Map;
  * @author ${author}
  * @date ${datetime}
  */
-public interface ${className}Service{
+public interface ${className}Service extends IService<${className}Entity>{
 
-    public ${className}Entity getById(${pk.attrType} ${pk.attrname});
-
-    /**
-     * 查询所有列表
-     *
-     * @param params 查询参数
-     * @return List
-     */
-    List<${className}Entity> queryAll(Map<String, Object> params);
-
-    /**
-     * 分页查询${comments}
-     *
-     * @param params 查询参数
-     * @return Page
-     */
-    Page queryPage(Map<String, Object> params);
-
-    /**
-     * 新增${comments}
-     *
-     * @param ${classname} ${comments}
-     * @return 新增结果
-     */
-    boolean add(${className}Entity ${classname});
-
-    /**
-     * 根据主键更新${comments}
-     *
-     * @param ${classname} ${comments}
-     * @return 更新结果
-     */
-    boolean update(${className}Entity ${classname});
-
-    /**
-     * 根据主键删除${comments}
-     *
-     * @param ${pk.attrname} ${pk.attrname}
-     * @return 删除结果
-     */
-    boolean delete(${pk.attrType} ${pk.attrname});
-
-    /**
-     * 根据主键批量删除
-     *
-     * @param ${pk.attrname}s ${pk.attrname}s
-     * @return 删除结果
-     */
-    boolean deleteBatch(${pk.attrType}[] ${pk.attrname}s);
 }

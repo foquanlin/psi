@@ -91,13 +91,22 @@
             <artifactId>tongyi-component-thirdstorage</artifactId>
             <version>${component.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-core</artifactId>
+            <version>${component.version}</version>
+        </dependency>
         <!-- mysql -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-swagger</artifactId>
+            <version>${component.version}</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>

@@ -91,7 +91,7 @@
         <module>tongyi-component-wechatmp</module>
         <module>tongyi-component-alibaba</module>
         <module>tongyi-component-tester</module>
-        <module>tongyi-component-cms</module>
+<!--        <module>tongyi-component-cms</module>-->
         <module>tongyi-application-admin</module>
         <module>tongyi-application-api</module>
     </modules>

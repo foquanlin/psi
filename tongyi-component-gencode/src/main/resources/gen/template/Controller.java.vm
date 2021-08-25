@@ -8,7 +8,6 @@
  */
 package ${package}.controller;
 import io.swagger.annotations.*;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.sys.controller.AbstractController;
@@ -17,7 +16,7 @@ import ${package}.service.${className}Service;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import com.tongyi.core.PageInfo;
 import java.util.List;
 import java.util.Map;
 
@@ -41,12 +40,11 @@ public class ${className}Controller extends AbstractController {
      * @return RestResponse
      */
     @ApiOperation(value = "查看所有列表")
-    @RequestMapping("/queryAll")
+    @RequestMapping("/listAll")
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
-        List<${className}Entity> list = ${classname}Service.queryAll(params);
-
-        return RestResponse.success().put("list", list);
+        List<${className}Entity> list = ${classname}Service.listAll(params);
+        return RestResponse.success("list", list);
     }
 
     /**
@@ -58,10 +56,9 @@ public class ${className}Controller extends AbstractController {
     @ApiOperation(value = "分页查询")
     @GetMapping("/list")
     @RequiresPermissions("${pre}:${pathName}:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        Page page = ${classname}Service.queryPage(params);
-
-        return RestResponse.success().put("page", page);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = ${classname}Service.listPage(current,size,params);
+        return RestResponse.success("page", page);
     }
 
     /**
@@ -75,48 +72,43 @@ public class ${className}Controller extends AbstractController {
     @RequiresPermissions("${pre}:${pathName}:info")
     public RestResponse info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
         ${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});
-
-        return RestResponse.success().put("${pathName}", ${classname});
+        return RestResponse.success("info", ${classname});
     }
 
     /**
      * 新增${comments}
      *
-     * @param ${classname} ${classname}
+     * @param entity
      * @return RestResponse
      */
     @ApiOperation(value = "新增${comments}")
     @SysLog("新增${comments}")
     @RequestMapping("/save")
     @RequiresPermissions("${pre}:${pathName}:save")
-    public RestResponse save(@RequestBody ${className}Entity ${classname}) {
-
-        ${classname}Service.add(${classname});
-
+    public RestResponse save(@RequestBody ${className}Entity entity) {
+        ${classname}Service.addEntity(entity);
         return RestResponse.success();
     }
 
     /**
      * 修改${comments}
      *
-     * @param ${classname} ${classname}
+     * @param entity
      * @return RestResponse
      */
     @ApiOperation(value = "修改${comments}")
     @SysLog("修改${comments}")
     @RequestMapping("/update")
     @RequiresPermissions("${pre}:${pathName}:update")
-    public RestResponse update(@RequestBody ${className}Entity ${classname}) {
-
-        ${classname}Service.update(${classname});
-
+    public RestResponse update(@RequestBody ${className}Entity entity) {
+        ${classname}Service.updateEntity(entity);
         return RestResponse.success();
     }
 
     /**
      * 根据主键删除${comments}
      *
-     * @param ${pk.attrname}s ${pk.attrname}s
+     * @param ${pk.attrname}s
      * @return RestResponse
      */
     @ApiOperation(value = "删除${comments}")
@@ -125,7 +117,6 @@ public class ${className}Controller extends AbstractController {
     @RequiresPermissions("${pre}:${pathName}:delete")
     public RestResponse delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s) {
         ${classname}Service.deleteBatch(${pk.attrname}s);
-
         return RestResponse.success();
     }
 }

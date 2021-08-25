@@ -37,33 +37,35 @@ public class RestResponse extends HashMap<String, Object> {
     }
 
     public static RestResponse error(int code, String msg) {
-        RestResponse restResponse = new RestResponse();
-        restResponse.put("code", code);
-        restResponse.put("msg", msg);
-        return restResponse;
+        RestResponse rsp = new RestResponse();
+        rsp.put("code", code);
+        rsp.put("msg", msg);
+        return rsp;
     }
 
     public static RestResponse success(String msg) {
-        RestResponse restResponse = new RestResponse();
-        restResponse.put("msg", msg);
-        return restResponse;
+        RestResponse rsp = new RestResponse();
+        rsp.put("msg", msg);
+        return rsp;
     }
     public static RestResponse success(Object msg) {
-        RestResponse restResponse = new RestResponse();
-        restResponse.put("data", msg);
-        return restResponse;
+        RestResponse rsp = new RestResponse();
+        rsp.put("data", msg);
+        return rsp;
     }
 
     public static RestResponse success(Map<String, Object> map) {
-        RestResponse restResponse = new RestResponse();
-        restResponse.putAll(map);
-        return restResponse;
+        RestResponse rsp = new RestResponse();
+        rsp.putAll(map);
+        return rsp;
     }
 
     public static RestResponse success() {
         return new RestResponse();
     }
-
+    public static RestResponse success(String key,Object obj) {
+        return new RestResponse().put(key,obj);
+    }
     @Override
     public RestResponse put(String key, Object value) {
         super.put(key, value);

@@ -1,16 +1,15 @@
 <template>
   <el-dialog
     :title="!dataForm.$pk.attrname ? '新增' : !disabled ? '修改' : '查看'"
-    :close-on-click-modal="false" width="71%"
-    :visible.sync="visible">
+    :close-on-click-modal="false" width="71%" :visible.sync="visible">
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
     <el-form-item label="${column.comments}" prop="${column.attrname}">
 #if($column.attrType=='Integer'||$column.attrType=='Long'||$column.attrType=='Float'||$column.attrType=='Double'||$column.attrType=='BigDecimal')
-        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" #if(!$column.required)clearable#end type="number"></el-input>
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" #if(!$column.required)clearable#end type="number"/>
 #elseif($column.attrType=='Boolean')
-        <el-switch v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否"></el-switch>
+        <el-switch v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否"/>
 #elseif($column.attrType=='String')
 #if($column.select)
         <el-select v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}">
@@ -20,10 +19,10 @@
             </el-option>
         </el-select>
 #else
-        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" #if(!$column.required)clearable#end></el-input>
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" #if(!$column.required)clearable#end/>
 #end
 #elseif($column.attrType=='Date')
-        <el-date-picker v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" type="date" format="yyyy-MM-dd"></el-date-picker>
+        <el-date-picker v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" type="date" format="yyyy-MM-dd"/>
 #end
     </el-form-item>
 #end
@@ -75,7 +74,7 @@
               method: 'get'
             }).then(({data}) => {
               if (data && data.code === 0) {
-                this.dataForm = data.${pathName}
+                this.dataForm = data.info
               }
             })
           }

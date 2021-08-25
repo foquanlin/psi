@@ -46,11 +46,11 @@
 #end
     </sql>
 
-    <select id="select${className}Page" resultType="${package}.entity.${className}Entity">
+    <select id="listPage" resultType="${package}.entity.${className}Entity">
         <include refid="selectSql"/>
     </select>
 
-    <select id="queryAll" resultType="${package}.entity.${className}Entity">
+    <select id="listAll" resultType="${package}.entity.${className}Entity">
         <include refid="selectSql"/>
     </select>
 </mapper>

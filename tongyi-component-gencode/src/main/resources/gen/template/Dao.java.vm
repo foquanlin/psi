@@ -32,7 +32,7 @@ public interface ${className}Dao extends BaseMapper<${className}Entity> {
      * @param params 查询参数
      * @return List
      */
-    List<${className}Entity> queryAll(@Param("params") Map<String, Object> params);
+    List<${className}Entity> listAll(@Param("params") Map<String, Object> params);
 
     /**
      * 自定义分页查询
@@ -41,5 +41,5 @@ public interface ${className}Dao extends BaseMapper<${className}Entity> {
      * @param params 查询参数
      * @return List
      */
-    List<${className}Entity> select${className}Page(IPage page, @Param("params") Map<String, Object> params);
+    List<${className}Entity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

@@ -48,7 +48,7 @@ public class PageInfo<T> implements Serializable {
         return this.current < this.getPages();
     }
 
-    public List<T> getRecords() {
+    public List<T> getList() {
         return this.list;
     }
 
@@ -65,7 +65,7 @@ public class PageInfo<T> implements Serializable {
         }
     }
 
-    public PageInfo<T> setRecords(List<T> list) {
+    public PageInfo<T> setList(List<T> list) {
         this.list = list;
         return this;
     }
