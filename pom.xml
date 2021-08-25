@@ -52,8 +52,8 @@
         <alipay-sdk.version>3.7.110.ALL</alipay-sdk.version>
         <dist.release.server>release-server</dist.release.server>
         <dist.snapshot.server>snapshot-server</dist.snapshot.server>
-        <dist.release.url>http://nexus.meilyhome.com/nexus/content/repositories/releases</dist.release.url>
-        <dist.snapshot.url>http://nexus.meilyhome.com/nexus/content/repositories/snapshots</dist.snapshot.url>
+        <dist.release.url>http://nexus.wxngrok.com/nexus/content/repositories/releases</dist.release.url>
+        <dist.snapshot.url>http://nexus.wxngrok.com/nexus/content/repositories/snapshots</dist.snapshot.url>
     </properties>
 
     <dependencies>
@@ -91,7 +91,6 @@
         <module>tongyi-component-wechatmp</module>
         <module>tongyi-component-alibaba</module>
         <module>tongyi-component-tester</module>
-<!--        <module>tongyi-component-cms</module>-->
         <module>tongyi-application-admin</module>
         <module>tongyi-application-api</module>
     </modules>
