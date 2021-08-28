@@ -1,785 +1,785 @@
 /*
-Navicat MySQL Data Transfer
+navicat mysql data transfer
 
-Source Server         :
-Source Server Version : 50722
-Source Host           :
-Source Database       : tongyi
+source server         :
+source server version : 50722
+source host           :
+source database       : tongyi
 
-Target Server Type    : MYSQL
-Target Server Version : 50722
-File Encoding         : 65001
+target server type    : mysql
+target server version : 50722
+file encoding         : 65001
 
-Date: 2019-02-12 19:51:39
+date: 2019-02-12 19:51:39
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+set foreign_key_checks=0;
 
 -- ----------------------------
--- Table structure for `QRTZ_BLOB_TRIGGERS`
+-- table structure for `qrtz_blob_triggers`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_BLOB_TRIGGERS`;
-CREATE TABLE `QRTZ_BLOB_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `BLOB_DATA` blob,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  KEY `SCHED_NAME` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `QRTZ_BLOB_TRIGGERS_IBFK_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_blob_triggers`;
+create table `qrtz_blob_triggers` (
+  `sched_name` varchar(120) not null,
+  `trigger_name` varchar(200) not null,
+  `trigger_group` varchar(200) not null,
+  `blob_data` blob,
+  primary key (`sched_name`,`trigger_name`,`trigger_group`),
+  key `sched_name` (`sched_name`,`trigger_name`,`trigger_group`),
+  constraint `qrtz_blob_triggers_ibfk_1` foreign key (`sched_name`, `trigger_name`, `trigger_group`) references `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_BLOB_TRIGGERS
+-- records of qrtz_blob_triggers
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_CALENDARS`
+-- table structure for `qrtz_calendars`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_CALENDARS`;
-CREATE TABLE `QRTZ_CALENDARS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `CALENDAR_NAME` varchar(200) NOT NULL,
-  `CALENDAR` blob NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`CALENDAR_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_calendars`;
+create table `qrtz_calendars` (
+  `sched_name` varchar(120) not null,
+  `calendar_name` varchar(200) not null,
+  `calendar` blob not null,
+  primary key (`sched_name`,`calendar_name`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_CALENDARS
+-- records of qrtz_calendars
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_CRON_TRIGGERS`
+-- table structure for `qrtz_cron_triggers`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_CRON_TRIGGERS`;
-CREATE TABLE `QRTZ_CRON_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `CRON_EXPRESSION` varchar(120) NOT NULL,
-  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `QRTZ_CRON_TRIGGERS_IBFK_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_cron_triggers`;
+create table `qrtz_cron_triggers` (
+  `sched_name` varchar(120) not null,
+  `trigger_name` varchar(200) not null,
+  `trigger_group` varchar(200) not null,
+  `cron_expression` varchar(120) not null,
+  `time_zone_id` varchar(80) default null,
+  primary key (`sched_name`,`trigger_name`,`trigger_group`),
+  constraint `qrtz_cron_triggers_ibfk_1` foreign key (`sched_name`, `trigger_name`, `trigger_group`) references `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_CRON_TRIGGERS
+-- records of qrtz_cron_triggers
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_FIRED_TRIGGERS`
+-- table structure for `qrtz_fired_triggers`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_FIRED_TRIGGERS`;
-CREATE TABLE `QRTZ_FIRED_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `ENTRY_ID` varchar(95) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `FIRED_TIME` bigint(13) NOT NULL,
-  `SCHED_TIME` bigint(13) NOT NULL,
-  `PRIORITY` int(11) NOT NULL,
-  `STATE` varchar(16) NOT NULL,
-  `JOB_NAME` varchar(200) DEFAULT NULL,
-  `JOB_GROUP` varchar(200) DEFAULT NULL,
-  `IS_NONCONCURRENT` varchar(1) DEFAULT NULL,
-  `REQUESTS_RECOVERY` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`),
-  KEY `IDX_QRTZ_FT_TRIG_INST_NAME` (`SCHED_NAME`,`INSTANCE_NAME`),
-  KEY `IDX_QRTZ_FT_INST_JOB_REQ_RCVRY` (`SCHED_NAME`,`INSTANCE_NAME`,`REQUESTS_RECOVERY`),
-  KEY `IDX_QRTZ_FT_J_G` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
-  KEY `IDX_QRTZ_FT_JG` (`SCHED_NAME`,`JOB_GROUP`),
-  KEY `IDX_QRTZ_FT_T_G` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  KEY `IDX_QRTZ_FT_TG` (`SCHED_NAME`,`TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_fired_triggers`;
+create table `qrtz_fired_triggers` (
+  `sched_name` varchar(120) not null,
+  `entry_id` varchar(95) not null,
+  `trigger_name` varchar(200) not null,
+  `trigger_group` varchar(200) not null,
+  `instance_name` varchar(200) not null,
+  `fired_time` bigint(13) not null,
+  `sched_time` bigint(13) not null,
+  `priority` int(11) not null,
+  `state` varchar(16) not null,
+  `job_name` varchar(200) default null,
+  `job_group` varchar(200) default null,
+  `is_nonconcurrent` varchar(1) default null,
+  `requests_recovery` varchar(1) default null,
+  primary key (`sched_name`,`entry_id`),
+  key `idx_qrtz_ft_trig_inst_name` (`sched_name`,`instance_name`),
+  key `idx_qrtz_ft_inst_job_req_rcvry` (`sched_name`,`instance_name`,`requests_recovery`),
+  key `idx_qrtz_ft_j_g` (`sched_name`,`job_name`,`job_group`),
+  key `idx_qrtz_ft_jg` (`sched_name`,`job_group`),
+  key `idx_qrtz_ft_t_g` (`sched_name`,`trigger_name`,`trigger_group`),
+  key `idx_qrtz_ft_tg` (`sched_name`,`trigger_group`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_FIRED_TRIGGERS
+-- records of qrtz_fired_triggers
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_JOB_DETAILS`
+-- table structure for `qrtz_job_details`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_JOB_DETAILS`;
-CREATE TABLE `QRTZ_JOB_DETAILS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `JOB_NAME` varchar(200) NOT NULL,
-  `JOB_GROUP` varchar(200) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `JOB_CLASS_NAME` varchar(250) NOT NULL,
-  `IS_DURABLE` varchar(1) NOT NULL,
-  `IS_NONCONCURRENT` varchar(1) NOT NULL,
-  `IS_UPDATE_DATA` varchar(1) NOT NULL,
-  `REQUESTS_RECOVERY` varchar(1) NOT NULL,
-  `JOB_DATA` blob,
-  PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
-  KEY `IDX_QRTZ_J_REQ_RECOVERY` (`SCHED_NAME`,`REQUESTS_RECOVERY`),
-  KEY `IDX_QRTZ_J_GRP` (`SCHED_NAME`,`JOB_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_job_details`;
+create table `qrtz_job_details` (
+  `sched_name` varchar(120) not null,
+  `job_name` varchar(200) not null,
+  `job_group` varchar(200) not null,
+  `description` varchar(250) default null,
+  `job_class_name` varchar(250) not null,
+  `is_durable` varchar(1) not null,
+  `is_nonconcurrent` varchar(1) not null,
+  `is_update_data` varchar(1) not null,
+  `requests_recovery` varchar(1) not null,
+  `job_data` blob,
+  primary key (`sched_name`,`job_name`,`job_group`),
+  key `idx_qrtz_j_req_recovery` (`sched_name`,`requests_recovery`),
+  key `idx_qrtz_j_grp` (`sched_name`,`job_group`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_JOB_DETAILS
+-- records of qrtz_job_details
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_LOCKS`
+-- table structure for `qrtz_locks`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_LOCKS`;
-CREATE TABLE `QRTZ_LOCKS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `LOCK_NAME` varchar(40) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_locks`;
+create table `qrtz_locks` (
+  `sched_name` varchar(120) not null,
+  `lock_name` varchar(40) not null,
+  primary key (`sched_name`,`lock_name`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_LOCKS
+-- records of qrtz_locks
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_PAUSED_TRIGGER_GRPS`
+-- table structure for `qrtz_paused_trigger_grps`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_PAUSED_TRIGGER_GRPS`;
-CREATE TABLE `QRTZ_PAUSED_TRIGGER_GRPS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_paused_trigger_grps`;
+create table `qrtz_paused_trigger_grps` (
+  `sched_name` varchar(120) not null,
+  `trigger_group` varchar(200) not null,
+  primary key (`sched_name`,`trigger_group`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_PAUSED_TRIGGER_GRPS
+-- records of qrtz_paused_trigger_grps
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_SCHEDULER_STATE`
+-- table structure for `qrtz_scheduler_state`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_SCHEDULER_STATE`;
-CREATE TABLE `QRTZ_SCHEDULER_STATE` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
-  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_scheduler_state`;
+create table `qrtz_scheduler_state` (
+  `sched_name` varchar(120) not null,
+  `instance_name` varchar(200) not null,
+  `last_checkin_time` bigint(13) not null,
+  `checkin_interval` bigint(13) not null,
+  primary key (`sched_name`,`instance_name`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_SCHEDULER_STATE
+-- records of qrtz_scheduler_state
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_SIMPLE_TRIGGERS`
+-- table structure for `qrtz_simple_triggers`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_SIMPLE_TRIGGERS`;
-CREATE TABLE `QRTZ_SIMPLE_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `REPEAT_COUNT` bigint(7) NOT NULL,
-  `REPEAT_INTERVAL` bigint(12) NOT NULL,
-  `TIMES_TRIGGERED` bigint(10) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `QRTZ_SIMPLE_TRIGGERS_IBFK_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_simple_triggers`;
+create table `qrtz_simple_triggers` (
+  `sched_name` varchar(120) not null,
+  `trigger_name` varchar(200) not null,
+  `trigger_group` varchar(200) not null,
+  `repeat_count` bigint(7) not null,
+  `repeat_interval` bigint(12) not null,
+  `times_triggered` bigint(10) not null,
+  primary key (`sched_name`,`trigger_name`,`trigger_group`),
+  constraint `qrtz_simple_triggers_ibfk_1` foreign key (`sched_name`, `trigger_name`, `trigger_group`) references `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_SIMPLE_TRIGGERS
+-- records of qrtz_simple_triggers
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_SIMPROP_TRIGGERS`
+-- table structure for `qrtz_simprop_triggers`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_SIMPROP_TRIGGERS`;
-CREATE TABLE `QRTZ_SIMPROP_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `STR_PROP_1` varchar(512) DEFAULT NULL,
-  `STR_PROP_2` varchar(512) DEFAULT NULL,
-  `STR_PROP_3` varchar(512) DEFAULT NULL,
-  `INT_PROP_1` int(11) DEFAULT NULL,
-  `INT_PROP_2` int(11) DEFAULT NULL,
-  `LONG_PROP_1` bigint(20) DEFAULT NULL,
-  `LONG_PROP_2` bigint(20) DEFAULT NULL,
-  `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
-  `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
-  `BOOL_PROP_1` varchar(1) DEFAULT NULL,
-  `BOOL_PROP_2` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `QRTZ_SIMPROP_TRIGGERS_IBFK_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_simprop_triggers`;
+create table `qrtz_simprop_triggers` (
+  `sched_name` varchar(120) not null,
+  `trigger_name` varchar(200) not null,
+  `trigger_group` varchar(200) not null,
+  `str_prop_1` varchar(512) default null,
+  `str_prop_2` varchar(512) default null,
+  `str_prop_3` varchar(512) default null,
+  `int_prop_1` int(11) default null,
+  `int_prop_2` int(11) default null,
+  `long_prop_1` bigint(20) default null,
+  `long_prop_2` bigint(20) default null,
+  `dec_prop_1` decimal(13,4) default null,
+  `dec_prop_2` decimal(13,4) default null,
+  `bool_prop_1` varchar(1) default null,
+  `bool_prop_2` varchar(1) default null,
+  primary key (`sched_name`,`trigger_name`,`trigger_group`),
+  constraint `qrtz_simprop_triggers_ibfk_1` foreign key (`sched_name`, `trigger_name`, `trigger_group`) references `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_SIMPROP_TRIGGERS
+-- records of qrtz_simprop_triggers
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `QRTZ_TRIGGERS`
+-- table structure for `qrtz_triggers`
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_TRIGGERS`;
-CREATE TABLE `QRTZ_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `JOB_NAME` varchar(200) NOT NULL,
-  `JOB_GROUP` varchar(200) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `NEXT_FIRE_TIME` bigint(13) DEFAULT NULL,
-  `PREV_FIRE_TIME` bigint(13) DEFAULT NULL,
-  `PRIORITY` int(11) DEFAULT NULL,
-  `TRIGGER_STATE` varchar(16) NOT NULL,
-  `TRIGGER_TYPE` varchar(8) NOT NULL,
-  `START_TIME` bigint(13) NOT NULL,
-  `END_TIME` bigint(13) DEFAULT NULL,
-  `CALENDAR_NAME` varchar(200) DEFAULT NULL,
-  `MISFIRE_INSTR` smallint(2) DEFAULT NULL,
-  `JOB_DATA` blob,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  KEY `IDX_QRTZ_T_J` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
-  KEY `IDX_QRTZ_T_JG` (`SCHED_NAME`,`JOB_GROUP`),
-  KEY `IDX_QRTZ_T_C` (`SCHED_NAME`,`CALENDAR_NAME`),
-  KEY `IDX_QRTZ_T_G` (`SCHED_NAME`,`TRIGGER_GROUP`),
-  KEY `IDX_QRTZ_T_STATE` (`SCHED_NAME`,`TRIGGER_STATE`),
-  KEY `IDX_QRTZ_T_N_STATE` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
-  KEY `IDX_QRTZ_T_N_G_STATE` (`SCHED_NAME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
-  KEY `IDX_QRTZ_T_NEXT_FIRE_TIME` (`SCHED_NAME`,`NEXT_FIRE_TIME`),
-  KEY `IDX_QRTZ_T_NFT_ST` (`SCHED_NAME`,`TRIGGER_STATE`,`NEXT_FIRE_TIME`),
-  KEY `IDX_QRTZ_T_NFT_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`),
-  KEY `IDX_QRTZ_T_NFT_ST_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_STATE`),
-  KEY `IDX_QRTZ_T_NFT_ST_MISFIRE_GRP` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
-  CONSTRAINT `QRTZ_TRIGGERS_IBFK_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `QRTZ_JOB_DETAILS` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists `qrtz_triggers`;
+create table `qrtz_triggers` (
+  `sched_name` varchar(120) not null,
+  `trigger_name` varchar(200) not null,
+  `trigger_group` varchar(200) not null,
+  `job_name` varchar(200) not null,
+  `job_group` varchar(200) not null,
+  `description` varchar(250) default null,
+  `next_fire_time` bigint(13) default null,
+  `prev_fire_time` bigint(13) default null,
+  `priority` int(11) default null,
+  `trigger_state` varchar(16) not null,
+  `trigger_type` varchar(8) not null,
+  `start_time` bigint(13) not null,
+  `end_time` bigint(13) default null,
+  `calendar_name` varchar(200) default null,
+  `misfire_instr` smallint(2) default null,
+  `job_data` blob,
+  primary key (`sched_name`,`trigger_name`,`trigger_group`),
+  key `idx_qrtz_t_j` (`sched_name`,`job_name`,`job_group`),
+  key `idx_qrtz_t_jg` (`sched_name`,`job_group`),
+  key `idx_qrtz_t_c` (`sched_name`,`calendar_name`),
+  key `idx_qrtz_t_g` (`sched_name`,`trigger_group`),
+  key `idx_qrtz_t_state` (`sched_name`,`trigger_state`),
+  key `idx_qrtz_t_n_state` (`sched_name`,`trigger_name`,`trigger_group`,`trigger_state`),
+  key `idx_qrtz_t_n_g_state` (`sched_name`,`trigger_group`,`trigger_state`),
+  key `idx_qrtz_t_next_fire_time` (`sched_name`,`next_fire_time`),
+  key `idx_qrtz_t_nft_st` (`sched_name`,`trigger_state`,`next_fire_time`),
+  key `idx_qrtz_t_nft_misfire` (`sched_name`,`misfire_instr`,`next_fire_time`),
+  key `idx_qrtz_t_nft_st_misfire` (`sched_name`,`misfire_instr`,`next_fire_time`,`trigger_state`),
+  key `idx_qrtz_t_nft_st_misfire_grp` (`sched_name`,`misfire_instr`,`next_fire_time`,`trigger_group`,`trigger_state`),
+  constraint `qrtz_triggers_ibfk_1` foreign key (`sched_name`, `job_name`, `job_group`) references `qrtz_job_details` (`sched_name`, `job_name`, `job_group`)
+) engine=innodb default charset=utf8;
 
 -- ----------------------------
--- Records of QRTZ_TRIGGERS
+-- records of qrtz_triggers
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SCHEDULE_JOB`
+-- table structure for `schedule_job`
 -- ----------------------------
-DROP TABLE IF EXISTS `SCHEDULE_JOB`;
-CREATE TABLE `SCHEDULE_JOB` (
-  `JOB_ID` VARCHAR(32) NOT NULL COMMENT '任务id',
-  `BEAN_NAME` VARCHAR(200) DEFAULT NULL COMMENT 'SPRING BEAN名称',
-  `METHOD_NAME` VARCHAR(100) DEFAULT NULL COMMENT '方法名',
-  `PARAMS` VARCHAR(2000) DEFAULT NULL COMMENT '参数',
-  `CRON_EXPRESSION` VARCHAR(100) DEFAULT NULL COMMENT 'cron表达式',
-  `STATUS` TINYINT(4) DEFAULT NULL COMMENT '任务状态  0：正常  1：暂停',
-  `REMARK` VARCHAR(255) DEFAULT NULL COMMENT '备注',
-  `CREATE_TIME` DATETIME DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`JOB_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务';
+drop table if exists `schedule_job`;
+create table `schedule_job` (
+  `job_id` varchar(32) not null comment '任务id',
+  `bean_name` varchar(200) default null comment 'spring bean名称',
+  `method_name` varchar(100) default null comment '方法名',
+  `params` varchar(2000) default null comment '参数',
+  `cron_expression` varchar(100) default null comment 'cron表达式',
+  `status` tinyint(4) default null comment '任务状态  0：正常  1：暂停',
+  `remark` varchar(255) default null comment '备注',
+  `create_time` datetime default null comment '创建时间',
+  primary key (`job_id`)
+) engine=innodb default charset=utf8 comment='定时任务';
 
 -- ----------------------------
--- Records of SCHEDULE_JOB
+-- records of schedule_job
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SCHEDULE_JOB_log`
+-- table structure for `schedule_job_log`
 -- ----------------------------
-DROP TABLE IF EXISTS `SCHEDULE_JOB_log`;
-CREATE TABLE `SCHEDULE_JOB_log` (
-  `LOG_ID` VARCHAR(32) NOT NULL COMMENT '任务日志id',
-  `JOB_ID` VARCHAR(32) NOT NULL COMMENT '任务id',
-  `BEAN_NAME` VARCHAR(200) DEFAULT NULL COMMENT 'spring bean名称',
-  `METHOD_NAME` VARCHAR(100) DEFAULT NULL COMMENT '方法名',
-  `PARAMS` VARCHAR(2000) DEFAULT NULL COMMENT '参数',
-  `STATUS` TINYINT(4) NOT NULL COMMENT '任务状态    0：成功    1：失败',
-  `ERROR` VARCHAR(2000) DEFAULT NULL COMMENT '失败信息',
-  `TIMES` INT(11) NOT NULL COMMENT '耗时(单位：毫秒)',
-  `CREATE_TIME` DATETIME DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`LOG_ID`),
-  KEY `JOB_ID` (`JOB_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
+drop table if exists `schedule_job_log`;
+create table `schedule_job_log` (
+  `log_id` varchar(32) not null comment '任务日志id',
+  `job_id` varchar(32) not null comment '任务id',
+  `bean_name` varchar(200) default null comment 'spring bean名称',
+  `method_name` varchar(100) default null comment '方法名',
+  `params` varchar(2000) default null comment '参数',
+  `status` tinyint(4) not null comment '任务状态    0：成功    1：失败',
+  `error` varchar(2000) default null comment '失败信息',
+  `times` int(11) not null comment '耗时(单位：毫秒)',
+  `create_time` datetime default null comment '创建时间',
+  primary key (`log_id`),
+  key `job_id` (`job_id`)
+) engine=innodb default charset=utf8 comment='定时任务日志';
 
 -- ----------------------------
--- Records of SCHEDULE_JOB_log
+-- records of schedule_job_log
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_CAPTCHA`
+-- table structure for `sys_captcha`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_CAPTCHA`;
-CREATE TABLE `SYS_CAPTCHA` (
-  `UUID` CHAR(36) NOT NULL COMMENT 'uuid',
-  `CODE` VARCHAR(6) NOT NULL COMMENT '验证码',
-  `EXPIRE_TIME` DATETIME DEFAULT NULL COMMENT '过期时间',
-  PRIMARY KEY (`UUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统验证码';
+drop table if exists `sys_captcha`;
+create table `sys_captcha` (
+  `uuid` char(36) not null comment 'uuid',
+  `code` varchar(6) not null comment '验证码',
+  `expire_time` datetime default null comment '过期时间',
+  primary key (`uuid`)
+) engine=innodb default charset=utf8 comment='系统验证码';
 
 -- ----------------------------
--- Records of SYS_CAPTCHA
+-- records of sys_captcha
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_CONFIG`
+-- table structure for `sys_config`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_CONFIG`;
-CREATE TABLE `SYS_CONFIG` (
-  `ID` VARCHAR(32) NOT NULL,
-  `PARAM_KEY` VARCHAR(50) DEFAULT NULL COMMENT 'key',
-  `PARAM_VALUE` VARCHAR(2000) DEFAULT NULL COMMENT 'value',
-  `STATUS` TINYINT(4) DEFAULT '1' COMMENT '状态   0：隐藏   1：显示',
-  `REMARK` VARCHAR(500) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `PARAM_KEY` (`PARAM_KEY`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置信息表';
+drop table if exists `sys_config`;
+create table `sys_config` (
+  `id` varchar(32) not null,
+  `param_key` varchar(50) default null comment 'key',
+  `param_value` varchar(2000) default null comment 'value',
+  `status` tinyint(4) default '1' comment '状态   0：隐藏   1：显示',
+  `remark` varchar(500) default null comment '备注',
+  primary key (`id`),
+  unique key `param_key` (`param_key`)
+) engine=innodb default charset=utf8 comment='系统配置信息表';
 
 -- ----------------------------
--- Records of SYS_CONFIG
+-- records of sys_config
 -- ----------------------------
-INSERT INTO `SYS_CONFIG` VALUES ('1', 'CLOUD_STORAGE_CONFIG_KEY', '{\"type\":4,\"qiniuDomain\":\"\",\"qiniuPrefix\":\"\",\"qiniuAccessKey\":\"\",\"qiniuSecretKey\":\"\",\"qiniuBucketName\":\"\",\"aliyunDomain\":\"\",\"aliyunPrefix\":\"\",\"aliyunEndPoint\":\"\",\"aliyunAccessKeyId\":\"\",\"aliyunAccessKeySecret\":\"\",\"aliyunBucketName\":\"\",\"qcloudDomain\":\"\",\"qcloudPrefix\":\"\",\"qcloudSecretId\":\"\",\"qcloudSecretKey\":\"\",\"qcloudBucketName\":\"\",\"diskPath\":\"/usr/local/nginx/html/upload\",\"proxyServer\":\"http://132.232.89.47/upload\"}', '0', '云存储配置信息');
-INSERT INTO `SYS_CONFIG` VALUES ('2', 'SMS_CONFIG_KEY', '{\"domain\":\"http://web.cr6868.com/asmx/smsservice.aspx?\",\"name\":\"lipengjun\",\"pwd\":\"\",\"sign\":\"【惠州市酷天科技有限公司】\",\"type\":1}', '0', '短信配置');
+insert into `sys_config` values ('1', 'cloud_storage_config_key', '{\"type\":4,\"qiniudomain\":\"\",\"qiniuprefix\":\"\",\"qiniuaccesskey\":\"\",\"qiniusecretkey\":\"\",\"qiniubucketname\":\"\",\"aliyundomain\":\"\",\"aliyunprefix\":\"\",\"aliyunendpoint\":\"\",\"aliyunaccesskeyid\":\"\",\"aliyunaccesskeysecret\":\"\",\"aliyunbucketname\":\"\",\"qclouddomain\":\"\",\"qcloudprefix\":\"\",\"qcloudsecretid\":\"\",\"qcloudsecretkey\":\"\",\"qcloudbucketname\":\"\",\"diskpath\":\"/usr/local/nginx/html/upload\",\"proxyserver\":\"http://132.232.89.47/upload\"}', '0', '云存储配置信息');
+insert into `sys_config` values ('2', 'sms_config_key', '{\"domain\":\"http://web.cr6868.com/asmx/smsservice.aspx?\",\"name\":\"lipengjun\",\"pwd\":\"\",\"sign\":\"【惠州市酷天科技有限公司】\",\"type\":1}', '0', '短信配置');
 
 -- ----------------------------
--- Table structure for `SYS_DICT`
+-- table structure for `sys_dict`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_DICT`;
-CREATE TABLE `SYS_DICT` (
-  `ID` VARCHAR(32) NOT NULL,
-  `GROUP_ID` VARCHAR(32) DEFAULT NULL COMMENT '所属分组ID',
-  `NAME` VARCHAR(100) DEFAULT NULL COMMENT '字典名称',
-  `VALUE` VARCHAR(64) DEFAULT NULL COMMENT '字典值',
-  `SORT` INT(11) DEFAULT NULL COMMENT '排序号',
-  `STATUS` INT(11) DEFAULT NULL COMMENT '状态码',
-  `REMARK` TEXT COMMENT '备注',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典';
+drop table if exists `sys_dict`;
+create table `sys_dict` (
+  `id` varchar(32) not null,
+  `group_id` varchar(32) default null comment '所属分组id',
+  `name` varchar(100) default null comment '字典名称',
+  `value` varchar(64) default null comment '字典值',
+  `sort` int(11) default null comment '排序号',
+  `status` int(11) default null comment '状态码',
+  `remark` text comment '备注',
+  primary key (`id`)
+) engine=innodb default charset=utf8 comment='数据字典';
 
 -- ----------------------------
--- Records of SYS_DICT
+-- records of sys_dict
 -- ----------------------------
-INSERT INTO `SYS_DICT` VALUES ('37f73ea6b07c40ab8baec7f58b10e69e', '0b5e3fc9c30a4839a881bef0f85fc8af', '男', '1', '1', '1', null);
-INSERT INTO `SYS_DICT` VALUES ('979439be76954bc1852fdf2aeccf3cbc', '0b5e3fc9c30a4839a881bef0f85fc8af', '未知', '3', '3', '1', null);
-INSERT INTO `SYS_DICT` VALUES ('fc982423addd41e3852c70f8396a0c6c', '0b5e3fc9c30a4839a881bef0f85fc8af', '女', '2', '2', '1', null);
-INSERT INTO `SYS_DICT` VALUES ('7936bc509417490ba0df9d938ccd1ce4', '2bbfcb36f9414b71a5d65f497be93496', '是', '1', '1', '1', null);
-INSERT INTO `SYS_DICT` VALUES ('f6cf775c5cea4c7b8858eb2ce0501177', '2bbfcb36f9414b71a5d65f497be93496', '否', '0', '2', '1', null);
+insert into `sys_dict` values ('37f73ea6b07c40ab8baec7f58b10e69e', '0b5e3fc9c30a4839a881bef0f85fc8af', '男', '1', '1', '1', null);
+insert into `sys_dict` values ('979439be76954bc1852fdf2aeccf3cbc', '0b5e3fc9c30a4839a881bef0f85fc8af', '未知', '3', '3', '1', null);
+insert into `sys_dict` values ('fc982423addd41e3852c70f8396a0c6c', '0b5e3fc9c30a4839a881bef0f85fc8af', '女', '2', '2', '1', null);
+insert into `sys_dict` values ('7936bc509417490ba0df9d938ccd1ce4', '2bbfcb36f9414b71a5d65f497be93496', '是', '1', '1', '1', null);
+insert into `sys_dict` values ('f6cf775c5cea4c7b8858eb2ce0501177', '2bbfcb36f9414b71a5d65f497be93496', '否', '0', '2', '1', null);
 
 -- ----------------------------
--- Table structure for `SYS_DICT_GROUP`
+-- table structure for `sys_dict_group`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_DICT_GROUP`;
-CREATE TABLE `SYS_DICT_GROUP` (
-  `ID` VARCHAR(32) NOT NULL,
-  `CODE` VARCHAR(64) NOT NULL COMMENT '分组编码',
-  `NAME` VARCHAR(100) DEFAULT NULL COMMENT '分组名称',
-  `CREATE_TIME` DATETIME DEFAULT NULL COMMENT '创建时间',
-  `REMARK` TEXT COMMENT '备注',
-  PRIMARY KEY (`ID`,`CODE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典分组';
+drop table if exists `sys_dict_group`;
+create table `sys_dict_group` (
+  `id` varchar(32) not null,
+  `code` varchar(64) not null comment '分组编码',
+  `name` varchar(100) default null comment '分组名称',
+  `create_time` datetime default null comment '创建时间',
+  `remark` text comment '备注',
+  primary key (`id`,`code`)
+) engine=innodb default charset=utf8 comment='数据字典分组';
 
 -- ----------------------------
--- Records of SYS_DICT_GROUP
+-- records of sys_dict_group
 -- ----------------------------
-INSERT INTO `SYS_DICT_GROUP` VALUES ('0b5e3fc9c30a4839a881bef0f85fc8af', 'SEX', '性别', null, '性别，1：男 2：女 3：未知');
-INSERT INTO `SYS_DICT_GROUP` VALUES ('2bbfcb36f9414b71a5d65f497be93496', 'IS_NOT', '是否', null, '1：是 0：否');
+insert into `sys_dict_group` values ('0b5e3fc9c30a4839a881bef0f85fc8af', 'sex', '性别', null, '性别，1：男 2：女 3：未知');
+insert into `sys_dict_group` values ('2bbfcb36f9414b71a5d65f497be93496', 'is_not', '是否', null, '1：是 0：否');
 
 -- ----------------------------
--- Table structure for `SYS_LOG`
+-- table structure for `sys_log`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_LOG`;
-CREATE TABLE `SYS_LOG` (
-  `ID` VARCHAR(32) NOT NULL,
-  `USER_NAME` VARCHAR(50) DEFAULT NULL COMMENT '用户名',
-  `OPERATION` VARCHAR(50) DEFAULT NULL COMMENT '用户操作',
-  `METHOD` VARCHAR(200) DEFAULT NULL COMMENT '请求方法',
-  `PARAMS` VARCHAR(5000) DEFAULT NULL COMMENT '请求参数',
-  `TIME` BIGINT(20) NOT NULL COMMENT '执行时长(毫秒)',
-  `IP` VARCHAR(64) DEFAULT NULL COMMENT 'IP地址',
-  `CREATE_TIME` DATETIME DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统日志';
+drop table if exists `sys_log`;
+create table `sys_log` (
+  `id` varchar(32) not null,
+  `user_name` varchar(50) default null comment '用户名',
+  `operation` varchar(50) default null comment '用户操作',
+  `method` varchar(200) default null comment '请求方法',
+  `params` varchar(5000) default null comment '请求参数',
+  `time` bigint(20) not null comment '执行时长(毫秒)',
+  `ip` varchar(64) default null comment 'ip地址',
+  `create_time` datetime default null comment '创建时间',
+  primary key (`id`)
+) engine=innodb default charset=utf8 comment='系统日志';
 
 -- ----------------------------
--- Records of SYS_LOG
+-- records of sys_log
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_MENU`
+-- table structure for `sys_menu`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_MENU`;
-CREATE TABLE `SYS_MENU` (
-  `MENU_ID` VARCHAR(8) NOT NULL,
-  `PARENT_ID` VARCHAR(8) DEFAULT NULL COMMENT '父菜单ID，一级菜单为0',
-  `NAME` VARCHAR(50) DEFAULT NULL COMMENT '菜单名称',
-  `URL` VARCHAR(200) DEFAULT NULL COMMENT '菜单URL',
-  `PERMS` VARCHAR(500) DEFAULT NULL COMMENT '授权(多个用逗号分隔，如：user:list,user:create)',
-  `TYPE` INT(11) DEFAULT NULL COMMENT '类型   0：目录   1：菜单   2：按钮',
-  `ICON` VARCHAR(50) DEFAULT NULL COMMENT '菜单图标',
-  `ORDER_NUM` INT(11) DEFAULT NULL COMMENT '排序',
-  `SHOWS` INT(11) DEFAULT NULL COMMENT '是否显示',
-  PRIMARY KEY (`MENU_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单管理';
+drop table if exists `sys_menu`;
+create table `sys_menu` (
+  `menu_id` varchar(8) not null,
+  `parent_id` varchar(8) default null comment '父菜单id，一级菜单为0',
+  `name` varchar(50) default null comment '菜单名称',
+  `url` varchar(200) default null comment '菜单url',
+  `perms` varchar(500) default null comment '授权(多个用逗号分隔，如：user:list,user:create)',
+  `type` int(11) default null comment '类型   0：目录   1：菜单   2：按钮',
+  `icon` varchar(50) default null comment '菜单图标',
+  `order_num` int(11) default null comment '排序',
+  `shows` int(11) default null comment '是否显示',
+  primary key (`menu_id`)
+) engine=innodb default charset=utf8 comment='菜单管理';
 
 -- ----------------------------
--- Records of SYS_MENU
+-- records of sys_menu
 -- ----------------------------
-INSERT INTO `SYS_MENU` VALUES ('10', '0', '系统管理', null, null, 0, 'system', 0,1);
-INSERT INTO `SYS_MENU` VALUES ('1001', '10', '菜单管理', 'sys/menu', 'sys:menu:list,sys:menu:info', 1, 'menu', 1,1);
-INSERT INTO `SYS_MENU` VALUES ('100101', '1001', '新增', null, 'sys:menu:save,sys:menu:select', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100102', '1001', '修改', null, 'sys:menu:update,sys:menu:select', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100103', '1001', '删除', null, 'sys:menu:delete', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('1002', '10', '组织机构', 'sys/org', 'sys:org:list,sys:org:info', 1, 'org', 2,1);
-INSERT INTO `SYS_MENU` VALUES ('100201', '1002', '新增', null, 'sys:org:save', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100202', '1002', '修改', null, 'sys:org:update', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100203', '1002', '删除', null, 'sys:org:delete', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('1003', '10', '系统参数', 'sys/config', 'sys:config:list,sys:config:info', 1, 'xitongpeizhi', 3,1);
-INSERT INTO `SYS_MENU` VALUES ('100301', '1003', '新增', null, 'sys:config:save', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100302', '1003', '修改', null, 'sys:config:update', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100303', '1003', '删除', null, 'sys:config:delete', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('1004', '10', '字典管理', 'sys/dictgroup', 'sys:dictgroup:list,sys:dictgroup:info,sys:dict:list,sys:dict:info', 1, 'dict', 4,1);
-INSERT INTO `SYS_MENU` VALUES ('100401', '1004', '数据字典新增', null, 'sys:dict:save', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100402', '1004', '数据字典修改', null, 'sys:dict:update', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100403', '1004', '数据字典删除', null, 'sys:dict:delete', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100404', '1004', '数据字典分组新增', null, 'sys:dictgroup:save', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100405', '1004', '数据字典分组修改', null, 'sys:dictgroup:update', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100406', '1004', '数据字典分组删除', null, 'sys:dictgroup:delete', 2, null, 0,1);
+insert into `sys_menu` values ('10', '0', '系统管理', null, null, 0, 'system', 0,1);
+insert into `sys_menu` values ('1001', '10', '菜单管理', 'sys/menu', 'sys:menu:list,sys:menu:info', 1, 'menu', 1,1);
+insert into `sys_menu` values ('100101', '1001', '新增', null, 'sys:menu:save,sys:menu:select', 2, null, 0,1);
+insert into `sys_menu` values ('100102', '1001', '修改', null, 'sys:menu:update,sys:menu:select', 2, null, 0,1);
+insert into `sys_menu` values ('100103', '1001', '删除', null, 'sys:menu:delete', 2, null, 0,1);
+insert into `sys_menu` values ('1002', '10', '组织机构', 'sys/org', 'sys:org:list,sys:org:info', 1, 'org', 2,1);
+insert into `sys_menu` values ('100201', '1002', '新增', null, 'sys:org:save', 2, null, 0,1);
+insert into `sys_menu` values ('100202', '1002', '修改', null, 'sys:org:update', 2, null, 0,1);
+insert into `sys_menu` values ('100203', '1002', '删除', null, 'sys:org:delete', 2, null, 0,1);
+insert into `sys_menu` values ('1003', '10', '系统参数', 'sys/config', 'sys:config:list,sys:config:info', 1, 'xitongpeizhi', 3,1);
+insert into `sys_menu` values ('100301', '1003', '新增', null, 'sys:config:save', 2, null, 0,1);
+insert into `sys_menu` values ('100302', '1003', '修改', null, 'sys:config:update', 2, null, 0,1);
+insert into `sys_menu` values ('100303', '1003', '删除', null, 'sys:config:delete', 2, null, 0,1);
+insert into `sys_menu` values ('1004', '10', '字典管理', 'sys/dictgroup', 'sys:dictgroup:list,sys:dictgroup:info,sys:dict:list,sys:dict:info', 1, 'dict', 4,1);
+insert into `sys_menu` values ('100401', '1004', '数据字典新增', null, 'sys:dict:save', 2, null, 0,1);
+insert into `sys_menu` values ('100402', '1004', '数据字典修改', null, 'sys:dict:update', 2, null, 0,1);
+insert into `sys_menu` values ('100403', '1004', '数据字典删除', null, 'sys:dict:delete', 2, null, 0,1);
+insert into `sys_menu` values ('100404', '1004', '数据字典分组新增', null, 'sys:dictgroup:save', 2, null, 0,1);
+insert into `sys_menu` values ('100405', '1004', '数据字典分组修改', null, 'sys:dictgroup:update', 2, null, 0,1);
+insert into `sys_menu` values ('100406', '1004', '数据字典分组删除', null, 'sys:dictgroup:delete', 2, null, 0,1);
 
-INSERT INTO `SYS_MENU` VALUES ('1005', '10', '文件上传', 'oss/oss', 'sys:oss:list', 1, 'oss', 5,1);
-INSERT INTO `SYS_MENU` VALUES ('100501', '1005', '云存储配置', null, 'sys:oss:config', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100502', '1005', '上传文件', null, 'sys:oss:upload', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100503', '1005', '删除', null, 'sys:oss:delete', 2, null, 0,1);
+insert into `sys_menu` values ('1005', '10', '文件上传', 'oss/oss', 'sys:oss:list', 1, 'oss', 5,1);
+insert into `sys_menu` values ('100501', '1005', '云存储配置', null, 'sys:oss:config', 2, null, 0,1);
+insert into `sys_menu` values ('100502', '1005', '上传文件', null, 'sys:oss:upload', 2, null, 0,1);
+insert into `sys_menu` values ('100503', '1005', '删除', null, 'sys:oss:delete', 2, null, 0,1);
 
-INSERT INTO `SYS_MENU` VALUES ('1006', '10', '系统日志', 'sys/log', 'sys:log:list', 1, 'log', 6,1);
+insert into `sys_menu` values ('1006', '10', '系统日志', 'sys/log', 'sys:log:list', 1, 'log', 6,1);
 
-INSERT INTO `SYS_MENU` VALUES ('1007', '10', '邮件系统', 'sys/maillog', 'sys:maillog:list,sys:maillog:info', '1', 'email', 7,1);
-INSERT INTO `SYS_MENU` VALUES ('100701', '1007', '删除', null, 'sys:maillog:delete', '2', null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('100702', '1007', '邮箱配置', null, 'sys:maillog:config', '2', null, 0,1);
+insert into `sys_menu` values ('1007', '10', '邮件系统', 'sys/maillog', 'sys:maillog:list,sys:maillog:info', '1', 'email', 7,1);
+insert into `sys_menu` values ('100701', '1007', '删除', null, 'sys:maillog:delete', '2', null, 0,1);
+insert into `sys_menu` values ('100702', '1007', '邮箱配置', null, 'sys:maillog:config', '2', null, 0,1);
 
-INSERT INTO `SYS_MENU` VALUES ('11', '0', '权限管理', null, null, 0, 'auth', 1,1);
-INSERT INTO `SYS_MENU` VALUES ('1101', '11', '管理员列表', 'sys/user', 'sys:user:list,sys:user:info', 1, 'admin', 1,1);
-INSERT INTO `SYS_MENU` VALUES ('110101', '1101', '重置密码', null, 'sys:user:resetPw', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('110102', '1101', '新增', null, 'sys:user:save,sys:role:select', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('110103', '1101', '修改', null, 'sys:user:update,sys:role:select', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('110104', '1101', '删除', null, 'sys:user:delete', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('1102', '11', '角色管理', 'sys/role', 'sys:role:list,sys:role:info', 1, 'role', 2,1);
-INSERT INTO `SYS_MENU` VALUES ('110201', '1102', '新增', null, 'sys:role:save,sys:menu:list', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('110202', '1102', '修改', null, 'sys:role:update,sys:menu:list', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('110203', '1102', '删除', null, 'sys:role:delete', 2, null, 0,1);
+insert into `sys_menu` values ('11', '0', '权限管理', null, null, 0, 'auth', 1,1);
+insert into `sys_menu` values ('1101', '11', '管理员列表', 'sys/user', 'sys:user:list,sys:user:info', 1, 'admin', 1,1);
+insert into `sys_menu` values ('110101', '1101', '重置密码', null, 'sys:user:resetpw', 2, null, 0,1);
+insert into `sys_menu` values ('110102', '1101', '新增', null, 'sys:user:save,sys:role:select', 2, null, 0,1);
+insert into `sys_menu` values ('110103', '1101', '修改', null, 'sys:user:update,sys:role:select', 2, null, 0,1);
+insert into `sys_menu` values ('110104', '1101', '删除', null, 'sys:user:delete', 2, null, 0,1);
+insert into `sys_menu` values ('1102', '11', '角色管理', 'sys/role', 'sys:role:list,sys:role:info', 1, 'role', 2,1);
+insert into `sys_menu` values ('110201', '1102', '新增', null, 'sys:role:save,sys:menu:list', 2, null, 0,1);
+insert into `sys_menu` values ('110202', '1102', '修改', null, 'sys:role:update,sys:menu:list', 2, null, 0,1);
+insert into `sys_menu` values ('110203', '1102', '删除', null, 'sys:role:delete', 2, null, 0,1);
 
-INSERT INTO `SYS_MENU` VALUES ('12', '0', '短信平台', null, null, 0, 'duanxinpingtai', 2,1);
-INSERT INTO `SYS_MENU` VALUES ('1211', '12', '短信配置', 'sys/smslog', 'sys:smslog:list', 1, 'duanxin', 1,1);
-INSERT INTO `SYS_MENU` VALUES ('121101', '1211', '修改配置', null, 'sys:smslog:config', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('121102', '1211', '删除', null, 'sys:smslog:delete', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('121103', '1211', '发送短信', null, 'sys:smslog:send', 2, null, 0,1);
+insert into `sys_menu` values ('12', '0', '短信平台', null, null, 0, 'duanxinpingtai', 2,1);
+insert into `sys_menu` values ('1211', '12', '短信配置', 'sys/smslog', 'sys:smslog:list', 1, 'duanxin', 1,1);
+insert into `sys_menu` values ('121101', '1211', '修改配置', null, 'sys:smslog:config', 2, null, 0,1);
+insert into `sys_menu` values ('121102', '1211', '删除', null, 'sys:smslog:delete', 2, null, 0,1);
+insert into `sys_menu` values ('121103', '1211', '发送短信', null, 'sys:smslog:send', 2, null, 0,1);
 
-INSERT INTO `SYS_MENU` VALUES ('13', '0', '任务调度', null, null, 0, 'diaodu', 3,1);
-INSERT INTO `SYS_MENU` VALUES ('1301', '13', '定时任务', 'job/schedule', 'sys:schedule:list,sys:schedule:info', 1, 'job', 1,1);
-INSERT INTO `SYS_MENU` VALUES ('130101', '1301', '删除', null, 'sys:schedule:delete', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('130102', '1301', '暂停', null, 'sys:schedule:pause', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('130103', '1301', '恢复', null, 'sys:schedule:resume', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('130104', '1301', '立即执行', null, 'sys:schedule:run', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('130105', '1301', '日志列表', null, 'sys:schedule:log', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('130106', '1301', '新增', null, 'sys:schedule:save', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('130107', '1301', '修改', null, 'sys:schedule:update', 2, null, 0,1);
+insert into `sys_menu` values ('13', '0', '任务调度', null, null, 0, 'diaodu', 3,1);
+insert into `sys_menu` values ('1301', '13', '定时任务', 'job/schedule', 'sys:schedule:list,sys:schedule:info', 1, 'job', 1,1);
+insert into `sys_menu` values ('130101', '1301', '删除', null, 'sys:schedule:delete', 2, null, 0,1);
+insert into `sys_menu` values ('130102', '1301', '暂停', null, 'sys:schedule:pause', 2, null, 0,1);
+insert into `sys_menu` values ('130103', '1301', '恢复', null, 'sys:schedule:resume', 2, null, 0,1);
+insert into `sys_menu` values ('130104', '1301', '立即执行', null, 'sys:schedule:run', 2, null, 0,1);
+insert into `sys_menu` values ('130105', '1301', '日志列表', null, 'sys:schedule:log', 2, null, 0,1);
+insert into `sys_menu` values ('130106', '1301', '新增', null, 'sys:schedule:save', 2, null, 0,1);
+insert into `sys_menu` values ('130107', '1301', '修改', null, 'sys:schedule:update', 2, null, 0,1);
 
-INSERT INTO `SYS_MENU` VALUES ('14', '0', '工作流管理', null, null, 0, 'activiti', 4,1);
-INSERT INTO `SYS_MENU` VALUES ('1401', '14', '流程操作', 'act/reprocdef', 'act:reprocdef:list', 1, 'procdef', 1,1);
-INSERT INTO `SYS_MENU` VALUES ('140101', '1401', '激活,挂起', null, 'act:reprocdef:update', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('140102', '1401', '删除', null, 'act:reprocdef:delete', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('140103', '1401', '转为模型', null, 'act:reprocdef:convertToModel', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('140104', '1401', '部署流程', null, 'act:reprocdef:deploy', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('1402', '14', '模型管理', 'act/remodel', 'act:remodel:list', 1, 'model', 2,1);
-INSERT INTO `SYS_MENU` VALUES ('140201', '1402', '新增', null, 'act:remodel:save', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('140202', '1402', '编辑', null, 'act:remodel:update', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('140203', '1402', '部署', null, 'act:remodel:deploy', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('140204', '1402', '导出', null, 'act:remodel:export', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('140205', '1402', '删除', null, 'act:remodel:delete', 2, null, 0,1);
+insert into `sys_menu` values ('14', '0', '工作流管理', null, null, 0, 'activiti', 4,1);
+insert into `sys_menu` values ('1401', '14', '流程操作', 'act/reprocdef', 'act:reprocdef:list', 1, 'procdef', 1,1);
+insert into `sys_menu` values ('140101', '1401', '激活,挂起', null, 'act:reprocdef:update', 2, null, 0,1);
+insert into `sys_menu` values ('140102', '1401', '删除', null, 'act:reprocdef:delete', 2, null, 0,1);
+insert into `sys_menu` values ('140103', '1401', '转为模型', null, 'act:reprocdef:converttomodel', 2, null, 0,1);
+insert into `sys_menu` values ('140104', '1401', '部署流程', null, 'act:reprocdef:deploy', 2, null, 0,1);
+insert into `sys_menu` values ('1402', '14', '模型管理', 'act/remodel', 'act:remodel:list', 1, 'model', 2,1);
+insert into `sys_menu` values ('140201', '1402', '新增', null, 'act:remodel:save', 2, null, 0,1);
+insert into `sys_menu` values ('140202', '1402', '编辑', null, 'act:remodel:update', 2, null, 0,1);
+insert into `sys_menu` values ('140203', '1402', '部署', null, 'act:remodel:deploy', 2, null, 0,1);
+insert into `sys_menu` values ('140204', '1402', '导出', null, 'act:remodel:export', 2, null, 0,1);
+insert into `sys_menu` values ('140205', '1402', '删除', null, 'act:remodel:delete', 2, null, 0,1);
 
-INSERT INTO `SYS_MENU` VALUES ('15', '0', '开发工具', null, null, 0, 'dev', 5,1);
-INSERT INTO `SYS_MENU` VALUES ('1501', '15', '在线用户管理', 'sys/usertoken', 'sys:usertoken:list', 1, 'zaixian', 1,1);
-INSERT INTO `SYS_MENU` VALUES ('150101', '1501', '强制下线', null, 'sys:usertoken:offline', 2, null, 0,1);
-INSERT INTO `SYS_MENU` VALUES ('1502', '15', '缓存信息', 'sys/redis', 'sys:cache:queryAll', 1, 'redis', 2,1);
-INSERT INTO `SYS_MENU` VALUES ('150201', '1502', '删除', null, 'sys:cache:deleteCache', 2, null, 0,1);
+insert into `sys_menu` values ('15', '0', '开发工具', null, null, 0, 'dev', 5,1);
+insert into `sys_menu` values ('1501', '15', '在线用户管理', 'sys/usertoken', 'sys:usertoken:list', 1, 'zaixian', 1,1);
+insert into `sys_menu` values ('150101', '1501', '强制下线', null, 'sys:usertoken:offline', 2, null, 0,1);
+insert into `sys_menu` values ('1502', '15', '缓存信息', 'sys/redis', 'sys:cache:queryall', 1, 'redis', 2,1);
+insert into `sys_menu` values ('150201', '1502', '删除', null, 'sys:cache:deletecache', 2, null, 0,1);
 
--- INSERT INTO `SYS_MENU` VALUES ('1503', '15', 'SQL监控', 'http://localhost:8888/platform-admin/druid/sql.html', null, 1, 'sql', 3,0);
--- INSERT INTO `SYS_MENU` VALUES ('1504', '15', '接口文档', 'http://localhost:8889/platform-api/doc.html', null, 1, 'interface', 4,1);
-INSERT INTO `SYS_MENU` VALUES ('1505', '15', '代码生成器', 'gen/generator', 'sys:generator:list', 1, 'code', 5,1);
-INSERT INTO `SYS_MENU` VALUES ('150501', '1505', '生成代码', null, 'sys:generator:code', 2, null, 0,1);
--- INSERT INTO `SYS_MENU` VALUES ('16', '0', 'ELK平台', 'http://localhost:5601', null, '1', 'log', 7,0);
+-- insert into `sys_menu` values ('1503', '15', 'sql监控', 'http://localhost:8888/platform-admin/druid/sql.html', null, 1, 'sql', 3,0);
+-- insert into `sys_menu` values ('1504', '15', '接口文档', 'http://localhost:8889/platform-api/doc.html', null, 1, 'interface', 4,1);
+insert into `sys_menu` values ('1505', '15', '代码生成器', 'gen/generator', 'sys:generator:list', 1, 'code', 5,1);
+insert into `sys_menu` values ('150501', '1505', '生成代码', null, 'sys:generator:code', 2, null, 0,1);
+-- insert into `sys_menu` values ('16', '0', 'elk平台', 'http://localhost:5601', null, '1', 'log', 7,0);
 
-INSERT INTO `SYS_MENU` VALUES ('1008', '10', '民族管理', 'sys/nation', 'sys:nation:list,sys:nation:info', '1', 'admin', '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('100801', '1008', '新增', NULL, 'sys:nation:save', '2', NULL, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('100802', '1008', '修改', NULL, 'sys:nation:update', '2', NULL, '0', '1');
-INSERT INTO `SYS_MENU` VALUES ('100803', '1008', '删除', NULL, 'sys:nation:delete', '2', NULL, '0', '1');
+insert into `sys_menu` values ('1008', '10', '民族管理', 'sys/nation', 'sys:nation:list,sys:nation:info', '1', 'admin', '0', '1');
+insert into `sys_menu` values ('100801', '1008', '新增', null, 'sys:nation:save', '2', null, '0', '1');
+insert into `sys_menu` values ('100802', '1008', '修改', null, 'sys:nation:update', '2', null, '0', '1');
+insert into `sys_menu` values ('100803', '1008', '删除', null, 'sys:nation:delete', '2', null, '0', '1');
 
 
 
 -- ----------------------------
--- Table structure for `SYS_ORG`
+-- table structure for `sys_org`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_ORG`;
-CREATE TABLE `SYS_ORG` (
-  `ORG_NO` VARCHAR(10) NOT NULL COMMENT '机构编码',
-  `ORG_NAME` VARCHAR(50) DEFAULT NULL COMMENT '机构名称',
-  `PARENT_NO` VARCHAR(10) DEFAULT NULL COMMENT '上级机构ID，一级机构为0',
-  `ORG_TYPE` INT(11) DEFAULT NULL COMMENT '级别',
-  `STATUS` INT(11) DEFAULT '1' COMMENT '状态  0：无效   1：有效',
-  `SORT` INT(11) DEFAULT NULL COMMENT '排序',
-  `CREATE_USER_ID` VARCHAR(32) DEFAULT NULL COMMENT '创建者ID',
-  `CREATE_TIME` DATETIME DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`ORG_NO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构';
+drop table if exists `sys_org`;
+create table `sys_org` (
+  `org_no` varchar(10) not null comment '机构编码',
+  `org_name` varchar(50) default null comment '机构名称',
+  `parent_no` varchar(10) default null comment '上级机构id，一级机构为0',
+  `org_type` int(11) default null comment '级别',
+  `status` int(11) default '1' comment '状态  0：无效   1：有效',
+  `sort` int(11) default null comment '排序',
+  `create_user_id` varchar(32) default null comment '创建者id',
+  `create_time` datetime default null comment '创建时间',
+  primary key (`org_no`)
+) engine=innodb default charset=utf8 comment='组织机构';
 
 -- ----------------------------
--- Records of SYS_ORG
+-- records of sys_org
 -- ----------------------------
-INSERT INTO `SYS_ORG` VALUES ('01', '中华人民共和国', '0', '1', '1', '0', '1', '2019-01-21 16:53:32');
+insert into `sys_org` values ('01', '中华人民共和国', '0', '1', '1', '0', '1', '2019-01-21 16:53:32');
 
 -- ----------------------------
--- Table structure for `SYS_OSS`
+-- table structure for `sys_oss`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_OSS`;
-CREATE TABLE `SYS_OSS` (
-  `ID` VARCHAR(32) NOT NULL,
-  `URL` VARCHAR(200) DEFAULT NULL COMMENT 'URL地址',
-  `CREATE_DATE` DATETIME DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文件上传';
+drop table if exists `sys_oss`;
+create table `sys_oss` (
+  `id` varchar(32) not null,
+  `url` varchar(200) default null comment 'url地址',
+  `create_date` datetime default null comment '创建时间',
+  primary key (`id`)
+) engine=innodb default charset=utf8 comment='文件上传';
 
 -- ----------------------------
--- Records of SYS_OSS
+-- records of sys_oss
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_ROLE`
+-- table structure for `sys_role`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_ROLE`;
-CREATE TABLE `SYS_ROLE` (
-  `ROLE_ID` VARCHAR(32) NOT NULL,
-  `ROLE_NAME` VARCHAR(100) DEFAULT NULL COMMENT '角色名称',
-  `REMARK` VARCHAR(100) DEFAULT NULL COMMENT '备注',
-  `CREATE_USER_ID` VARCHAR(32) DEFAULT NULL COMMENT '创建者ID',
-  `CREATE_USER_ORG_NO` VARCHAR(32) DEFAULT NULL COMMENT '创建者所属机构',
-  `CREATE_TIME` DATETIME DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`ROLE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';
+drop table if exists `sys_role`;
+create table `sys_role` (
+  `role_id` varchar(32) not null,
+  `role_name` varchar(100) default null comment '角色名称',
+  `remark` varchar(100) default null comment '备注',
+  `create_user_id` varchar(32) default null comment '创建者id',
+  `create_user_org_no` varchar(32) default null comment '创建者所属机构',
+  `create_time` datetime default null comment '创建时间',
+  primary key (`role_id`)
+) engine=innodb default charset=utf8 comment='角色';
 
 -- ----------------------------
--- Records of SYS_ROLE
+-- records of sys_role
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_ROLE_MENU`
+-- table structure for `sys_role_menu`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_ROLE_MENU`;
-CREATE TABLE `SYS_ROLE_MENU` (
-  `ID` VARCHAR(32) NOT NULL,
-  `ROLE_ID` VARCHAR(32) DEFAULT NULL COMMENT '角色ID',
-  `MENU_ID` VARCHAR(8) DEFAULT NULL COMMENT '菜单ID',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+drop table if exists `sys_role_menu`;
+create table `sys_role_menu` (
+  `id` varchar(32) not null,
+  `role_id` varchar(32) default null comment '角色id',
+  `menu_id` varchar(8) default null comment '菜单id',
+  primary key (`id`)
+) engine=innodb default charset=utf8 comment='角色与菜单对应关系';
 
 -- ----------------------------
--- Records of SYS_ROLE_MENU
+-- records of sys_role_menu
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_ROLE_ORG`
+-- table structure for `sys_role_org`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_ROLE_ORG`;
-CREATE TABLE `SYS_ROLE_ORG` (
-  `ID` VARCHAR(32) NOT NULL,
-  `ROLE_ID` VARCHAR(32) DEFAULT NULL COMMENT '角色ID',
-  `ORG_NO` VARCHAR(32) DEFAULT NULL COMMENT '机构ID',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与机构对应关系';
+drop table if exists `sys_role_org`;
+create table `sys_role_org` (
+  `id` varchar(32) not null,
+  `role_id` varchar(32) default null comment '角色id',
+  `org_no` varchar(32) default null comment '机构id',
+  primary key (`id`)
+) engine=innodb default charset=utf8 comment='角色与机构对应关系';
 
 -- ----------------------------
--- Records of SYS_ROLE_ORG
+-- records of sys_role_org
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_SMS_LOG`
+-- table structure for `sys_sms_log`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_SMS_LOG`;
-CREATE TABLE `SYS_SMS_LOG` (
-  `ID` VARCHAR(32) NOT NULL COMMENT '主键',
-  `USER_ID` VARCHAR(32) DEFAULT NULL COMMENT '操作人ID',
-  `CONTENT` TEXT COMMENT '必填参数。发送内容（1-500 个汉字）UTF-8编码',
-  `MOBILE` TEXT COMMENT '必填参数。手机号码。多个以英文逗号隔开',
-  `STIME` DATETIME DEFAULT NULL COMMENT '可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送',
-  `SIGN` VARCHAR(32) DEFAULT NULL COMMENT '必填参数。用户签名',
-  `TYPE` VARCHAR(32) DEFAULT NULL COMMENT '必填参数。固定值 PT',
-  `EXTNO` VARCHAR(255) DEFAULT NULL COMMENT '可选参数。扩展码，用户定义扩展码，只能为数字',
-  `SEND_STATUS` INT(1) DEFAULT NULL COMMENT '1成功 0失败',
-  `SEND_ID` VARCHAR(32) DEFAULT NULL COMMENT '发送编号',
-  `INVALID_NUM` INT(11) DEFAULT NULL COMMENT '无效号码数',
-  `SUCCESS_NUM` INT(11) DEFAULT NULL COMMENT '成功提交数',
-  `BLACK_NUM` INT(11) DEFAULT NULL COMMENT '黑名单数',
-  `RETURN_MSG` VARCHAR(50) DEFAULT NULL COMMENT '返回消息',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='短信发送日志';
+drop table if exists `sys_sms_log`;
+create table `sys_sms_log` (
+  `id` varchar(32) not null comment '主键',
+  `user_id` varchar(32) default null comment '操作人id',
+  `content` text comment '必填参数。发送内容（1-500 个汉字）utf-8编码',
+  `mobile` text comment '必填参数。手机号码。多个以英文逗号隔开',
+  `stime` datetime default null comment '可选参数。发送时间，填写时已填写的时间发送，不填时为当前时间发送',
+  `sign` varchar(32) default null comment '必填参数。用户签名',
+  `type` varchar(32) default null comment '必填参数。固定值 pt',
+  `extno` varchar(255) default null comment '可选参数。扩展码，用户定义扩展码，只能为数字',
+  `send_status` int(1) default null comment '1成功 0失败',
+  `send_id` varchar(32) default null comment '发送编号',
+  `invalid_num` int(11) default null comment '无效号码数',
+  `success_num` int(11) default null comment '成功提交数',
+  `black_num` int(11) default null comment '黑名单数',
+  `return_msg` varchar(50) default null comment '返回消息',
+  primary key (`id`)
+) engine=innodb default charset=utf8 comment='短信发送日志';
 
 -- ----------------------------
--- Records of SYS_SMS_LOG
+-- records of sys_sms_log
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_USER`
+-- table structure for `sys_user`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_USER`;
-CREATE TABLE `SYS_USER` (
-  `USER_ID` VARCHAR(32) NOT NULL,
-  `USER_NAME` VARCHAR(50) NOT NULL COMMENT '用户名',
-  `REAL_NAME` VARCHAR(64) NOT NULL,
-  `SEX` TINYINT(4) NOT NULL,
-  `ORG_NO` VARCHAR(32) DEFAULT NULL COMMENT '机构编码',
-  `SALT` VARCHAR(20) DEFAULT NULL COMMENT '盐',
-  `EMAIL_HOST` VARCHAR(32) DEFAULT NULL COMMENT '邮件服务器地址',
-  `EMAIL_PORT` INT(11) DEFAULT NULL COMMENT '服务器端口',
-  `EMAIL` VARCHAR(100) DEFAULT NULL COMMENT '邮箱',
-  `EMAIL_PW` VARCHAR(64) DEFAULT NULL COMMENT '用户邮箱密码',
-  `MOBILE` VARCHAR(100) DEFAULT NULL COMMENT '手机号',
-  `STATUS` TINYINT(4) DEFAULT NULL COMMENT '状态  0：禁用   1：正常',
-  `PASSWORD` VARCHAR(100) DEFAULT NULL COMMENT '密码',
-  `CREATE_USER_ID` VARCHAR(32) DEFAULT NULL COMMENT '创建者ID',
-  `CREATE_USER_ORG_NO` VARCHAR(32) DEFAULT NULL COMMENT '创建人所属机构',
-  `CREATE_TIME` DATETIME DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`USER_ID`),
-  UNIQUE KEY `USERNAME` (`USER_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统用户';
+drop table if exists `sys_user`;
+create table `sys_user` (
+  `user_id` varchar(32) not null,
+  `user_name` varchar(50) not null comment '用户名',
+  `real_name` varchar(64) not null,
+  `sex` tinyint(4) not null,
+  `org_no` varchar(32) default null comment '机构编码',
+  `salt` varchar(20) default null comment '盐',
+  `email_host` varchar(32) default null comment '邮件服务器地址',
+  `email_port` int(11) default null comment '服务器端口',
+  `email` varchar(100) default null comment '邮箱',
+  `email_pw` varchar(64) default null comment '用户邮箱密码',
+  `mobile` varchar(100) default null comment '手机号',
+  `status` tinyint(4) default null comment '状态  0：禁用   1：正常',
+  `password` varchar(100) default null comment '密码',
+  `create_user_id` varchar(32) default null comment '创建者id',
+  `create_user_org_no` varchar(32) default null comment '创建人所属机构',
+  `create_time` datetime default null comment '创建时间',
+  primary key (`user_id`),
+  unique key `username` (`user_name`)
+) engine=innodb default charset=utf8 comment='系统用户';
 
 -- ----------------------------
--- Records of SYS_USER
+-- records of sys_user
 -- ----------------------------
-INSERT INTO `SYS_USER` VALUES ('1', 'admin', '林佛权', 1, '01', 'YzcmCZNvbXocrsz9dm8e', 'smtp.qq.com','25', '147657060@qq.com', '', '13794384396', '1', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', null, null, '2016-11-11 11:11:11');
+insert into `sys_user` values ('1', 'admin', '林佛权', 1, '01', 'yzcmcznvbxocrsz9dm8e', 'smtp.qq.com','25', '147657060@qq.com', '', '13794384396', '1', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', null, null, '2016-11-11 11:11:11');
 
 -- ----------------------------
--- Table structure for `SYS_USER_ROLE`
+-- table structure for `sys_user_role`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_USER_ROLE`;
-CREATE TABLE `SYS_USER_ROLE` (
-  `ID` VARCHAR(32) NOT NULL,
-  `USER_ID` VARCHAR(32) DEFAULT NULL COMMENT '用户ID',
-  `ROLE_ID` VARCHAR(32) DEFAULT NULL COMMENT '角色ID',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
+drop table if exists `sys_user_role`;
+create table `sys_user_role` (
+  `id` varchar(32) not null,
+  `user_id` varchar(32) default null comment '用户id',
+  `role_id` varchar(32) default null comment '角色id',
+  primary key (`id`)
+) engine=innodb default charset=utf8 comment='用户与角色对应关系';
 
 -- ----------------------------
--- Records of SYS_USER_ROLE
+-- records of sys_user_role
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `SYS_USER_TOKEN`
+-- table structure for `sys_user_token`
 -- ----------------------------
-DROP TABLE IF EXISTS `SYS_USER_TOKEN`;
-CREATE TABLE `SYS_USER_TOKEN` (
-  `USER_ID` VARCHAR(32) NOT NULL,
-  `TOKEN` VARCHAR(100) NOT NULL COMMENT 'TOKEN',
-  `EXPIRE_TIME` DATETIME DEFAULT NULL COMMENT '过期时间',
-  `UPDATE_TIME` DATETIME DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`USER_ID`),
-  UNIQUE KEY `TOKEN` (`TOKEN`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统用户Token';
-
--- ----------------------------
--- Records of SYS_USER_TOKEN
--- ----------------------------
-
--- ----------------------------
--- Table structure for `MALL_USER`
--- ----------------------------
--- DROP TABLE IF EXISTS `MALL_USER`;
--- CREATE TABLE `MALL_USER` (
--- 	ID VARCHAR(32) NOT NULL COMMENT '用户ID',
--- 	USER_NAME VARCHAR(128) DEFAULT '' NOT NULL COMMENT '用户名',
--- 	PASSWORD VARCHAR(128) DEFAULT '' NULL COMMENT '密码',
--- 	GENDER TINYINT NULL COMMENT '用户的性别（1是男性，2是女性，0是未知）',
--- 	BIRTHDAY DATETIME NULL COMMENT '生日',
--- 	REGISTER_TIME DATETIME NULL COMMENT '注册时间',
--- 	LAST_LOGIN_TIME DATETIME NULL COMMENT '最后登录时间',
--- 	LAST_LOGIN_IP VARCHAR(32) DEFAULT '' NULL COMMENT '最后登录IP',
--- 	NICKNAME VARCHAR(60) DEFAULT '' NULL COMMENT '微信昵称',
--- 	MOBILE VARCHAR(32) DEFAULT '' NULL COMMENT '手机号',
--- 	REGISTER_IP VARCHAR(64) DEFAULT '' NULL COMMENT '注册ip',
--- 	HEAD_IMG_URL VARCHAR(255) DEFAULT '' NULL COMMENT '用户头像',
--- 	ALI_USER_ID VARCHAR(64) DEFAULT '' NULL COMMENT '支付宝用户标识',
--- 	OPEN_ID VARCHAR(64) DEFAULT '' NULL COMMENT '用户的标识',
--- 	QQ_OPEN_ID VARCHAR(64) DEFAULT '' NULL COMMENT 'QQ用户的标识',
--- 	MP_OPEN_ID VARCHAR(64) NULL COMMENT '公众号用户的标识',
--- 	UNION_ID VARCHAR(128) NULL COMMENT '用户唯一标识',
--- 	SUBSCRIBE TINYINT DEFAULT 0 COMMENT '公众号关注状态（1是关注，0是未关注），未关注时获取不到其余信息',
--- 	SUBSCRIBE_TIME VARCHAR(32) NULL COMMENT '用户关注公众号时间，为时间戳。如果用户曾多次关注，则取最后关注时间',
---   PRIMARY KEY (`ID`),
---   KEY `OPEN_ID` (`OPEN_ID`) USING BTREE
--- ) ENGINE=INNODB DEFAULT CHARSET=UTF8 COMMENT='会员';
-
--- ----------------------------
--- Records of MALL_USER
--- ----------------------------
--- INSERT INTO `MALL_USER` VALUES ('1', 'A Boy Genius 专业小程序开发', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 1, '1992-07-04 02:31:09', '2019-04-12 12:03:48', '2019-06-18 15:37:58', '223.104.35.49', 'A Boy Genius 专业小程序开发', '15209831990', '117.136.100.200', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eo62pttzxBohpF0AKAtJpnWiayaMYfRZ4j3pyxf8fYkMwz3icKiaDiboQW0UmzbtegcDIfHBYiaFkM8SibQ/132', null, 'ok8KW5GEIwAYTa-Z92JfbzxkVNpA', null, null, 1, '');
-
-DROP TABLE IF EXISTS `SYS_MAIL_LOG`;
-CREATE TABLE `SYS_MAIL_LOG` (
-  `ID` VARCHAR(32) NOT NULL,
-  `SENDER` VARCHAR(100) NOT NULL COMMENT '发送人',
-  `RECEIVER` VARCHAR(4000) NOT NULL COMMENT '接收人',
-  `SUBJECT` VARCHAR(500) NOT NULL COMMENT '邮件主题',
-  `CONTENT` VARCHAR(4000) DEFAULT NULL COMMENT '发送内容',
-  `SEND_DATE` DATETIME DEFAULT NULL COMMENT '发送时间',
-  `TYPE` TINYINT(4) DEFAULT NULL COMMENT '0：系统发送邮件 1：用户发送邮件',
-  `SEND_RESULT` TINYINT(4) DEFAULT NULL COMMENT '发送结果 0:发送成功 1:发送失败',
-  `CREATE_USER_ID` VARCHAR(32) DEFAULT NULL COMMENT '创建者ID',
-  `CREATE_USER_ORG_NO` VARCHAR(32) DEFAULT NULL COMMENT '创建人所属机构',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件发送日志';
-
-
-DROP TABLE IF EXISTS `SYS_NATION`;
-CREATE TABLE `SYS_NATION` (`code`  varchar(10) NOT NULL ,`name`  varchar(255) NULL ,PRIMARY KEY (`code`))  ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='民族';
-      
-INSERT INTO SYS_NATION VALUES('01','汉族')   ;
-INSERT INTO SYS_NATION VALUES('02','蒙古族')  ; 
-INSERT INTO SYS_NATION VALUES('03','回族')   ;
-INSERT INTO SYS_NATION VALUES('04','藏族')   ;
-INSERT INTO SYS_NATION VALUES('05','维吾尔族');   
-INSERT INTO SYS_NATION VALUES('06','苗族')   ;
-INSERT INTO SYS_NATION VALUES('07','彝族')   ;
-INSERT INTO SYS_NATION VALUES('08','壮族')   ;
-INSERT INTO SYS_NATION VALUES('09','布依族')  ; 
-INSERT INTO SYS_NATION VALUES('10','朝鲜族')   ;
-INSERT INTO SYS_NATION VALUES('11','满族')   ;
-INSERT INTO SYS_NATION VALUES('12','侗族')   ;
-INSERT INTO SYS_NATION VALUES('13','瑶族')   ;
-INSERT INTO SYS_NATION VALUES('14','白族')   ;
-INSERT INTO SYS_NATION VALUES('15','土家族')  ; 
-INSERT INTO SYS_NATION VALUES('16','哈尼族')   ;
-INSERT INTO SYS_NATION VALUES('17','哈萨克族')  ; 
-INSERT INTO SYS_NATION VALUES('18','傣族')   ;
-INSERT INTO SYS_NATION VALUES('19','黎族')   ;
-INSERT INTO SYS_NATION VALUES('20','傈僳族')  ; 
-INSERT INTO SYS_NATION VALUES('21','佤族')   ;
-INSERT INTO SYS_NATION VALUES('22','畲族')   ;
-INSERT INTO SYS_NATION VALUES('23','高山族')  ; 
-INSERT INTO SYS_NATION VALUES('24','拉祜族')   ;
-INSERT INTO SYS_NATION VALUES('25','水族')   ;
-INSERT INTO SYS_NATION VALUES('26','东乡族')  ; 
-INSERT INTO SYS_NATION VALUES('27','纳西族')   ;
-INSERT INTO SYS_NATION VALUES('28','景颇族')   ;
-INSERT INTO SYS_NATION VALUES('29','柯尔克孜族');   
-INSERT INTO SYS_NATION VALUES('30','土族')   ;
-INSERT INTO SYS_NATION VALUES('31','达斡尔族');   
-INSERT INTO SYS_NATION VALUES('32','仫佬族')   ;
-INSERT INTO SYS_NATION VALUES('33','羌族')   ;
-INSERT INTO SYS_NATION VALUES('34','布朗族')  ; 
-INSERT INTO SYS_NATION VALUES('35','撒拉族')   ;
-INSERT INTO SYS_NATION VALUES('36','毛难族')   ;
-INSERT INTO SYS_NATION VALUES('37','仡佬族')   ;
-INSERT INTO SYS_NATION VALUES('38','锡伯族')   ;
-INSERT INTO SYS_NATION VALUES('39','阿昌族')   ;
-INSERT INTO SYS_NATION VALUES('40','普米族')   ;
-INSERT INTO SYS_NATION VALUES('41','塔吉克族')  ; 
-INSERT INTO SYS_NATION VALUES('42','怒族')   ;
-INSERT INTO SYS_NATION VALUES('43','乌孜别克族')   ;
-INSERT INTO SYS_NATION VALUES('44','俄罗斯族')   ;
-INSERT INTO SYS_NATION VALUES('45','鄂温克族')   ;
-INSERT INTO SYS_NATION VALUES('46','崩龙族')   ;
-INSERT INTO SYS_NATION VALUES('47','保安族')   ;
-INSERT INTO SYS_NATION VALUES('48','裕固族')   ;
-INSERT INTO SYS_NATION VALUES('49','京族')   ;
-INSERT INTO SYS_NATION VALUES('50','塔塔尔族');   
-INSERT INTO SYS_NATION VALUES('51','独龙族')   ;
-INSERT INTO SYS_NATION VALUES('52','鄂伦春族')  ; 
-INSERT INTO SYS_NATION VALUES('53','赫哲族')   ;
-INSERT INTO SYS_NATION VALUES('54','门巴族')   ;
-INSERT INTO SYS_NATION VALUES('55','珞巴族')   ;
-INSERT INTO SYS_NATION VALUES('56','基诺族')   ;
+drop table if exists `sys_user_token`;
+create table `sys_user_token` (
+  `user_id` varchar(32) not null,
+  `token` varchar(100) not null comment 'token',
+  `expire_time` datetime default null comment '过期时间',
+  `update_time` datetime default null comment '更新时间',
+  primary key (`user_id`),
+  unique key `token` (`token`)
+) engine=innodb default charset=utf8 comment='系统用户token';
+
+-- ----------------------------
+-- records of sys_user_token
+-- ----------------------------
+
+-- ----------------------------
+-- table structure for `mall_user`
+-- ----------------------------
+-- drop table if exists `mall_user`;
+-- create table `mall_user` (
+-- 	id varchar(32) not null comment '用户id',
+-- 	user_name varchar(128) default '' not null comment '用户名',
+-- 	password varchar(128) default '' null comment '密码',
+-- 	gender tinyint null comment '用户的性别（1是男性，2是女性，0是未知）',
+-- 	birthday datetime null comment '生日',
+-- 	register_time datetime null comment '注册时间',
+-- 	last_login_time datetime null comment '最后登录时间',
+-- 	last_login_ip varchar(32) default '' null comment '最后登录ip',
+-- 	nickname varchar(60) default '' null comment '微信昵称',
+-- 	mobile varchar(32) default '' null comment '手机号',
+-- 	register_ip varchar(64) default '' null comment '注册ip',
+-- 	head_img_url varchar(255) default '' null comment '用户头像',
+-- 	ali_user_id varchar(64) default '' null comment '支付宝用户标识',
+-- 	open_id varchar(64) default '' null comment '用户的标识',
+-- 	qq_open_id varchar(64) default '' null comment 'qq用户的标识',
+-- 	mp_open_id varchar(64) null comment '公众号用户的标识',
+-- 	union_id varchar(128) null comment '用户唯一标识',
+-- 	subscribe tinyint default 0 comment '公众号关注状态（1是关注，0是未关注），未关注时获取不到其余信息',
+-- 	subscribe_time varchar(32) null comment '用户关注公众号时间，为时间戳。如果用户曾多次关注，则取最后关注时间',
+--   primary key (`id`),
+--   key `open_id` (`open_id`) using btree
+-- ) engine=innodb default charset=utf8 comment='会员';
+
+-- ----------------------------
+-- records of mall_user
+-- ----------------------------
+-- insert into `mall_user` values ('1', 'a boy genius 专业小程序开发', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 1, '1992-07-04 02:31:09', '2019-04-12 12:03:48', '2019-06-18 15:37:58', '223.104.35.49', 'a boy genius 专业小程序开发', '15209831990', '117.136.100.200', 'https://wx.qlogo.cn/mmopen/vi_32/dyaiogq83eo62pttzxbohpf0akatjpnwiayamyfrz4j3pyxf8fykmwz3ickiadiboqw0umzbtegcdifhbyiafkm8sibq/132', null, 'ok8kw5geiwayta-z92jfbzxkvnpa', null, null, 1, '');
+
+drop table if exists `sys_mail_log`;
+create table `sys_mail_log` (
+  `id` varchar(32) not null,
+  `sender` varchar(100) not null comment '发送人',
+  `receiver` varchar(4000) not null comment '接收人',
+  `subject` varchar(500) not null comment '邮件主题',
+  `content` varchar(4000) default null comment '发送内容',
+  `send_date` datetime default null comment '发送时间',
+  `type` tinyint(4) default null comment '0：系统发送邮件 1：用户发送邮件',
+  `send_result` tinyint(4) default null comment '发送结果 0:发送成功 1:发送失败',
+  `create_user_id` varchar(32) default null comment '创建者id',
+  `create_user_org_no` varchar(32) default null comment '创建人所属机构',
+  primary key (`id`)
+) engine=innodb default charset=utf8 comment='邮件发送日志';
+
+
+drop table if exists `sys_nation`;
+create table `sys_nation` (`code`  varchar(10) not null ,`name`  varchar(255) null ,primary key (`code`))  engine=innodb default charset=utf8 comment='民族';
+
+insert into sys_nation values('01','汉族')   ;
+insert into sys_nation values('02','蒙古族')  ;
+insert into sys_nation values('03','回族')   ;
+insert into sys_nation values('04','藏族')   ;
+insert into sys_nation values('05','维吾尔族');
+insert into sys_nation values('06','苗族')   ;
+insert into sys_nation values('07','彝族')   ;
+insert into sys_nation values('08','壮族')   ;
+insert into sys_nation values('09','布依族')  ;
+insert into sys_nation values('10','朝鲜族')   ;
+insert into sys_nation values('11','满族')   ;
+insert into sys_nation values('12','侗族')   ;
+insert into sys_nation values('13','瑶族')   ;
+insert into sys_nation values('14','白族')   ;
+insert into sys_nation values('15','土家族')  ;
+insert into sys_nation values('16','哈尼族')   ;
+insert into sys_nation values('17','哈萨克族')  ;
+insert into sys_nation values('18','傣族')   ;
+insert into sys_nation values('19','黎族')   ;
+insert into sys_nation values('20','傈僳族')  ;
+insert into sys_nation values('21','佤族')   ;
+insert into sys_nation values('22','畲族')   ;
+insert into sys_nation values('23','高山族')  ;
+insert into sys_nation values('24','拉祜族')   ;
+insert into sys_nation values('25','水族')   ;
+insert into sys_nation values('26','东乡族')  ;
+insert into sys_nation values('27','纳西族')   ;
+insert into sys_nation values('28','景颇族')   ;
+insert into sys_nation values('29','柯尔克孜族');
+insert into sys_nation values('30','土族')   ;
+insert into sys_nation values('31','达斡尔族');
+insert into sys_nation values('32','仫佬族')   ;
+insert into sys_nation values('33','羌族')   ;
+insert into sys_nation values('34','布朗族')  ;
+insert into sys_nation values('35','撒拉族')   ;
+insert into sys_nation values('36','毛难族')   ;
+insert into sys_nation values('37','仡佬族')   ;
+insert into sys_nation values('38','锡伯族')   ;
+insert into sys_nation values('39','阿昌族')   ;
+insert into sys_nation values('40','普米族')   ;
+insert into sys_nation values('41','塔吉克族')  ;
+insert into sys_nation values('42','怒族')   ;
+insert into sys_nation values('43','乌孜别克族')   ;
+insert into sys_nation values('44','俄罗斯族')   ;
+insert into sys_nation values('45','鄂温克族')   ;
+insert into sys_nation values('46','崩龙族')   ;
+insert into sys_nation values('47','保安族')   ;
+insert into sys_nation values('48','裕固族')   ;
+insert into sys_nation values('49','京族')   ;
+insert into sys_nation values('50','塔塔尔族');
+insert into sys_nation values('51','独龙族')   ;
+insert into sys_nation values('52','鄂伦春族')  ;
+insert into sys_nation values('53','赫哲族')   ;
+insert into sys_nation values('54','门巴族')   ;
+insert into sys_nation values('55','珞巴族')   ;
+insert into sys_nation values('56','基诺族')   ;
