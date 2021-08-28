@@ -4,7 +4,7 @@
       <div class="site-content">
         <div class="brand-info">
           <h2 class="brand-info__text">酷天软件</h2>
-          <p class="brand-info__intro">platform-plus-ui</p>
+          <p class="brand-info__intro">tongyi-ui</p>
         </div>
         <div class="login-main">
           <h3 class="login-title">管理员登录</h3>

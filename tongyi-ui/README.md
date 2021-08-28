@@ -1,5 +1,5 @@
 ## 介绍
-- platform-plus-ui基于vue、element-ui构建开发，实现platform-plus后台管理前端功能。
+- tongyi-ui基于vue、element-ui构建开发，实现platform-plus后台管理前端功能。
 - 封装富文本编辑器组件，并且支持使用v-model双向绑定富文本数据。简单到像使用input一样。
 ```
 <ueditor v-model="msg"></ueditor>
