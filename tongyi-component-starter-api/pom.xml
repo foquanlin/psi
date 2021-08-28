@@ -46,6 +46,16 @@
             <artifactId>tongyi-component-swagger</artifactId>
             <version>${component.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-wechatmp</artifactId>
+            <version>${component.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-thirdstorage</artifactId>
+            <version>${component.version}</version>
+        </dependency>
     </dependencies>
 <!--    <profiles>-->
 <!--        <profile>-->
