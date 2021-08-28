@@ -2,8 +2,6 @@ package com.tongyi.cache;
 
 import com.google.gson.Gson;
 //import com.tongyi.common.utils.JedisUtil;
-//import com.tongyi.modules.mall.entity.MallUserEntity;
-import com.tongyi.modules.sys.entity.SysUserTokenEntity;
 import lombok.extern.slf4j.Slf4j;
 //import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.cache.annotation.Cacheable;
@@ -35,8 +33,8 @@ public class UserTokenCache {
      * @param userId
      * @return
      */
-    @Cacheable(key = "#userId")
-    public SysUserTokenEntity getUserTokenByUserId(String userId) {
+//    @Cacheable(key = "#userId")
+//    public SysUserTokenEntity getUserTokenByUserId(String userId) {
 //        String temp = jedisUtil.get(toUserTokenKey(userId));
 //        String temp = (String)redisTemplate.opsForValue().get(toUserTokenKey(userId));
 //        if (!org.springframework.util.StringUtils.isEmpty(temp)) {
@@ -45,25 +43,25 @@ public class UserTokenCache {
 //        } else {
 //            return null;
 //        }
-        return null;
-    }
+//        return null;
+//    }
 
     /**
      * 根据token
      *
-     * @param token
+     * @param
      * @return
      */
 
-    public SysUserTokenEntity getUserInfoByToken(String token) {
+//    public SysUserTokenEntity getUserInfoByToken(String token) {
 //        String temp = jedisUtil.get(toTokenUserKey(token));
 //        String temp = (String)redisTemplate.opsForValue().get(toUserTokenKey(token));
 //        if (StringUtils.isNullOrEmpty(temp)) {
 //            return null;
 //        }
 //        return getUserTokenByUserId(temp);
-        return null;
-    }
+//        return null;
+//    }
 
     public void del(String userId) {
 //        jedisUtil.del(toUserTokenKey(userId));
@@ -73,21 +71,21 @@ public class UserTokenCache {
     /**
      * 放置用户Id和token关系
      *
-     * @param SysUserTokenEntity
+     * @param
      */
-    public void putUserToken(SysUserTokenEntity SysUserTokenEntity) {
+//    public void putUserToken(SysUserTokenEntity SysUserTokenEntity) {
 //        jedisUtil.set(toUserTokenKey(SysUserTokenEntity.getUserId()), fromTokenCacheString(SysUserTokenEntity), Constant.EXPIRE);
 //        jedisUtil.set(toTokenUserKey(SysUserTokenEntity.getToken()), SysUserTokenEntity.getUserId().toString(), Constant.EXPIRE);
 //        redisTemplate.opsForValue().set(toUserTokenKey(SysUserTokenEntity.getUserId()), fromTokenCacheString(SysUserTokenEntity), Constant.EXPIRE);
 //        redisTemplate.opsForValue().set(toTokenUserKey(SysUserTokenEntity.getToken()), SysUserTokenEntity.getUserId().toString(), Constant.EXPIRE);
-    }
+//    }
 
-    private String fromTokenCacheString(SysUserTokenEntity d) {
-        if (d == null) {
-            return null;
-        }
-        return gson.toJson(d);
-    }
+//    private String fromTokenCacheString(SysUserTokenEntity d) {
+//        if (d == null) {
+//            return null;
+//        }
+//        return gson.toJson(d);
+//    }
 
     private String toUserTokenKey(String userId) {
         return XCX_TOKEN_USER_PREFIXX + userId;
