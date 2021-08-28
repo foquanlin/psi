@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tongyi-application-api</artifactId>
+    <artifactId>tongyi-component-starter-api</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>tongyi-application-api</name>
+    <name>tongyi-component-starter-api</name>
     <url>http://www.meilyhome.com</url>
 
     <properties>
@@ -43,73 +43,42 @@
         </dependency>
         <dependency>
             <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-wechatmp</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-sys</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-thirdstorage</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
             <artifactId>tongyi-component-swagger</artifactId>
             <version>${component.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-mail</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-mybatis</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <!-- mysql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
     </dependencies>
-    <profiles>
-        <profile>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <id>dev</id>
-            <properties>
-                <package.environment>dev</package.environment>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <package.environment>prod</package.environment>
-            </properties>
-        </profile>
-    </profiles>
-    <build>
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <activation>-->
+<!--                <activeByDefault>true</activeByDefault>-->
+<!--            </activation>-->
+<!--            <id>dev</id>-->
+<!--            <properties>-->
+<!--                <package.environment>dev</package.environment>-->
+<!--            </properties>-->
+<!--        </profile>-->
+<!--        <profile>-->
+<!--            <id>prod</id>-->
+<!--            <properties>-->
+<!--                <package.environment>prod</package.environment>-->
+<!--            </properties>-->
+<!--        </profile>-->
+<!--    </profiles>-->
+     <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
+                <excludes>
+                    <exclude>**/application*.yml</exclude>
+                </excludes>
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+<!--            <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
 <!--            <plugin>-->
 <!--                <groupId>com.spotify</groupId>-->
 <!--                <artifactId>docker-maven-plugin</artifactId>-->
@@ -138,6 +107,6 @@
 <!--                    </resources>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
-        </plugins>
+<!--         </plugins>-->
     </build>
 </project>

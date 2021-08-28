@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tongyi-application-admin</artifactId>
+    <artifactId>tongyi-component-starter-admin</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>tongyi-application-admin</name>
+    <name>tongyi-component-starter-admin</name>
     <url>http://www.meilyhome.com</url>
 
     <properties>
@@ -46,23 +46,8 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.7</version>
-        </dependency>
-        <dependency>
             <groupId>com.tongyi</groupId>
             <artifactId>tongyi-component-common</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-mybatis</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-gencode</artifactId>
             <version>${component.version}</version>
         </dependency>
         <dependency>
@@ -73,73 +58,25 @@
 
         <dependency>
             <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-mail</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-sms</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-wechatmp</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-thirdstorage</artifactId>
-            <version>${component.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
             <artifactId>tongyi-core</artifactId>
             <version>${component.version}</version>
         </dependency>
-        <!-- mysql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-swagger</artifactId>
-            <version>${component.version}</version>
-        </dependency>
     </dependencies>
-    <profiles>
-        <profile>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <id>dev</id>
-            <properties>
-                <package.environment>dev</package.environment>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <package.environment>prod</package.environment>
-            </properties>
-        </profile>
-    </profiles>
-    <build>
+     <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
+                <excludes>
+                    <exclude>**/application*.yml</exclude>
+                </excludes>
                 <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
 <!--            <plugin>-->
 <!--                <groupId>com.spotify</groupId>-->
 <!--                <artifactId>docker-maven-plugin</artifactId>-->
@@ -169,6 +106,6 @@
 <!--                    </resources>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
-        </plugins>
+         </plugins>
     </build>
 </project>
