@@ -165,12 +165,12 @@ create table `wx_user`  (
 
 insert into `sys_menu` values ('16', '0', '微信管理', null, null, 0, 'admin', 1,1);
 insert into `sys_menu` values ('1601', '16', '公众号菜单', 'wx/wx-menu', '', 1, 'log', 0,1);
-insert into `sys_menu` values ('160101', '1601', '更新公众号菜单', '', 'wx:menu:save', 2, '', 0,1);
+insert into `sys_menu` values ('160101', '1601', '更新公众号菜单', '', 'wx:menu:save', 2, 'admin', 0,1);
 
-insert into `sys_menu` values ('1602', '16', '素材管理', 'wx/wx-assets', '', 1, '', 0,1);
-insert into `sys_menu` values ('160201', '1602', '查看', '', 'wx:wxassets:list', 2, '', 0,1);
-insert into `sys_menu` values ('160202', '1602', '新增修改', '', 'wx:wxassets:save', 2, '', 0,1);
-insert into `sys_menu` values ('160203', '1602', '删除', '', 'wx:wxassets:delete', 2, '', 0,1);
+insert into `sys_menu` values ('1602', '16', '素材管理', 'wx/wx-assets', '', 1, 'admin', 0,1);
+insert into `sys_menu` values ('160201', '1602', '查看', '', 'wx:wxassets:list', 2, 'admin', 0,1);
+insert into `sys_menu` values ('160202', '1602', '新增修改', '', 'wx:wxassets:save', 2, 'admin', 0,1);
+insert into `sys_menu` values ('160203', '1602', '删除', '', 'wx:wxassets:delete', 2, 'admin', 0,1);
 
 insert into `sys_menu` values ('1603', '16', '自动回复规则', 'wx/msg-reply-rule', null, 1, 'admin', 6,1);
 insert into `sys_menu` values ('160301', '1603', '查看', null, 'wx:msgreplyrule:list,wx:msgreplyrule:info', 2, 'admin', 6,1);
@@ -194,7 +194,7 @@ insert into `sys_menu` values ('160601', '1606', '查看', null, 'wx:wxuser:list
 insert into `sys_menu` values ('160602', '1606', '删除', null, 'wx:wxuser:delete', 2, 'admin', 6,1);
 insert into `sys_menu` values ('160603', '1606', '同步', '', 'wx:wxuser:save', 2, 'admin', 6,1);
 
-insert into `sys_menu` values ('1607', '16', '公众号消息', 'wx/wx-msg', null, 1, '', 6,1);
+insert into `sys_menu` values ('1607', '16', '公众号消息', 'wx/wx-msg', null, 1, 'admin', 6,1);
 insert into `sys_menu` values ('160701', '1607', '查看', null, 'wx:wxmsg:list,wx:wxmsg:info', 2, 'admin', 6,1);
 insert into `sys_menu` values ('160702', '1607', '新增', null, 'wx:wxmsg:save', 2, 'admin', 6,1);
 insert into `sys_menu` values ('160703', '1607', '删除', null, 'wx:wxmsg:delete', 2, 'admin', 6,1);
