@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import ${className}Edit from './${pathName}-edit'
+  import ${pathName}Edit from './${pathName}-edit'
   import Options from '../sys/options'
   export default {
     data () {
@@ -51,7 +51,7 @@
       }
     },
     components: {
-      ${className}Edit,
+      ${pathName}Edit,
       Options
     },
     activated () {
@@ -100,14 +100,14 @@
       showDetails (id) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.${className}Edit.init(id, true)
+          this.$refs.${pathName}Edit.init(id, true)
         })
       },
       // 新增 / 修改
       editHandle (id) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.${className}Edit.init(id)
+          this.$refs.${pathName}Edit.init(id)
         })
       },
       // 删除
