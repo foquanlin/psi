@@ -5,35 +5,35 @@
 <!--        <cache-ref namespace="${package}.dao.${className}Dao"/>-->
 
     <sql id="selectSql">
-        SELECT
+        select
 #foreach($column in $columns)
-        T.$column.columnName#if($velocityCount != $columns.size()),
+        t.$column.columnName#if($velocityCount != $columns.size()),
 #end
 #end
 
-        FROM ${tableName} T
-        WHERE 1=1
+        from ${tableName} t
+        where 1=1
 #foreach($column in $columns)
     #set($param='${params.'+$column.attrname+'}')
 #if($column.attrType=='String')
         <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
-            AND T.$column.columnName LIKE '%$param%'
+            and t.$column.columnName like '%$param%'
         </if>
 #elseif($column.attrType=='Integer')
         <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
-            AND T.$column.columnName = $param
+            and t.$column.columnName = $param
         </if>
 #elseif($column.attrType=='Boolean')
         <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
-            AND T.$column.columnName = $param
+            and t.$column.columnName = $param
         </if>
 #elseif($column.attrType=='Long')
         <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
-            AND T.$column.columnName = $param
+            and t.$column.columnName = $param
         </if>
 #elseif($column.attrType=='Float')
         <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
-            AND T.$column.columnName = $param
+            and t.$column.columnName = $param
         </if>
 #elseif($column.attrType=='Date')
     #set($sparam='${params.'+$column.attrname+'Start}')
@@ -41,7 +41,7 @@
     #set($params=$column.attrname+'Start')
     #set($parame=$column.attrname+'End')
         <if test="params.$params != null and params.$params != '' and params.$parame != null and params.$parame != ''">
-            AND T.$column.columnName BETWEEN '$sparam' AND '$eparam'
+            and t.$column.columnName between '$sparam' and '$eparam'
         </if>
 #end
 #end

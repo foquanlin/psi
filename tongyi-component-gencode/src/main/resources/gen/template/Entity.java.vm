@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 #end
 #if(${hasDate})
 import java.util.Date;
+import java.sql.Time;
 #end
 
 /**
