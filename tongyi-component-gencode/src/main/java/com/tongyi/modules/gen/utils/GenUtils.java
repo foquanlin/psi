@@ -67,7 +67,7 @@ public class GenUtils {
 //        boolean hasBigDecimal = false;
         for (ColumnEntity column : columns) {
             ColumnEntity columnEntity = new ColumnEntity();
-            columnEntity.setColumnName(column.getColumnName().toUpperCase());
+            columnEntity.setColumnName(column.getColumnName().toLowerCase());
             columnEntity.setDataType(column.getDataType());
             columnEntity.setComments(null == column.getComments() ? column.getColumnName() : column.getComments());
             columnEntity.setColumnDefault(column.getColumnDefault());
