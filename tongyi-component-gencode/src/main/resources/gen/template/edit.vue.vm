@@ -7,22 +7,24 @@
 #if($column.columnName != $pk.columnName)
     <el-form-item label="${column.comments}" prop="${column.attrname}">
 #if($column.attrType=='Integer'||$column.attrType=='Long'||$column.attrType=='Float'||$column.attrType=='Double'||$column.attrType=='BigDecimal')
-        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" #if(!$column.required)clearable#end type="number"/>
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable type="number"/>
 #elseif($column.attrType=='Boolean')
         <el-switch v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否"/>
 #elseif($column.attrType=='String')
 #if($column.select)
-        <el-select v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}">
+        <el-select v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable>
             <el-option v-for="item in items" :key="item.code" :label="item.name" :value="item.code">
                 <span style="float: left">{{ item.name }}</span>
                 <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
             </el-option>
         </el-select>
 #else
-        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" #if(!$column.required)clearable#end/>
+        <el-input v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" clearable/>
 #end
 #elseif($column.attrType=='Date')
-        <el-date-picker v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" type="date" format="yyyy-MM-dd"/>
+        <el-date-picker v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" type="date" value-format="yyyy-MM-dd" clearable/>
+#elseif($column.attrType=='Time')
+        <el-time-picker v-model="dataForm.${column.attrname}" :disabled="disabled" placeholder="${column.comments}" type="time" value-format="HH:mm:ss" clearable/>
 #end
     </el-form-item>
 #end

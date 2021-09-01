@@ -31,10 +31,10 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author 林佛权
  */
-@Slf4j
-@RestController
-@RequestMapping("/app/auth")
-@Api(tags = "AppLoginController|APP登录接口")
+//@Slf4j
+//@RestController
+//@RequestMapping("/app/auth")
+//@Api(tags = "AppLoginController|APP登录接口")
 //@EnableConfigurationProperties(AliMaProperties.class)
 public class AppLoginController extends AppBaseController {
 //    @Autowired
