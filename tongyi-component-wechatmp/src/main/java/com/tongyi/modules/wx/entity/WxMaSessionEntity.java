@@ -31,7 +31,7 @@ import java.io.Serializable;
  * @since 2020-11-04 17:52:19
  */
 @Data
-@TableName("WX_MA_SESSION")
+@TableName("wx_ma_session")
 public class WxMaSessionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

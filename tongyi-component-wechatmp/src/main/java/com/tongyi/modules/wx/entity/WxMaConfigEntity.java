@@ -31,7 +31,7 @@ import java.io.Serializable;
  * @since 2020-04-05 21:58:47
  */
 @Data
-@TableName("WX_MA_CONFIG")
+@TableName("wx_ma_config")
 public class WxMaConfigEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
