@@ -92,6 +92,11 @@
             <artifactId>tongyi-component-webconfig</artifactId>
             <version>${component.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-utils</artifactId>
+            <version>${component.version}</version>
+        </dependency>
     </dependencies>
 <!--    <build>-->
 <!--        <plugins>-->

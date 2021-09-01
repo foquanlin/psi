@@ -13,6 +13,7 @@ package com.tongyi.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.TokenGenerator;
@@ -36,7 +37,12 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
     @Override
     public String createToken(String userId) {
         //生成一个token
-        String token = TokenGenerator.generateValue();
+        String token = null;
+        try {
+            token = TokenGenerator.generateValue();
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
 
         //当前时间
         Date now = new Date();
@@ -69,7 +75,12 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
     @Override
     public void logout(String userId) {
         //生成一个token
-        String token = TokenGenerator.generateValue();
+        String token = null;
+        try {
+            token = TokenGenerator.generateValue();
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
 
         //修改token
         SysUserTokenEntity tokenEntity = new SysUserTokenEntity();

@@ -11,7 +11,6 @@
  */
 package com.tongyi.common.validator;
 
-import com.tongyi.common.exception.BusinessException;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -20,20 +19,20 @@ import org.apache.commons.lang.StringUtils;
  * @author 林佛权
  */
 public abstract class AbstractAssert {
-    public static void exists(Object object, String message) {
+    public static void exists(Object object, String message) throws Exception {
         if (null!=object) {
-            throw new BusinessException(message);
+            throw new Exception(message);
         }
     }
-    public static void isBlank(String str, String message) {
+    public static void isBlank(String str, String message) throws Exception {
         if (StringUtils.isBlank(str)) {
-            throw new BusinessException(message);
+            throw new Exception(message);
         }
     }
 
-    public static void isNull(Object object, String message) {
+    public static void isNull(Object object, String message) throws Exception {
         if (object == null) {
-            throw new BusinessException(message);
+            throw new Exception(message);
         }
     }
 }

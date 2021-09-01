@@ -55,5 +55,10 @@
             <artifactId>tongyi-component-sys</artifactId>
             <version>${component.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-utils</artifactId>
+            <version>${component.version}</version>
+        </dependency>
     </dependencies>
 </project>

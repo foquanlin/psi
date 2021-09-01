@@ -194,6 +194,10 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-utils</artifactId>
+            <version>${component.version}</version>
+        </dependency>
     </dependencies>
 </project>

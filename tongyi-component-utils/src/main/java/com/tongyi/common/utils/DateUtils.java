@@ -110,7 +110,7 @@ public class DateUtils {
      */
     public static String getDateFormat(String date_str) {
         String style = null;
-        if (org.springframework.util.StringUtils.isEmpty(date_str)) {
+        if (StringUtils.isEmpty(date_str)) {
             return null;
         }
         boolean b = false;
@@ -120,7 +120,7 @@ public class DateUtils {
                 style = regularExp[i][1];
             }
         }
-        if (org.springframework.util.StringUtils.isEmpty(style)) {
+        if (StringUtils.isEmpty(style)) {
             log.info("date_str:" + date_str);
             log.info("日期格式获取出错，未识别的日期格式");
         }

@@ -33,5 +33,10 @@
             <artifactId>tongyi-component-common</artifactId>
             <version>${component.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-utils</artifactId>
+            <version>${component.version}</version>
+        </dependency>
     </dependencies>
 </project>
