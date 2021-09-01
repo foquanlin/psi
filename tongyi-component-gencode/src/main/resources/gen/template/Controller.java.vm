@@ -7,7 +7,6 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package ${package}.controller;
-import io.swagger.annotations.*;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.sys.controller.AbstractController;
