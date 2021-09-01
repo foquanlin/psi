@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.platform.modules.wx.dao.WxMaConfigDao">
+
+    <sql id="selectSql">
+        SELECT
+        T.ID,
+        T.APP_ID,
+        T.SECRET,
+        T.TOKEN,
+        T.AES_KEY,
+        T.MSG_DATA_FORMAT
+        FROM WX_MA_CONFIG T
+        WHERE 1=1
+        <if test="params.appId != null and params.appId.trim() != ''">
+            AND T.APP_ID LIKE '%${params.appId}%'
+        </if>
+    </sql>
+
+    <select id="selectWxMaConfigPage" resultType="com.platform.modules.wx.entity.WxMaConfigEntity">
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="queryAll" resultType="com.platform.modules.wx.entity.WxMaConfigEntity">
+        <include refid="selectSql"/>
+    </select>
+</mapper>

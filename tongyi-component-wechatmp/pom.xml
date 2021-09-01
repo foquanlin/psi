@@ -78,5 +78,10 @@
             <artifactId>weixin-java-open</artifactId>
             <version>${weixin-java-open.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-core</artifactId>
+            <version>${component.version}</version>
+        </dependency>
     </dependencies>
 </project>

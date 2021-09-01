@@ -162,6 +162,41 @@ create table `wx_user`  (
   index `idx_appid`(`appid`) using btree comment 'appid'
 ) engine = innodb character set = utf8mb4 comment = '用户表' row_format = dynamic;
 
+drop table if exists `wx_mp_config`;
+create table `wx_mp_config` (
+    `id` varchar(32) not null,
+    `app_id` varchar(64) default null comment '微信公众号appid',
+    `secret` varchar(128) default null comment '微信公众号secret',
+    `token` varchar(128) default null comment '公众号token',
+    `aes_key` varchar(128) default null comment '微信公众号encodingaeskey',
+    `content` varchar(1000) default null comment '关注后回复',
+    primary key (`id`)
+) engine=innodb default charset=utf8 comment='微信公众号配置';
+-- insert into `wx_mp_config` values ('1', 'wxb340c435ee3873dc', '', '', '', '您好，欢迎关注微信公众号，您可以直接回复消息发现更多服务（如：文档、官网）。');
+
+drop table if exists `wx_ma_config`;
+create table `wx_ma_config` (
+    `id` varchar(32) not null,
+    `app_id` varchar(64) default null comment '微信小程序appid',
+    `secret` varchar(128) default null comment '微信小程序secret',
+    `token` varchar(128) default null comment '小程序token',
+    `aes_key` varchar(128) default null comment '微信小程序encodingaeskey',
+    `msg_data_format` varchar(32) default null comment '消息格式，xml或者json',
+    primary key (`id`)
+) engine=innodb default charset=utf8 comment='微信小程序配置';
+-- insert into `wx_ma_config` values ('1', 'wxeca4341756496160', '', '', '', 'json');
+
+create table `wx_ma_session` (
+`id`  varchar(255) character set utf8mb4 collate utf8mb4_general_ci not null comment 'id' ,
+`token`  varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null comment 'token',
+`session_key`  varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null comment 'sessionKey',
+`open_id`  varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null  comment 'openid',
+`union_id`  varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null  comment 'unionid',
+primary key (`id`)
+)
+engine=innodb
+default character set=utf8mb4 collate=utf8mb4_general_ci
+row_format=dynamic;
 
 insert into `sys_menu` values ('16', '0', '微信管理', null, null, 0, 'admin', 1,1);
 insert into `sys_menu` values ('1601', '16', '公众号菜单', 'wx/wx-menu', '', 1, 'log', 0,1);
