@@ -8,23 +8,22 @@
         </appender>
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
-                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %boldYellow(%logger) - %msg%n</pattern>
             </encoder>
         </appender>
         <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            　　　　　　　　　<fileNamePattern>logs/admin.%d{yyyy-MM-dd}.log</fileNamePattern>
-            　　　　　　　　　<maxHistory>30</maxHistory>
-            　　　　　　</rollingPolicy>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/logs/admin.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
             <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
-                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n</pattern>
             </encoder>
         </appender>
-
         <root level="INFO">
             <appender-ref ref="STDOUT"/>
+            <!--            <appender-ref ref="LOGSTASH"/>-->
             <appender-ref ref="FILE"/>
-<!--            <appender-ref ref="LOGSTASH"/>-->
         </root>
     </springProfile>
 
@@ -36,24 +35,22 @@
         </appender>
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder charset="UTF-8">
-                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %boldYellow(%logger) - %msg%n</pattern>
             </encoder>
         </appender>
         <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            　　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            　　　　　　　　　<fileNamePattern>logs/admin.%d{yyyy-MM-dd}.log</fileNamePattern>
-            　　　　　　　　　<maxHistory>30</maxHistory>
-            　　　　　　</rollingPolicy>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>logs/admin.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
             <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
                 <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
             </encoder>
         </appender>
-
         <root level="ERROR">
-<!--            <appender-ref ref="LOGSTASH"/>-->
+            <!--            <appender-ref ref="LOGSTASH"/>-->
             <appender-ref ref="STDOUT"/>
             <appender-ref ref="FILE"/>
         </root>
     </springProfile>
-
 </configuration>
