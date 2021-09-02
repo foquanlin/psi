@@ -105,14 +105,6 @@ mybatis-plus:
       #逻辑未删除值
       logic-not-delete-value: 1
 
-platform-api:
-  # APPI模块，是通过jwt认证的，如果要使用APP模块，则需要修改【加密秘钥】
-  jwt:
-    # 加密秘钥
-    secret: f4e2e52034348f86b67cde581c0f9eb5
-    # token有效时长，7天，单位秒
-    expire: 604800
-    header: token
 #ali:
 #  ma: #支付宝小程序
 #    appId:
@@ -156,7 +148,18 @@ platform-api:
 logging:
   level:
     com:
-      platform:
+      tongyi:
         modules:
           vis:
             dao: debug
+tongyi:
+  # APPI模块，是通过jwt认证的，如果要使用APP模块，则需要修改【加密秘钥】
+  jwt:
+    # 加密秘钥
+    secret: f4e2e52034348f86b67cde581c0f9eb5
+    # token有效时长，7天，单位秒
+    expire: 604800
+    header: token
+  path:
+    includes: /**
+    excludes: /app/wx/mp/portal, /app/wx/ma/portal, /app/wx/menu/create, /actuator/**

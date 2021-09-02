@@ -75,7 +75,7 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.tongyi.modules.*.entity;com.github.niefy.modules.*.entity
+  typeAliasesPackage: com.tongyi.modules.*.entity
   type-handlers-package: com.tongyi.common.handler #自定义jdbc数据类型的映射
   check-config-location: true
   configuration:
@@ -143,13 +143,13 @@ wx:
 #    spbillCreateIp:  #APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
 #    baseNotifyUrl:  #支付回调通知地址
 
-platform:
+tongyi:
   file:
     path: file:D:/usr/local/nginx/html/upload/
 logging:
   level:
     com:
-      platform:
+      tongyi:
         modules:
           vis:
             dao: debug

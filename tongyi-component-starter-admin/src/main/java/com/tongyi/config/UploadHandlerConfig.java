@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Component
 public class UploadHandlerConfig implements WebMvcConfigurer {
-    @Value("${platform.file.path}")
+    @Value("${tongyi.file.path}")
     private String filePath;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
