@@ -14,8 +14,10 @@ package com.tongyi.config;
 import com.tongyi.interceptor.AuthorizationInterceptor;
 import com.tongyi.resolver.LoginUserResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,7 +29,10 @@ import java.util.List;
  * @author 林佛权
  */
 @Configuration
+@ConfigurationProperties(prefix = "tongyi.path")
 public class WebMvcConfig implements WebMvcConfigurer {
+    private String[] includes;
+    private String[] excludes;
     @Autowired
     private AuthorizationInterceptor authorizationInterceptor;
 //    @Autowired
@@ -35,9 +40,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authorizationInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/app/wx/mp/portal", "/app/wx/ma/portal", "/app/wx/menu/create", "/actuator/**");
+        InterceptorRegistration inter = registry.addInterceptor(authorizationInterceptor);
+        inter.addPathPatterns(includes);
+        inter.excludePathPatterns(excludes);
     }
 
 //    @Override

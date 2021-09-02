@@ -26,7 +26,7 @@ import java.util.Date;
  * @author 林佛权
  */
 @Slf4j
-@ConfigurationProperties(prefix = "platform-api.jwt")
+@ConfigurationProperties(prefix = "tongyi.jwt")
 @Component
 public class JwtUtils {
     private String secret;
