@@ -13,7 +13,7 @@
         </appender>
         <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <fileNamePattern>/logs/admin.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>logs/admin.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <maxHistory>30</maxHistory>
             </rollingPolicy>
             <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->

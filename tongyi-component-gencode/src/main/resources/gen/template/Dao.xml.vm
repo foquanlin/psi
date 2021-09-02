@@ -40,7 +40,7 @@
     #set($eparam='${params.'+$column.attrname+'End}')
     #set($params=$column.attrname+'Start')
     #set($parame=$column.attrname+'End')
-        <if test="params.$params != null and params.$params != '' and params.$parame != null and params.$parame != ''">
+        <if test="params.$params != null and params.$parame != null">
             and t.$column.columnName between '$sparam' and '$eparam'
         </if>
 #end
