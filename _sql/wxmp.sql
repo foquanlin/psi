@@ -195,7 +195,7 @@ create table `wx_ma_session` (
 primary key (`id`)
 )
 engine=innodb
-default character set=utf8mb4 collate=utf8mb4_general_ci
+default character set=utf8mb4 collate=utf8mb4_general_ci  comment='微信小程序会话'
 row_format=dynamic;
 
 insert into `sys_menu` values ('16', '0', '微信管理', null, null, 0, 'admin', 1,1);

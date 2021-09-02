@@ -25,8 +25,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  *
  * @author 林佛权
  */
-@Component
-public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
+//@Component
+public class LoginUserResolver implements HandlerMethodArgumentResolver {
 //    @Autowired
 //    private IUserService<IUserEntity> userService;
 
