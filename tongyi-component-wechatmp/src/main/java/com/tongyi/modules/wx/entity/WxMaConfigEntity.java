@@ -18,6 +18,8 @@
  */
 package com.tongyi.modules.wx.entity;
 
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -60,4 +62,13 @@ public class WxMaConfigEntity implements Serializable {
      * 消息格式，XML或者JSON
      */
     private String msgDataFormat;
+
+    public WxMaConfig newConfig(){
+        WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
+        config.setAppid(this.getAppId());
+        config.setSecret(this.getSecret());
+        config.setToken(this.getToken());
+        config.setAesKey(this.getAesKey());
+        return config;
+    }
 }

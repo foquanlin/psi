@@ -18,18 +18,28 @@
  */
 package com.tongyi.modules.wx.service.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.wx.dao.WxMaConfigDao;
+import com.tongyi.modules.wx.entity.WxAccount;
 import com.tongyi.modules.wx.entity.WxMaConfigEntity;
 import com.tongyi.modules.wx.service.WxMaConfigService;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
+import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,8 +49,12 @@ import java.util.Map;
  * @author 林佛权
  * @since 2020-04-05 21:58:47
  */
+@Slf4j
 @Service("wxMaConfigService")
 public class WxMaConfigServiceImpl extends ServiceImpl<WxMaConfigDao, WxMaConfigEntity> implements WxMaConfigService {
+
+    @Autowired
+    private WxMaService wxMaService;
 
     @Override
     public List<WxMaConfigEntity> queryAll(Map<String, Object> params) {
@@ -85,5 +99,36 @@ public class WxMaConfigServiceImpl extends ServiceImpl<WxMaConfigDao, WxMaConfig
     @Override
     public WxMaConfigEntity getById(String id) {
         return super.getById(id);
+    }
+
+
+    @PostConstruct
+    public void loadWxMaConfigStorages(){
+        log.info("加载小程序配置...");
+        List<WxMaConfigEntity> list = this.list();
+        if (list == null || list.isEmpty()) {
+            log.info("未读取到小程序配置，请在管理后台添加");
+            return;
+        }
+        log.info("加载到{}条小程序配置",list.size());
+        list.forEach(this::addAccountToRuntime);
+        log.info("小程序配置加载完成");
+    }
+
+    /**
+     * 添加账号到当前程序，如首次添加需初始化configStorageMap
+     * @param entity
+     */
+    private synchronized void addAccountToRuntime(WxMaConfigEntity entity){
+        String appid = entity.getAppId();
+        WxMaConfig config = entity.newConfig();
+        try {
+            wxMaService.addConfig(appid,config);
+        }catch (NullPointerException e){
+            log.info("需初始化configStorageMap...");
+            Map<String, WxMaConfig> configStorages = new HashMap<>(4);
+            configStorages.put(appid,config);
+            wxMaService.setMultiConfigs(configStorages,appid);
+        }
     }
 }
