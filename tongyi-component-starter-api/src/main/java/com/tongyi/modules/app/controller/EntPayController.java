@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * 企业付款相关接口
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-@Api("企业付款")
+@Api(tags = "EntPayController|企业付款")
 @RequestMapping("/app/pay")
 @RestController
 public class EntPayController {
