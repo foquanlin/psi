@@ -16,6 +16,7 @@ import com.tongyi.resolver.LoginUserResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @Configuration
 @ConfigurationProperties(prefix = "tongyi.path")
+@Component
 public class WebMvcConfig implements WebMvcConfigurer {
     private String[] includes;
     private String[] excludes;
@@ -41,10 +43,21 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration inter = registry.addInterceptor(authorizationInterceptor);
-        inter.addPathPatterns(includes);
-        inter.excludePathPatterns(excludes);
+        if (null != includes ) {
+            inter.addPathPatterns(includes);
+        }
+        if (null !=excludes) {
+            inter.excludePathPatterns(excludes);
+        }
     }
 
+    public void setIncludes(String[] includes) {
+        this.includes = includes;
+    }
+
+    public void setExcludes(String[] excludes) {
+        this.excludes = excludes;
+    }
 //    @Override
 //    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 //        argumentResolvers.add(loginUserHandlerMethodArgumentResolver);
