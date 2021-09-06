@@ -29,17 +29,25 @@
         disabled: false,
         visible: false,
         dataForm: {
-          id: 0,
+          id: '',
           paramKey: '',
           paramValue: '',
           remark: ''
         },
         dataRule: {
           paramKey: [
-            {required: true, message: '参数名不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '参数名不能为空',
+              trigger: 'blur'
+            }
           ],
           paramValue: [
-            {required: true, message: '参数值不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '参数值不能为空',
+              trigger: 'blur'
+            }
           ]
         }
       }
@@ -55,7 +63,7 @@
             this.$http({
               url: `/sys/config/info/${this.dataForm.id}`,
               method: 'get'
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.dataForm.paramKey = data.config.paramKey
                 this.dataForm.paramValue = data.config.paramValue
@@ -78,7 +86,7 @@
                 'paramValue': this.dataForm.paramValue,
                 'remark': this.dataForm.remark
               }
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',

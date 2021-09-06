@@ -60,7 +60,7 @@
         header-align="center"
         align="center"
         width="150"
-        :show-overflow-tooltip="true"
+        show-tooltip-when-overflow
         label="菜单URL">
       </el-table-column>
       <el-table-column
@@ -68,7 +68,7 @@
         header-align="center"
         align="center"
         width="150"
-        :show-overflow-tooltip="true"
+        show-tooltip-when-overflow
         label="授权标识">
       </el-table-column>
       <el-table-column
@@ -117,7 +117,7 @@
         this.$http({
           url: '/sys/menu/list',
           method: 'get'
-        }).then(({data}) => {
+        }).then(({ data }) => {
           this.dataList = this.treeDataTranslate(data.menuList, 'menuId', 'parentId', 'childrens')
         })
       },
@@ -138,7 +138,7 @@
           this.$http({
             url: `/sys/menu/delete/${id}`,
             method: 'post'
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

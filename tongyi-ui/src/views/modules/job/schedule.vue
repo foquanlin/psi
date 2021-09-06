@@ -58,7 +58,7 @@
         label="cron表达式">
       </el-table-column>
       <el-table-column
-        show-overflow-tooltip
+        show-tooltip-when-overflow
         prop="remark"
         header-align="center"
         align="center"
@@ -152,7 +152,7 @@
             'limit': this.pageSize,
             'beanName': this.searchForm.beanName
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -198,7 +198,7 @@
             url: '/sys/schedule/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',
@@ -225,7 +225,7 @@
             url: '/sys/schedule/pause',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',
@@ -254,7 +254,7 @@
             url: '/sys/schedule/resume',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',
@@ -283,7 +283,7 @@
             url: '/sys/schedule/run',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

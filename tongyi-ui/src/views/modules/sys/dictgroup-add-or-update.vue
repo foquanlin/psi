@@ -28,17 +28,25 @@
       return {
         visible: false,
         dataForm: {
-          id: 0,
+          id: '',
           code: '',
           name: '',
           remark: ''
         },
         dataRule: {
           code: [
-            {required: true, message: '分组编码不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '分组编码不能为空',
+              trigger: 'blur'
+            }
           ],
           name: [
-            {required: true, message: '分组名称不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '分组名称不能为空',
+              trigger: 'blur'
+            }
           ]
         }
       }
@@ -53,7 +61,7 @@
             this.$http({
               url: `/sys/dictgroup/info/${this.dataForm.id}`,
               method: 'get'
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.dataForm = data.dictgroup
               }
@@ -69,7 +77,7 @@
               url: `/sys/dictgroup/${!this.dataForm.id ? 'save' : 'update'}`,
               method: 'post',
               data: this.dataForm
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',

@@ -50,14 +50,16 @@
     methods: {
       init (id) {
         if (id) {
-          this.$http({
-            url: `/sys/maillog/info/${id}`,
-            method: 'get'
-          }).then(({data}) => {
-            if (data && data.code === 0) {
-              this.visible = true
-              this.dataForm = data.maillog
-            }
+          this.$nextTick(() => {
+            this.$http({
+              url: `/sys/maillog/info/${id}`,
+              method: 'get'
+            }).then(({ data }) => {
+              if (data && data.code === 0) {
+                this.visible = true
+                this.dataForm = data.maillog
+              }
+            })
           })
         }
       }

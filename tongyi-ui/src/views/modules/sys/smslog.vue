@@ -5,6 +5,9 @@
         <el-input v-model="searchForm.sendId" placeholder="发送编号" clearable></el-input>
       </el-form-item>
       <el-form-item>
+        <el-input v-model="searchForm.mobile" placeholder="手机号码" clearable></el-input>
+      </el-form-item>
+      <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
         <el-button v-if="isAuth('sys:smslog:config')" type="primary" @click="addConfig()">短信配置</el-button>
         <el-button v-if="isAuth('sys:smslog:send')" type="success" @click="sendSms()">发送短信</el-button>
@@ -40,7 +43,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        show-overflow-tooltip
+        show-tooltip-when-overflow
         prop="content"
         header-align="center"
         align="center"
@@ -57,7 +60,6 @@
         prop="stime"
         header-align="center"
         align="center"
-        width="150"
         label="发送时间">
       </el-table-column>
       <el-table-column
@@ -73,7 +75,7 @@
         align="center"
         label="提交状态">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.sendStatus === 0" size="small">提交成功</el-tag>
+          <el-tag v-if="scope.row.sendStatus === 0" size="small">成功</el-tag>
           <el-tag v-else size="small" type="danger">异常</el-tag>
         </template>
       </el-table-column>
@@ -137,7 +139,8 @@
     data () {
       return {
         searchForm: {
-          sendId: ''
+          sendId: '',
+          mobile: ''
         },
         dataList: [],
         pageIndex: 1,
@@ -149,7 +152,8 @@
       }
     },
     components: {
-      SmsConfig, SmsSend
+      SmsConfig,
+      SmsSend
     },
     activated () {
       this.getDataList()
@@ -161,11 +165,12 @@
           url: '/sys/smslog/list',
           method: 'get',
           params: {
-            'page': this.pageIndex,
-            'limit': this.pageSize,
-            'sendId': this.searchForm.sendId
+            page: this.pageIndex,
+            limit: this.pageSize,
+            sendId: this.searchForm.sendId,
+            mobile: this.searchForm.mobile
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -218,7 +223,7 @@
             url: '/sys/smslog/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

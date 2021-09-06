@@ -30,7 +30,7 @@
         label="角色名称">
       </el-table-column>
       <el-table-column
-        show-overflow-tooltip
+        show-tooltip-when-overflow
         prop="remark"
         header-align="center"
         align="center"
@@ -40,7 +40,6 @@
         prop="createTime"
         header-align="center"
         align="center"
-        width="180"
         label="创建时间">
       </el-table-column>
       <el-table-column
@@ -107,7 +106,7 @@
             'limit': this.pageSize,
             'roleName': this.searchForm.roleName
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -153,7 +152,7 @@
             url: '/sys/role/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

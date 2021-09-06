@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {isEmail} from '@/utils/validate'
+  import { isEmail } from '@/utils/validate'
 
   export default {
     data () {
@@ -58,13 +58,15 @@
     methods: {
       init () {
         this.visible = true
-        this.$http({
-          url: '/sys/user/info',
-          method: 'get'
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.dataForm = data.user
-          }
+        this.$nextTick(() => {
+          this.$http({
+            url: '/sys/user/info',
+            method: 'get'
+          }).then(({ data }) => {
+            if (data && data.code === 0) {
+              this.dataForm = data.user
+            }
+          })
         })
       },
       // 表单提交
@@ -81,7 +83,7 @@
                 'emailPort': this.dataForm.emailPort,
                 'emailPw': this.dataForm.emailPw
               }
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.visible = false
                 this.$message({

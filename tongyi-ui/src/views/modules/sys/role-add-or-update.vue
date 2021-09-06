@@ -57,13 +57,17 @@
           children: 'children'
         },
         dataForm: {
-          id: 0,
+          id: '',
           roleName: '',
           remark: ''
         },
         dataRule: {
           roleName: [
-            {required: true, message: '角色名称不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '角色名称不能为空',
+              trigger: 'blur'
+            }
           ]
         }
       }
@@ -75,7 +79,7 @@
         this.$http({
           url: '/sys/menu/list',
           method: 'get'
-        }).then(({data}) => {
+        }).then(({ data }) => {
           this.menuList = this.treeDataTranslate(data.menuList, 'menuId')
         }).then(() => {
           this.visible = true
@@ -88,7 +92,7 @@
             this.$http({
               url: `/sys/role/info/${this.dataForm.id}`,
               method: 'get'
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.dataForm.roleName = data.role.roleName
                 this.dataForm.remark = data.role.remark
@@ -113,7 +117,7 @@
                 'menuIdList': [].concat(this.$refs.menuListTree.getCheckedKeys(), this.$refs.menuListTree.getHalfCheckedKeys()),
                 'orgNoList': [].concat(this.$refs.orgListTree.getCheckedKeys(), this.$refs.orgListTree.getHalfCheckedKeys())
               }
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',

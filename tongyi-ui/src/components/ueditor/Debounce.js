@@ -5,9 +5,9 @@
  */
 export default function (fun, delay) {
   let timer = null
-  let debounced = function () {
-    let ctx = this
-    let args = arguments
+  const debounced = function () {
+    const ctx = this
+    const args = arguments
     if (timer) clearTimeout(timer)
     timer = setTimeout(function () {
       fun.apply(ctx, args)

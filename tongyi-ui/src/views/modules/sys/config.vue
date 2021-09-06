@@ -23,7 +23,7 @@
         align="center"
         width="50">
       </el-table-column>
-      <el-table-column width="250px"
+      <el-table-column  width="250px"
         prop="paramKey"
         header-align="center"
         align="left"
@@ -35,8 +35,8 @@
         align="right"
         label="参数值">
       </el-table-column>
-      <el-table-column width="250px"
-        show-overflow-tooltip
+      <el-table-column  width="250px"
+        show-tooltip-when-overflow
         prop="remark"
         header-align="center"
         align="left"
@@ -109,7 +109,7 @@
             'limit': this.pageSize,
             'paramKey': this.searchForm.paramKey
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -162,7 +162,7 @@
             url: '/sys/config/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

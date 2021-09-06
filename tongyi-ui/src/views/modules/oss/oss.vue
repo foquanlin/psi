@@ -6,9 +6,11 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button type="primary" @click="configHandle()">云存储配置</el-button>
+        <el-button v-if="isAuth('sys:oss:config')" type="primary" @click="configHandle()">云存储配置</el-button>
         <el-button type="primary" @click="uploadHandle()">上传文件</el-button>
-        <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('sys:oss:delete')" type="danger" @click="deleteHandle()"
+                   :disabled="dataListSelections.length <= 0">批量删除
+        </el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -29,10 +31,18 @@
         label="URL地址">
       </el-table-column>
       <el-table-column
+        prop="url"
+        header-align="center"
+        align="center"
+        label="预览">
+        <template slot-scope="scope">
+          <img style="height: 50%;width: 50%" @click="openImg(scope.row.url)" :src="scope.row.url"/>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="createDate"
         header-align="center"
         align="center"
-        width="180"
         label="创建时间">
       </el-table-column>
       <el-table-column
@@ -43,7 +53,8 @@
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="showImg(scope.row.url)">预览</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button type="text" size="small" v-if="isAuth('sys:oss:delete')" @click="deleteHandle(scope.row.id)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -100,7 +111,7 @@
             'limit': this.pageSize,
             'url': this.searchForm.url
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -162,7 +173,7 @@
             url: '/sys/oss/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

@@ -29,7 +29,7 @@
         header-align="center"
         align="center"
         width="150"
-        :show-overflow-tooltip="true"
+        show-tooltip-when-overflow
         label="请求方法">
       </el-table-column>
       <el-table-column
@@ -37,7 +37,7 @@
         header-align="center"
         align="center"
         width="150"
-        :show-overflow-tooltip="true"
+        show-tooltip-when-overflow
         label="请求参数">
       </el-table-column>
       <el-table-column
@@ -57,7 +57,6 @@
         prop="createTime"
         header-align="center"
         align="center"
-        width="180"
         label="创建时间">
       </el-table-column>
     </el-table>
@@ -101,7 +100,7 @@
             'limit': this.pageSize,
             'key': this.searchForm.key
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total

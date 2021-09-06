@@ -104,7 +104,7 @@
         this.$http({
           url: '/sys/oss/config',
           method: 'get'
-        }).then(({data}) => {
+        }).then(({ data }) => {
           this.dataForm = data && data.code === 0 ? data.config : []
         })
       },
@@ -116,7 +116,7 @@
               url: '/sys/oss/saveConfig',
               method: 'post',
               data: this.dataForm
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',

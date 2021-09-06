@@ -91,10 +91,10 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="250px"
         prop="deployTime"
         header-align="center"
         align="center"
-        width="160"
         label="部署时间">
       </el-table-column>
       <el-table-column
@@ -182,7 +182,7 @@
             'category': this.searchForm.category,
             'key': this.searchForm.key
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -212,7 +212,7 @@
         this.$http({
           url: '/act/reprocdef/update?id=' + id + '&state=' + state,
           method: 'post'
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.$message({
               message: data.msg,
@@ -228,7 +228,7 @@
         this.$http({
           url: '/act/reprocdef/convertToModel?id=' + id,
           method: 'post'
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.$message({
               message: '操作成功',
@@ -263,7 +263,7 @@
             url: '/act/reprocdef/delete',
             method: 'post',
             data: deploymentIds
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

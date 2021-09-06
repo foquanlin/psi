@@ -87,7 +87,7 @@
       return {
         visible: false,
         dataForm: {
-          id: 0,
+          id: '',
           type: 1,
           typeList: ['目录', '菜单', '按钮'],
           name: '',
@@ -126,7 +126,7 @@
         this.$http({
           url: '/sys/menu/select',
           method: 'get'
-        }).then(({data}) => {
+        }).then(({ data }) => {
           this.menuList = this.treeDataTranslate(data.menuList, 'menuId')
         }).then(() => {
           this.visible = true

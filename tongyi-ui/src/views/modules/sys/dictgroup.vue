@@ -48,7 +48,7 @@
             prop="remark"
             header-align="center"
             align="center"
-            show-overflow-tooltip
+            show-tooltip-when-overflow
             label="备注">
           </el-table-column>
           <el-table-column
@@ -106,7 +106,8 @@
       }
     },
     components: {
-      AddOrUpdate, Dict
+      AddOrUpdate,
+      Dict
     },
     activated () {
       this.getDataList()
@@ -128,7 +129,7 @@
             'code': this.searchForm.code,
             'name': this.searchForm.name
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -174,7 +175,7 @@
             url: '/sys/dictgroup/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

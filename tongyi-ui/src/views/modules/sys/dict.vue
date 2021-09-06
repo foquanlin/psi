@@ -122,7 +122,7 @@
             'name': this.searchForm.name,
             'code': this.code
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dictDataList = data.page.records
             this.dictTotalPage = data.page.total
@@ -168,7 +168,7 @@
             url: '/sys/dict/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

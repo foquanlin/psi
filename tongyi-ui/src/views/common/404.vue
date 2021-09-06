@@ -59,6 +59,7 @@
       }
 
     }
+
     .not-found-btn-gohome {
       margin-left: 30px;
     }

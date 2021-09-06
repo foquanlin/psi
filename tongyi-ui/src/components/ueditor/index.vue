@@ -63,6 +63,10 @@
         type: String,
         default: ''
       },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
       observerDebounceTime: {
         type: Number,
         default: 50,
@@ -241,6 +245,13 @@
         // 函数防抖
         this.observer = new MutationObserver(Debounce(changeHandle, this.observerDebounceTime))
         this.observer.observe(this.editor.body, this.observerOptions)
+      },
+      _setStatus () {
+        if (this.disabled) {
+          this.editor.disable()
+        } else {
+          this.editor.enable()
+        }
       }
     },
     beforeDestroy () {
@@ -259,7 +270,7 @@
           switch (this.status) {
             case 0:
               this.status = 1
-              this.initValue = value;
+              this.initValue = value || '';
               // 判断执行环境是服务端还是客户端，这里的 process.client 是 Nuxt 添加的环境变量
               (this.forceInit || (typeof process !== 'undefined' && process.client) || typeof window !== 'undefined') && this._checkDependencies().then(() => {
                 this.$refs.script ? this._initEditor() : this.$nextTick(() => this._initEditor())
@@ -269,13 +280,20 @@
               this.initValue = value
               break
             case 2:
-              this._setContent(value)
+              this._setContent(value || '')
+              this._setStatus()
               break
             default:
               break
           }
         },
         immediate: true
+      },
+      disabled: {
+        handler (disabled) {
+          this.disabled = disabled
+          this._setStatus()
+        }
       }
     }
   }

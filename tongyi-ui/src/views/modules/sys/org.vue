@@ -65,7 +65,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        width="155"
+        width="250px"
         prop="createTime"
         header-align="center"
         align="center"
@@ -124,7 +124,7 @@
             'orgName': this.searchForm.orgName,
             'parentName': this.searchForm.parentName
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = this.treeDataTranslate(data.list, 'orgNo', 'parentNo', 'childrens')
           } else {
@@ -150,7 +150,7 @@
             url: '/sys/org/delete',
             method: 'post',
             data: orgNo
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

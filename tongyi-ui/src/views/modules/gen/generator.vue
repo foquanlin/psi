@@ -121,7 +121,7 @@
             'limit': this.pageSize,
             'tableName': this.searchForm.tableName
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total

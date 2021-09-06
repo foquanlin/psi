@@ -46,7 +46,7 @@
       <el-table-column
         prop="cacheKey"
         label="缓存KEY"
-        show-overflow-tooltip
+        show-tooltip-when-overflow
         width="180">
       </el-table-column>
       <el-table-column
@@ -102,7 +102,7 @@
           params: {
             type: this.searchForm.type
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.list
           }
@@ -122,7 +122,7 @@
             url: '/sys/cache/deleteCache',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

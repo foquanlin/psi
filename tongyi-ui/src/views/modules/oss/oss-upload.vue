@@ -3,7 +3,8 @@
     title="上传文件"
     :close-on-click-modal="false"
     @close="closeHandle"
-    :visible.sync="visible">
+    :visible.sync="visible"
+    append-to-body>
     <el-upload
       drag
       :action="url"

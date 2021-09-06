@@ -107,7 +107,7 @@
             'beanName': this.searchForm.beanName,
             'methodName': this.searchForm.methodName
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -133,7 +133,7 @@
         this.$http({
           url: `/sys/scheduleLog/info/${id}`,
           method: 'get'
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.$alert(data.log.error)
           }

@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {clearLoginInfo} from '@/utils'
+  import { clearLoginInfo } from '@/utils'
 
   export default {
     data () {
@@ -46,14 +46,29 @@
         },
         dataRule: {
           password: [
-            {required: true, message: '原密码不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '原密码不能为空',
+              trigger: 'blur'
+            }
           ],
           newPassword: [
-            {required: true, message: '新密码不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '新密码不能为空',
+              trigger: 'blur'
+            }
           ],
           confirmPassword: [
-            {required: true, message: '确认密码不能为空', trigger: 'blur'},
-            {validator: validateConfirmPassword, trigger: 'blur'}
+            {
+              required: true,
+              message: '确认密码不能为空',
+              trigger: 'blur'
+            },
+            {
+              validator: validateConfirmPassword,
+              trigger: 'blur'
+            }
           ]
         }
       }
@@ -92,7 +107,7 @@
                 'password': this.dataForm.password,
                 'newPassword': this.dataForm.newPassword
               }
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',
@@ -103,7 +118,7 @@
                 this.$nextTick(() => {
                   this.mainTabs = []
                   clearLoginInfo()
-                  this.$router.replace({name: 'login'})
+                  this.$router.replace({ name: 'login' })
                 })
               }
             })

@@ -34,13 +34,25 @@
         },
         dataRule: {
           name: [
-            {required: true, message: '模型名称不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '模型名称不能为空',
+              trigger: 'blur'
+            }
           ],
           key: [
-            {required: true, message: '模型标识不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '模型标识不能为空',
+              trigger: 'blur'
+            }
           ],
           description: [
-            {required: true, message: '模型描述不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '模型描述不能为空',
+              trigger: 'blur'
+            }
           ]
         }
       }
@@ -62,7 +74,7 @@
                 url: `/act/remodel/${!this.dataForm.id ? 'save' : 'update'}`,
                 method: 'post',
                 data: this.dataForm
-              }).then(({data}) => {
+              }).then(({ data }) => {
                 if (data && data.code === 0) {
                   this.$message({
                     message: '操作成功',

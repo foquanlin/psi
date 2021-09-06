@@ -2,7 +2,7 @@
   <div class="mod-maillog">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.sender" placeholder="参数名" clearable></el-input>
+        <el-input v-model="searchForm.receiver" placeholder="接收人" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
@@ -44,7 +44,7 @@
         label="邮件主题">
       </el-table-column>
       <el-table-column
-        show-overflow-tooltip
+        show-tooltip-when-overflow
         prop="content"
         header-align="center"
         align="center"
@@ -116,7 +116,7 @@
     data () {
       return {
         searchForm: {
-          sender: ''
+          receiver: ''
         },
         dataList: [],
         pageIndex: 1,
@@ -128,7 +128,8 @@
       }
     },
     components: {
-      Detail, Config
+      Detail,
+      Config
     },
     activated () {
       this.getDataList()
@@ -142,9 +143,9 @@
           params: {
             'page': this.pageIndex,
             'limit': this.pageSize,
-            'sender': this.searchForm.sender
+            'receiver': this.searchForm.receiver
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -196,7 +197,7 @@
             url: '/sys/maillog/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',

@@ -44,13 +44,25 @@
         },
         dataRule: {
           beanName: [
-            {required: true, message: '用户名不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '用户名不能为空',
+              trigger: 'blur'
+            }
           ],
           methodName: [
-            {required: true, message: '方法名称不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '方法名称不能为空',
+              trigger: 'blur'
+            }
           ],
           cronExpression: [
-            {required: true, message: 'cron表达式不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: 'cron表达式不能为空',
+              trigger: 'blur'
+            }
           ]
         }
       }
@@ -65,7 +77,7 @@
             this.$http({
               url: `/sys/schedule/info/${this.dataForm.id}`,
               method: 'get'
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.dataForm.beanName = data.schedule.beanName
                 this.dataForm.methodName = data.schedule.methodName
@@ -94,7 +106,7 @@
                 'remark': this.dataForm.remark,
                 'status': !this.dataForm.id ? undefined : this.dataForm.status
               }
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',

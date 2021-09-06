@@ -22,7 +22,7 @@
         <el-input v-model="dataForm.value" placeholder="字典值"></el-input>
       </el-form-item>
       <el-form-item label="排序号" prop="sort">
-        <el-input-number v-model="dataForm.sort" placeholder="排序号"></el-input-number>
+        <el-input-number v-model="dataForm.sort" controls-position="right" :min="0" step-strictly></el-input-number>
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-radio-group v-model="dataForm.status">
@@ -49,7 +49,7 @@
         groupId: '',
         groupWrong: '',
         dataForm: {
-          id: 0,
+          id: '',
           groupId: '',
           name: '',
           value: '',
@@ -60,10 +60,18 @@
         groupDataList: [],
         dataRule: {
           name: [
-            {required: true, message: '字典名称不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '字典名称不能为空',
+              trigger: 'blur'
+            }
           ],
           value: [
-            {required: true, message: '字典值不能为空', trigger: 'blur'}
+            {
+              required: true,
+              message: '字典值不能为空',
+              trigger: 'blur'
+            }
           ]
         }
       }
@@ -78,7 +86,7 @@
           url: '/sys/dictgroup/queryAll',
           method: 'get',
           loading: false
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.groupDataList = data.list
             this.visible = true
@@ -88,7 +96,7 @@
                 this.$http({
                   url: `/sys/dict/info/${this.dataForm.id}`,
                   method: 'get'
-                }).then(({data}) => {
+                }).then(({ data }) => {
                   if (data && data.code === 0) {
                     this.dataForm = data.dict
                   }
@@ -117,7 +125,7 @@
               url: `/sys/dict/${!this.dataForm.id ? 'save' : 'update'}`,
               method: 'post',
               data: this.dataForm
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',

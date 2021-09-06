@@ -36,12 +36,14 @@
         label="关键字">
       </el-table-column>
       <el-table-column
+        width="250px"
         prop="createTime"
         header-align="center"
         align="center"
         label="创建时间">
       </el-table-column>
       <el-table-column
+        width="250px"
         prop="lastUpdateTime"
         header-align="center"
         align="center"
@@ -123,7 +125,7 @@
             'limit': this.pageSize,
             'key': this.searchForm.key
           }
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.records
             this.totalPage = data.page.total
@@ -169,7 +171,7 @@
             url: '/act/remodel/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
+          }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
                 message: '操作成功',
@@ -187,7 +189,7 @@
         this.$http({
           url: '/act/remodel/deploy?id=' + id,
           method: 'post'
-        }).then(({data}) => {
+        }).then(({ data }) => {
           if (data && data.code === 0) {
             this.$message({
               message: data.msg,

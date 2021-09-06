@@ -15,7 +15,6 @@
     </el-form-item>
   </el-form>
 </template>
-
 <script>
   export default {
     computed: {

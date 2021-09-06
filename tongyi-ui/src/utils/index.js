@@ -27,8 +27,8 @@ export function isAuth (key) {
  * @param childrenKey 子list数据的key
  */
 export function treeDataTranslate (data, id = 'id', pid = 'parentId', childrenKey = 'children') {
-  let res = []
-  let temp = {}
+  const res = []
+  const temp = {}
   for (let i = 0; i < data.length; i++) {
     temp[data[i][id]] = data[i]
   }
@@ -37,10 +37,10 @@ export function treeDataTranslate (data, id = 'id', pid = 'parentId', childrenKe
       if (!temp[data[k][pid]][childrenKey]) {
         temp[data[k][pid]][childrenKey] = []
       }
-      if (!temp[data[k][pid]]['_level']) {
-        temp[data[k][pid]]['_level'] = 1
+      if (!temp[data[k][pid]]._level) {
+        temp[data[k][pid]]._level = 1
       }
-      data[k]['_level'] = temp[data[k][pid]]._level + 1
+      data[k]._level = temp[data[k][pid]]._level + 1
       temp[data[k][pid]][childrenKey].push(data[k])
     } else {
       res.push(data[k])
@@ -50,11 +50,39 @@ export function treeDataTranslate (data, id = 'id', pid = 'parentId', childrenKe
 }
 
 /**
+ * @param date
+ */
+export function transDate (date, fmt) {
+  if (!date) {
+    return '--'
+  }
+  let _this = new Date(date * 1000)
+  var o = {
+    'M+': _this.getMonth() + 1,
+    'd+': _this.getDate(),
+    'h+': _this.getHours(),
+    'm+': _this.getMinutes(),
+    's+': _this.getSeconds(),
+    'q+': Math.floor((_this.getMonth() + 3) / 3),
+    'S': _this.getMilliseconds()
+  }
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (_this.getFullYear() + '').substr(4 - RegExp.$1.length))
+  }
+  for (var k in o) {
+    if (new RegExp('(' + k + ')').test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+    }
+  }
+  return fmt
+}
+
+/**
  * 根据orgNo翻译为orgName
  * @param orgNo
  */
 export function transOrg (orgNo) {
-  let orgList = JSON.parse(sessionStorage.getItem('orgList') || '[]')
+  const orgList = JSON.parse(sessionStorage.getItem('orgList') || '[]')
   if (orgList.length > 0) {
     for (let i = 0; i < orgList.length; i++) {
       if (orgList[i].orgNo === orgNo) {
@@ -62,7 +90,7 @@ export function transOrg (orgNo) {
       }
     }
   }
-  return '--'
+  return orgNo
 }
 
 /**
@@ -70,7 +98,7 @@ export function transOrg (orgNo) {
  * @param userId
  */
 export function transUser (userId) {
-  let userList = JSON.parse(sessionStorage.getItem('userList') || '[]')
+  const userList = JSON.parse(sessionStorage.getItem('userList') || '[]')
   if (userList.length > 0) {
     for (let i = 0; i < userList.length; i++) {
       if (userList[i].userId === userId) {
@@ -78,14 +106,14 @@ export function transUser (userId) {
       }
     }
   }
-  return '--'
+  return userId
 }
 
 export function transDict (code, value) {
   if (!value && value !== 0) {
     return '--'
   }
-  let dictList = JSON.parse(sessionStorage.getItem('dictList') || '[]')
+  const dictList = JSON.parse(sessionStorage.getItem('dictList') || '[]')
   if (dictList.length > 0) {
     for (let i = 0; i < dictList.length; i++) {
       if (dictList[i].code === code && dictList[i].value.toString() === value.toString()) {
@@ -93,7 +121,19 @@ export function transDict (code, value) {
       }
     }
   }
-  return '--'
+  return value
+}
+
+/**
+ * 预览图片
+ * @param imageUrl
+ */
+export function openImg (imageUrl) {
+  this.$alert('<img style="width: 100%;height: 100%;" src="' + imageUrl + '"/>', '预览', {
+    dangerouslyUseHTMLString: true,
+    callback: function () {
+    }
+  })
 }
 
 /**

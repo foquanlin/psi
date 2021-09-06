@@ -39,7 +39,8 @@
 </template>
 
 <script>
-  import {getUUID} from '@/utils'
+  import { getUUID } from '@/utils'
+  import { Encrypt } from '@/utils/AESUtils'
 
   export default {
     data () {
@@ -77,14 +78,14 @@
               method: 'post',
               data: {
                 'userName': this.dataForm.userName,
-                'password': this.dataForm.password,
+                'password': Encrypt(this.dataForm.password),
                 'uuid': this.dataForm.uuid,
                 'captcha': this.dataForm.captcha
               }
-            }).then(({data}) => {
+            }).then(({ data }) => {
               if (data && data.code === 0) {
                 this.$cookie.set('token', data.token)
-                this.$router.replace({name: 'home'})
+                this.$router.replace({ name: 'home' })
               } else {
                 this.getCaptcha()
               }
@@ -178,6 +179,7 @@
       }
 
     }
+
     .login-btn-submit {
       width: 100%;
       margin-top: 38px;

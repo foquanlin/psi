@@ -3,7 +3,7 @@
  * @param {*} s
  */
 export function isEmail (s) {
-  return /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(s)
+  return /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(s)
 }
 
 /**
@@ -68,7 +68,7 @@ export const isPc = function () {
  * 判断姓名是否正确
  */
 export function isName (name) {
-  let regName = /^[\u4e00-\u9fa5]{2,4}$/
+  const regName = /^[\u4e00-\u9fa5]{2,4}$/
   if (!regName.test(name)) return false
   return true
 }
@@ -110,8 +110,7 @@ export function isNull (val) {
   } else if (val instanceof Object) {
     if (JSON.stringify(val) === '{}') return true
   } else {
-    if (val === 'null' || val == null || val === 'undefined' || val === undefined || val === '') return true
-    return false
+    return val === 'null' || val == null || val === 'undefined' || val === undefined || val === ''
   }
   return false
 }
@@ -171,9 +170,9 @@ export function isCardId (code) {
         code = code.split('')
         // ∑(ai×Wi)(mod 11)
         // 加权因子
-        let factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+        const factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
         // 校验位
-        let parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2, 'x']
+        const parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2, 'x']
         let sum = 0
         let ai = 0
         let wi = 0
@@ -182,7 +181,7 @@ export function isCardId (code) {
           wi = factor[i]
           sum += ai * wi
         }
-        let last = parity[sum % 11]
+        const last = parity[sum % 11]
         if (last !== code[17]) {
           msg = '证件号码校验位错误'
           return false
