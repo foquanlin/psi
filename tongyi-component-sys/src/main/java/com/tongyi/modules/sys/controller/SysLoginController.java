@@ -12,6 +12,7 @@
 package com.tongyi.modules.sys.controller;
 
 import com.tongyi.common.annotation.SysLog;
+import com.tongyi.common.utils.AESUtil;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.sys.entity.SysUserEntity;
@@ -76,12 +77,18 @@ public class SysLoginController extends AbstractController {
         if (!captcha) {
             return RestResponse.error("验证码不正确");
         }
-
+        String password;
+        try {
+            // AESUtil.desEncrypt解密后 password 为char[16], trim转为char[6]
+            password = AESUtil.desEncrypt(form.getPassword()).trim();
+        } catch (Exception e) {
+            return RestResponse.error("解密失败！");
+        }
         //用户信息
         SysUserEntity user = sysUserService.queryByUserName(form.getUserName());
 
         //账号不存在、密码错误
-        if (user == null || !user.getPassword().equals(new Sha256Hash(form.getPassword(), user.getSalt()).toHex())) {
+        if (user == null || !user.getPassword().equals(new Sha256Hash(password, user.getSalt()).toHex())) {
             return RestResponse.error("账号或密码不正确");
         }
 
