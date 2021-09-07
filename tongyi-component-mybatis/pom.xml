@@ -25,10 +25,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-sys</artifactId>
-            <version>${component.version}</version>
-            <scope>provided</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -45,6 +47,11 @@
                     <artifactId>mybatis-plus-generator</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-utils</artifactId>
+            <version>${component.version}</version>
         </dependency>
     </dependencies>
 </project>
