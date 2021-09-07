@@ -85,6 +85,33 @@ public class StringUtils {
         return false;
     }
 
+    /**
+     * 加一拼成字符串
+     * 如传入 10, 4 返回 1005
+     *
+     * @param parentId parentId
+     * @param maxId    maxId
+     * @return String 加1
+     */
+    public static String addOne(String parentId, String maxId) {
+        int ten = 10;
+        if ("0".equals(parentId)) {
+            parentId = "";
+        }
+        if (isNullOrEmpty(maxId)) {
+            return parentId + "01";
+        }
+
+        maxId = maxId.substring(maxId.length() - 2);
+
+        int result = Integer.parseInt(maxId) + 1;
+
+        if (result < ten) {
+            return parentId + "0" + result;
+        } else {
+            return parentId + result + "";
+        }
+    }
 
     /**
      * 支付交易ID
