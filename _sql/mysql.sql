@@ -326,7 +326,7 @@ create table `sys_config` (
 -- ----------------------------
 -- records of sys_config
 -- ----------------------------
-insert into `sys_config` values ('1', 'cloud_storage_config_key', '{\"type\":4,\"qiniudomain\":\"\",\"qiniuprefix\":\"\",\"qiniuaccesskey\":\"\",\"qiniusecretkey\":\"\",\"qiniubucketname\":\"\",\"aliyundomain\":\"\",\"aliyunprefix\":\"\",\"aliyunendpoint\":\"\",\"aliyunaccesskeyid\":\"\",\"aliyunaccesskeysecret\":\"\",\"aliyunbucketname\":\"\",\"qclouddomain\":\"\",\"qcloudprefix\":\"\",\"qcloudsecretid\":\"\",\"qcloudsecretkey\":\"\",\"qcloudbucketname\":\"\",\"diskpath\":\"/usr/local/nginx/html/upload\",\"proxyserver\":\"http://132.232.89.47/upload\"}', '0', '云存储配置信息');
+insert into `sys_config` values ('1', 'cloud_storage_config_key', '{\"type\":4,\"qiniuDomain\":\"\",\"qiniuPrefix\":\"\",\"qiniuAccessKey\":\"\",\"qiniuSecretKey\":\"\",\"qiniuBucketName\":\"\",\"aliyunDomain\":\"\",\"aliyunPrefix\":\"\",\"aliyunEndPoint\":\"\",\"aliyunAccessKeyId\":\"\",\"aliyunAccessKeySecret\":\"\",\"aliyunBucketName\":\"\",\"qcloudDomain\":\"\",\"qcloudPrefix\":\"\",\"qcloudSecretId\":\"\",\"qcloudSecretKey\":\"\",\"qcloudBucketName\":\"\",\"diskPath\":\"/usr/local/nginx/html/upload\",\"proxyServer\":\"http://132.232.89.47/upload\"}', '0', '云存储配置信息');
 insert into `sys_config` values ('2', 'sms_config_key', '{\"domain\":\"http://web.cr6868.com/asmx/smsservice.aspx?\",\"name\":\"lipengjun\",\"pwd\":\"\",\"sign\":\"【惠州市酷天科技有限公司】\",\"type\":1}', '0', '短信配置');
 
 -- ----------------------------
