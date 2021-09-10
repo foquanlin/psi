@@ -25,7 +25,6 @@ import java.util.Map;
  * @author ${author}
  * @date ${datetime}
  */
-@Api(tags = "${comments}接口")
 @RestController
 @RequestMapping("${pre}/${pathName}")
 public class ${className}Controller extends AbstractController {
@@ -38,7 +37,6 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @ApiOperation(value = "查看所有列表")
     @RequestMapping("/listAll")
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
@@ -52,7 +50,6 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @ApiOperation(value = "分页查询")
     @GetMapping("/list")
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
@@ -66,7 +63,6 @@ public class ${className}Controller extends AbstractController {
      * @param ${pk.attrname} 主键
      * @return RestResponse
      */
-    @ApiOperation(value = "根据主键查询详情")
     @RequestMapping("/info/{${pk.attrname}}")
     @RequiresPermissions("${pre}:${pathName}:info")
     public RestResponse info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
@@ -80,7 +76,6 @@ public class ${className}Controller extends AbstractController {
      * @param entity
      * @return RestResponse
      */
-    @ApiOperation(value = "新增${comments}")
     @SysLog("新增${comments}")
     @RequestMapping("/save")
     @RequiresPermissions("${pre}:${pathName}:save")
@@ -95,7 +90,6 @@ public class ${className}Controller extends AbstractController {
      * @param entity
      * @return RestResponse
      */
-    @ApiOperation(value = "修改${comments}")
     @SysLog("修改${comments}")
     @RequestMapping("/update")
     @RequiresPermissions("${pre}:${pathName}:update")
@@ -110,7 +104,6 @@ public class ${className}Controller extends AbstractController {
      * @param ${pk.attrname}s
      * @return RestResponse
      */
-    @ApiOperation(value = "删除${comments}")
     @SysLog("删除${comments}")
     @RequestMapping("/delete")
     @RequiresPermissions("${pre}:${pathName}:delete")
