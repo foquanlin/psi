@@ -12,6 +12,8 @@
 #end
 
         from ${tableName} t
+    </sql>
+    <sql id="selectWhere">
         <where>
 #foreach($column in $columns)
     #set($param='${params.'+$column.attrname+'}')
@@ -47,12 +49,13 @@
 #end
         </where>
     </sql>
-
     <select id="listPage" resultType="${package}.entity.${className}Entity">
         <include refid="selectSql"/>
+        <include refid="selectWhere"/>
     </select>
 
     <select id="listAll" resultType="${package}.entity.${className}Entity">
         <include refid="selectSql"/>
+        <include refid="selectWhere"/>
     </select>
 </mapper>

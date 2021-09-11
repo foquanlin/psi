@@ -150,7 +150,7 @@ public class GenUtils {
          */
         Map<String, Object> map = new HashMap<>(32);
         //取表前缀用于分包
-        map.put("tableName", tableEntity.getTableName().toUpperCase());
+        map.put("tableName", tableEntity.getTableName().toLowerCase());
         map.put("comments", null == tableEntity.getComments() ? "" : tableEntity.getComments());
         map.put("pk", tableEntity.getPk());
         map.put("className", tableEntity.getClassName());
