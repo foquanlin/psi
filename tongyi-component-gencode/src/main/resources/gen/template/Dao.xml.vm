@@ -12,12 +12,12 @@
 #end
 
         from ${tableName} t
-        where 1=1
+        <where>
 #foreach($column in $columns)
     #set($param='${params.'+$column.attrname+'}')
 #if($column.attrType=='String')
         <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
-            and t.$column.columnName like '%$param%'
+            and t.$column.columnName = $param
         </if>
 #elseif($column.attrType=='Integer')
         <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
@@ -45,6 +45,7 @@
         </if>
 #end
 #end
+        </where>
     </sql>
 
     <select id="listPage" resultType="${package}.entity.${className}Entity">
