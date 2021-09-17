@@ -81,4 +81,17 @@ public abstract class AbstractController {
         dataScope.setOrgNos(sysRoleOrgService.queryOrgNoListByUserId(getUserId()));
         return dataScope;
     }
+
+    /**
+     * 数据权限构造
+     *
+     * @return DataScope
+     */
+    protected DataScope getDataScopeByOrgNo(String userAlias, String orgAlias) {
+        DataScope dataScope = new DataScope();
+        dataScope.setUserAlias(userAlias);
+        dataScope.setOrgAlias(orgAlias);
+        dataScope.setOrgNos(this.getOrgNo());
+        return dataScope;
+    }
 }
