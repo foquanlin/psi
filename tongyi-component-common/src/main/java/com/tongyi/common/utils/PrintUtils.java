@@ -11,8 +11,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +21,6 @@ import java.util.List;
  *
  * @author foquanlin
  */
-@Component
-@ConfigurationProperties("print")
 public class PrintUtils {
     /**
      * 不需要修改
@@ -39,7 +35,13 @@ public class PrintUtils {
      * 必填: 注册账号后生成的UKEY
      */
     public String ukey = "";
-
+    private RequestConfig requestConfig;
+    public PrintUtils(String user,String ukey){
+        this.user = user;
+        this.ukey = ukey;
+        //通过POST请求，发送打印信息到服务器
+        this.requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build();
+    }
     /**
      * 测试时，打开下面注释掉方法的即可,更多接口文档信息,请访问官网开放平台查看
      *
@@ -137,9 +139,6 @@ public class PrintUtils {
 //        content += "订餐时间：2016-08-08 08:08:08<BR>";
 //        content += "<QR>http://www.dzist.com</QR>";
 
-        //通过POST请求，发送打印信息到服务器
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build();
-
         CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
 
         HttpPost post = new HttpPost(URL);
@@ -165,10 +164,6 @@ public class PrintUtils {
      * @return 已打印返回true, 未打印返回false。
      */
     public String queryOrderState(String orderid) {
-
-        //通过POST请求，发送打印信息到服务器
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build();
-
         CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
 
         HttpPost post = new HttpPost(URL);
@@ -194,10 +189,6 @@ public class PrintUtils {
      * @return 已打印订单数和等待打印数。
      */
     public String queryOrderInfoByDate(String sn, String strdate) {
-
-        //通过POST请求，发送打印信息到服务器
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build();
-
         CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
 
         HttpPost post = new HttpPost(URL);
@@ -224,10 +215,6 @@ public class PrintUtils {
      * @return 该打印机在线或离线，正常或异常的信息。
      */
     public String queryPrinterStatus(String sn) {
-
-        //通过POST请求，发送打印信息到服务器
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build();
-
         CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
 
         HttpPost post = new HttpPost(URL);
@@ -250,7 +237,7 @@ public class PrintUtils {
      * @param httpClient httpClient
      * @return String
      */
-    public static String execute(HttpPost post, List<NameValuePair> nvps, CloseableHttpClient httpClient) {
+    private String execute(HttpPost post, List<NameValuePair> nvps, CloseableHttpClient httpClient) {
         CloseableHttpResponse response = null;
         String result = null;
         try {
@@ -296,7 +283,7 @@ public class PrintUtils {
      * @param STIME
      * @return
      */
-    private static String signature(String USER, String UKEY, String STIME) {
+    private String signature(String USER, String UKEY, String STIME) {
         return DigestUtils.sha1Hex(USER + UKEY + STIME);
     }
 }
