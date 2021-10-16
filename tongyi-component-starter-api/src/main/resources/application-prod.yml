@@ -2,7 +2,7 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://mysql.tdocker.top:3307/db?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://mysql.tdocker.top:3307/db?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnect=true&serverTimezone=Asia/Shanghai
     username: root
     password: abcdefg
     hikari:
