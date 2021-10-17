@@ -50,6 +50,7 @@
         <weixin-java-pay.version>3.9.0</weixin-java-pay.version>
         <weixin-java-open.version>3.9.0</weixin-java-open.version>
         <alipay-sdk.version>3.7.110.ALL</alipay-sdk.version>
+        <alipay-easysdk.version>2.2.1</alipay-easysdk.version>
         <dist.release.server>release-server</dist.release.server>
         <dist.snapshot.server>snapshot-server</dist.snapshot.server>
         <dist.release.url>http://nexus.wxngrok.com/nexus/content/repositories/releases</dist.release.url>
@@ -90,6 +91,7 @@
         <module>tongyi-component-shiro</module>
         <module>tongyi-component-wechatmp</module>
         <module>tongyi-component-alibaba</module>
+        <module>tongyi-component-alipay</module>
         <module>tongyi-component-tester</module>
         <module>tongyi-component-starter-admin</module>
         <module>tongyi-component-starter-api</module>
