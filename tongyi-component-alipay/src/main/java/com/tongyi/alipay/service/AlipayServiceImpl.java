@@ -6,12 +6,14 @@ import com.alipay.easysdk.payment.facetoface.models.AlipayTradePayResponse;
 import com.alipay.easysdk.payment.facetoface.models.AlipayTradePrecreateResponse;
 import com.tongyi.alipay.config.AliPayProperties;
 import com.tongyi.common.exception.BusinessException;
+import com.tongyi.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * 惠州市酷天科技有限公司
@@ -31,10 +33,19 @@ public class AlipayServiceImpl implements IAlipayService {
 
     @Override
     public void faceToFace(String subject, String outTradeNo, BigDecimal amount,String authCode) {
+        if (StringUtils.isNullOrEmpty(outTradeNo)){
+            throw new BusinessException("请填写订单号");
+        }
+        if (StringUtils.isNullOrEmpty(amount)){
+            throw new BusinessException("请填写金额");
+        }
+        if (StringUtils.isNullOrEmpty(authCode)){
+            throw new BusinessException("没有付款码");
+        }
         AlipayTradePrecreateResponse atpr = null;
         try {
             Client client = Factory.Payment.FaceToFace();
-            atpr = client.preCreate(subject,outTradeNo,amount.toPlainString());
+            atpr = client.preCreate(subject,outTradeNo,amount.setScale(2, RoundingMode.HALF_UP).toPlainString());
         } catch (Exception e) {
             log.error("支付宝接口异常:",e);
             throw new BusinessException("支付宝接口异常:",e.getCause());
@@ -49,7 +60,7 @@ public class AlipayServiceImpl implements IAlipayService {
         AlipayTradePayResponse rsp = null;
         try {
             Client client = Factory.Payment.FaceToFace();
-            rsp = client.pay(subject,outTradeNo,amount.toPlainString(),authCode);
+            rsp = client.pay(subject,outTradeNo,amount.setScale(2, RoundingMode.HALF_UP).toPlainString(),authCode);
         } catch (Exception e) {
             log.error("支付宝接口异常:",e);
             throw new BusinessException("支付宝接口异常:",e.getCause());
