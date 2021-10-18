@@ -3,6 +3,7 @@ package com.tongyi.alipay.service;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.payment.facetoface.Client;
 import com.alipay.easysdk.payment.facetoface.models.AlipayTradePayResponse;
+import com.alipay.easysdk.payment.facetoface.models.AlipayTradePrecreateResponse;
 import com.tongyi.alipay.config.AliPayProperties;
 import com.tongyi.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,21 @@ public class AlipayServiceImpl implements IAlipayService {
 
     @Override
     public void faceToFace(String subject, String outTradeNo, BigDecimal amount,String authCode) {
+        AlipayTradePrecreateResponse atpr = null;
+        try {
+            Client client = Factory.Payment.FaceToFace();
+            atpr = client.preCreate(subject,outTradeNo,amount.toPlainString());
+        } catch (Exception e) {
+            log.error("支付宝接口异常:",e);
+            throw new BusinessException("支付宝接口异常:",e.getCause());
+        }
+        if (null == atpr){
+            throw new BusinessException("支付宝没有返回");
+        }
+        if (!"10000".equalsIgnoreCase(atpr.code)){
+            throw new BusinessException(String.format("[%s]%s",atpr.subCode,atpr.subMsg));
+        }
+
         AlipayTradePayResponse rsp = null;
         try {
             Client client = Factory.Payment.FaceToFace();
@@ -42,10 +58,7 @@ public class AlipayServiceImpl implements IAlipayService {
             throw new BusinessException("支付宝没有返回");
         }
         if (!"10000".equalsIgnoreCase(rsp.code)){
-            throwException(rsp);
+            throw new BusinessException(String.format("[%s]%s",rsp.subCode,rsp.subMsg));
         }
-    }
-    private void throwException(AlipayTradePayResponse rsp){
-        throw new BusinessException(String.format("[%s]%s",rsp.subCode,rsp.subMsg));
     }
 }
