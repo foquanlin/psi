@@ -19,7 +19,6 @@ import java.math.BigDecimal;
  * 2021-10-17
  */
 @Slf4j
-@Component
 public class AlipayServiceImpl implements IAlipayService {
 
     public AlipayServiceImpl() {
