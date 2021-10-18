@@ -30,18 +30,19 @@ public class AlipayServiceImpl implements IAlipayService {
 
     @Override
     public void faceToFace(String subject, String outTradeNo, BigDecimal amount,String authCode) {
+        AlipayTradePayResponse rsp = null;
         try {
             Client client = Factory.Payment.FaceToFace();
-            AlipayTradePayResponse rsp = client.pay(subject,outTradeNo,amount.toPlainString(),authCode);
-            if (null == rsp){
-                throw new BusinessException("支付宝没有返回");
-            }
-            if (!"10000".equalsIgnoreCase(rsp.code)){
-                throwException(rsp);
-            }
+            rsp = client.pay(subject,outTradeNo,amount.toPlainString(),authCode);
         } catch (Exception e) {
             log.error("支付宝接口异常:",e);
             throw new BusinessException("支付宝接口异常:",e);
+        }
+        if (null == rsp){
+            throw new BusinessException("支付宝没有返回");
+        }
+        if (!"10000".equalsIgnoreCase(rsp.code)){
+            throwException(rsp);
         }
     }
     private void throwException(AlipayTradePayResponse rsp){
