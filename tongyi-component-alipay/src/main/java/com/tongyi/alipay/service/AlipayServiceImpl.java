@@ -36,7 +36,7 @@ public class AlipayServiceImpl implements IAlipayService {
             rsp = client.pay(subject,outTradeNo,amount.toPlainString(),authCode);
         } catch (Exception e) {
             log.error("支付宝接口异常:",e);
-            throw new BusinessException("支付宝接口异常:",e);
+            throw new BusinessException("支付宝接口异常:",e.getCause());
         }
         if (null == rsp){
             throw new BusinessException("支付宝没有返回");
