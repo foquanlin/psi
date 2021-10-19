@@ -25,7 +25,7 @@ import java.util.Date;
  * @author 林佛权
  */
 @Data
-@TableName("ACT_RE_MODEL")
+@TableName("act_re_model")
 public class ActReModelEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /**

@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author 林佛权
  */
 @Data
-@TableName("SYS_CONFIG")
+@TableName("sys_config")
 public class SysConfigEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

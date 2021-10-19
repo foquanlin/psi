@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @date 2021-02-02 20:05:49
  */
 @Data
-@TableName("SYS_NATION")
+@TableName("sys_nation")
 public class SysNationEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

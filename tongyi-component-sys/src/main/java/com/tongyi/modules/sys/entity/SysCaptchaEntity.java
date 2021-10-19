@@ -23,7 +23,7 @@ import java.util.Date;
  * @author 林佛权
  */
 @Data
-@TableName("SYS_CAPTCHA")
+@TableName("sys_captcha")
 public class SysCaptchaEntity {
     @TableId
     private String uuid;

@@ -28,7 +28,7 @@ import java.io.Serializable;
  * @author 林佛权
  */
 @Data
-@TableName("SYS_DICT")
+@TableName("sys_dict")
 public class SysDictEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

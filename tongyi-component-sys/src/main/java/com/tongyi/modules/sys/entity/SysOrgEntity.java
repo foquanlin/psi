@@ -30,7 +30,7 @@ import java.util.Date;
  * @author 林佛权
  */
 @Data
-@TableName("SYS_ORG")
+@TableName("sys_org")
 public class SysOrgEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

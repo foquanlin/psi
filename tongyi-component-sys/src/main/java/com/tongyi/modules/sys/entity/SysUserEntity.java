@@ -31,7 +31,7 @@ import java.util.List;
  * @author 林佛权
  */
 @Data
-@TableName("SYS_USER")
+@TableName("sys_user")
 public class SysUserEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

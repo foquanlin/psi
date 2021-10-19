@@ -25,7 +25,7 @@ import java.util.Date;
  * @author 林佛权
  */
 @Data
-@TableName("ACT_RE_PROCDEF")
+@TableName("act_re_procdef")
 public class ActReProcdefEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

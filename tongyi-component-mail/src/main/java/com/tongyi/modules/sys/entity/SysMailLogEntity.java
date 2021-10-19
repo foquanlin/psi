@@ -24,7 +24,7 @@ import java.util.Date;
  * @author 林佛权
  */
 @Data
-@TableName("SYS_MAIL_LOG")
+@TableName("sys_mail_log")
 public class SysMailLogEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

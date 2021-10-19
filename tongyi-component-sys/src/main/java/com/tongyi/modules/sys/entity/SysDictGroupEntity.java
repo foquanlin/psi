@@ -28,7 +28,7 @@ import java.util.Date;
  * @author 林佛权
  */
 @Data
-@TableName("SYS_DICT_GROUP")
+@TableName("sys_dict_group")
 public class SysDictGroupEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

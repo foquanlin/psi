@@ -25,7 +25,7 @@ import java.util.Date;
  * @author 林佛权
  */
 @Data
-@TableName("SYS_USER_TOKEN")
+@TableName("sys_user_token")
 public class SysUserTokenEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
