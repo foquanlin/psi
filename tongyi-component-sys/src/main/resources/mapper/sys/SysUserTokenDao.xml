@@ -4,26 +4,26 @@
 <mapper namespace="com.tongyi.modules.sys.dao.SysUserTokenDao">
 
 	<select id="queryByToken" resultType="com.tongyi.modules.sys.entity.SysUserTokenEntity">
-		SELECT
-        T.USER_ID,
-        T.TOKEN,
-        T.EXPIRE_TIME,
-        T.UPDATE_TIME
-        FROM SYS_USER_TOKEN T
-        WHERE T.TOKEN = #{value}
+		select
+        t.user_id,
+        t.token,
+        t.expire_time,
+        t.update_time
+        from sys_user_token t
+        where t.token = #{value}
 	</select>
 
     <sql id="selectSql">
-        SELECT
-        T.USER_ID,
-        T.EXPIRE_TIME,
-        T.UPDATE_TIME,
-        U.USER_NAME USER_NAME
-        FROM SYS_USER_TOKEN T
-        LEFT JOIN SYS_USER U ON T.USER_ID = U.USER_ID
-        WHERE 1=1 AND T.EXPIRE_TIME > #{params.nowDate}
+        select
+        t.user_id,
+        t.expire_time,
+        t.update_time,
+        u.user_name user_name
+        from sys_user_token t
+        left join sys_user u on t.user_id = u.user_id
+        where 1=1 and t.expire_time > #{params.nowDate}
         <if test="params.name != null and params.name.trim() != ''">
-            AND U.REAL_NAME LIKE '%${params.name}%'
+            and u.real_name like '%${params.name}%'
         </if>
     </sql>
 

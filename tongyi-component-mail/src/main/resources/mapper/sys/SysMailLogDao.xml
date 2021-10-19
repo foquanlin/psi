@@ -4,21 +4,21 @@
 <mapper namespace="com.tongyi.modules.sys.dao.SysMailLogDao">
 
     <select id="selectSysMailLogPage" resultType="com.tongyi.modules.sys.entity.SysMailLogEntity">
-        SELECT
-        T.ID,
-        T.SENDER,
-        T.RECEIVER,
-        T.SUBJECT,
-        T.CONTENT,
-        T.SEND_DATE,
-        T.TYPE,
-        T.SEND_RESULT,
-        T.CREATE_USER_ID,
-        T.CREATE_USER_ORG_NO
-        FROM SYS_MAIL_LOG T
-        WHERE 1=1
+        select
+        t.id,
+        t.sender,
+        t.receiver,
+        t.subject,
+        t.content,
+        t.send_date,
+        t.type,
+        t.send_result,
+        t.create_user_id,
+        t.create_user_org_no
+        from sys_mail_log t
+        where 1=1
         <if test="params.sender != null and params.sender.trim() != ''">
-            AND T.SENDER LIKE '%${params.sender}%'
+            and t.sender like '%${params.sender}%'
         </if>
     </select>
 </mapper>

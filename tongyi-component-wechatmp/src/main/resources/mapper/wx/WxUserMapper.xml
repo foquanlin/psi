@@ -4,6 +4,6 @@
 <!--    <cache-ref namespace="com.tongyi.modules.wx.dao.WxUserMapper"/>-->
 
     <update id="unsubscribe">
-        UPDATE wx_user SET subscribe=0 WHERE openid=#{openid}
+        update wx_user set subscribe=0 where openid=#{openid}
     </update>
 </mapper>

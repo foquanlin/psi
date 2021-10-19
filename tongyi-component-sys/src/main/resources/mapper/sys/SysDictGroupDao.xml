@@ -3,19 +3,19 @@
 
 <mapper namespace="com.tongyi.modules.sys.dao.SysDictGroupDao">
     <sql id="selectSql">
-        SELECT
-        T.ID,
-        T.CODE,
-        T.NAME,
-        T.CREATE_TIME,
-        T.REMARK
-        FROM SYS_DICT_GROUP T
-        WHERE 1=1
+        select
+        t.id,
+        t.code,
+        t.name,
+        t.create_time,
+        t.remark
+        from sys_dict_group t
+        where 1=1
         <if test="params.code != null and params.code.trim() != ''">
-            AND T.CODE LIKE '%${params.code}%'
+            and t.code like '%${params.code}%'
         </if>
         <if test="params.name != null and params.name.trim() != ''">
-            AND T.NAME LIKE '%${params.name}%'
+            and t.name like '%${params.name}%'
         </if>
     </sql>
 

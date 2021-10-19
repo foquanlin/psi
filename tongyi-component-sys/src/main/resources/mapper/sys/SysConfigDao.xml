@@ -4,18 +4,18 @@
 
 	<!-- 根据key，更新value -->
 	<update id="updateValueByKey" parameterType="map">
-		UPDATE SYS_CONFIG SET PARAM_VALUE = #{paramValue} WHERE PARAM_KEY = #{paramKey}
+		update sys_config set param_value = #{paramvalue} where param_key = #{paramKey}
 	</update>
 
 	<!-- 根据key，查询value -->
 	<select id="queryByKey" parameterType="string" resultType="com.tongyi.modules.sys.entity.SysConfigEntity">
-		SELECT
-        T.ID,
-        T.PARAM_KEY,
-        T.PARAM_VALUE,
-        T.STATUS,
-        T.REMARK
-        FROM SYS_CONFIG T
-        WHERE T.PARAM_KEY = #{paramKey}
+		select
+        t.id,
+        t.param_key,
+        t.param_value,
+        t.status,
+        t.remark
+        from sys_config t
+        where t.param_key = #{paramKey}
 	</select>
 </mapper>

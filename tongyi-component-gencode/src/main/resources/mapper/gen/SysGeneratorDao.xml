@@ -4,22 +4,22 @@
 <mapper namespace="com.tongyi.modules.gen.dao.SysGeneratorDao">
 	<select id="queryPage" resultType="com.tongyi.modules.gen.entity.ResultMapEntity">
 		<if test="params.driverClassName != null and params.driverClassName == 'com.mysql.cj.jdbc.Driver'">
-			SELECT TABLE_NAME, ENGINE, TABLE_COMMENT, CREATE_TIME FROM INFORMATION_SCHEMA.TABLES
-			WHERE TABLE_SCHEMA = (select database())
+			select table_name, engine, table_comment, create_time from information_schema.tables
+			where table_schema = (select database())
 			<if test="params.tableName != null and params.tableName.trim() != ''">
-				AND TABLE_NAME LIKE '%${params.tableName}%'
+				and table_name like '%${params.tableName}%'
 			</if>
-			ORDER BY CREATE_TIME DESC
+			order by create_time desc
 		</if>
 		<if test="params.driverClassName != null and params.driverClassName == 'oracle.jdbc.driver.OracleDriver'">
-			SELECT TABLE_NAME, COMMENTS TABLE_COMMENT FROM
-				(SELECT ROWNUM AS RN,USER_TAB_COMMENTS.TABLE_NAME TABLE_NAME,USER_TAB_COMMENTS.COMMENTS COMMENTS,USER_TABLES.TABLESPACE_NAME
-				FROM USER_TAB_COMMENTS
-				LEFT JOIN USER_TABLES
-				ON USER_TABLES.TABLE_NAME = USER_TAB_COMMENTS.TABLE_NAME
-				WHERE 1 = 1
+			select table_name, comments table_comment from
+				(select rownum as rn,user_tab_comments.table_name table_name,user_tab_comments.comments comments,user_tables.tablespace_name
+				from user_tab_comments
+				left join user_tables
+				on user_tables.table_name = user_tab_comments.table_name
+				where 1 = 1
 				<if test="params.tableName != null and params.tableName.trim() != ''">
-					AND USER_TABLES.TABLE_NAME LIKE CONCAT(CONCAT('%', #{params.tableName}), '%')
+					and user_tables.table_name like concat(concat('%', #{params.tableName}), '%')
 				</if>
 				)
 		</if>
@@ -27,48 +27,48 @@
 
 	<select id="queryTable" resultType="com.tongyi.modules.gen.entity.ResultMapEntity">
 		<if test="driverClassName != null and driverClassName == 'com.mysql.cj.jdbc.Driver'">
-			SELECT TABLE_NAME TABLENAME, ENGINE, TABLE_COMMENT TABLECOMMENT, CREATE_TIME CREATETIME FROM INFORMATION_SCHEMA.TABLES
-				WHERE TABLE_SCHEMA = (SELECT database()) AND TABLE_NAME = #{tableName}
+			select table_name tablename, engine, table_comment tablecomment, create_time createtime from information_schema.tables
+				where table_schema = (select database()) and table_name = #{tableName}
 		</if>
 
 		<if test="driverClassName != null and driverClassName == 'oracle.jdbc.driver.OracleDriver'">
-			SELECT USER_TAB_COMMENTS.TABLE_NAME TABLE_NAME,
-				USER_TAB_COMMENTS.COMMENTS   table_Comment,
-				USER_TABLES.TABLESPACE_NAME
-			FROM USER_TAB_COMMENTS
-			LEFT JOIN USER_TABLES
-			ON USER_TABLES.TABLE_NAME = USER_TAB_COMMENTS.TABLE_NAME
-			WHERE USER_TAB_COMMENTS.table_name = #{tableName}
+			select user_tab_comments.table_name table_name,
+				user_tab_comments.comments   table_comment,
+				user_tables.tablespace_name
+			from user_tab_comments
+			left join user_tables
+			on user_tables.table_name = user_tab_comments.table_name
+			where user_tab_comments.table_name = #{tableName}
 		</if>
 	</select>
 
 	<select id="queryColumns" resultType="com.tongyi.modules.gen.entity.ColumnEntity">
 		<if test="driverClassName != null and driverClassName == 'com.mysql.cj.jdbc.Driver'">
-			SELECT ORDINAL_POSITION,COLUMN_DEFAULT,NUMERIC_PRECISION,NUMERIC_SCALE,DATETIME_PRECISION,IS_NULLABLE,COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT COMMENTS, COLUMN_KEY, EXTRA FROM INFORMATION_SCHEMA.COLUMNS
-				WHERE TABLE_NAME = #{tableName} AND TABLE_SCHEMA = (SELECT database()) ORDER BY ORDINAL_POSITION
+			select ordinal_position,column_default,numeric_precision,numeric_scale,datetime_precision,is_nullable,column_name, data_type, column_comment comments, column_key, extra from information_schema.columns
+				where table_name = #{tableName} and table_schema = (select database()) order by ordinal_position
 		</if>
 
 		<if test="driverClassName != null and driverClassName == 'oracle.jdbc.driver.OracleDriver'">
-			SELECT COLUMN_NAME COLUMN_NAME,
-				lower(DATA_TYPE || decode(DATA_TYPE, 'DATE', '', '(' || nvl(DATA_PRECISION, data_length) || nvl2(nullif(DATA_SCALE, 0), ',' || data_scale, '') || ')')) DATA_TYPE,
-				(SELECT COMMENTS FROM USER_COL_COMMENTS WHERE TABLE_NAME = #{tableName} AND COLUMN_NAME = USER_TAB_COLUMNS.COLUMN_NAME) COMMENTS,
-				(SELECT COL.COLUMN_NAME FROM USER_CONSTRAINTS CON, USER_CONS_COLUMNS COL WHERE CON.CONSTRAINT_NAME = COL.CONSTRAINT_NAME AND CON.CONSTRAINT_TYPE = 'P' AND COL.TABLE_NAME = #{params.tableName}) COLUMN_KEY
-			FROM USER_TAB_COLUMNS
-			LEFT JOIN USER_TABLES
-				ON USER_TABLES.TABLE_NAME = USER_TAB_COLUMNS.TABLE_NAME
-				WHERE USER_TAB_COLUMNS.TABLE_NAME = #{tableName}
+			select column_name column_name,
+				lower(data_type || decode(data_type, 'date', '', '(' || nvl(data_precision, data_length) || nvl2(nullif(data_scale, 0), ',' || data_scale, '') || ')')) data_type,
+				(select comments from user_col_comments where table_name = #{tableName} and column_name = user_tab_columns.column_name) comments,
+				(select col.column_name from user_constraints con, user_cons_columns col where con.constraint_name = col.constraint_name and con.constraint_type = 'P' and col.table_name = #{params.tableName}) column_key
+			from user_tab_columns
+			left join user_tables
+				on user_tables.table_name = user_tab_columns.table_name
+				where user_tab_columns.table_name = #{tableName}
 		</if>
 	</select>
 
 	<select id="queryForeign" resultType="com.tongyi.modules.gen.entity.ForeignEntity">
-			SELECT F.ID as id,
-			substring_index(F.FOR_NAME,'/',-1) as forName,
-			substring_index(F.REF_NAME,'/',-1) as refName
-			,R.FOR_COL_NAME as forColName,
-			R.REF_COL_NAME as refColName,
-			F.N_COLS as cols,F.TYPE as type ,R.POS as pos
-			FROM INFORMATION_SCHEMA.INNODB_SYS_FOREIGN F,INFORMATION_SCHEMA.INNODB_SYS_FOREIGN_COLS R
-			where F.ID=R.ID AND F.REF_NAME LIKE concat(database(),'/%') and F.FOR_NAME =CONCAT(database(),'/',#{tableName});
+			select f.id as id,
+			substring_index(f.for_name,'/',-1) as forName,
+			substring_index(f.ref_name,'/',-1) as refName,
+		    r.for_col_name as forColName,
+			r.ref_col_name as refColName,
+			f.n_cols as cols,f.type as type ,r.pos as pos
+			from information_schema.innodb_sys_foreign f,information_schema.innodb_sys_foreign_cols r
+			where f.id=r.id and f.ref_name like concat(database(),'/%') and f.for_name =concat(database(),'/',#{tableName});
 	</select>
 
 </mapper>

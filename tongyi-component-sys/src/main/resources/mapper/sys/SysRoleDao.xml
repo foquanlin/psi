@@ -5,21 +5,21 @@
 	
 	<!-- 查询用户创建的角色ID列表 -->
 	<select id="queryRoleIdList" resultType="string">
-		SELECT ROLE_ID FROM SYS_ROLE T WHERE 1=1
+		select role_id from sys_role t where 1=1
 	</select>
 
 	<select id="selectSysRolePage" resultType="com.tongyi.modules.sys.entity.SysRoleEntity">
-		SELECT
-		T.ROLE_ID,
-		T.ROLE_NAME,
-		T.REMARK,
-		T.CREATE_USER_ID,
-		T.CREATE_USER_ORG_NO,
-		T.CREATE_TIME
-		FROM SYS_ROLE T
-		WHERE 1=1
+		select
+		t.role_id,
+		t.role_name,
+		t.remark,
+		t.create_user_id,
+		t.create_user_org_no,
+		t.create_time
+		from sys_role t
+		where 1=1
 		<if test="params.roleName != null and params.roleName.trim() != ''">
-			AND T.ROLE_NAME LIKE '%${params.roleName}%'
+			and t.role_name like '%${params.roleName}%'
 		</if>
 	</select>
 </mapper>

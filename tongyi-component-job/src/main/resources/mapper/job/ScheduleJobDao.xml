@@ -5,26 +5,26 @@
 
 	<!-- 批量更新状态 -->
 	<update id="updateBatch">
-		UPDATE SCHEDULE_JOB SET STATUS = #{status} WHERE JOB_ID IN
+		update schedule_job set status = #{status} where job_id in
 		<foreach item="jobId" collection="list"  open="(" separator="," close=")">
 			#{jobId}
 		</foreach>
 	</update>
 
 	<select id="selectScheduleJobPage" resultType="com.tongyi.modules.job.entity.ScheduleJobEntity">
-		SELECT
-		T.JOB_ID,
-		T.BEAN_NAME,
-		T.METHOD_NAME,
-		T.PARAMS,
-		T.CRON_EXPRESSION,
-		T.STATUS,
-		T.REMARK,
-		T.CREATE_TIME
-		FROM SCHEDULE_JOB T
-		WHERE 1=1
+		select
+		t.job_id,
+		t.bean_name,
+		t.method_name,
+		t.params,
+		t.cron_expression,
+		t.status,
+		t.remark,
+		t.create_time
+		from schedule_job t
+		where 1=1
 		<if test="params.beanName != null and params.beanName.trim() != ''">
-			AND T.BEAN_NAME LIKE '%${params.beanName}%'
+			and t.bean_name like '%${params.beanName}%'
 		</if>
 	</select>
 </mapper>

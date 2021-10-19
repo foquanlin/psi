@@ -4,13 +4,13 @@
 <mapper namespace="com.tongyi.modules.sys.dao.SysMenuDao">
 
 	<select id="queryNotButtonList" resultType="com.tongyi.modules.sys.entity.SysMenuEntity">
-		SELECT MENU_ID,PARENT_ID,NAME,URL,PERMS,TYPE,ICON,ORDER_NUM,SHOWS FROM SYS_MENU WHERE TYPE != 2 AND SHOWS = 1 ORDER BY ORDER_NUM ASC
+		select menu_id,parent_id,name,url,perms,type,icon,order_num,shows from sys_menu where type != 2 and shows = 1 order by order_num asc
 	</select>
 
 	<select id="queryList" resultType="com.tongyi.modules.sys.entity.SysMenuEntity">
-		SELECT A.*,B.NAME PARENT_NAME FROM SYS_MENU A LEFT JOIN SYS_MENU B ON A.PARENT_ID = B.MENU_ID WHERE A.SHOWS = 1 ORDER BY A.MENU_ID,A.ORDER_NUM
+		select a.*,b.name parent_name from sys_menu a left join sys_menu b on a.parent_id = b.menu_id where a.shows = 1 order by a.menu_id,a.order_num
 	</select>
     <select id="queryMaxIdByParentId" resultType="string">
-		SELECT MAX(MENU_ID) FROM SYS_MENU WHERE SHOWS = 1 AND PARENT_ID = #{parentId}
+		select max(menu_id) from sys_menu where shows = 1 and parent_id = #{parentId}
 	</select>
 </mapper>

@@ -4,14 +4,14 @@
 <mapper namespace="com.tongyi.modules.oss.dao.SysOssDao">
 
     <select id="selectSysOssPage" resultType="com.tongyi.modules.oss.entity.SysOssEntity">
-        SELECT
-        T.ID,
-        T.URL,
-        T.CREATE_DATE
-        FROM SYS_OSS T
-        WHERE 1=1
+        select
+        t.id,
+        t.url,
+        t.create_date
+        from sys_oss t
+        where 1=1
         <if test="params.url != null and params.url.trim() != ''">
-            AND T.URL LIKE '%${params.url}%'
+            and t.url like '%${params.url}%'
         </if>
     </select>
 </mapper>

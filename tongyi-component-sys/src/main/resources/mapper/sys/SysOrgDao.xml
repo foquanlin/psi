@@ -4,30 +4,30 @@
 <mapper namespace="com.tongyi.modules.sys.dao.SysOrgDao">
 
     <select id="queryMaxIdByParentNo" resultType="string">
-		SELECT MAX(ORG_NO) FROM SYS_ORG WHERE PARENT_NO = #{parentNo}
+		select max(org_no) from sys_org where parent_no = #{parentNo}
 	</select>
 
 	<sql id="selectSql">
-		SELECT O.ORG_NO,
-		O.ORG_NAME,
-		O.PARENT_NO,
-		O.ORG_TYPE,
-		O.STATUS,
-		O.SORT,
-		O.CREATE_TIME,
-		O.CREATE_USER_ID,
-		SO.ORG_NAME PARENT_NAME
-		FROM SYS_ORG O
-		LEFT JOIN SYS_ORG SO ON O.PARENT_NO = SO.ORG_NO
-		WHERE 1=1
+		select o.org_no,
+		o.org_name,
+		o.parent_no,
+		o.org_type,
+		o.status,
+		o.sort,
+		o.create_time,
+		o.create_user_id,
+		so.org_name parent_name
+		from sys_org o
+		left join sys_org so on o.parent_no = so.org_no
+		where 1=1
 		<if test="orgName != null and orgName.trim() != ''">
-			AND O.ORG_NAME LIKE '%${orgName}%'
+			and o.org_name like '%${orgName}%'
 		</if>
 		<if test="orgType != null">
-			AND O.ORG_TYPE = #{orgType}
+			and o.org_type = #{orgType}
 		</if>
 		<if test="parentName != null and parentName.trim() != ''">
-			AND SO.ORG_NAME LIKE '%${parentName}%'
+			and so.org_name like '%${parentName}%'
 		</if>
 	</sql>
 
@@ -36,8 +36,8 @@
 	</select>
 
 	<select id="selectChildrensByOrgNo" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
-		SELECT
-		ORG_NAME
-		FROM SYS_ORG WHERE PARENT_NO = #{orgNo}
+		select
+		org_name
+		from sys_org where parent_no = #{orgNo}
 	</select>
 </mapper>

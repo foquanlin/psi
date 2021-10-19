@@ -4,17 +4,17 @@
 <mapper namespace="com.tongyi.modules.sys.dao.SysNationDao">
 
     <sql id="selectSql">
-        SELECT
-        T.CODE,
-        T.NAME
-        FROM SYS_NATION T
-        WHERE 1=1
-    <if test="params.code != null and params.code != ''">
-    AND T.CODE LIKE '%${params.code}%'
-    </if>
-    <if test="params.name != null and params.name != ''">
-    AND T.NAME LIKE '%${params.name}%'
-    </if>
+        select
+        t.code,
+        t.name
+        from sys_nation t
+        where 1=1
+        <if test="params.code != null and params.code != ''">
+            and t.code like '%${params.code}%'
+        </if>
+        <if test="params.name != null and params.name != ''">
+            and t.name like '%${params.name}%'
+        </if>
     </sql>
 
     <select id="selectSysNationPage" resultType="com.tongyi.modules.sys.entity.SysNationEntity">

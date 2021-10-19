@@ -4,20 +4,20 @@
 <mapper namespace="com.tongyi.modules.sys.dao.SysRoleOrgDao">
 
     <delete id="deleteByRoleId">
-        DELETE FROM SYS_ROLE_ORG WHERE ROLE_ID = #{roleId}
+        delete from sys_role_org where role_id = #{roleId}
     </delete>
     <delete id="deleteBatch">
-        DELETE FROM SYS_ROLE_ORG WHERE ROLE_ID IN
+        delete from sys_role_org where role_id in
         <foreach item="roleId" collection="array" open="(" separator="," close=")">
             #{roleId}
         </foreach>
     </delete>
 
     <select id="queryOrgNoList" resultType="string">
-		SELECT ORG_NO FROM SYS_ROLE_ORG WHERE ROLE_ID = #{value}
+		select org_no from sys_role_org where role_id = #{value}
 	</select>
 
     <select id="queryOrgNoListByUserId" resultType="string">
-		SELECT ORG_NO FROM SYS_ROLE_ORG WHERE ROLE_ID IN (SELECT ROLE_ID FROM SYS_USER_ROLE WHERE USER_ID =  #{value})
+		select org_no from sys_role_org where role_id in (select role_id from sys_user_role where user_id =  #{value})
 	</select>
 </mapper>

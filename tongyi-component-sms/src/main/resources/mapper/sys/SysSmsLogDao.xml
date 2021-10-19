@@ -4,25 +4,25 @@
 <mapper namespace="com.tongyi.modules.sys.dao.SysSmsLogDao">
 
     <sql id="selectSql">
-        SELECT
-        T.ID,
-        T.USER_ID,
-        T.CONTENT,
-        T.MOBILE,
-        T.STIME,
-        T.SIGN,
-        T.TYPE,
-        T.EXTNO,
-        T.SEND_STATUS,
-        T.SEND_ID,
-        T.INVALID_NUM,
-        T.SUCCESS_NUM,
-        T.BLACK_NUM,
-        T.RETURN_MSG
-        FROM SYS_SMS_LOG T
-        WHERE 1=1
+        select
+        t.id,
+        t.user_id,
+        t.content,
+        t.mobile,
+        t.stime,
+        t.sign,
+        t.type,
+        t.extno,
+        t.send_status,
+        t.send_id,
+        t.invalid_num,
+        t.success_num,
+        t.black_num,
+        t.return_msg
+        from sys_sms_log t
+        where 1=1
         <if test="params.sendId != null and params.sendId.trim() != ''">
-            AND T.SEND_ID LIKE '%${params.sendId}%'
+            and t.send_id like '%${params.sendId}%'
         </if>
     </sql>
 
