@@ -50,7 +50,7 @@ public class WxMaSessionServiceImpl extends ServiceImpl<WxMaSessionDao, WxMaSess
     @Override
     public PageInfo<WxMaSessionEntity> queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.id");
+        params.put("sidx", "t.id");
         params.put("asc", false);
         Page<WxMaSessionEntity> page = new Query<WxMaSessionEntity>(params).getPage();
         return new PageInfo<WxMaSessionEntity>(page.getCurrent(),page.getSize()).setList(baseMapper.selectWxMaSessionPage(page, params)).setTotal(page.getTotal());

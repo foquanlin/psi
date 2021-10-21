@@ -56,7 +56,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
     @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.CREATE_TIME");
+        params.put("sidx", "t.create_time");
         params.put("asc", false);
         Page<ScheduleJobEntity> page = new Query<ScheduleJobEntity>(params).getPage();
         return page.setRecords(baseMapper.selectScheduleJobPage(page, params));

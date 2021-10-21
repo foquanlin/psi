@@ -52,7 +52,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.CREATE_TIME");
+        params.put("sidx", "t.create_time");
         params.put("asc", false);
         Page<SysUserEntity> page = new Query<SysUserEntity>(params).getPage();
         return page.setRecords(baseMapper.selectListPage(page, params));

@@ -38,7 +38,7 @@ public class SysNationServiceImpl extends ServiceImpl<SysNationDao, SysNationEnt
     @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.code");
+        params.put("sidx", "t.code");
         params.put("asc", false);
         Page<SysNationEntity> page = new Query<SysNationEntity>(params).getPage();
         return page.setRecords(baseMapper.selectSysNationPage(page, params));

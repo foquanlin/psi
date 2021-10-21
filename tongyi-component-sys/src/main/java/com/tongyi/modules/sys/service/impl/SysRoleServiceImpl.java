@@ -46,7 +46,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.CREATE_TIME");
+        params.put("sidx", "t.create_time");
         params.put("asc", false);
         Page<SysRoleEntity> page = new Query<SysRoleEntity>(params).getPage();
         return page.setRecords(baseMapper.selectSysRolePage(page, params));

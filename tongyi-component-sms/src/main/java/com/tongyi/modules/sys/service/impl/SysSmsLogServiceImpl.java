@@ -49,7 +49,7 @@ public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogDao, SysSmsLogEnt
     @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.SEND_ID");
+        params.put("sidx", "t.send_id");
         params.put("asc", false);
         Page<SysSmsLogEntity> page = new Query<SysSmsLogEntity>(params).getPage();
         return page.setRecords(baseMapper.selectSysSmsLogPage(page, params));

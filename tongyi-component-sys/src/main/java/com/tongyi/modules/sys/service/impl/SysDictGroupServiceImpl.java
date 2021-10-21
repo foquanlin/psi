@@ -41,7 +41,7 @@ public class SysDictGroupServiceImpl extends ServiceImpl<SysDictGroupDao, SysDic
     @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.CREATE_TIME");
+        params.put("sidx", "t.create_time");
         params.put("asc", false);
         Page<SysDictGroupEntity> page = new Query<SysDictGroupEntity>(params).getPage();
         return page.setRecords(baseMapper.selectSysDictGroupPage(page, params));

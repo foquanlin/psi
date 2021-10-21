@@ -34,7 +34,7 @@ public class SysMailLogServiceImpl extends ServiceImpl<SysMailLogDao, SysMailLog
     @Override
     public Page queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.SEND_DATE");
+        params.put("sidx", "t.send_date");
         params.put("asc", false);
         Page<SysMailLogEntity> page = new Query<SysMailLogEntity>(params).getPage();
         return page.setRecords(baseMapper.selectSysMailLogPage(page, params));

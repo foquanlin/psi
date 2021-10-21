@@ -64,7 +64,7 @@ public class WxMaConfigServiceImpl extends ServiceImpl<WxMaConfigDao, WxMaConfig
     @Override
     public PageInfo<WxMaConfigEntity> queryPage(Map<String, Object> params) {
         //排序
-        params.put("sidx", "T.ID");
+        params.put("sidx", "t.id");
         params.put("asc", false);
         Page<WxMaConfigEntity> page = new Query<WxMaConfigEntity>(params).getPage();
         return new PageInfo<WxMaConfigEntity>(page.getCurrent(),page.getSize()).setList(baseMapper.selectWxMaConfigPage(page, params)).setTotal(page.getTotal());
