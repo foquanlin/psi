@@ -35,6 +35,12 @@ public class SysMailLogEntity implements Serializable {
      * 操作人主动邮件
      */
     public static final int USER_SEND = 1;
+
+    /**
+     * 系统邮件签名
+     */
+    public static final String SIGNATURE_STR = "<br><font color='red'>-------------------------------------------------------------------<br>以上内容为邮件系统自动发送，请勿直接回复。</font>";
+
     /**
      *
      */

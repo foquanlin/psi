@@ -15,7 +15,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.exception.BusinessException;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.sys.dao.SysUserDao;
 import com.tongyi.modules.sys.entity.SysUserEntity;
@@ -74,7 +73,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         user.setCreateTime(new Date());
         //sha256加密
         String salt = RandomStringUtils.randomAlphanumeric(20);
-        user.setPassword(new Sha256Hash(Constant.DEFAULT_PW, salt).toHex());
+        user.setPassword(new Sha256Hash(SysUserEntity.DEFAULT_PW, salt).toHex());
         user.setSalt(salt);
         this.save(user);
 
@@ -122,7 +121,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         for (int i = 0; i < userIds.length; i++) {
             SysUserEntity user = this.getById(userIds[i]);
 
-            user.setPassword(new Sha256Hash(Constant.DEFAULT_PW, user.getSalt()).toHex());
+            user.setPassword(new Sha256Hash(SysUserEntity.DEFAULT_PW, user.getSalt()).toHex());
 
             this.updateById(user);
         }

@@ -56,51 +56,14 @@ public class Constant {
      */
     public static final String SUPER_ADMIN_ORG = "01";
 
-    public static final String DEFAULT_PW = "888888";
-
     /**
      * 6小时后过期
      */
     public static final int EXPIRE = 3600 * 6;
 
-    /**
-     * 短信
-     */
-    public final static String PRE_SMS = "PRE_SMS:";
-
-    /**
-     * 权限前缀
-     */
-    public static final String SESSION = "SESSION:";
-
-    /**
-     * 系统缓存前缀
-     */
-    public static final String SYS_CACHE = "SYS_CACHE:";
-
-    /**
-     * 业务系统缓存前缀
-     */
-    public static final String MTM_CACHE = "MTM_CACHE:";
-
     public static final String STR_ZERO = "0";
-    public static final String STR_ONE = "1";
-    public static final String STR_TWO = "2";
-    public static final String STR_THREE = "3";
-    public static final String STR_FOUR = "4";
 
-    public static final int ONE = 1;
-    public static final int TWO = 2;
     public static final int THREE = 3;
-
-    /**
-     * 未关注
-     */
-    public static final int UNSUBSCRIBE = 0;
-    /**
-     * 关注
-     */
-    public static final int SUBSCRIBE = 1;
 
     /**
      * 斜杠
@@ -128,24 +91,4 @@ public class Constant {
     public static final String LINE_BREAK = "\\r\\n";
 
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
-
-    public static final String BPMN20 = ".bpmn20.xml";
-
-    public static final String IMAGE = "image";
-
-    public static final String XML = "xml";
-    public static final String PNG = "png";
-    public static final String BAR = "bar";
-    public static final String ZIP = "zip";
-    public static final String BPMN = "bpmn";
-
-    /**
-     * 系统邮件签名
-     */
-    public static final String SIGNATURE_STR = "<br><font color='red'>-------------------------------------------------------------------<br>以上内容为邮件系统自动发送，请勿直接回复。</font>";
-
-
-
-
-
 }

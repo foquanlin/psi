@@ -17,9 +17,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Lists;
 import com.tongyi.common.exception.BusinessException;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.act.dao.ActReProcdefDao;
+import com.tongyi.modules.act.entity.ActReModelEntity;
 import com.tongyi.modules.act.entity.ActReProcdefEntity;
 import com.tongyi.modules.act.service.ActReProcdefService;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
@@ -73,9 +73,9 @@ public class ActReProcdefServiceImpl extends ServiceImpl<ActReProcdefDao, ActReP
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(id).singleResult();
 
         String resourceName = "";
-        if (Constant.IMAGE.equals(resType)) {
+        if (ActReModelEntity.IMAGE.equals(resType)) {
             resourceName = processDefinition.getDiagramResourceName();
-        } else if (Constant.XML.equals(resType)) {
+        } else if (ActReModelEntity.XML.equals(resType)) {
             resourceName = processDefinition.getResourceName();
         }
 
@@ -115,7 +115,7 @@ public class ActReProcdefServiceImpl extends ServiceImpl<ActReProcdefDao, ActReP
             entity.setName(deployment == null ? "" : StringUtils.isBlank(deployment.getName()) ? processDefinition.getName() : deployment.getName());
             entity.setDeployTime(deployment == null ? null : deployment.getDeploymentTime());
             entity.setDeploymentId(processDefinition.getDeploymentId());
-            entity.setSuspensionState(processDefinition.isSuspended() ? Constant.TWO : Constant.ONE);
+            entity.setSuspensionState(processDefinition.isSuspended() ? ActReModelEntity.TWO : ActReModelEntity.ONE);
             entity.setResourceName(processDefinition.getResourceName());
             entity.setDgrmResourceName(processDefinition.getDiagramResourceName());
             entity.setCategory(processDefinition.getCategory());
@@ -153,14 +153,14 @@ public class ActReProcdefServiceImpl extends ServiceImpl<ActReProcdefDao, ActReP
         InputStream fileInputStream = file.getInputStream();
         Deployment deployment = null;
         String extension = FilenameUtils.getExtension(fileName);
-        if (Constant.ZIP.equals(extension) || Constant.BAR.equals(extension)) {
+        if (ActReModelEntity.ZIP.equals(extension) || ActReModelEntity.BAR.equals(extension)) {
             ZipInputStream zip = new ZipInputStream(fileInputStream);
             deployment = repositoryService.createDeployment().addZipInputStream(zip).deploy();
-        } else if (Constant.PNG.equals(extension)) {
+        } else if (ActReModelEntity.PNG.equals(extension)) {
             deployment = repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
-        } else if (fileName.indexOf(Constant.BPMN20) != -1) {
+        } else if (fileName.indexOf(ActReModelEntity.BPMN20) != -1) {
             deployment = repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
-        } else if (Constant.BPMN.equals(extension)) {
+        } else if (ActReModelEntity.BPMN.equals(extension)) {
             deployment = repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
         } else {
             message = new StringBuilder("不支持的文件类型：" + extension);
@@ -213,14 +213,14 @@ public class ActReProcdefServiceImpl extends ServiceImpl<ActReProcdefDao, ActReP
     @Override
     public String updateState(int state, String id) {
         String msg = "无操作";
-        if (state == Constant.ONE) {
+        if (state == ActReModelEntity.ONE) {
             try {
                 repositoryService.activateProcessDefinitionById(id, true, null);
             } catch (Exception e) {
                 throw new BusinessException("流程已经激活");
             }
             msg = "已激活ID为[" + id + "]的流程定义。";
-        } else if (state == Constant.TWO) {
+        } else if (state == ActReModelEntity.TWO) {
             try {
                 repositoryService.suspendProcessDefinitionById(id, true, null);
             } catch (Exception e) {

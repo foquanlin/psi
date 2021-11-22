@@ -34,7 +34,7 @@ import java.util.List;
 @TableName("sys_user")
 public class SysUserEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    public static final String DEFAULT_PW = "888888";
     /**
      * 用户ID
      */

@@ -34,6 +34,26 @@ import java.util.Map;
 @RestController
 @RequestMapping("/sys/cache")
 public class SysCacheController {
+    public static final String STR_ZERO = "0";
+    public static final String STR_ONE = "1";
+    public static final String STR_TWO = "2";
+    public static final String STR_THREE = "3";
+    public static final String STR_FOUR = "4";
+    /**
+     * 权限前缀
+     */
+    public static final String SESSION = "SESSION:";
+
+    /**
+     * 系统缓存前缀
+     */
+    public static final String SYS_CACHE = "SYS_CACHE:";
+
+    /**
+     * 业务系统缓存前缀
+     */
+    public static final String MTM_CACHE = "MTM_CACHE:";
+
     @Autowired
     SysCacheService sysCacheService;
 
@@ -47,18 +67,18 @@ public class SysCacheController {
     @RequestMapping("/queryAll")
     public RestResponse queryAll(@RequestParam Map<String, String> params) {
         String type = params.get("type");
-        if (Constant.STR_ONE.equals(type)) {
+        if (STR_ONE.equals(type)) {
             //查询所有缓存
             params.put("pattern", "*");
-        } else if (Constant.STR_TWO.equals(type)) {
+        } else if (STR_TWO.equals(type)) {
             //查询session缓存
-            params.put("pattern", Constant.SESSION + "*");
-        } else if (Constant.STR_THREE.equals(type)) {
+            params.put("pattern", SESSION + "*");
+        } else if (STR_THREE.equals(type)) {
             //查询系统缓存
-            params.put("pattern", Constant.SYS_CACHE + "*");
-        } else if (Constant.STR_FOUR.equals(type)) {
+            params.put("pattern", SYS_CACHE + "*");
+        } else if (STR_FOUR.equals(type)) {
             //查询业务缓存
-            params.put("pattern", Constant.MTM_CACHE + "*");
+            params.put("pattern", MTM_CACHE + "*");
         }
         List<SysCacheEntity> list = sysCacheService.queryAll(params);
 

@@ -59,7 +59,7 @@ public class MailServiceImpl implements MailService {
 
         SysMailLogEntity mailLogEntity = new SysMailLogEntity();
         mailLogEntity.setReceiver(to);
-        mailLogEntity.setContent(content + Constant.SIGNATURE_STR);
+        mailLogEntity.setContent(content + SysMailLogEntity.SIGNATURE_STR);
         mailLogEntity.setSubject(subject);
         mailLogEntity.setSendDate(new Date());
         mailLogEntity.setSendResult(0);
@@ -87,7 +87,7 @@ public class MailServiceImpl implements MailService {
                 helper.setFrom(user.getEmail());
                 helper.setTo(to.split(","));
                 helper.setSubject(subject);
-                helper.setText(content + Constant.SIGNATURE_STR, true);
+                helper.setText(content + SysMailLogEntity.SIGNATURE_STR, true);
 
                 senderImpl.send(message);
                 log.info("邮件发送成功");
@@ -105,7 +105,7 @@ public class MailServiceImpl implements MailService {
                 helper.setFrom(from);
                 helper.setTo(to.split(","));
                 helper.setSubject(subject);
-                helper.setText(content + Constant.SIGNATURE_STR, true);
+                helper.setText(content + SysMailLogEntity.SIGNATURE_STR, true);
 
                 mailSender.send(message);
                 log.info("邮件发送成功");
@@ -135,7 +135,7 @@ public class MailServiceImpl implements MailService {
     public boolean sendAttachmentsMail(String fromUserId, String to, String subject, String content, String filePath) {
         SysMailLogEntity mailLogEntity = new SysMailLogEntity();
         mailLogEntity.setReceiver(to);
-        mailLogEntity.setContent(content + Constant.SIGNATURE_STR);
+        mailLogEntity.setContent(content + SysMailLogEntity.SIGNATURE_STR);
         mailLogEntity.setSubject(subject);
         mailLogEntity.setSendDate(new Date());
         mailLogEntity.setSendResult(0);
@@ -159,7 +159,7 @@ public class MailServiceImpl implements MailService {
                 helper.setFrom(user.getEmail());
                 helper.setTo(to.split(","));
                 helper.setSubject(subject);
-                helper.setText(content + Constant.SIGNATURE_STR, true);
+                helper.setText(content + SysMailLogEntity.SIGNATURE_STR, true);
 
                 FileSystemResource file = new FileSystemResource(new File(filePath));
                 String fileName = filePath.substring(filePath.lastIndexOf(File.separator));
@@ -180,7 +180,7 @@ public class MailServiceImpl implements MailService {
                 helper.setFrom(from);
                 helper.setTo(to.split(","));
                 helper.setSubject(subject);
-                helper.setText(content + Constant.SIGNATURE_STR, true);
+                helper.setText(content + SysMailLogEntity.SIGNATURE_STR, true);
 
                 FileSystemResource file = new FileSystemResource(new File(filePath));
                 String fileName = filePath.substring(filePath.lastIndexOf(File.separator)).replace(File.separator,"");
@@ -213,7 +213,7 @@ public class MailServiceImpl implements MailService {
     public boolean sendInlineResourceMail(String fromUserId, String to, String subject, String content, String rscPath, String rscId) {
         SysMailLogEntity mailLogEntity = new SysMailLogEntity();
         mailLogEntity.setReceiver(to);
-        mailLogEntity.setContent(content + Constant.SIGNATURE_STR);
+        mailLogEntity.setContent(content + SysMailLogEntity.SIGNATURE_STR);
         mailLogEntity.setSubject(subject);
         mailLogEntity.setSendDate(new Date());
         mailLogEntity.setSendResult(0);
@@ -236,7 +236,7 @@ public class MailServiceImpl implements MailService {
                 helper.setFrom(user.getEmail());
                 helper.setTo(to.split(","));
                 helper.setSubject(subject);
-                helper.setText(content + Constant.SIGNATURE_STR, true);
+                helper.setText(content + SysMailLogEntity.SIGNATURE_STR, true);
 
                 FileSystemResource res = new FileSystemResource(new File(rscPath));
                 helper.addInline(rscId, res);
@@ -256,7 +256,7 @@ public class MailServiceImpl implements MailService {
                 helper.setFrom(from);
                 helper.setTo(to.split(","));
                 helper.setSubject(subject);
-                helper.setText(content + Constant.SIGNATURE_STR, true);
+                helper.setText(content + SysMailLogEntity.SIGNATURE_STR, true);
 
                 FileSystemResource res = new FileSystemResource(new File(rscPath));
                 helper.addInline(rscId, res);

@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.tongyi.common.exception.BusinessException;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.act.dao.ActReModelDao;
 import com.tongyi.modules.act.entity.ActReModelEntity;
@@ -118,8 +117,8 @@ public class ActReModelServiceImpl extends ServiceImpl<ActReModelDao, ActReModel
             byte[] bpmnBytes = xmlConverter.convertToXML(bpmnModel);
 
             String processName = modelData.getName();
-            if (!StringUtils.endsWith(processName, Constant.BPMN20)) {
-                processName += Constant.BPMN20;
+            if (!StringUtils.endsWith(processName, ActReModelEntity.BPMN20)) {
+                processName += ActReModelEntity.BPMN20;
             }
             ByteArrayInputStream in = new ByteArrayInputStream(bpmnBytes);
             Deployment deployment = repositoryService.createDeployment()
