@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tongyi.modules.gen.dao.SysGeneratorDao">
-	<select id="queryPage" resultType="com.tongyi.modules.gen.entity.ResultMapEntity">
+	<select id="listPage" resultType="com.tongyi.modules.gen.entity.ResultMapEntity">
 		<if test="params.driverClassName != null and params.driverClassName == 'com.mysql.cj.jdbc.Driver'">
 			select table_name, engine, table_comment, create_time from information_schema.tables
 			where table_schema = (select database())

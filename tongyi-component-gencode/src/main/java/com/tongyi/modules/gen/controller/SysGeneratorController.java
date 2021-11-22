@@ -1,10 +1,10 @@
 package com.tongyi.modules.gen.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.DateUtils;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.common.xss.XssHttpServletRequestWrapper;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.gen.service.SysGeneratorService;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -41,9 +41,9 @@ public class SysGeneratorController {
     @ResponseBody
     @RequestMapping("/list")
     @RequiresPermissions("sys:generator:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Page page = sysGeneratorService.queryPage(params);
+        PageInfo page = sysGeneratorService.listPage(current,size,params);
         return RestResponse.success().put("page", page);
     }
 

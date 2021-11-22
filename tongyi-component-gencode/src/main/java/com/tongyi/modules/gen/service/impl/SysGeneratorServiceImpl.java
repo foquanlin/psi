@@ -3,6 +3,7 @@ package com.tongyi.modules.gen.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.gen.dao.SysGeneratorDao;
 import com.tongyi.modules.gen.entity.ColumnEntity;
 import com.tongyi.modules.gen.entity.ForeignEntity;
@@ -17,8 +18,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,14 +37,6 @@ public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, Result
 
     @Value("${spring.datasource.driverClassName}")
     private String driverClassName;
-
-    @Override
-    public Page queryPage(Map<String, Object> params) {
-        Page<ResultMapEntity> page = new Query<ResultMapEntity>(params).getPage();
-
-        params.put("driverClassName", driverClassName);
-        return page.setRecords(baseMapper.queryPage(page, params));
-    }
 
     @Override
     public ResultMapEntity queryTable(String tableName) {
@@ -98,4 +94,45 @@ public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, Result
         return outputStream.toByteArray();
     }
 
+    @Override
+    public ResultMapEntity getById(Serializable id){
+        return super.getById(id);
+    }
+
+    @Override
+    public List<ResultMapEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<ResultMapEntity> listPage(int current, int size,Map<String, Object> params) {
+        params.put("driverClassName", driverClassName);
+        Page<ResultMapEntity> page = new Query<ResultMapEntity>(current,size,params).getPage();
+        List<ResultMapEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<ResultMapEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addEntity(ResultMapEntity entity) {
+        return super.save(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateEntity(ResultMapEntity entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] ids) {
+        return super.removeByIds(Arrays.asList(ids));
+    }
 }

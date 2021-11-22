@@ -1,12 +1,10 @@
 package com.tongyi.modules.gen.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
 import com.tongyi.modules.gen.entity.ColumnEntity;
 import com.tongyi.modules.gen.entity.ResultMapEntity;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 代码生成器
@@ -15,13 +13,6 @@ import java.util.Map;
  * @email 147657060@qq.com
  */
 public interface SysGeneratorService extends IService<ResultMapEntity> {
-    /**
-     * 查询分页信息
-     *
-     * @param params 查询参数
-     * @return Page
-     */
-    Page queryPage(Map<String, Object> params);
 
     /**
      * queryTable
