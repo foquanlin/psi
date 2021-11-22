@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.*;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysSmsLogDao;
 import com.tongyi.modules.sys.entity.SmsConfig;
 import com.tongyi.modules.sys.entity.SysSmsLogEntity;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -40,42 +42,7 @@ public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogDao, SysSmsLogEnt
 
     @Autowired
     private SysConfigService sysConfigService;
-
-    @Override
-    public List<SysSmsLogEntity> queryAll(Map<String, Object> params) {
-        return baseMapper.queryAll(params);
-    }
-
-    @Override
-    public Page queryPage(Map<String, Object> params) {
-        //排序
-        params.put("sidx", "t.send_id");
-        params.put("asc", false);
-        Page<SysSmsLogEntity> page = new Query<SysSmsLogEntity>(params).getPage();
-        return page.setRecords(baseMapper.selectSysSmsLogPage(page, params));
-    }
-
-    @Override
-    public void add(SysSmsLogEntity sysSmsLog) {
-        this.save(sysSmsLog);
-    }
-
-    @Override
-    public void update(SysSmsLogEntity sysSmsLog) {
-        this.update(sysSmsLog, new QueryWrapper<>());
-    }
-
-    @Override
-    public void delete(String id) {
-        this.removeById(id);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteBatch(String[] ids) {
-        this.removeByIds(Arrays.asList(ids));
-    }
-
+    
     @Override
     public SysSmsLogEntity sendSms(String userId, SysSmsLogEntity smsLog) {
         smsLog.setType(SmsUtil.TYPE);
@@ -133,5 +100,46 @@ public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogDao, SysSmsLogEnt
         //保存发送记录
         save(smsLog);
         return smsLog;
+    }
+
+    @Override
+    public SysSmsLogEntity getById(Serializable id){
+        return super.getById(id);
+    }
+
+    @Override
+    public List<SysSmsLogEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<SysSmsLogEntity> listPage(int current, int size, Map<String, Object> params) {
+        Page<SysSmsLogEntity> page = new Query<SysSmsLogEntity>(current,size,params).getPage();
+        List<SysSmsLogEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<SysSmsLogEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addEntity(SysSmsLogEntity entity) {
+        return super.save(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateEntity(SysSmsLogEntity entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] ids) {
+        return super.removeByIds(Arrays.asList(ids));
     }
 }

@@ -27,14 +27,13 @@ import java.util.Map;
  */
 @Mapper
 public interface SysSmsLogDao extends BaseMapper<SysSmsLogEntity> {
-
     /**
      * 查询所有列表
      *
      * @param params 查询参数
      * @return List
      */
-    List<SysSmsLogEntity> queryAll(@Param("params") Map<String, Object> params);
+    List<SysSmsLogEntity> listAll(@Param("params") Map<String, Object> params);
 
     /**
      * 自定义分页查询
@@ -43,5 +42,5 @@ public interface SysSmsLogDao extends BaseMapper<SysSmsLogEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<SysSmsLogEntity> selectSysSmsLogPage(IPage page, @Param("params") Map<String, Object> params);
+    List<SysSmsLogEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

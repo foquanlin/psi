@@ -11,11 +11,11 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.entity.SmsConfig;
 import com.tongyi.modules.sys.entity.SysSmsLogEntity;
 import com.tongyi.modules.sys.service.SysConfigService;
@@ -49,7 +49,7 @@ public class SysSmsLogController extends AbstractController {
     @RequestMapping("/queryAll")
     @RequiresPermissions("sys:smslog:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
-        List<SysSmsLogEntity> list = sysSmsLogService.queryAll(params);
+        List<SysSmsLogEntity> list = sysSmsLogService.listAll(params);
 
         return RestResponse.success().put("list", list);
     }
@@ -62,8 +62,8 @@ public class SysSmsLogController extends AbstractController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:smslog:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        Page page = sysSmsLogService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = sysSmsLogService.listPage(current,size,params);
 
         return RestResponse.success().put("page", page);
     }
@@ -93,7 +93,7 @@ public class SysSmsLogController extends AbstractController {
     @RequiresPermissions("sys:smslog:save")
     public RestResponse save(@RequestBody SysSmsLogEntity sysSmsLog) {
 
-        sysSmsLogService.add(sysSmsLog);
+        sysSmsLogService.addEntity(sysSmsLog);
 
         return RestResponse.success();
     }
@@ -109,7 +109,7 @@ public class SysSmsLogController extends AbstractController {
     @RequiresPermissions("sys:smslog:update")
     public RestResponse update(@RequestBody SysSmsLogEntity sysSmsLog) {
 
-        sysSmsLogService.update(sysSmsLog);
+        sysSmsLogService.updateEntity(sysSmsLog);
 
         return RestResponse.success();
     }

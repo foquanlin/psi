@@ -11,12 +11,8 @@
  */
 package com.tongyi.modules.sys.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
 import com.tongyi.modules.sys.entity.SysSmsLogEntity;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 短信发送日志Service接口
@@ -24,50 +20,6 @@ import java.util.Map;
  * @author 林佛权
  */
 public interface SysSmsLogService extends IService<SysSmsLogEntity> {
-
-    /**
-     * 查询所有列表
-     *
-     * @param params 查询参数
-     * @return List
-     */
-    List<SysSmsLogEntity> queryAll(Map<String, Object> params);
-
-    /**
-     * 查询分页信息
-     *
-     * @param params 查询参数
-     * @return Page
-     */
-    Page queryPage(Map<String, Object> params);
-
-    /**
-     * 新增实体
-     *
-     * @param sysSmsLog 实体
-     */
-    void add(SysSmsLogEntity sysSmsLog);
-
-    /**
-     * 根据主键更新实体
-     *
-     * @param sysSmsLog 实体
-     */
-    void update(SysSmsLogEntity sysSmsLog);
-
-    /**
-     * 根据主键删除
-     *
-     * @param id 主键
-     */
-    void delete(String id);
-
-    /**
-     * 根据主键批量删除
-     *
-     * @param ids
-     */
-    void deleteBatch(String[] ids);
 
     /**
      * 发送短信
