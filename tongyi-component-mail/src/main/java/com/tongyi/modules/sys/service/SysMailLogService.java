@@ -11,11 +11,8 @@
  */
 package com.tongyi.modules.sys.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
 import com.tongyi.modules.sys.entity.SysMailLogEntity;
-
-import java.util.Map;
 
 /**
  * 邮件发送日志Service接口
@@ -23,36 +20,4 @@ import java.util.Map;
  * @author 林佛权
  */
 public interface SysMailLogService extends IService<SysMailLogEntity> {
-
-    /**
-     * 分页查询邮件发送日志
-     *
-     * @param params 查询参数
-     * @return Page
-     */
-    Page queryPage(Map<String, Object> params);
-
-    /**
-     * 新增邮件发送日志
-     *
-     * @param sysMailLog 邮件发送日志
-     * @return 新增结果
-     */
-    boolean add(SysMailLogEntity sysMailLog);
-
-    /**
-     * 根据主键删除邮件发送日志
-     *
-     * @param id id
-     * @return 删除结果
-     */
-    boolean delete(String id);
-
-    /**
-     * 根据主键批量删除
-     *
-     * @param ids ids
-     * @return 删除结果
-     */
-    boolean deleteBatch(String[] ids);
 }

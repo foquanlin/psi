@@ -122,7 +122,7 @@ public class MailServiceImpl implements MailService {
             mailLogEntity.setSendResult(1);
             log.error("发送邮件时发生异常！", e);
         }
-        mailLogService.add(mailLogEntity);
+        mailLogService.addEntity(mailLogEntity);
         return result;
     }
 
@@ -200,7 +200,7 @@ public class MailServiceImpl implements MailService {
             mailLogEntity.setSendResult(1);
             log.error("发送带附件的邮件时发生异常！", e);
         }
-        mailLogService.add(mailLogEntity);
+        mailLogService.addEntity(mailLogEntity);
         return result;
     }
 
@@ -276,7 +276,7 @@ public class MailServiceImpl implements MailService {
             mailLogEntity.setSendResult(1);
             log.error("发送嵌入静态资源的邮件时发生异常！", e);
         }
-        mailLogService.add(mailLogEntity);
+        mailLogService.addEntity(mailLogEntity);
         return result;
     }
 }

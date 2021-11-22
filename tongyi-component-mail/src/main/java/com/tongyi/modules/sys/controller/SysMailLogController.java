@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.entity.SysMailLogEntity;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import com.tongyi.modules.sys.service.SysMailLogService;
@@ -46,12 +47,12 @@ public class SysMailLogController extends AbstractController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:maillog:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
 
         //只能查看权限下的发送记录
         params.put("dataScope", getDataScope());
 
-        Page page = sysMailLogService.queryPage(params);
+        PageInfo page = sysMailLogService.listPage(current,size,params);
 
         return RestResponse.success().put("page", page);
     }
