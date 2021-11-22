@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.job.dao.ScheduleJobDao;
 import com.tongyi.modules.job.entity.ScheduleJobEntity;
 import com.tongyi.modules.job.service.ScheduleJobService;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -54,50 +56,11 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
     }
 
     @Override
-    public Page queryPage(Map<String, Object> params) {
-        //排序
-        params.put("sidx", "t.create_time");
-        params.put("asc", false);
-        Page<ScheduleJobEntity> page = new Query<ScheduleJobEntity>(params).getPage();
-        return page.setRecords(baseMapper.selectScheduleJobPage(page, params));
-    }
-
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void add(ScheduleJobEntity scheduleJob) {
-        scheduleJob.setCreateTime(new Date());
-        scheduleJob.setStatus(Constant.ScheduleStatus.NORMAL.getValue());
-        this.save(scheduleJob);
-
-        ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void update(ScheduleJobEntity scheduleJob) {
-        ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
-
-        this.updateById(scheduleJob);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteBatch(String[] jobIds) {
-        for (String jobId : jobIds) {
-            ScheduleUtils.deleteScheduleJob(scheduler, jobId);
-        }
-
-        //删除数据
-        this.removeByIds(Arrays.asList(jobIds));
-    }
-
-    @Override
     public void updateBatch(String[] jobIds, int status) {
         Map<String, Object> map = new HashMap<>(4);
         map.put("list", jobIds);
         map.put("status", status);
-        baseMapper.updateBatch(map);
+        super.baseMapper.updateBatch(map);
     }
 
     @Override
@@ -128,4 +91,56 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
         updateBatch(jobIds, Constant.ScheduleStatus.NORMAL.getValue());
     }
 
+
+    @Override
+    public ScheduleJobEntity getById(Serializable id){
+        return super.getById(id);
+    }
+
+    @Override
+    public List<ScheduleJobEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<ScheduleJobEntity> listPage(int current, int size, Map<String, Object> params) {
+        Page<ScheduleJobEntity> page = new Query<ScheduleJobEntity>(current,size,params).getPage();
+        List<ScheduleJobEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<ScheduleJobEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addEntity(ScheduleJobEntity scheduleJob) {
+        scheduleJob.setCreateTime(new Date());
+        scheduleJob.setStatus(Constant.ScheduleStatus.NORMAL.getValue());
+        boolean saved = super.save(scheduleJob);
+
+        ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
+        return saved;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateEntity(ScheduleJobEntity scheduleJob) {
+        ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
+        return super.updateById(scheduleJob);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] ids) {
+        for (Serializable jobId : ids) {
+            ScheduleUtils.deleteScheduleJob(scheduler, (String)jobId);
+        }
+        //删除数据
+        this.removeByIds(Arrays.asList(ids));
+        return true;
+    }
 }

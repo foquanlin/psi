@@ -12,7 +12,6 @@
 package com.tongyi.modules.sys.controller;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.core.PageInfo;

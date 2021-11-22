@@ -11,10 +11,10 @@
  */
 package com.tongyi.modules.job.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.common.validator.ValidatorUtils;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.job.entity.ScheduleJobEntity;
 import com.tongyi.modules.job.service.ScheduleJobService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -42,8 +42,8 @@ public class ScheduleJobController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:schedule:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        Page page = scheduleJobService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = scheduleJobService.listPage(current, size,params);
 
         return RestResponse.success().put("page", page);
     }
@@ -74,7 +74,7 @@ public class ScheduleJobController {
     public RestResponse save(@RequestBody ScheduleJobEntity scheduleJob) {
         ValidatorUtils.validateEntity(scheduleJob);
 
-        scheduleJobService.add(scheduleJob);
+        scheduleJobService.addEntity(scheduleJob);
 
         return RestResponse.success();
     }
@@ -91,7 +91,7 @@ public class ScheduleJobController {
     public RestResponse update(@RequestBody ScheduleJobEntity scheduleJob) {
         ValidatorUtils.validateEntity(scheduleJob);
 
-        scheduleJobService.update(scheduleJob);
+        scheduleJobService.updateEntity(scheduleJob);
 
         return RestResponse.success();
     }

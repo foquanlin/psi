@@ -36,6 +36,15 @@ public interface ScheduleJobDao extends BaseMapper<ScheduleJobEntity> {
      */
     int updateBatch(Map<String, Object> map);
 
+
+    /**
+     * 查询所有列表
+     *
+     * @param params 查询参数
+     * @return List
+     */
+    List<ScheduleJobEntity> listAll(@Param("params") Map<String, Object> params);
+
     /**
      * 自定义分页查询
      *
@@ -43,5 +52,5 @@ public interface ScheduleJobDao extends BaseMapper<ScheduleJobEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<ScheduleJobEntity> selectScheduleJobPage(IPage page, @Param("params") Map<String, Object> params);
+    List<ScheduleJobEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

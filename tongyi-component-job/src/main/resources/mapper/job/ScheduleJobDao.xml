@@ -11,7 +11,7 @@
 		</foreach>
 	</update>
 
-	<select id="selectScheduleJobPage" resultType="com.tongyi.modules.job.entity.ScheduleJobEntity">
+	<sql id="selectSql">
 		select
 		t.job_id,
 		t.bean_name,
@@ -22,9 +22,21 @@
 		t.remark,
 		t.create_time
 		from schedule_job t
-		where 1=1
-		<if test="params.beanName != null and params.beanName.trim() != ''">
-			and t.bean_name like '%${params.beanName}%'
-		</if>
+	</sql>
+
+	<sql id="selectWhere">
+		<where>
+			<if test="params.beanName != null and params.beanName.trim() != ''">
+				and t.bean_name like '%${params.beanName}%'
+			</if>
+		</where>
+	</sql>
+	<select id="listPage" resultType="com.tongyi.modules.job.entity.ScheduleJobEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+	<select id="listAll" resultType="com.tongyi.modules.job.entity.ScheduleJobEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
 	</select>
 </mapper>

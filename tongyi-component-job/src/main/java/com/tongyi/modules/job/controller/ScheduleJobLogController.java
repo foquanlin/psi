@@ -11,8 +11,8 @@
  */
 package com.tongyi.modules.job.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.job.entity.ScheduleJobLogEntity;
 import com.tongyi.modules.job.service.ScheduleJobLogService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -40,8 +40,8 @@ public class ScheduleJobLogController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:schedule:log")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        Page page = scheduleJobLogService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = scheduleJobLogService.listPage(current, size, params);
 
         return RestResponse.success().put("page", page);
     }

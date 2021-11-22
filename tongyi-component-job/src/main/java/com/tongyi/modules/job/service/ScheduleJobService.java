@@ -11,8 +11,8 @@
  */
 package com.tongyi.modules.job.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.job.entity.ScheduleJobEntity;
 
 import java.util.Map;
@@ -23,35 +23,6 @@ import java.util.Map;
  * @author 林佛权
  */
 public interface ScheduleJobService extends IService<ScheduleJobEntity> {
-
-    /**
-     * 获取分页数据
-     *
-     * @param params 查询参数
-     * @return Page
-     */
-    Page queryPage(Map<String, Object> params);
-
-    /**
-     * 新增定时任务
-     *
-     * @param scheduleJob scheduleJob
-     */
-    void add(ScheduleJobEntity scheduleJob);
-
-    /**
-     * 更新定时任务
-     *
-     * @param scheduleJob scheduleJob
-     */
-    void update(ScheduleJobEntity scheduleJob);
-
-    /**
-     * 批量删除定时任务
-     *
-     * @param jobIds jobIds
-     */
-    void deleteBatch(String[] jobIds);
 
     /**
      * 批量更新定时任务状态

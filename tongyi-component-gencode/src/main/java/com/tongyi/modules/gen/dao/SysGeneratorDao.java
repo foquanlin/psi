@@ -2,7 +2,6 @@ package com.tongyi.modules.gen.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.modules.gen.entity.ColumnEntity;
 import com.tongyi.modules.gen.entity.ForeignEntity;
 import com.tongyi.modules.gen.entity.ResultMapEntity;
