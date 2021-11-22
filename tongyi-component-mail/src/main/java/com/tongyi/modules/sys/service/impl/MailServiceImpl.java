@@ -96,7 +96,7 @@ public class MailServiceImpl implements MailService {
                 mailLogEntity.setCreateUserId(Constant.SUPER_ADMIN);
                 mailLogEntity.setCreateUserOrgNo(Constant.SUPER_ADMIN_ORG);
                 mailLogEntity.setSender(user.getEmail());
-                mailLogEntity.setType(Constant.USER_SEND);
+                mailLogEntity.setType(SysMailLogEntity.USER_SEND);
                 result = true;
             } else {
                 MimeMessage message = mailSender.createMimeMessage();
@@ -115,7 +115,7 @@ public class MailServiceImpl implements MailService {
                 mailLogEntity.setCreateUserId(sysUserEntity.getUserId());
                 mailLogEntity.setCreateUserOrgNo(sysUserEntity.getOrgNo());
                 mailLogEntity.setSender(from);
-                mailLogEntity.setType(Constant.SYS_SEND);
+                mailLogEntity.setType(SysMailLogEntity.SYS_SEND);
                 result = true;
             }
         } catch (MessagingException e) {
@@ -171,7 +171,7 @@ public class MailServiceImpl implements MailService {
                 mailLogEntity.setCreateUserId(Constant.SUPER_ADMIN);
                 mailLogEntity.setCreateUserOrgNo(Constant.SUPER_ADMIN_ORG);
                 mailLogEntity.setSender(user.getEmail());
-                mailLogEntity.setType(Constant.USER_SEND);
+                mailLogEntity.setType(SysMailLogEntity.USER_SEND);
                 result = true;
             } else {
                 MimeMessage message = mailSender.createMimeMessage();
@@ -193,7 +193,7 @@ public class MailServiceImpl implements MailService {
                 mailLogEntity.setCreateUserId(sysUserEntity.getUserId());
                 mailLogEntity.setCreateUserOrgNo(sysUserEntity.getOrgNo());
                 mailLogEntity.setSender(from);
-                mailLogEntity.setType(Constant.SYS_SEND);
+                mailLogEntity.setType(SysMailLogEntity.SYS_SEND);
                 result = true;
             }
         } catch (MessagingException e) {
@@ -248,7 +248,7 @@ public class MailServiceImpl implements MailService {
                 mailLogEntity.setCreateUserId(Constant.SUPER_ADMIN);
                 mailLogEntity.setCreateUserOrgNo(Constant.SUPER_ADMIN_ORG);
                 mailLogEntity.setSender(user.getEmail());
-                mailLogEntity.setType(Constant.USER_SEND);
+                mailLogEntity.setType(SysMailLogEntity.USER_SEND);
                 result = true;
             } else {
                 MimeMessage message = mailSender.createMimeMessage();
@@ -269,7 +269,7 @@ public class MailServiceImpl implements MailService {
                 mailLogEntity.setCreateUserId(sysUserEntity.getUserId());
                 mailLogEntity.setCreateUserOrgNo(sysUserEntity.getOrgNo());
                 mailLogEntity.setSender(from);
-                mailLogEntity.setType(Constant.SYS_SEND);
+                mailLogEntity.setType(SysMailLogEntity.SYS_SEND);
                 result = true;
             }
         } catch (MessagingException e) {

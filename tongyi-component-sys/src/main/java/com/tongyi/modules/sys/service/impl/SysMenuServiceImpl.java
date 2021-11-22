@@ -17,6 +17,7 @@ import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.StringUtils;
 import com.tongyi.modules.sys.dao.SysMenuDao;
 import com.tongyi.modules.sys.entity.SysMenuEntity;
+import com.tongyi.modules.sys.service.MenuType;
 import com.tongyi.modules.sys.service.SysMenuService;
 import com.tongyi.modules.sys.service.SysRoleMenuService;
 import com.tongyi.modules.sys.service.SysUserService;
@@ -120,7 +121,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
 
         for (SysMenuEntity entity : menuList) {
             //目录
-            if (entity.getType() == Constant.MenuType.CATALOG.getValue()) {
+            if (entity.getType() == MenuType.CATALOG.getValue()) {
                 entity.setList(getMenuTreeList(queryListParentId(entity.getMenuId(), menuIdList), menuIdList));
             }
             subMenuList.add(entity);

@@ -18,6 +18,16 @@ public class SmsConfig implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 空字符串
+     */
+    public static final String BLANK = "";
+
+    /**
+     * 短信配置KEY
+     */
+    public final static String SMS_CONFIG_KEY = "SMS_CONFIG_KEY";
+
+    /**
      * 类型 1：创瑞
      */
 //    @Range(min = 1, max = 3, message = "类型错误")

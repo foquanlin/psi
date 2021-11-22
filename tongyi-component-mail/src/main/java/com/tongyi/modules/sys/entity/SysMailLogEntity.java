@@ -27,7 +27,14 @@ import java.util.Date;
 @TableName("sys_mail_log")
 public class SysMailLogEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    /**
+     * 系统自动邮件
+     */
+    public static final int SYS_SEND = 0;
+    /**
+     * 操作人主动邮件
+     */
+    public static final int USER_SEND = 1;
     /**
      *
      */

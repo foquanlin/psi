@@ -197,31 +197,31 @@ public class SysMenuController extends AbstractController {
         }
 
         //菜单
-        if (menu.getType() == Constant.MenuType.MENU.getValue()) {
+        if (menu.getType() == MenuType.MENU.getValue()) {
             if (StringUtils.isBlank(menu.getUrl())) {
                 throw new BusinessException("菜单URL不能为空");
             }
         }
 
         //上级菜单类型
-        int parentType = Constant.MenuType.CATALOG.getValue();
+        int parentType = MenuType.CATALOG.getValue();
         if (!Constant.STR_ZERO.equals(menu.getParentId())) {
             SysMenuEntity parentMenu = sysMenuService.getById(menu.getParentId());
             parentType = parentMenu.getType();
         }
 
         //目录、菜单
-        if (menu.getType() == Constant.MenuType.CATALOG.getValue() ||
-                menu.getType() == Constant.MenuType.MENU.getValue()) {
-            if (parentType != Constant.MenuType.CATALOG.getValue()) {
+        if (menu.getType() == MenuType.CATALOG.getValue() ||
+                menu.getType() == MenuType.MENU.getValue()) {
+            if (parentType != MenuType.CATALOG.getValue()) {
                 throw new BusinessException("上级菜单只能为目录类型");
             }
             return;
         }
 
         //按钮
-        if (menu.getType() == Constant.MenuType.BUTTON.getValue()) {
-            if (parentType != Constant.MenuType.MENU.getValue()) {
+        if (menu.getType() == MenuType.BUTTON.getValue()) {
+            if (parentType != MenuType.MENU.getValue()) {
                 throw new BusinessException("上级菜单只能为菜单类型");
             }
         }

@@ -19,6 +19,7 @@ import com.tongyi.core.PageInfo;
 import com.tongyi.modules.job.dao.ScheduleJobDao;
 import com.tongyi.modules.job.entity.ScheduleJobEntity;
 import com.tongyi.modules.job.service.ScheduleJobService;
+import com.tongyi.modules.job.service.ScheduleStatus;
 import com.tongyi.modules.job.utils.ScheduleUtils;
 import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
@@ -78,7 +79,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
             ScheduleUtils.pauseJob(scheduler, jobId);
         }
 
-        updateBatch(jobIds, Constant.ScheduleStatus.PAUSE.getValue());
+        updateBatch(jobIds, ScheduleStatus.PAUSE.getValue());
     }
 
     @Override
@@ -88,7 +89,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
             ScheduleUtils.resumeJob(scheduler, jobId);
         }
 
-        updateBatch(jobIds, Constant.ScheduleStatus.NORMAL.getValue());
+        updateBatch(jobIds, ScheduleStatus.NORMAL.getValue());
     }
 
 
@@ -113,7 +114,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(ScheduleJobEntity scheduleJob) {
         scheduleJob.setCreateTime(new Date());
-        scheduleJob.setStatus(Constant.ScheduleStatus.NORMAL.getValue());
+        scheduleJob.setStatus(ScheduleStatus.NORMAL.getValue());
         boolean saved = super.save(scheduleJob);
 
         ScheduleUtils.createScheduleJob(scheduler, scheduleJob);

@@ -11,9 +11,8 @@
  */
 package com.tongyi.modules.oss.cloud;
 
-
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.SpringContextUtils;
+import com.tongyi.modules.sys.entity.SysConfigEntity;
 import com.tongyi.modules.sys.service.SysConfigService;
 
 /**
@@ -30,15 +29,15 @@ public final class UploadFactory {
 
     public static AbstractCloudStorageService build() {
         //获取云存储配置信息
-        CloudStorageConfig config = sysConfigService.getConfigObject(Constant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
+        CloudStorageConfig config = sysConfigService.getConfigObject(SysConfigEntity.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
 
-        if (config.getType() == Constant.CloudService.QINIU.getValue()) {
+        if (config.getType() == CloudService.QINIU.getValue()) {
             return new QiniuCloudStorageService(config);
-        } else if (config.getType() == Constant.CloudService.ALIYUN.getValue()) {
+        } else if (config.getType() == CloudService.ALIYUN.getValue()) {
             return new AliyunCloudStorageService(config);
-        } else if (config.getType() == Constant.CloudService.QCLOUD.getValue()) {
+        } else if (config.getType() == CloudService.QCLOUD.getValue()) {
             return new QcloudCloudStorageService(config);
-        } else if (config.getType() == Constant.CloudService.DISCK.getValue()) {
+        } else if (config.getType() == CloudService.DISCK.getValue()) {
             return new DiskCloudStorageService(config);
         }
 

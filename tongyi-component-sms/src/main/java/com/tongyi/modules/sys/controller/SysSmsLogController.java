@@ -137,7 +137,7 @@ public class SysSmsLogController extends AbstractController {
     @RequestMapping("/config")
     @RequiresPermissions("sys:smslog:config")
     public RestResponse config() {
-        SmsConfig config = sysConfigService.getConfigObject(Constant.SMS_CONFIG_KEY, SmsConfig.class);
+        SmsConfig config = sysConfigService.getConfigObject(SmsConfig.SMS_CONFIG_KEY, SmsConfig.class);
 
         return RestResponse.success().put("config", config);
     }
@@ -152,7 +152,7 @@ public class SysSmsLogController extends AbstractController {
     @RequiresPermissions("sys:smslog:config")
     @RequestMapping("/saveConfig")
     public RestResponse saveConfig(@RequestBody SmsConfig config) {
-        sysConfigService.updateValueByKey(Constant.SMS_CONFIG_KEY, gson.toJson(config));
+        sysConfigService.updateValueByKey(SmsConfig.SMS_CONFIG_KEY, gson.toJson(config));
         return RestResponse.success();
     }
 

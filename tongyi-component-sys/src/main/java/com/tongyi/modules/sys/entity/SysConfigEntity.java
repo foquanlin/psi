@@ -28,6 +28,12 @@ import java.io.Serializable;
 public class SysConfigEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
+
+    /**
+     * 云存储配置KEY
+     */
+    public final static String CLOUD_STORAGE_CONFIG_KEY = "CLOUD_STORAGE_CONFIG_KEY";
+
     @TableId
     private String id;
     @NotBlank(message = "参数名不能为空")

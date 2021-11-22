@@ -46,9 +46,9 @@ public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogDao, SysSmsLogEnt
     @Override
     public SysSmsLogEntity sendSms(String userId, SysSmsLogEntity smsLog) {
         smsLog.setType(SmsUtil.TYPE);
-        String result = Constant.BLANK;
+        String result = SmsConfig.BLANK;
         //获取云存储配置信息
-        SmsConfig config = sysConfigService.getConfigObject(Constant.SMS_CONFIG_KEY, SmsConfig.class);
+        SmsConfig config = sysConfigService.getConfigObject(SmsConfig.SMS_CONFIG_KEY, SmsConfig.class);
         if (StringUtils.isNullOrEmpty(config)) {
             throw new BusinessException("请先配置短信平台信息");
         }

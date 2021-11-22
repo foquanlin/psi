@@ -14,6 +14,7 @@ package com.tongyi.modules.job.utils;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.modules.job.entity.ScheduleJobEntity;
+import com.tongyi.modules.job.service.ScheduleStatus;
 import org.quartz.*;
 
 /**
@@ -70,7 +71,7 @@ public class ScheduleUtils {
             scheduler.scheduleJob(jobDetail, trigger);
 
             //暂停任务
-            if (scheduleJob.getStatus() == Constant.ScheduleStatus.PAUSE.getValue()) {
+            if (scheduleJob.getStatus() == ScheduleStatus.PAUSE.getValue()) {
                 pauseJob(scheduler, scheduleJob.getJobId());
             }
         } catch (SchedulerException e) {
@@ -100,7 +101,7 @@ public class ScheduleUtils {
             scheduler.rescheduleJob(triggerKey, trigger);
 
             //暂停任务
-            if (scheduleJob.getStatus() == Constant.ScheduleStatus.PAUSE.getValue()) {
+            if (scheduleJob.getStatus() == ScheduleStatus.PAUSE.getValue()) {
                 pauseJob(scheduler, scheduleJob.getJobId());
             }
 

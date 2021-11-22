@@ -15,17 +15,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.exception.BusinessException;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.common.validator.ValidatorUtils;
 import com.tongyi.common.validator.group.AliyunGroup;
 import com.tongyi.common.validator.group.DiskGroup;
 import com.tongyi.common.validator.group.QcloudGroup;
 import com.tongyi.common.validator.group.QiniuGroup;
+import com.tongyi.modules.oss.cloud.CloudService;
 import com.tongyi.modules.oss.cloud.CloudStorageConfig;
 import com.tongyi.modules.oss.cloud.UploadFactory;
 import com.tongyi.modules.oss.entity.SysOssEntity;
 import com.tongyi.modules.oss.service.SysOssService;
+import com.tongyi.modules.sys.entity.SysConfigEntity;
 import com.tongyi.modules.sys.service.SysConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -84,7 +85,7 @@ public class SysOssController {
     @GetMapping("/config")
     @RequiresPermissions("sys:oss:config")
     public RestResponse config() {
-        CloudStorageConfig config = sysConfigService.getConfigObject(Constant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
+        CloudStorageConfig config = sysConfigService.getConfigObject(SysConfigEntity.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
 
         return RestResponse.success().put("config", config);
     }
@@ -102,21 +103,21 @@ public class SysOssController {
         //校验类型
         ValidatorUtils.validateEntity(config);
 
-        if (config.getType() == Constant.CloudService.QINIU.getValue()) {
+        if (config.getType() == CloudService.QINIU.getValue()) {
             //校验七牛数据
             ValidatorUtils.validateEntity(config, QiniuGroup.class);
-        } else if (config.getType() == Constant.CloudService.ALIYUN.getValue()) {
+        } else if (config.getType() == CloudService.ALIYUN.getValue()) {
             //校验阿里云数据
             ValidatorUtils.validateEntity(config, AliyunGroup.class);
-        } else if (config.getType() == Constant.CloudService.QCLOUD.getValue()) {
+        } else if (config.getType() == CloudService.QCLOUD.getValue()) {
             //校验腾讯云数据
             ValidatorUtils.validateEntity(config, QcloudGroup.class);
-        } else if (config.getType() == Constant.CloudService.DISCK.getValue()) {
+        } else if (config.getType() == CloudService.DISCK.getValue()) {
             //校验腾讯云数据
             ValidatorUtils.validateEntity(config, DiskGroup.class);
         }
 
-        sysConfigService.updateValueByKey(Constant.CLOUD_STORAGE_CONFIG_KEY, new Gson().toJson(config));
+        sysConfigService.updateValueByKey(SysConfigEntity.CLOUD_STORAGE_CONFIG_KEY, new Gson().toJson(config));
 
         return RestResponse.success();
     }
