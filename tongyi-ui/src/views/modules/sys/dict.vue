@@ -124,7 +124,7 @@
           }
         }).then(({ data }) => {
           if (data && data.code === 0) {
-            this.dictDataList = data.page.records
+            this.dictDataList = data.page.list
             this.dictTotalPage = data.page.total
           } else {
             this.dictDataList = []

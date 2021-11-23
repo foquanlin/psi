@@ -6,7 +6,7 @@
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="80px">
         <!-- @keyup.enter.native="dataFormSubmit()" -->
     <el-form-item label="" prop="name">
-        <el-input v-model="dataForm.name" :disabled="disabled" placeholder="" clearable></el-input>
+        <el-input v-model="dataForm.name" :disabled="disabled" placeholder="民族名称" clearable></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
