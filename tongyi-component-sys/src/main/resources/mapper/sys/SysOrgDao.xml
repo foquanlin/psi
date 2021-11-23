@@ -22,14 +22,14 @@
 	</sql>
 	<sql id="selectWhere">
 		<where>
-			<if test="orgName != null and orgName.trim() != ''">
-				and o.org_name like '%${orgName}%'
+			<if test="params.orgName != null and params.orgName.trim() != ''">
+				and o.org_name like '%${params.orgName}%'
 			</if>
-			<if test="orgType != null">
-				and o.org_type = #{orgType}
+			<if test="params.orgType != null">
+				and o.org_type = #{params.orgType}
 			</if>
-			<if test="parentName != null and parentName.trim() != ''">
-				and so.org_name like '%${parentName}%'
+			<if test="params.parentName != null and params.parentName.trim() != ''">
+				and so.org_name like '%${params.parentName}%'
 			</if>
 		</where>
 	</sql>
