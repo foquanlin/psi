@@ -24,7 +24,7 @@
     </sql>
     <sql id="selectWhere">
         <where>
-            <if test="params.nowDate != null and params.nowDate.trim() != ''">
+            <if test="params.nowDate != null">
                 and t.expire_time > #{params.nowDate}
             </if>
             <if test="params.name != null and params.name.trim() != ''">

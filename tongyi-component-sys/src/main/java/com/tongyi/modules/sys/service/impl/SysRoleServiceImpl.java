@@ -47,7 +47,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 
     @Override
     public List<SysRoleEntity> selectListByMap(Map<String, Object> params) {
-        return baseMapper.selectSysRolePage(params);
+        return baseMapper.listAll(params);
     }
 
     @Override
