@@ -20,17 +20,20 @@
         t.black_num,
         t.return_msg
         from sys_sms_log t
-        where 1=1
-        <if test="params.sendId != null and params.sendId.trim() != ''">
-            and t.send_id like '%${params.sendId}%'
-        </if>
     </sql>
-
-    <select id="selectSysSmsLogPage" resultType="com.tongyi.modules.sys.entity.SysSmsLogEntity">
+    <sql id="selectWhere">
+        <where>
+            <if test="params.sendId != null and params.sendId.trim() != ''">
+                and t.send_id like '%${params.sendId}%'
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysSmsLogEntity">
         <include refid="selectSql"/>
+        <include refid="selectWhere"/>
     </select>
-
-    <select id="queryAll" resultType="com.tongyi.modules.sys.entity.SysSmsLogEntity">
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysSmsLogEntity">
         <include refid="selectSql"/>
+        <include refid="selectWhere"/>
     </select>
 </mapper>
