@@ -11,9 +11,9 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.service.SysUserTokenService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +40,8 @@ public class SysUserTokenController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:usertoken:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        Page page = sysUserTokenService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = sysUserTokenService.listPage(current,size,params);
 
         return RestResponse.success().put("page", page);
     }

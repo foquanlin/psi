@@ -11,12 +11,12 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.common.validator.ValidatorUtils;
 import com.tongyi.common.validator.group.AddGroup;
 import com.tongyi.common.validator.group.UpdateGroup;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.entity.SysDictGroupEntity;
 import com.tongyi.modules.sys.service.SysDictGroupService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -46,7 +46,7 @@ public class SysDictGroupController {
     @RequestMapping("/queryAll")
     @RequiresPermissions("sys:dictgroup:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
-        List<SysDictGroupEntity> list = sysDictGroupService.queryAll(params);
+        List<SysDictGroupEntity> list = sysDictGroupService.listAll(params);
 
         return RestResponse.success().put("list", list);
     }
@@ -59,8 +59,8 @@ public class SysDictGroupController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:dictgroup:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        Page page = sysDictGroupService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = sysDictGroupService.listPage(current, size, params);
 
         return RestResponse.success().put("page", page);
     }
@@ -90,7 +90,7 @@ public class SysDictGroupController {
     @RequiresPermissions("sys:dictgroup:save")
     public RestResponse save(@RequestBody SysDictGroupEntity sysDictGroup) {
         ValidatorUtils.validateEntity(sysDictGroup, AddGroup.class);
-        sysDictGroupService.add(sysDictGroup);
+        sysDictGroupService.addEntity(sysDictGroup);
 
         return RestResponse.success();
     }
@@ -106,7 +106,7 @@ public class SysDictGroupController {
     @RequiresPermissions("sys:dictgroup:update")
     public RestResponse update(@RequestBody SysDictGroupEntity sysDictGroup) {
         ValidatorUtils.validateEntity(sysDictGroup, UpdateGroup.class);
-        sysDictGroupService.update(sysDictGroup);
+        sysDictGroupService.updateEntity(sysDictGroup);
 
         return RestResponse.success();
     }

@@ -11,16 +11,18 @@
  */
 package com.tongyi.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tongyi.common.utils.Query;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysUserRoleDao;
 import com.tongyi.modules.sys.entity.SysUserRoleEntity;
 import com.tongyi.modules.sys.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author 林佛权
@@ -57,7 +59,43 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserR
     }
 
     @Override
-    public int deleteBatch(String[] roleIds) {
-        return baseMapper.deleteBatch(roleIds);
+    public SysUserRoleEntity getById(Serializable id){
+        return super.getById(id);
+    }
+
+    @Override
+    public List<SysUserRoleEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<SysUserRoleEntity> listPage(int current, int size, Map<String, Object> params) {
+        Page<SysUserRoleEntity> page = new Query<SysUserRoleEntity>(current,size,params).getPage();
+        List<SysUserRoleEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<SysUserRoleEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addEntity(SysUserRoleEntity entity) {
+        return super.save(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateEntity(SysUserRoleEntity entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] ids) {
+        return super.removeByIds(Arrays.asList(ids));
     }
 }

@@ -11,8 +11,7 @@
  */
 package com.tongyi.modules.sys.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 
 import java.util.List;
@@ -24,22 +23,6 @@ import java.util.Map;
  * @author 林佛权
  */
 public interface SysUserService extends IService<SysUserEntity> {
-
-    /**
-     * 查询所有
-     *
-     * @param params 查询参数
-     * @return List
-     */
-    List<SysUserEntity> queryAll(Map<String, Object> params);
-
-    /**
-     * 分页查询
-     *
-     * @param params 查询参数
-     * @return Page
-     */
-    Page queryPage(Map<String, Object> params);
 
     /**
      * 查询用户的所有菜单ID
@@ -63,7 +46,7 @@ public interface SysUserService extends IService<SysUserEntity> {
      * @param user   用户
      * @param params 查询参数
      */
-    void add(SysUserEntity user, Map<String, Object> params);
+    void addEntity(SysUserEntity user, Map<String, Object> params);
 
     /**
      * 修改用户
@@ -71,14 +54,7 @@ public interface SysUserService extends IService<SysUserEntity> {
      * @param user   用户
      * @param params 查询参数
      */
-    void update(SysUserEntity user, Map<String, Object> params);
-
-    /**
-     * 删除用户
-     *
-     * @param userIds 用户Ids
-     */
-    void deleteBatch(String[] userIds);
+    void updateEntity(SysUserEntity user, Map<String, Object> params);
 
     /**
      * 修改密码
@@ -96,4 +72,6 @@ public interface SysUserService extends IService<SysUserEntity> {
      * @param userIds 用户Ids
      */
     void resetPw(String[] userIds);
+
+    List<SysUserEntity> selectField(String fields);
 }

@@ -11,7 +11,6 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.core.PageInfo;
@@ -96,7 +95,7 @@ public class SysMailLogController extends AbstractController {
     @RequiresPermissions("sys:maillog:config")
     public RestResponse config(@RequestBody SysUserEntity user) {
 
-        sysUserService.update(user, new UpdateWrapper<SysUserEntity>().eq("USER_ID", user.getUserId()));
+        sysUserService.updateEntity(user);
 
         return RestResponse.success();
     }

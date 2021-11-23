@@ -52,4 +52,21 @@ public interface SysRoleDao extends BaseMapper<SysRoleEntity> {
      * @return List
      */
     List<SysRoleEntity> selectSysRolePage(@Param("params") Map<String, Object> params);
+
+    /**
+     * 查询所有列表
+     *
+     * @param params 查询参数
+     * @return List
+     */
+    List<SysRoleEntity> listAll(@Param("params") Map<String, Object> params);
+
+    /**
+     * 自定义分页查询
+     *
+     * @param page   分页参数
+     * @param params 查询参数
+     * @return List
+     */
+    List<SysRoleEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

@@ -32,7 +32,7 @@ public interface SysNationDao extends BaseMapper<SysNationEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<SysNationEntity> queryAll(@Param("params") Map<String, Object> params);
+    List<SysNationEntity> listAll(@Param("params") Map<String, Object> params);
 
     /**
      * 自定义分页查询
@@ -41,5 +41,5 @@ public interface SysNationDao extends BaseMapper<SysNationEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<SysNationEntity> selectSysNationPage(IPage page, @Param("params") Map<String, Object> params);
+    List<SysNationEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

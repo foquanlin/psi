@@ -12,10 +12,13 @@
 package com.tongyi.modules.sys.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tongyi.modules.sys.entity.SysRoleMenuEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色与菜单对应关系
@@ -40,4 +43,21 @@ public interface SysRoleMenuDao extends BaseMapper<SysRoleMenuEntity> {
      * @return int
      */
     int deleteBatch(String[] roleIds);
+
+    /**
+     * 查询所有列表
+     *
+     * @param params 查询参数
+     * @return List
+     */
+    List<SysRoleMenuEntity> listAll(@Param("params") Map<String, Object> params);
+
+    /**
+     * 自定义分页查询
+     *
+     * @param page   分页参数
+     * @param params 查询参数
+     * @return List
+     */
+    List<SysRoleMenuEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

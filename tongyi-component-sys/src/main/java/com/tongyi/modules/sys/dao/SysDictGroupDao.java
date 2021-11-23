@@ -29,19 +29,19 @@ import java.util.Map;
 public interface SysDictGroupDao extends BaseMapper<SysDictGroupEntity> {
 
     /**
+     * 查询所有列表
+     *
+     * @param params 查询参数
+     * @return List
+     */
+    List<SysDictGroupEntity> listAll(@Param("params") Map<String, Object> params);
+
+    /**
      * 自定义分页查询
      *
      * @param page   分页参数
      * @param params 查询参数
      * @return List
      */
-    List<SysDictGroupEntity> selectSysDictGroupPage(IPage page, @Param("params") Map<String, Object> params);
-
-    /**
-     * 查询所有数据字典
-     *
-     * @param params 查询参数
-     * @return List
-     */
-    List<SysDictGroupEntity> queryAll(@Param("params") Map<String, Object> params);
+    List<SysDictGroupEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

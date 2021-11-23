@@ -12,7 +12,6 @@
 package com.tongyi.modules.sys.controller;
 
 import com.tongyi.common.annotation.SysLog;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.sys.entity.SysCacheEntity;
 import com.tongyi.modules.sys.service.SysCacheService;

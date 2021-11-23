@@ -11,54 +11,16 @@
  */
 package com.tongyi.modules.sys.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
 import com.tongyi.modules.sys.entity.SysOrgEntity;
 
 import java.util.List;
-import java.util.Map;
-
 /**
  * 组织机构Service接口
  *
  * @author 林佛权
  */
 public interface SysOrgService extends IService<SysOrgEntity> {
-
-    /**
-     * 查询所有列表
-     *
-     * @param params 查询参数
-     * @return List
-     */
-    List<SysOrgEntity> queryAll(Map<String, Object> params);
-
-    /**
-     * 新增实体
-     *
-     * @param sysOrg 实体
-     */
-    void add(SysOrgEntity sysOrg);
-
-    /**
-     * 根据主键更新实体
-     *
-     * @param sysOrg 实体
-     */
-    void update(SysOrgEntity sysOrg);
-
-    /**
-     * 根据主键删除
-     *
-     * @param orgNo 机构编码
-     */
-    void delete(String orgNo);
-
-    /**
-     * 根据主键批量删除
-     *
-     * @param orgNos 机构编码集
-     */
-    void deleteBatch(String[] orgNos);
 
     /**
      * 根据OrgNo查询子机构

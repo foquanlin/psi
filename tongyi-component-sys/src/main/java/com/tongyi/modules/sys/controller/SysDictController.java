@@ -11,18 +11,16 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.common.validator.ValidatorUtils;
 import com.tongyi.common.validator.group.AddGroup;
 import com.tongyi.common.validator.group.UpdateGroup;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.entity.SysDictEntity;
 import com.tongyi.modules.sys.entity.SysDictGroupEntity;
 import com.tongyi.modules.sys.service.SysDictGroupService;
 import com.tongyi.modules.sys.service.SysDictService;
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +50,7 @@ public class SysDictController {
     @RequestMapping("/queryAll")
     @RequiresPermissions("sys:dict:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
-        List<SysDictEntity> list = sysDictService.queryAll(params);
+        List<SysDictEntity> list = sysDictService.listAll(params);
 
         return RestResponse.success().put("list", list);
     }
@@ -65,8 +63,8 @@ public class SysDictController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:dict:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        IPage page = sysDictService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = sysDictService.listPage(current, size, params);
 
         return RestResponse.success().put("page", page);
     }
@@ -95,7 +93,7 @@ public class SysDictController {
     @RequiresPermissions("sys:dict:save")
     public RestResponse save(@RequestBody SysDictEntity sysDict) {
         ValidatorUtils.validateEntity(sysDict, AddGroup.class);
-        sysDictService.add(sysDict);
+        sysDictService.addEntity(sysDict);
 
         return RestResponse.success();
     }
@@ -110,7 +108,7 @@ public class SysDictController {
     @RequiresPermissions("sys:dict:update")
     public RestResponse update(@RequestBody SysDictEntity sysDict) {
         ValidatorUtils.validateEntity(sysDict, UpdateGroup.class);
-        sysDictService.update(sysDict);
+        sysDictService.updateEntity(sysDict);
 
         return RestResponse.success();
     }
@@ -139,9 +137,7 @@ public class SysDictController {
     @RequestMapping("/queryByCode")
     public RestResponse queryByCode(@RequestParam Map<String, Object> params) {
         String code = (String) params.get("code");
-        SysDictGroupEntity sysDictGroupEntity = sysDictGroupService.getOne(new QueryWrapper<SysDictGroupEntity>()
-                .eq(StringUtils.isNotBlank(code), "code", code)
-        );
+        SysDictGroupEntity sysDictGroupEntity = sysDictGroupService.getByCode(code);
         String type = "";
         if (null != sysDictGroupEntity) {
             type = sysDictGroupEntity.getName();

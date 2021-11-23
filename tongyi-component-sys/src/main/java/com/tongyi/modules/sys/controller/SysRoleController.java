@@ -11,10 +11,10 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.common.validator.ValidatorUtils;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.entity.SysRoleEntity;
 import com.tongyi.modules.sys.service.SysRoleMenuService;
 import com.tongyi.modules.sys.service.SysRoleOrgService;
@@ -50,12 +50,12 @@ public class SysRoleController extends AbstractController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:role:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
 
         //如需数据权限，在参数中添加DataScope
         params.put("dataScope", getDataScope());
 
-        Page page = sysRoleService.queryPage(params);
+        PageInfo page = sysRoleService.listPage(current, size, params);
 
         return RestResponse.success().put("page", page);
     }
@@ -112,7 +112,7 @@ public class SysRoleController extends AbstractController {
 
         role.setCreateUserId(getUserId());
         role.setCreateUserOrgNo(getOrgNo());
-        sysRoleService.add(role);
+        sysRoleService.addEntity(role);
 
         return RestResponse.success();
     }
@@ -131,7 +131,7 @@ public class SysRoleController extends AbstractController {
 
         role.setCreateUserId(getUserId());
         role.setCreateUserOrgNo(getOrgNo());
-        sysRoleService.update(role);
+        sysRoleService.updateEntity(role);
 
         return RestResponse.success();
     }

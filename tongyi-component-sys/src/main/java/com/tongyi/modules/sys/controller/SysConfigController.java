@@ -11,10 +11,10 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.common.validator.ValidatorUtils;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.entity.SysConfigEntity;
 import com.tongyi.modules.sys.service.SysConfigService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -42,8 +42,8 @@ public class SysConfigController extends AbstractController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:config:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        Page page = sysConfigService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = sysConfigService.listPage(current,size,params);
 
         return RestResponse.success().put("page", page);
     }
@@ -75,7 +75,7 @@ public class SysConfigController extends AbstractController {
         ValidatorUtils.validateEntity(config);
         config.setStatus(1);
 
-        sysConfigService.add(config);
+        sysConfigService.addEntity(config);
 
         return RestResponse.success();
     }
@@ -93,7 +93,7 @@ public class SysConfigController extends AbstractController {
         ValidatorUtils.validateEntity(config);
         config.setStatus(1);
 
-        sysConfigService.update(config);
+        sysConfigService.updateEntity(config);
 
         return RestResponse.success();
     }

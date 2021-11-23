@@ -37,11 +37,19 @@ public interface SysUserTokenDao extends BaseMapper<SysUserTokenEntity> {
     SysUserTokenEntity queryByToken(String token);
 
     /**
-     * 分页查询
+     * 查询所有列表
+     *
+     * @param params 查询参数
+     * @return List
+     */
+    List<SysUserTokenEntity> listAll(@Param("params") Map<String, Object> params);
+
+    /**
+     * 自定义分页查询
      *
      * @param page   分页参数
      * @param params 查询参数
      * @return List
      */
-    List<SysUserTokenEntity> selectSysUserTokenPage(IPage page, @Param("params") Map<String, Object> params);
+    List<SysUserTokenEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysRoleDao;
 import com.tongyi.modules.sys.dao.SysUserDao;
 import com.tongyi.modules.sys.entity.SysRoleEntity;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -44,63 +46,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     private SysRoleOrgService sysRoleOrgService;
 
     @Override
-    public Page queryPage(Map<String, Object> params) {
-        //排序
-        params.put("sidx", "t.create_time");
-        params.put("asc", false);
-        Page<SysRoleEntity> page = new Query<SysRoleEntity>(params).getPage();
-        return page.setRecords(baseMapper.selectSysRolePage(page, params));
-    }
-
-    @Override
     public List<SysRoleEntity> selectListByMap(Map<String, Object> params) {
         return baseMapper.selectSysRolePage(params);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void add(SysRoleEntity role) {
-        role.setCreateTime(new Date());
-        this.save(role);
-
-        //检查权限是否越权
-        checkPrems(role);
-
-        //保存角色与菜单关系
-        sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
-
-        //保存角色与机构关系
-        sysRoleOrgService.saveOrUpdate(role.getRoleId(), role.getOrgNoList());
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void update(SysRoleEntity role) {
-        this.updateById(role);
-
-        //检查权限是否越权
-        checkPrems(role);
-
-        //更新角色与菜单关系
-        sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
-        //保存角色与机构关系
-        sysRoleOrgService.saveOrUpdate(role.getRoleId(), role.getOrgNoList());
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteBatch(String[] roleIds) {
-        //删除角色
-        this.removeByIds(Arrays.asList(roleIds));
-
-        //删除角色与菜单关联
-        sysRoleMenuService.deleteBatch(roleIds);
-
-        //删除角色与用户关联
-        sysUserRoleService.deleteBatch(roleIds);
-
-        //删除角色与机构关联
-        sysRoleOrgService.deleteBatch(roleIds);
     }
 
     @Override
@@ -124,5 +71,78 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         if (!menuIdList.containsAll(role.getMenuIdList())) {
             throw new BusinessException("新增角色的权限，已超出你的权限范围");
         }
+    }
+
+    @Override
+    public SysRoleEntity getById(Serializable id){
+        return super.getById(id);
+    }
+
+    @Override
+    public List<SysRoleEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<SysRoleEntity> listPage(int current, int size, Map<String, Object> params) {
+        //排序
+        params.put("sidx", "t.create_time");
+        params.put("asc", false);
+        Page<SysRoleEntity> page = new Query<SysRoleEntity>(current,size,params).getPage();
+        List<SysRoleEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<SysRoleEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addEntity(SysRoleEntity role) {
+        role.setCreateTime(new Date());
+        this.save(role);
+
+        //检查权限是否越权
+        this.checkPrems(role);
+
+        //保存角色与菜单关系
+        sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
+
+        //保存角色与机构关系
+        sysRoleOrgService.saveOrUpdate(role.getRoleId(), role.getOrgNoList());
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateEntity(SysRoleEntity role) {
+        this.updateById(role);
+
+        //检查权限是否越权
+        this.checkPrems(role);
+
+        //更新角色与菜单关系
+        sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
+        //保存角色与机构关系
+        sysRoleOrgService.saveOrUpdate(role.getRoleId(), role.getOrgNoList());
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] roleIds) {
+        //删除角色与菜单关联
+        sysRoleMenuService.deleteBatch(roleIds);
+
+        //删除角色与用户关联
+        sysUserRoleService.deleteBatch(roleIds);
+
+        //删除角色与机构关联
+        sysRoleOrgService.deleteBatch(roleIds);
+        //删除角色
+        return this.removeByIds(Arrays.asList(roleIds));
     }
 }

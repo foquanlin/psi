@@ -11,8 +11,8 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.service.SysLogService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +44,8 @@ public class SysLogController {
     @ResponseBody
     @GetMapping("/list")
     @RequiresPermissions("sys:log:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        IPage page = sysLogService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = sysLogService.listPage(current,size,params);
 
         return RestResponse.success().put("page", page);
     }

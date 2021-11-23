@@ -11,7 +11,6 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.RestResponse;
@@ -19,6 +18,7 @@ import com.tongyi.common.validator.AbstractAssert;
 import com.tongyi.common.validator.ValidatorUtils;
 import com.tongyi.common.validator.group.AddGroup;
 import com.tongyi.common.validator.group.UpdateGroup;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import com.tongyi.modules.sys.form.PasswordForm;
 import com.tongyi.modules.sys.service.SysUserRoleService;
@@ -55,7 +55,7 @@ public class SysUserController extends AbstractController {
     @RequestMapping("/queryAll")
     @RequiresPermissions("sys:dict:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
-        List<SysUserEntity> list = sysUserService.queryAll(params);
+        List<SysUserEntity> list = sysUserService.listAll(params);
 
         return RestResponse.success().put("list", list);
     }
@@ -68,12 +68,12 @@ public class SysUserController extends AbstractController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:user:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
 
         //如需数据权限，在参数中添加DataScope
         params.put("dataScope", getDataScope());
 
-        Page page = sysUserService.queryPage(params);
+        PageInfo page = sysUserService.listPage(current,size,params);
 
         return RestResponse.success().put("page", page);
     }
@@ -148,7 +148,7 @@ public class SysUserController extends AbstractController {
 
         user.setCreateUserId(getUserId());
         user.setCreateUserOrgNo(getOrgNo());
-        sysUserService.add(user, params);
+        sysUserService.addEntity(user, params);
 
         return RestResponse.success();
     }
@@ -170,7 +170,7 @@ public class SysUserController extends AbstractController {
 
         user.setCreateUserId(getUserId());
         user.setCreateUserOrgNo(getOrgNo());
-        sysUserService.update(user, params);
+        sysUserService.updateEntity(user, params);
 
         return RestResponse.success();
     }

@@ -14,14 +14,16 @@ package com.tongyi.modules.sys.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysDictGroupDao;
 import com.tongyi.modules.sys.entity.SysDictGroupEntity;
 import com.tongyi.modules.sys.service.SysDictGroupService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,39 +36,57 @@ import java.util.Map;
 public class SysDictGroupServiceImpl extends ServiceImpl<SysDictGroupDao, SysDictGroupEntity> implements SysDictGroupService {
 
     @Override
-    public List<SysDictGroupEntity> queryAll(Map<String, Object> params) {
-        return baseMapper.queryAll(params);
+    public SysDictGroupEntity getById(Serializable id){
+        return super.getById(id);
     }
 
     @Override
-    public Page queryPage(Map<String, Object> params) {
+    public List<SysDictGroupEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<SysDictGroupEntity> listPage(int current, int size, Map<String, Object> params) {
         //排序
         params.put("sidx", "t.create_time");
         params.put("asc", false);
-        Page<SysDictGroupEntity> page = new Query<SysDictGroupEntity>(params).getPage();
-        return page.setRecords(baseMapper.selectSysDictGroupPage(page, params));
-    }
-
-    @Override
-    public void add(SysDictGroupEntity sysDictGroup) {
-        sysDictGroup.setCreateTime(new Date());
-        this.save(sysDictGroup);
+        Page<SysDictGroupEntity> page = new Query<SysDictGroupEntity>(current,size,params).getPage();
+        List<SysDictGroupEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<SysDictGroupEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(SysDictGroupEntity sysDictGroup) {
-        this.updateById(sysDictGroup);
-    }
-
-    @Override
-    public void delete(String id) {
-        this.removeById(id);
+    public boolean addEntity(SysDictGroupEntity entity) {
+        return super.save(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBatch(String[] ids) {
-        this.removeByIds(Arrays.asList(ids));
+    public boolean updateEntity(SysDictGroupEntity entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] ids) {
+        return super.removeByIds(Arrays.asList(ids));
+    }
+
+    @Override
+    public SysDictGroupEntity getByCode(String code) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("code",code);
+        List<SysDictGroupEntity> list = super.baseMapper.listAll(params);
+        if (null!=list && !list.isEmpty()){
+            return list.get(0);
+        }
+        return null;
     }
 }

@@ -11,12 +11,8 @@
  */
 package com.tongyi.modules.sys.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
 import com.tongyi.modules.sys.entity.SysDictGroupEntity;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 数据字典分组Service接口
@@ -25,47 +21,5 @@ import java.util.Map;
  */
 public interface SysDictGroupService extends IService<SysDictGroupEntity> {
 
-    /**
-     * 查看所有列表
-     *
-     * @param params 查询参数
-     * @return List
-     */
-    List<SysDictGroupEntity> queryAll(Map<String, Object> params);
-
-    /**
-     * 分页查询
-     *
-     * @param params 查询参数
-     * @return Page
-     */
-    Page queryPage(Map<String, Object> params);
-
-    /**
-     * 新增实体
-     *
-     * @param sysDictGroup 实体
-     */
-    void add(SysDictGroupEntity sysDictGroup);
-
-    /**
-     * 根据主键更新实体
-     *
-     * @param sysDictGroup 实体
-     */
-    void update(SysDictGroupEntity sysDictGroup);
-
-    /**
-     * 根据主键删除
-     *
-     * @param id 主键
-     */
-    void delete(String id);
-
-    /**
-     * 根据主键批量删除
-     *
-     * @param ids ids
-     */
-    void deleteBatch(String[] ids);
+    SysDictGroupEntity getByCode(String code);
 }

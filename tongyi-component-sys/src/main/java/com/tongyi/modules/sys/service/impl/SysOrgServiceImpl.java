@@ -11,14 +11,18 @@
  */
 package com.tongyi.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.StringUtils;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysOrgDao;
 import com.tongyi.modules.sys.entity.SysOrgEntity;
 import com.tongyi.modules.sys.service.SysOrgService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -33,14 +37,25 @@ import java.util.Map;
 public class SysOrgServiceImpl extends ServiceImpl<SysOrgDao, SysOrgEntity> implements SysOrgService {
 
     @Override
-    public List<SysOrgEntity> queryAll(Map<String, Object> params) {
-        return baseMapper.queryAll(params);
+    public SysOrgEntity getById(Serializable id){
+        return super.getById(id);
+    }
+
+    @Override
+    public List<SysOrgEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<SysOrgEntity> listPage(int current, int size, Map<String, Object> params) {
+        Page<SysOrgEntity> page = new Query<SysOrgEntity>(current,size,params).getPage();
+        List<SysOrgEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<SysOrgEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void add(SysOrgEntity sysOrg) {
-
+    public boolean addEntity(SysOrgEntity sysOrg) {
         String parentNo = sysOrg.getParentNo();
 
         String maxId = baseMapper.queryMaxIdByParentNo(parentNo);
@@ -51,30 +66,30 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgDao, SysOrgEntity> impl
         sysOrg.setOrgType(orgType);
         sysOrg.setCreateTime(new Date());
 
-        baseMapper.insert(sysOrg);
+        return super.save(sysOrg);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(SysOrgEntity sysOrg) {
+    public boolean updateEntity(SysOrgEntity sysOrg) {
         String orgNo = sysOrg.getOrgNo();
 
         int orgType = getOrgType(orgNo);
         sysOrg.setOrgType(orgType);
 
-        this.updateById(sysOrg);
+        return super.updateById(sysOrg);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String orgNo) {
-        this.removeById(orgNo);
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBatch(String[] orgNos) {
-        this.removeByIds(Arrays.asList(orgNos));
+    public boolean deleteBatch(Serializable[] ids) {
+        return super.removeByIds(Arrays.asList(ids));
     }
 
     @Override

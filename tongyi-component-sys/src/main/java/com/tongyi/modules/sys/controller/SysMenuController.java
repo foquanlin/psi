@@ -11,7 +11,6 @@
  */
 package com.tongyi.modules.sys.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Constant;
@@ -64,9 +63,9 @@ public class SysMenuController extends AbstractController {
 
         Map<String, Object> map = new HashMap<>(2);
 
-        List<SysDictEntity> dictList = sysDictService.queryAll(map);
-        List<SysOrgEntity> orgList = orgService.list();
-        List<SysUserEntity> userList = userService.list(new QueryWrapper<SysUserEntity>().select("USER_ID,REAL_NAME"));
+        List<SysDictEntity> dictList = sysDictService.listAll(map);
+        List<SysOrgEntity> orgList = orgService.listAll(new HashMap<String,Object>());
+        List<SysUserEntity> userList = userService.selectField("user_id,real_name");
         return RestResponse.success()
                 .put("menuList", menuList)
                 .put("permissions", permissions)
@@ -136,7 +135,7 @@ public class SysMenuController extends AbstractController {
         //数据校验
         verifyForm(menu);
 
-        sysMenuService.add(menu);
+        sysMenuService.addEntity(menu);
 
         return RestResponse.success();
     }
@@ -153,9 +152,9 @@ public class SysMenuController extends AbstractController {
     public RestResponse update(@RequestBody SysMenuEntity menu) {
         ValidatorUtils.validateEntity(menu, UpdateGroup.class);
         //数据校验
-        verifyForm(menu);
+        this.verifyForm(menu);
 
-        sysMenuService.updateById(menu);
+        sysMenuService.updateEntity(menu);
 
         return RestResponse.success();
     }
@@ -177,7 +176,7 @@ public class SysMenuController extends AbstractController {
             return RestResponse.error("请先删除子菜单或按钮");
         }
 
-        sysMenuService.delete(menuId);
+        sysMenuService.deleteEntity(menuId);
 
         return RestResponse.success();
     }

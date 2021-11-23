@@ -37,12 +37,12 @@ public interface SysDictDao extends BaseMapper<SysDictEntity> {
     List<SysDictEntity> queryByCode(Map<String, Object> params);
 
     /**
-     * 查询所有数据字典
+     * 查询所有列表
      *
      * @param params 查询参数
      * @return List
      */
-    List<SysDictEntity> queryAll(@Param("params") Map<String, Object> params);
+    List<SysDictEntity> listAll(@Param("params") Map<String, Object> params);
 
     /**
      * 自定义分页查询
@@ -51,5 +51,5 @@ public interface SysDictDao extends BaseMapper<SysDictEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<SysDictEntity> selectDictPage(IPage page, @Param("params") Map<String, Object> params);
+    List<SysDictEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

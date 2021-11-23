@@ -18,4 +18,32 @@
         from sys_config t
         where t.param_key = #{paramKey}
 	</select>
+
+    <sql id="selectSql">
+        select
+        t.id,
+        t.param_key,
+        t.param_value,
+        t.status,
+        t.remark
+        from sys_config t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.paramKey != null and params.paramKey.trim() != ''">
+                and t.param_key = #{params.paramKey}
+            </if>
+            <if test="params.status != null and params.status.trim() != ''">
+                and t.status = #{params.status}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysConfigEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysConfigEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
 </mapper>

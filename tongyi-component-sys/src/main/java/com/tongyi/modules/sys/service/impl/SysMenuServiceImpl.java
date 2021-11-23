@@ -12,9 +12,12 @@
 package com.tongyi.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Constant;
+import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.StringUtils;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysMenuDao;
 import com.tongyi.modules.sys.entity.SysMenuEntity;
 import com.tongyi.modules.sys.service.MenuType;
@@ -23,11 +26,10 @@ import com.tongyi.modules.sys.service.SysRoleMenuService;
 import com.tongyi.modules.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author 林佛权
@@ -57,7 +59,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
 
     @Override
     public List<SysMenuEntity> queryListParentId(String parentId) {
-        return baseMapper.selectList(new QueryWrapper<SysMenuEntity>().eq("PARENT_ID", parentId).eq("SHOWS","1").orderByAsc("ORDER_NUM"));
+        return baseMapper.selectList(new QueryWrapper<SysMenuEntity>().eq("parent_id", parentId).eq("shows","1").orderByAsc("order_num"));
     }
 
     @Override
@@ -78,27 +80,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     }
 
     @Override
-    public boolean delete(String menuId) {
-        //删除菜单
-        this.removeById(menuId);
-        //删除菜单与角色关联
-        Map<String, Object> map = new HashMap<>(2);
-        map.put("menu_id", menuId);
-        return sysRoleMenuService.removeByMap(map);
-    }
-
-    @Override
     public List<SysMenuEntity> queryList() {
         return baseMapper.queryList();
-    }
-
-    @Override
-    public boolean add(SysMenuEntity menu) {
-        String parentId = menu.getParentId();
-        String maxId = baseMapper.queryMaxIdByParentId(parentId);
-
-        menu.setMenuId(StringUtils.addOne(parentId, maxId));
-        return this.save(menu);
     }
 
     /**
@@ -128,5 +111,55 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
         }
 
         return subMenuList;
+    }
+
+    @Override
+    public SysMenuEntity getById(Serializable id){
+        return super.getById(id);
+    }
+
+    @Override
+    public List<SysMenuEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<SysMenuEntity> listPage(int current, int size, Map<String, Object> params) {
+        Page<SysMenuEntity> page = new Query<SysMenuEntity>(current,size,params).getPage();
+        List<SysMenuEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<SysMenuEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addEntity(SysMenuEntity menu) {
+        String parentId = menu.getParentId();
+        String maxId = baseMapper.queryMaxIdByParentId(parentId);
+
+        menu.setMenuId(StringUtils.addOne(parentId, maxId));
+        return super.save(menu);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateEntity(SysMenuEntity entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable menuId) {
+        //删除菜单
+        this.removeById(menuId);
+        //删除菜单与角色关联
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("menu_id", menuId);
+        return sysRoleMenuService.removeByMap(map);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] ids) {
+        return super.removeByIds(Arrays.asList(ids));
     }
 }

@@ -1,6 +1,6 @@
 package com.tongyi.modules.sys.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
 import com.tongyi.modules.sys.entity.SysRoleOrgEntity;
 
 import java.util.List;
@@ -36,12 +36,4 @@ public interface SysRoleOrgService extends IService<SysRoleOrgEntity> {
      * @return String
      */
     String queryOrgNoListByUserId(String userId);
-
-    /**
-     * 根据角色ID数组，批量删除
-     *
-     * @param roleIds 角色ids
-     * @return int
-     */
-    int deleteBatch(String[] roleIds);
 }

@@ -43,7 +43,7 @@ public class SysOrgController extends AbstractController {
     @RequestMapping("/queryAll")
     @RequiresPermissions("sys:org:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
-        List<SysOrgEntity> list = sysOrgService.queryAll(params);
+        List<SysOrgEntity> list = sysOrgService.listAll(params);
 
         return RestResponse.success().put("list", list);
     }
@@ -74,7 +74,7 @@ public class SysOrgController extends AbstractController {
     public RestResponse save(@RequestBody SysOrgEntity sysOrg) {
         SysUserEntity user = getUser();
         sysOrg.setCreateUserId(user.getUserId());
-        sysOrgService.add(sysOrg);
+        sysOrgService.addEntity(sysOrg);
         return RestResponse.success();
     }
 
@@ -88,7 +88,7 @@ public class SysOrgController extends AbstractController {
     @RequestMapping("/update")
     @RequiresPermissions("sys:org:update")
     public RestResponse update(@RequestBody SysOrgEntity sysOrg) {
-        sysOrgService.update(sysOrg);
+        sysOrgService.updateEntity(sysOrg);
         return RestResponse.success();
     }
 
@@ -107,7 +107,7 @@ public class SysOrgController extends AbstractController {
         if (sysOrgEntities.size() > 0) {
             return RestResponse.error("请先删除子机构");
         } else {
-            sysOrgService.delete(orgNo);
+            sysOrgService.deleteEntity(orgNo);
         }
         return RestResponse.success();
     }

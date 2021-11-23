@@ -7,9 +7,10 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.sys.controller;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.entity.SysNationEntity;
 import com.tongyi.modules.sys.service.SysNationService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -40,7 +41,7 @@ public class SysNationController extends AbstractController {
     @RequestMapping("/queryAll")
     @RequiresPermissions("sys:nation:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
-        List<SysNationEntity> list = sysNationService.queryAll(params);
+        List<SysNationEntity> list = sysNationService.listAll(params);
 
         return RestResponse.success().put("list", list);
     }
@@ -53,8 +54,8 @@ public class SysNationController extends AbstractController {
      */
     @GetMapping("/list")
     @RequiresPermissions("sys:nation:list")
-    public RestResponse list(@RequestParam Map<String, Object> params) {
-        Page page = sysNationService.queryPage(params);
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = sysNationService.listPage(current, size, params);
 
         return RestResponse.success().put("page", page);
     }
@@ -84,7 +85,7 @@ public class SysNationController extends AbstractController {
     @RequiresPermissions("sys:nation:save")
     public RestResponse save(@RequestBody SysNationEntity sysNation) {
 
-        sysNationService.add(sysNation);
+        sysNationService.addEntity(sysNation);
 
         return RestResponse.success();
     }
@@ -100,7 +101,7 @@ public class SysNationController extends AbstractController {
     @RequiresPermissions("sys:nation:update")
     public RestResponse update(@RequestBody SysNationEntity sysNation) {
 
-        sysNationService.update(sysNation);
+        sysNationService.updateEntity(sysNation);
 
         return RestResponse.success();
     }

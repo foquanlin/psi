@@ -12,7 +12,9 @@
 package com.tongyi.modules.sys.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.tongyi.modules.sys.entity.SysRoleOrgEntity;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -44,20 +46,21 @@ public interface SysUserDao extends BaseMapper<SysUserEntity> {
      */
     List<String> queryAllMenuId(String userId);
 
+
     /**
-     * 分页查询
+     * 查询所有列表
+     *
+     * @param params 查询参数
+     * @return List
+     */
+    List<SysUserEntity> listAll(@Param("params") Map<String, Object> params);
+
+    /**
+     * 自定义分页查询
      *
      * @param page   分页参数
      * @param params 查询参数
      * @return List
      */
-    List<SysUserEntity> selectListPage(Page<SysUserEntity> page, @Param("params") Map<String, Object> params);
-
-    /**
-     * 查询所有
-     *
-     * @param params 查询参数
-     * @return List
-     */
-    List<SysUserEntity> selectListPage(@Param("params") Map<String, Object> params);
+    List<SysUserEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 }

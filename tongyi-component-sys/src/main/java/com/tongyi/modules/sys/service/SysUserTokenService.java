@@ -11,11 +11,8 @@
  */
 package com.tongyi.modules.sys.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.tongyi.core.IService;
 import com.tongyi.modules.sys.entity.SysUserTokenEntity;
-
-import java.util.Map;
 
 /**
  * 用户Token
@@ -38,21 +35,6 @@ public interface SysUserTokenService extends IService<SysUserTokenEntity> {
      * @param userId 用户Id
      */
     void logout(String userId);
-
-    /**
-     * 分页查询
-     *
-     * @param params 查询参数
-     * @return Page
-     */
-    Page queryPage(Map<String, Object> params);
-
-    /**
-     * 根据主键删除
-     *
-     * @param userId 用户Id
-     */
-    void delete(String userId);
 
     /**
      * 批量下线用户(删除用户token记录)

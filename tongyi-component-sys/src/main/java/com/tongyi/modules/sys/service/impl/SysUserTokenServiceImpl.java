@@ -17,14 +17,17 @@ import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.TokenGenerator;
+import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysUserTokenDao;
 import com.tongyi.modules.sys.entity.SysUserTokenEntity;
 import com.tongyi.modules.sys.service.SysUserTokenService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,8 +35,6 @@ import java.util.Map;
  */
 @Service("sysUserTokenService")
 public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUserTokenEntity> implements SysUserTokenService {
-
-
     @Override
     public String createToken(String userId) {
         //生成一个token
@@ -90,22 +91,50 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
     }
 
     @Override
-    public Page queryPage(Map<String, Object> params) {
-        Page<SysUserTokenEntity> page = new Query<SysUserTokenEntity>(params).getPage();
-
-        params.put("nowDate", new Date());
-        return page.setRecords(baseMapper.selectSysUserTokenPage(page, params));
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void delete(String userId) {
-        this.removeById(userId);
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public void offlineBatch(String[] userIds) {
         this.removeByIds(Arrays.asList(userIds));
+    }
+
+    @Override
+    public SysUserTokenEntity getById(Serializable id){
+        return super.getById(id);
+    }
+
+    @Override
+    public List<SysUserTokenEntity> listAll(Map<String, Object> params) {
+        return super.baseMapper.listAll(params);
+    }
+
+    @Override
+    public PageInfo<SysUserTokenEntity> listPage(int current, int size, Map<String, Object> params) {
+        params.put("nowDate", new Date());
+        Page<SysUserTokenEntity> page = new Query<SysUserTokenEntity>(current,size,params).getPage();
+        List<SysUserTokenEntity> list = super.baseMapper.listPage(page, params);
+        return new PageInfo<SysUserTokenEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addEntity(SysUserTokenEntity entity) {
+        return super.save(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateEntity(SysUserTokenEntity entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteEntity(Serializable id) {
+        return super.removeById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatch(Serializable[] ids) {
+        return super.removeByIds(Arrays.asList(ids));
     }
 }
