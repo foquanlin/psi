@@ -37,14 +37,6 @@ public interface SysOrgDao extends BaseMapper<SysOrgEntity> {
     String queryMaxIdByParentNo(String orgNo);
 
     /**
-     * 查询所有列表
-     *
-     * @param params 查询参数
-     * @return List
-     */
-    List<SysOrgEntity> queryAll(Map<String, Object> params);
-
-    /**
      * 根据orgNo查询所有下级列表
      *
      * @param orgNo 机构编码

@@ -19,20 +19,27 @@
 		so.org_name parent_name
 		from sys_org o
 		left join sys_org so on o.parent_no = so.org_no
-		where 1=1
-		<if test="orgName != null and orgName.trim() != ''">
-			and o.org_name like '%${orgName}%'
-		</if>
-		<if test="orgType != null">
-			and o.org_type = #{orgType}
-		</if>
-		<if test="parentName != null and parentName.trim() != ''">
-			and so.org_name like '%${parentName}%'
-		</if>
 	</sql>
-
-	<select id="queryAll" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
+	<sql id="selectWhere">
+		<where>
+			<if test="orgName != null and orgName.trim() != ''">
+				and o.org_name like '%${orgName}%'
+			</if>
+			<if test="orgType != null">
+				and o.org_type = #{orgType}
+			</if>
+			<if test="parentName != null and parentName.trim() != ''">
+				and so.org_name like '%${parentName}%'
+			</if>
+		</where>
+	</sql>
+	<select id="listAll" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
 		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+	<select id="listPage" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
 	</select>
 
 	<select id="selectChildrensByOrgNo" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
