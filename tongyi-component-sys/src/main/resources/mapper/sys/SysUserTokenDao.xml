@@ -18,17 +18,26 @@
         t.user_id,
         t.expire_time,
         t.update_time,
-        u.user_name user_name
+        u.user_name as user_name
         from sys_user_token t
         left join sys_user u on t.user_id = u.user_id
-        where 1=1 and t.expire_time > #{params.nowDate}
-        <if test="params.name != null and params.name.trim() != ''">
-            and u.real_name like '%${params.name}%'
-        </if>
     </sql>
-
-    <select id="selectSysUserTokenPage" resultType="com.tongyi.modules.sys.entity.SysUserTokenEntity">
+    <sql id="selectWhere">
+        <where>
+            <if test="params.nowDate != null and params.nowDate.trim() != ''">
+                and t.expire_time > #{params.nowDate}
+            </if>
+            <if test="params.name != null and params.name.trim() != ''">
+                and u.real_name like '%${params.name}%'
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysUserTokenEntity">
         <include refid="selectSql"/>
+        <include refid="selectWhere"/>
     </select>
-
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysUserTokenEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
 </mapper>

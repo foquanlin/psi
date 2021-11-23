@@ -13,4 +13,33 @@
 	<select id="queryRoleIdList" resultType="string">
 		select role_id from sys_user_role where user_id = #{value}
 	</select>
+
+	<sql id="selectSql">
+		select
+		t.`id`,
+		t.`user_id`,
+		t.`role_id`
+		from `sys_user_role` t
+	</sql>
+	<sql id="selectWhere">
+		<where>
+			<if test="params.id != null and params.id.trim() != ''">
+				and t.id = #{params.id}
+			</if>
+			<if test="params.userId != null and params.userId.trim() != ''">
+				and t.user_id = #{params.userId}
+			</if>
+			<if test="params.roleId != null and params.roleId.trim() != ''">
+				and t.role_id = #{params.roleId}
+			</if>
+		</where>
+	</sql>
+	<select id="listPage" resultType="com.tongyi.modules.sys.entity.SysUserRoleEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+	<select id="listAll" resultType="com.tongyi.modules.sys.entity.SysUserRoleEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
 </mapper>

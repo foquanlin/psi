@@ -16,15 +16,41 @@
 			left join sys_role_menu rm on ur.role_id = rm.role_id
 		where ur.user_id = #{userId}
 	</select>
-	
-	<select id="selectListPage" resultType="com.tongyi.modules.sys.entity.SysUserEntity">
-		select t.user_id, t.sex, t.real_name, t.user_name, t.org_no, t.email_host,t.email_port, t.email, t.email_pw, t.mobile, t.status, t.create_time,t.create_user_id,t.create_user_org_no from sys_user t
-		where 1=1
-		<if test="params.userName != null and params.userName != ''">
-			and t.user_name like '%${params.userName}%'
-		</if>
-		<if test="params.orgNo != null and params.orgNo != ''">
-			and t.org_no = #{params.orgNo}
-		</if>
+
+	<sql id="selectSql">
+		select
+		t.user_id,
+		t.sex,
+		t.real_name,
+		t.user_name,
+		t.org_no,
+		t.email_host,
+		t.email_port,
+		t.email,
+		t.email_pw,
+		t.mobile,
+		t.status,
+		t.create_time,
+		t.create_user_id,
+		t.create_user_org_no
+		from sys_user t
+	</sql>
+	<sql id="selectWhere">
+		<where>
+			<if test="params.userName != null and params.userName != ''">
+				and t.user_name like '%${params.userName}%'
+			</if>
+			<if test="params.orgNo != null and params.orgNo != ''">
+				and t.org_no = #{params.orgNo}
+			</if>
+		</where>
+	</sql>
+	<select id="listPage" resultType="com.tongyi.modules.sys.entity.SysUserEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+	<select id="listAll" resultType="com.tongyi.modules.sys.entity.SysUserEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
 	</select>
 </mapper>

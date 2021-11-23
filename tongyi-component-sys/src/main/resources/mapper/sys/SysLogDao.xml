@@ -2,5 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tongyi.modules.sys.dao.SysLogDao">
-
+    <sql id="selectSql">
+        select `id`,
+        t.`user_name`,
+        t.`operation`,
+        t.`method`,
+        t.`params`,
+        t.`time`,
+        t.`ip`,
+        t.`create_time`
+        from sys_log t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.userName != null and params.userName.trim() != ''">
+                and t.userName = #{params.userName}
+            </if>
+            <if test="params.operation != null and params.operation.trim() != ''">
+                and t.operation = #{params.operation}
+            </if>
+            <if test="params.method != null and params.method.trim() != ''">
+                and t.method = #{params.method}
+            </if>
+            <if test="params.ip != null and params.ip.trim() != ''">
+                and t.ip = #{params.ip}
+            </if>
+            <if test="params.params != null and params.params.trim() != ''">
+                and t.params = #{params.params}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysLogEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysLogEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
 </mapper>

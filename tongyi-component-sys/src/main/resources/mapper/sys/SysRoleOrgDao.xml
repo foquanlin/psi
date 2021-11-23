@@ -20,4 +20,33 @@
     <select id="queryOrgNoListByUserId" resultType="string">
 		select org_no from sys_role_org where role_id in (select role_id from sys_user_role where user_id =  #{value})
 	</select>
+
+    <sql id="selectSql">
+        select
+        t.`id`,
+        t.`role_id`,
+        t.`org_no`
+        from `sys_role_org` t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id.trim() != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.roleId != null and params.roleId.trim() != ''">
+                and t.role_id = #{params.roleId}
+            </if>
+            <if test="params.orgNo != null and params.orgNo.trim() != ''">
+                and t.org_no = #{params.orgNo}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysRoleOrgEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysRoleOrgEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
 </mapper>

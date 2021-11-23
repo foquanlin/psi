@@ -7,6 +7,12 @@
 		select max(org_no) from sys_org where parent_no = #{parentNo}
 	</select>
 
+	<select id="selectChildrensByOrgNo" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
+		select
+		org_name
+		from sys_org where parent_no = #{orgNo}
+	</select>
+
 	<sql id="selectSql">
 		select o.org_no,
 		o.org_name,
@@ -40,11 +46,5 @@
 	<select id="listPage" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
 		<include refid="selectSql"/>
 		<include refid="selectWhere"/>
-	</select>
-
-	<select id="selectChildrensByOrgNo" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
-		select
-		org_name
-		from sys_org where parent_no = #{orgNo}
 	</select>
 </mapper>
