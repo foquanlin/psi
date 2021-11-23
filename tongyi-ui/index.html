@@ -8,14 +8,14 @@
   <% if (process.env.NODE_ENV === 'production') { %>
   <!-- 生产环境 -->
   <script>document.write('<script src="./config/index.js?t=' + new Date().getTime() + '"><\/script>')</script>
-<!--  <script>-->
-  <!--  (function () {-->
-  <!--    var hm = document.createElement('script')-->
-  <!--    hm.src = 'https://hm.baidu.com/hm.js?qw'-->
-  <!--    var s = document.getElementsByTagName('script')[0]-->
-  <!--    s.parentNode.insertBefore(hm, s)-->
-  <!--  })()-->
-  <!--</script>-->
+  <script>
+    (function () {
+      var hm = document.createElement('script')
+      hm.src = 'https://hm.baidu.com/hm.js?90cbda569f94a24f322488f182ca0f64'
+      var s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(hm, s)
+    })()
+  </script>
   <% }else { %>
   <!-- 开发环境 -->
   <link rel="shortcut icon" type="image/x-icon" href="./static/img/favicon.ico">
