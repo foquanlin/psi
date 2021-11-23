@@ -47,7 +47,7 @@ spring:
     version: 2.0.0
     contact:
       name: 联系我们
-      url: http://meilyhome.com
+      url: http://wxngrok.com
       email: foquanlin@163.com
   mail:
     default-encoding: utf-8
