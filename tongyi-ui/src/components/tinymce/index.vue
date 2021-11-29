@@ -1,10 +1,6 @@
 <template>
   <div class="tinymce-box">
-    <editor
-      v-model="myValue"
-      :init="init"
-      :disabled="disabled"
-      @click="onClick">
+    <editor v-model="myValue" :init="init" :disabled="disabled" @click="onClick"  @onExecCommand="onExecCommand">
     </editor>
   </div>
 </template>
@@ -88,14 +84,54 @@
             console.log(failure)
           }
         },
-        myValue: this.value
+        myValue: this.value,
+        uploading: false,
+        cosConfig: []
       }
     },
     mounted () {
-      console.log(window)
       tinymce.init({})
+      this.cosInit()
     },
     methods: {
+      cosInit () {
+        this.$http({
+          url: '/sys/oss/config',
+          method: 'get',
+          params: {}
+        }).then(({ data }) => {
+          if (data && data.code === 0) {
+            this.cosConfig = data.config
+          } else {
+            this.$message.error('请先配置云存储相关信息！')
+          }
+        })
+      },
+      onExecCommand (e) {
+        console.log(e)
+      },
+      uploadFile (file) {
+        this.uploading = true
+        return new Promise((resolve, reject) => {
+          let formData = new FormData()
+          formData.append('file', file)
+          this.$http({
+            url: '/sys/oss/upload',
+            method: 'post',
+            data: formData
+          }).then(({ data }) => {
+            console.log(data)
+            if (data && data.code === 0) {
+              this.$emit('uploaded', data.url)
+              resolve(data.url)
+            } else {
+              this.$message.error('文件上传失败：' + data.msg)
+              reject(data.msg)
+            }
+            this.uploading = false
+          }).catch(err => reject(err))
+        })
+      },
       // 添加相关的事件，可用的事件参照文档=> https://github.com/tinymce/tinymce-vue => All available events
       // 需要什么事件可以自己增加
       onClick (e) {
