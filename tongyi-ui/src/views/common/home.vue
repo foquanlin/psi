@@ -2,7 +2,7 @@
   <div class="mod-demo-echarts">
 <!--    <el-col :span="24">-->
 <!--      <el-card>-->
-<!--        <ueditor v-model="msg"></ueditor>-->
+<!--        <el-editor v-model="msg"></ueditor>-->
 <!--        {{msg}}-->
 <!--      </el-card>-->
 <!--    </el-col>-->
@@ -36,7 +36,7 @@
   export default {
     data () {
       return {
-        msg: '<h2><h2><img src="http://img.baidu.com/hi/face/i_f03.gif"/>Vue + UEditor + v-model双向绑定</h2></h2>',
+        msg: '<h2><h2><img src="http://img.baidu.com/hi/face/i_f03.gif"/>Vue + el-editor + v-model双向绑定</h2></h2>',
         chartLine: null,
         chartBar: null,
         chartPie: null,

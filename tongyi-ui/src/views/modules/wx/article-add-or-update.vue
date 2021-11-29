@@ -41,7 +41,7 @@
                     <OssUploader slot="append" @uploaded="dataForm.image=$event"></OssUploader>
                 </el-input>
             </el-form-item>
-            <ueditor v-model="dataForm.content"></ueditor>
+            <el-editor v-model="dataForm.content"></el-editor>
 <!--            <tinymce-editor ref="editor" v-model="dataForm.content"></tinymce-editor>-->
         </el-form>
         <div class="margin-top text-right">

@@ -46,7 +46,7 @@
                     </el-col>
                 </el-row>
                 <el-form-item label="内容" prop="content">
-                  <ueditor v-model="articles[selectedIndex].content"></ueditor>
+                  <el-editor v-model="articles[selectedIndex].content"></el-editor>
 <!--                    <tinymce-editor ref="editor" v-model="articles[selectedIndex].content"> </tinymce-editor>-->
                 </el-form-item>
             </el-form>

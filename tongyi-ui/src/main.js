@@ -23,17 +23,17 @@ import { isAuth, treeDataTranslate, transOrg, transUser, transDict, openImg, tra
 import cloneDeep from 'lodash/cloneDeep'
 import ElDict from './components/el-dict'
 import ElImg from './components/el-img'
-import Ueditor from './components/ueditor'
+import Tinymce from './components/tinymce'
 
 Vue.use(VueCookie)
 Vue.use(ElDict)
 Vue.use(ElImg)
-Vue.use(Ueditor)
 Vue.use(VueClipboard)
+Vue.use(Tinymce)
 
 Vue.component('el-dict', ElDict)
 Vue.component('el-img', ElImg)
-Vue.component('ueditor', Ueditor)
+Vue.component('el-editor', Tinymce)
 
 Vue.config.productionTip = false
 
