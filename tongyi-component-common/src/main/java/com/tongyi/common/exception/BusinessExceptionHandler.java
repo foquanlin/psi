@@ -11,14 +11,28 @@
  */
 package com.tongyi.common.exception;
 
+import com.google.gson.Gson;
 import com.tongyi.common.utils.RestResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.TreeMap;
 
 /**
  * 异常处理器
@@ -63,5 +77,81 @@ public class BusinessExceptionHandler {
     public RestResponse handleException(Exception e) {
         log.error(e.getMessage(), e);
         return RestResponse.error();
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public RestResponse methodNotSupportedHandler(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
+        log.error("url:{} -> 请求方式不正确:{},method:{}", request == null ? null : request.getRequestURL(),request == null ? null :request.getMethod(), e);
+        return RestResponse.error(500, e.getMessage());
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public RestResponse paramErrorHandler(Exception e, HttpServletRequest request) {
+        log.error("url:{} -> 参数异常:{}", request == null ? null : request.getRequestURL(), e);
+        return RestResponse.error(500, e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public RestResponse mismatchErrorHandler(MethodArgumentTypeMismatchException e) {
+        log.error("参数转换失败，方法：" + Objects.requireNonNull(e.getParameter().getMethod()).getName() + ",参数：" +
+                e.getName() + "，信息：" + e.getLocalizedMessage());
+        return RestResponse.error(500, e.getMessage());
+    }
+
+    /**
+     * 配合Assert使用，香
+     *
+     * @param e       e
+     * @param request request
+     * @return object
+     */
+    @ExceptionHandler({IllegalStateException.class, IllegalArgumentException.class})
+    public RestResponse handler(RuntimeException e, HttpServletRequest request) {
+        log.error("url:{} -> 业务异常:{}", request == null ? null : request.getRequestURL(), e);
+        return RestResponse.error(500, e.getMessage());
+    }
+
+    @ExceptionHandler
+    public RestResponse handler(Exception e, HttpServletRequest request) {
+        log.error("url:{} -> 错误:{}", request == null ? null : request.getRequestURL(), e);
+
+        Optional.ofNullable(request)
+                .ifPresent(r -> {
+                            TreeMap<String, String> reqMap = new TreeMap<>();
+                            for (Map.Entry<String, String[]> me : r.getParameterMap().entrySet()) {
+                                String key = me.getKey();
+                                String value = me.getValue()[0];
+                                reqMap.put(key, value);
+                            }
+                            log.error("入参:{}", new Gson().toJson(reqMap));
+                        }
+                );
+        return RestResponse.error(500, "服务器异常");
+    }
+
+    /**
+     * body参数
+     *
+     * @param e BindException
+     */
+    @ExceptionHandler(BindException.class)
+    public RestResponse handlerBindException(BindException e) {
+        StringBuilder msg = new StringBuilder();
+        FieldError c = e.getBindingResult().getFieldErrors().get(0);
+        msg.append(c.getDefaultMessage()).append(":").append(c.getRejectedValue());
+        return RestResponse.error(500, msg.toString());
+    }
+
+    /**
+     * 方法参数
+     *
+     * @param e ConstraintViolationException
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public RestResponse handlerConstraintViolationException(ConstraintViolationException e) {
+        StringBuilder msg = new StringBuilder();
+        ConstraintViolation<?> violation = e.getConstraintViolations().iterator().next();
+        msg.append(violation.getMessage()).append(":").append(violation.getInvalidValue());
+        return RestResponse.error(500, msg.toString());
     }
 }
