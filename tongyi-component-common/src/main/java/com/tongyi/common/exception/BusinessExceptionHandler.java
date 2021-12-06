@@ -73,11 +73,11 @@ public class BusinessExceptionHandler {
         return RestResponse.error("没有权限，请联系管理员授权");
     }
 
-    @ExceptionHandler(Exception.class)
-    public RestResponse handleException(Exception e) {
-        log.error(e.getMessage(), e);
-        return RestResponse.error();
-    }
+//    @ExceptionHandler(Exception.class)
+//    public RestResponse handleException(Exception e) {
+//        log.error(e.getMessage(), e);
+//        return RestResponse.error();
+//    }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public RestResponse methodNotSupportedHandler(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
