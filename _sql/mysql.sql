@@ -641,7 +641,7 @@ create table `sys_user` (
 -- ----------------------------
 -- records of sys_user
 -- ----------------------------
-insert into `sys_user` values ('1', 'admin', '林佛权', 1, '01', 'yzcmcznvbxocrsz9dm8e', 'smtp.qq.com','25', '147657060@qq.com', '', '13794384396', '1', '9ec9750e709431dad22365cabc5c625482e574c74adaebba7dd02f1129e4ce1d', null, null, '2016-11-11 11:11:11');
+insert into `sys_user` values ('1', 'admin', '林佛权', 1, '01', 'yzcmcznvbxocrsz9dm8e', 'smtp.qq.com','25', '147657060@qq.com', '', '13794384396', '1', 'afeb21d897ac93b3df65f87f17786a35a27045174c98c10b608a37acba2cfac3', null, null, '2016-11-11 11:11:11');
 
 -- ----------------------------
 -- table structure for `sys_user_role`
