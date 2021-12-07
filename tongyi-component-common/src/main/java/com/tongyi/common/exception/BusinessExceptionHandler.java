@@ -73,12 +73,6 @@ public class BusinessExceptionHandler {
         return RestResponse.error("没有权限，请联系管理员授权");
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public RestResponse handleException(Exception e) {
-//        log.error(e.getMessage(), e);
-//        return RestResponse.error();
-//    }
-
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public RestResponse methodNotSupportedHandler(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
         log.error("url:{} -> 请求方式不正确:{},method:{}", request == null ? null : request.getRequestURL(),request == null ? null :request.getMethod(), e);
@@ -93,8 +87,7 @@ public class BusinessExceptionHandler {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public RestResponse mismatchErrorHandler(MethodArgumentTypeMismatchException e) {
-        log.error("参数转换失败，方法：" + Objects.requireNonNull(e.getParameter().getMethod()).getName() + ",参数：" +
-                e.getName() + "，信息：" + e.getLocalizedMessage());
+        log.error("参数转换失败，方法：{},参数：{}，信息：{}" ,Objects.requireNonNull(e.getParameter().getMethod()).getName() ,e.getName() , e.getMessage());
         return RestResponse.error(500, e.getMessage());
     }
 
@@ -114,18 +107,17 @@ public class BusinessExceptionHandler {
     @ExceptionHandler
     public RestResponse handler(Exception e, HttpServletRequest request) {
         log.error("url:{} -> 错误:{}", request == null ? null : request.getRequestURL(), e);
-
         Optional.ofNullable(request)
-                .ifPresent(r -> {
-                            TreeMap<String, String> reqMap = new TreeMap<>();
-                            for (Map.Entry<String, String[]> me : r.getParameterMap().entrySet()) {
-                                String key = me.getKey();
-                                String value = me.getValue()[0];
-                                reqMap.put(key, value);
-                            }
-                            log.error("入参:{}", new Gson().toJson(reqMap));
-                        }
-                );
+            .ifPresent(r -> {
+//                TreeMap<String, String> reqMap = new TreeMap<>();
+//                for (Map.Entry<String, String[]> me : r.getParameterMap().entrySet()) {
+//                    String key = me.getKey();
+//                    String value = me.getValue()[0];
+//                    reqMap.put(key, value);
+//                }
+                log.error("url:{} -> 错误:{},参数:{}", request == null ? null : request.getRequestURL(), e,new Gson().toJson(r.getParameterMap()));
+                }
+            );
         return RestResponse.error(500, "服务器异常");
     }
 
