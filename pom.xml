@@ -92,6 +92,7 @@
         <module>tongyi-component-wechatmp</module>
         <module>tongyi-component-alibaba</module>
         <module>tongyi-component-alipay</module>
+        <module>tongyi-component-tencentcloud</module>
         <module>tongyi-component-tester</module>
         <module>tongyi-component-starter-admin</module>
         <module>tongyi-component-starter-api</module>
