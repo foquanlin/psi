@@ -38,8 +38,8 @@
             and t.$column.columnName = $param
         </if>
 #elseif($column.attrType=='Date')
-    #set($sparam='${params.'+$column.attrname+'Start}')
-    #set($eparam='${params.'+$column.attrname+'End}')
+    #set($sparam='#{params.'+$column.attrname+'Start}')
+    #set($eparam='#{params.'+$column.attrname+'End}')
     #set($params=$column.attrname+'Start')
     #set($parame=$column.attrname+'End')
         <if test="params.$params != null and params.$parame != null">
