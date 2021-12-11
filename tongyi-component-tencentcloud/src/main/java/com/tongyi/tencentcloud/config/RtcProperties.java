@@ -52,6 +52,8 @@ public class RtcProperties {
     private boolean debug= false;
     private String language;
 
+    private String callbackKey = "kutian1234";
+
     public Credential newCredential(){
         Credential cred = new Credential(secretId, secretKey);
         return cred;
