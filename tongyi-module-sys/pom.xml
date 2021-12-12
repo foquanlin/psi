@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tongyi-component-sys</artifactId>
+    <artifactId>tongyi-module-sys</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0</version>
 
-    <name>tongyi-component-sys</name>
+    <name>tongyi-module-sys</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

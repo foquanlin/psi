@@ -80,22 +80,22 @@
         <module>tongyi-component-kafka</module>
         <module>tongyi-component-excel</module>
         <module>tongyi-component-mssql</module>
-        <module>tongyi-component-thirdstorage</module>
-        <module>tongyi-component-sms</module>
-        <module>tongyi-component-sys</module>
-        <module>tongyi-component-act</module>
-        <module>tongyi-component-job</module>
-        <module>tongyi-component-gencode</module>
-        <module>tongyi-component-mail</module>
         <module>tongyi-component-webconfig</module>
         <module>tongyi-component-shiro</module>
-        <module>tongyi-component-wechatmp</module>
         <module>tongyi-component-alibaba</module>
         <module>tongyi-component-alipay</module>
         <module>tongyi-component-tencentcloud</module>
         <module>tongyi-component-tester</module>
         <module>tongyi-component-starter-admin</module>
         <module>tongyi-component-starter-api</module>
+        <module>tongyi-module-thirdstorage</module>
+        <module>tongyi-module-sms</module>
+        <module>tongyi-module-sys</module>
+        <module>tongyi-module-act</module>
+        <module>tongyi-module-job</module>
+        <module>tongyi-module-gencode</module>
+        <module>tongyi-module-mail</module>
+        <module>tongyi-module-wechatmp</module>
     </modules>
 
     <dependencyManagement>

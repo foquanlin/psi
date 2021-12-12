@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tongyi-component-gencode</artifactId>
+    <artifactId>tongyi-module-gencode</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0</version>
 
-    <name>tongyi-component-gencode</name>
+    <name>tongyi-module-gencode</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
