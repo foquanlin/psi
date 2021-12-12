@@ -63,7 +63,7 @@ public class ${className}ServiceTest {
             item.set$column.attrName (id);
 #end
 #end
-            service.saveEntity(item);
+            service.addEntity(item);
         }
     }
 
@@ -89,7 +89,7 @@ public class ${className}ServiceTest {
         item.set$column.attrName (id);
 #end
 #end
-        service.saveEntity(item);
+        service.addEntity(item);
         service.updateEntity(item);
         service.getById(id);
         service.listAll(new HashMap<>());
