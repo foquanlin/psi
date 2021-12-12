@@ -13,9 +13,9 @@ package com.tongyi.datascope;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.ShiroUtils;
 import com.tongyi.common.utils.StringUtils;
+import com.tongyi.modules.sys.SysConstant;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -64,7 +64,7 @@ public class DataScopeInterceptor extends SqlExplainInterceptor implements Inter
             SysUserEntity user = ShiroUtils.getUserEntity();
             if (null != user) {
                 //如果不是超级管理员，则只能查询本机构及子机构数据
-                if (!Constant.SUPER_ADMIN.equals(user.getUserId())) {
+                if (!SysConstant.SUPER_ADMIN.equals(user.getUserId())) {
                     String userAlias = dataScope.getUserAlias();
                     String orgAlias = dataScope.getOrgAlias();
                     String alias = dataScope.getOrgNos();

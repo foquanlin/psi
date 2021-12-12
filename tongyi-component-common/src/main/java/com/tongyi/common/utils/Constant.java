@@ -21,40 +21,8 @@ public class Constant {
 
     public static final String SUCCESS = "SUCCESS";
     public static final String FAIL = "FAIL";
-    /**
-     *  请求header中的微信用户端源链接参数
-     */
-    public static final String WX_CLIENT_HREF_HEADER = "wx-client-href";
 
-    /**
-     * 当前页码
-     */
-    public static final String PAGE = "page";
-    /**
-     * 每页显示记录数
-     */
-    public static final String LIMIT = "limit";
-    /**
-     * 排序字段
-     */
-    public static final String ORDER_FIELD = "sidx";
-    /**
-     * 排序方式
-     */
-    public static final String ORDER = "order";
-    /**
-     *  升序
-     */
-    public static final String ASC = "asc";
 
-    /**
-     * 超级管理员ID
-     */
-    public static final String SUPER_ADMIN = "1";
-    /**
-     * 超级管理员所属机构
-     */
-    public static final String SUPER_ADMIN_ORG = "01";
 
     /**
      * 6小时后过期

@@ -12,13 +12,13 @@
 package com.tongyi.modules.sys.controller;
 
 import com.tongyi.common.annotation.SysLog;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.common.validator.AbstractAssert;
 import com.tongyi.common.validator.ValidatorUtils;
 import com.tongyi.common.validator.group.AddGroup;
 import com.tongyi.common.validator.group.UpdateGroup;
 import com.tongyi.core.PageInfo;
+import com.tongyi.modules.sys.SysConstant;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import com.tongyi.modules.sys.form.PasswordForm;
 import com.tongyi.modules.sys.service.SysUserRoleService;
@@ -185,7 +185,7 @@ public class SysUserController extends AbstractController {
     @PostMapping("/delete")
     @RequiresPermissions("sys:user:delete")
     public RestResponse delete(@RequestBody String[] userIds) {
-        if (ArrayUtils.contains(userIds, Constant.SUPER_ADMIN)) {
+        if (ArrayUtils.contains(userIds, SysConstant.SUPER_ADMIN)) {
             return RestResponse.error("系统管理员不能删除");
         }
 
@@ -208,7 +208,7 @@ public class SysUserController extends AbstractController {
     @PostMapping("/resetPw")
     @RequiresPermissions("sys:user:resetPw")
     public RestResponse resetPw(@RequestBody String[] userIds) {
-        if (ArrayUtils.contains(userIds, Constant.SUPER_ADMIN)) {
+        if (ArrayUtils.contains(userIds, SysConstant.SUPER_ADMIN)) {
             return RestResponse.error("系统管理员不能重置");
         }
 

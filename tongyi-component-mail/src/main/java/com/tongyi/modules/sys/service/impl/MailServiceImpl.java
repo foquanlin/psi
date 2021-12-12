@@ -11,8 +11,8 @@
  */
 package com.tongyi.modules.sys.service.impl;
 
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.ShiroUtils;
+import com.tongyi.modules.sys.SysConstant;
 import com.tongyi.modules.sys.service.MailService;
 import com.tongyi.modules.sys.entity.SysMailLogEntity;
 import com.tongyi.modules.sys.entity.SysUserEntity;
@@ -93,8 +93,8 @@ public class MailServiceImpl implements MailService {
                 log.info("邮件发送成功");
 
                 //保存发送日志
-                mailLogEntity.setCreateUserId(Constant.SUPER_ADMIN);
-                mailLogEntity.setCreateUserOrgNo(Constant.SUPER_ADMIN_ORG);
+                mailLogEntity.setCreateUserId(SysConstant.SUPER_ADMIN);
+                mailLogEntity.setCreateUserOrgNo(SysConstant.SUPER_ADMIN_ORG);
                 mailLogEntity.setSender(user.getEmail());
                 mailLogEntity.setType(SysMailLogEntity.USER_SEND);
                 result = true;
@@ -168,8 +168,8 @@ public class MailServiceImpl implements MailService {
                 senderImpl.send(message);
 
                 //保存发送日志
-                mailLogEntity.setCreateUserId(Constant.SUPER_ADMIN);
-                mailLogEntity.setCreateUserOrgNo(Constant.SUPER_ADMIN_ORG);
+                mailLogEntity.setCreateUserId(SysConstant.SUPER_ADMIN);
+                mailLogEntity.setCreateUserOrgNo(SysConstant.SUPER_ADMIN_ORG);
                 mailLogEntity.setSender(user.getEmail());
                 mailLogEntity.setType(SysMailLogEntity.USER_SEND);
                 result = true;
@@ -245,8 +245,8 @@ public class MailServiceImpl implements MailService {
                 log.info("嵌入静态资源的邮件已经发送。");
 
                 //保存发送日志
-                mailLogEntity.setCreateUserId(Constant.SUPER_ADMIN);
-                mailLogEntity.setCreateUserOrgNo(Constant.SUPER_ADMIN_ORG);
+                mailLogEntity.setCreateUserId(SysConstant.SUPER_ADMIN);
+                mailLogEntity.setCreateUserOrgNo(SysConstant.SUPER_ADMIN_ORG);
                 mailLogEntity.setSender(user.getEmail());
                 mailLogEntity.setType(SysMailLogEntity.USER_SEND);
                 result = true;

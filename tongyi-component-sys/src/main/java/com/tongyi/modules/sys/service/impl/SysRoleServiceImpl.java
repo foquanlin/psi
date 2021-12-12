@@ -14,9 +14,9 @@ package com.tongyi.modules.sys.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.exception.BusinessException;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.core.PageInfo;
+import com.tongyi.modules.sys.SysConstant;
 import com.tongyi.modules.sys.dao.SysRoleDao;
 import com.tongyi.modules.sys.dao.SysUserDao;
 import com.tongyi.modules.sys.entity.SysRoleEntity;
@@ -60,7 +60,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
      */
     private void checkPrems(SysRoleEntity role) {
         //如果不是超级管理员，则需要判断角色的权限是否超过自己的权限
-        if (Constant.SUPER_ADMIN.equals(role.getCreateUserId())) {
+        if (SysConstant.SUPER_ADMIN.equals(role.getCreateUserId())) {
             return;
         }
 

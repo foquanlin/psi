@@ -26,6 +26,11 @@ import java.util.UUID;
 @RequestMapping("/wxAuth")
 @RequiredArgsConstructor
 public class WxAuthController {
+    /**
+     *  请求header中的微信用户端源链接参数
+     */
+    public static final String WX_CLIENT_HREF_HEADER = "wx-client-href";
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final WxMpService wxMpService;
@@ -95,9 +100,9 @@ public class WxAuthController {
     public RestResponse getShareSignature(HttpServletRequest request, HttpServletResponse response,@CookieValue String appid) throws WxErrorException {
         this.wxMpService.switchoverTo(appid);
         // 1.拼接url（当前网页的URL，不包含#及其后面部分）
-        String wxShareUrl = request.getHeader(Constant.WX_CLIENT_HREF_HEADER);
+        String wxShareUrl = request.getHeader(WxAuthController.WX_CLIENT_HREF_HEADER);
         if (StringUtils.isEmpty(wxShareUrl)) {
-            return RestResponse.error("header中缺少"+ Constant.WX_CLIENT_HREF_HEADER+"参数，微信分享加载失败");
+            return RestResponse.error("header中缺少"+ WxAuthController.WX_CLIENT_HREF_HEADER+"参数，微信分享加载失败");
         }
         wxShareUrl = wxShareUrl.split("#")[0];
         Map<String, String> wxMap = new TreeMap<>();

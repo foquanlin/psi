@@ -13,7 +13,7 @@ package com.tongyi.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tongyi.common.utils.Constant;
+import com.tongyi.modules.sys.SysConstant;
 import com.tongyi.modules.sys.dao.SysMenuDao;
 import com.tongyi.modules.sys.dao.SysUserDao;
 import com.tongyi.modules.sys.dao.SysUserTokenDao;
@@ -42,7 +42,7 @@ public class ShiroServiceImpl extends ServiceImpl<SysUserTokenDao, SysUserTokenE
         List<String> permsList;
 
         //系统管理员，拥有最高权限
-        if (Constant.SUPER_ADMIN.equals(userId)) {
+        if (SysConstant.SUPER_ADMIN.equals(userId)) {
             List<SysMenuEntity> menuList = sysMenuDao.selectList(null);
             permsList = new ArrayList<>(menuList.size());
             for (SysMenuEntity menu : menuList) {

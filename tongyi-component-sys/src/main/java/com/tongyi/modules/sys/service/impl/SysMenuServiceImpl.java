@@ -14,10 +14,10 @@ package com.tongyi.modules.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.StringUtils;
 import com.tongyi.core.PageInfo;
+import com.tongyi.modules.sys.SysConstant;
 import com.tongyi.modules.sys.dao.SysMenuDao;
 import com.tongyi.modules.sys.entity.SysMenuEntity;
 import com.tongyi.modules.sys.service.MenuType;
@@ -70,7 +70,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
     @Override
     public List<SysMenuEntity> getUserMenuList(String userId) {
         //系统管理员，拥有最高权限
-        if (Constant.SUPER_ADMIN.equals(userId)) {
+        if (SysConstant.SUPER_ADMIN.equals(userId)) {
             return getAllMenuList(null);
         }
 
