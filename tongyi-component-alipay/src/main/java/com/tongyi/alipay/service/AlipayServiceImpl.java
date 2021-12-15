@@ -52,6 +52,7 @@ public class AlipayServiceImpl implements IAlipayService {
             throw new BusinessException("支付宝没有返回");
         }
         if (!"10000".equalsIgnoreCase(atpr.code)){
+            log.error("创建付款异常:code={},msg={}",atpr.subCode,atpr.subMsg);
             throw new BusinessException(String.format("[%s]%s",atpr.subCode,atpr.subMsg));
         }
 
@@ -69,6 +70,7 @@ public class AlipayServiceImpl implements IAlipayService {
             throw new BusinessException("支付宝没有返回");
         }
         if (!"10000".equalsIgnoreCase(rsp.code)){
+            log.error("扣款异常:code={},msg={}",rsp.subCode,rsp.subMsg);
             throw new BusinessException(String.format("[%s]%s",rsp.subCode,rsp.subMsg));
         }
     }
