@@ -8,6 +8,7 @@ import com.tongyi.alipay.config.AliPayProperties;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -43,7 +44,7 @@ public class AlipayServiceImpl implements IAlipayService {
         try {
             Client client = Factory.Payment.FaceToFace();
             atpr = client.preCreate(subject,outTradeNo,amount.setScale(2, RoundingMode.HALF_UP).toPlainString());
-            log.info("创建支付宝付款单:{}",atpr);
+            log.info("创建支付宝付款单:{}",ToStringBuilder.reflectionToString(atpr));
         } catch (Exception e) {
             log.error("支付宝接口异常:",e);
             throw new BusinessException("支付宝接口异常:",e.getCause());
@@ -61,7 +62,7 @@ public class AlipayServiceImpl implements IAlipayService {
             log.info("支付宝开始扣款:说明={},金额={},付款码={}",subject,amount.setScale(2, RoundingMode.HALF_UP).toPlainString(),authCode);
             Client client = Factory.Payment.FaceToFace();
             rsp = client.pay(subject,outTradeNo,amount.setScale(2, RoundingMode.HALF_UP).toPlainString(),authCode);
-            log.info("面对面支付完成:{}",rsp);
+            log.info("面对面支付完成:{}", ToStringBuilder.reflectionToString(rsp));
         } catch (Exception e) {
             log.error("支付宝接口异常:",e);
             throw new BusinessException("支付宝接口异常:",e.getCause());
