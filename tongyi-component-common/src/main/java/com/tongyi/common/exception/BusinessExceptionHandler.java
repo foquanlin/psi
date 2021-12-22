@@ -84,11 +84,10 @@ public class BusinessExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public RestResponse mismatchErrorHandler(MethodArgumentTypeMismatchException e) {
-        log.error("参数转换失败，方法：{},参数：{}，信息：{}" ,Objects.requireNonNull(e.getParameter().getMethod()).getName() ,e.getName() , e.getMessage());
+    public RestResponse mismatchErrorHandler(MethodArgumentTypeMismatchException e,HttpServletRequest request) {
+        log.error("参数转换失败，url:{},方法：{},参数：{}，信息：{}" ,request == null ? null : request.getRequestURL(),Objects.requireNonNull(e.getParameter().getMethod()).getName() ,e.getName() , e.getMessage());
         return RestResponse.error(500, e.getMessage());
     }
-
     /**
      * 配合Assert使用，香
      *
