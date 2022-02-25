@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <description>酷天后台管理系统</description>
-    
+
     <profiles>
         <profile>
             <id>dev</id>
@@ -136,6 +136,12 @@
 
     <build>
         <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
