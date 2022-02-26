@@ -53,4 +53,15 @@
             <version>${component.version}</version>
         </dependency>
     </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*Dao.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
 </project>
