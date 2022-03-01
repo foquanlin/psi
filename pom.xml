@@ -68,11 +68,11 @@
         <activiti.version>6.0.0</activiti.version>
         <batik.version>1.7</batik.version>
         <logstash.version>5.1</logstash.version>
-        <weixin-java-cp.version>3.9.0</weixin-java-cp.version>
-        <weixin-java-mp.version>3.9.0</weixin-java-mp.version>
-        <weixin-java-miniapp.version>3.9.0</weixin-java-miniapp.version>
-        <weixin-java-pay.version>3.9.0</weixin-java-pay.version>
-        <weixin-java-open.version>3.9.0</weixin-java-open.version>
+        <weixin-java-cp.version>4.2.0</weixin-java-cp.version>
+        <weixin-java-mp.version>4.2.0</weixin-java-mp.version>
+        <weixin-java-miniapp.version>4.2.0</weixin-java-miniapp.version>
+        <weixin-java-pay.version>4.2.0</weixin-java-pay.version>
+        <weixin-java-open.version>4.2.0</weixin-java-open.version>
         <alipay-sdk.version>3.7.110.ALL</alipay-sdk.version>
         <alipay-easysdk.version>2.2.1</alipay-easysdk.version>
         <dist.release.server>release-server</dist.release.server>
