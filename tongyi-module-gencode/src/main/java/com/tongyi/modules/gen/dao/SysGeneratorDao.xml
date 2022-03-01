@@ -44,7 +44,7 @@
 
 	<select id="queryColumns" resultType="com.tongyi.modules.gen.entity.ColumnEntity">
 		<if test="driverClassName != null and driverClassName == 'com.mysql.cj.jdbc.Driver'">
-			select ordinal_position,column_default,numeric_precision,numeric_scale,datetime_precision,is_nullable,column_name, data_type, column_comment comments, column_key, extra from information_schema.columns
+			select ordinal_position,column_default,numeric_precision,numeric_scale,datetime_precision,is_nullable,column_name, data_type, column_comment comments, column_key, extra,character_maximum_length as length from information_schema.columns
 				where table_name = #{tableName} and table_schema = (select database()) order by ordinal_position
 		</if>
 
