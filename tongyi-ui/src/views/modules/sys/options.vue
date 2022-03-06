@@ -120,6 +120,14 @@
       }
       let date = new Date(cellValue)
       return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
+    },
+    formatUrls (urls) {
+      let items = urls.split(',')
+      let list = []
+      for (let idx = 0; idx < items.length; idx++) {
+        list.push({url: items[idx]})
+      }
+      return list
     }
   }
 </script>
