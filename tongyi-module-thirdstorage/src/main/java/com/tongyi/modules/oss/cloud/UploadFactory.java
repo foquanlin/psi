@@ -23,11 +23,10 @@ import com.tongyi.modules.sys.service.SysConfigService;
 public final class UploadFactory {
     private static SysConfigService sysConfigService;
 
-    static {
-        UploadFactory.sysConfigService = (SysConfigService) SpringContextUtils.getBean("sysConfigService");
-    }
-
     public static AbstractCloudStorageService build() {
+        if (null == UploadFactory.sysConfigService) {
+            UploadFactory.sysConfigService = (SysConfigService) SpringContextUtils.getBean("sysConfigService");
+        }
         //获取云存储配置信息
         CloudStorageConfig config = sysConfigService.getConfigObject(SysConfigEntity.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
 
