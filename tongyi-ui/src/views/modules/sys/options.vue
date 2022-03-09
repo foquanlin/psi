@@ -122,6 +122,9 @@
       return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
     },
     formatUrls (urls) {
+      if (urls === undefined) {
+        return []
+      }
       let items = urls.split(',')
       let list = []
       for (let idx = 0; idx < items.length; idx++) {
