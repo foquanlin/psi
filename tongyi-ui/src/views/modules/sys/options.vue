@@ -125,7 +125,9 @@
       let items = urls.split(',')
       let list = []
       for (let idx = 0; idx < items.length; idx++) {
-        list.push({url: items[idx]})
+        if (items[idx] !== '') {
+          list.push({url: items[idx]})
+        }
       }
       return list
     }
