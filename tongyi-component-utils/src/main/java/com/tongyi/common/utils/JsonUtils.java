@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.TreeMap;
 
 /**
  * @author 林佛权
@@ -14,7 +15,9 @@ public class JsonUtils {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
-        return gson.toJson(obj);
+        String json = gson.toJson(obj);
+        TreeMap<String, Object> map = gson.fromJson(json, TreeMap.class);
+        return gson.toJson(map);
     }
 
     public static <T> T fromJson(String json,Class<T> t){
