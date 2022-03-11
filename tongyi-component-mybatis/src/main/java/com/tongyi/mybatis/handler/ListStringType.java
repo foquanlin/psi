@@ -1,6 +1,5 @@
 package com.tongyi.mybatis.handler;
 
-import com.tongyi.xbuilder.entity.EnumEntity;
 import org.apache.ibatis.type.MappedTypes;
 import org.apache.ibatis.type.TypeReference;
 
