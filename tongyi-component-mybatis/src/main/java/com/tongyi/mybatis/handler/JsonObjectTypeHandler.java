@@ -1,4 +1,4 @@
-package com.tongyi.common.handler;
+package com.tongyi.mybatis.handler;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @MappedJdbcTypes(JdbcType.VARCHAR)
-public class JSONObjectTypeHandler extends BaseTypeHandler<JsonObject> {
+public class JsonObjectTypeHandler extends BaseTypeHandler<JsonObject> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, JsonObject object, JdbcType jdbcType) throws SQLException {
         if (null==object){
