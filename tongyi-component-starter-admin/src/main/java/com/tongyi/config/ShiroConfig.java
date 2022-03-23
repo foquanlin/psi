@@ -70,6 +70,7 @@ public class ShiroConfig {
         filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/webSocket/**", "anon");
 
+        filterMap.put("/modeler.html", "anon");
         filterMap.put("/diagram-viewer/**", "anon");
         filterMap.put("/editor-app/**", "anon");
         filterMap.put("/service/**", "anon");
