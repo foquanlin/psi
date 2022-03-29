@@ -61,14 +61,14 @@
     data () {
       return {
         init: {
-          language_url: `/static/tinymce/langs/zh_CN.js`,
+          language_url: window.SITE_CONFIG.version + `/static/tinymce/langs/zh_CN.js`,
           language: 'zh_CN',
-          skin_url: `/static/tinymce/skins/ui/oxide`,
+          skin_url: window.SITE_CONFIG.version + `/static/tinymce/skins/ui/oxide`,
           // skin_url: 'tinymce/skins/ui/oxide-dark', // 暗色系
           convert_urls: false,
           height: 300,
           // content_css（为编辑区指定css文件）,加上就不显示字数统计了
-          content_css: `/static/tinymce/skins/content/default/content.css`,
+          content_css: window.SITE_CONFIG.version + `/static/tinymce/skins/content/default/content.css`,
           // （指定需加载的插件）
           plugins: this.plugins,
           toolbar: this.toolbar, // （自定义工具栏）
