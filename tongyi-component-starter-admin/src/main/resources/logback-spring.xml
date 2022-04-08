@@ -47,7 +47,7 @@
                 <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
             </encoder>
         </appender>
-        <root level="ERROR">
+        <root level="INFO">
             <!--            <appender-ref ref="LOGSTASH"/>-->
             <appender-ref ref="STDOUT"/>
             <appender-ref ref="FILE"/>
