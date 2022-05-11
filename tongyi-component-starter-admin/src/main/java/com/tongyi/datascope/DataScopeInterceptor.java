@@ -70,6 +70,9 @@ public class DataScopeInterceptor extends SqlExplainInterceptor implements Inter
                     String alias = dataScope.getOrgNos();
                     boolean self = dataScope.getSelf();
 
+                    if (filterSql.indexOf("where")==-1){
+                        filterSql.append(" where 1=1");
+                    }
                     if (StringUtils.isNotBlank(alias)) {
                         filterSql.append(" and (").append(orgAlias).append(" in (").append(alias).append(")");
                         if (self) {
