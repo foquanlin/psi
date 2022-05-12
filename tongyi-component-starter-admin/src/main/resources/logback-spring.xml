@@ -53,4 +53,32 @@
             <appender-ref ref="FILE"/>
         </root>
     </springProfile>
+
+    <!-- 开发、测试环境 -->
+    <springProfile name="test">
+        <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>127.0.0.1:9601</destination>
+            <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+        </appender>
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %boldYellow(%logger) - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/home/logs/admin.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="DEBUG">
+            <appender-ref ref="STDOUT"/>
+            <!--            <appender-ref ref="LOGSTASH"/>-->
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
 </configuration>
