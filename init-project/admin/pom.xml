@@ -32,12 +32,12 @@
         </dependency>
         <dependency>
             <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-sys</artifactId>
+            <artifactId>tongyi-module-sys</artifactId>
             <version>${component.version}</version>
         </dependency>
         <dependency>
             <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-gencode</artifactId>
+            <artifactId>tongyi-module-gencode</artifactId>
             <version>${component.version}</version>
         </dependency>
         <dependency>
