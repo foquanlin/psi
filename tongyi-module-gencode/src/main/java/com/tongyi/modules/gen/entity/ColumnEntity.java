@@ -54,7 +54,7 @@ public class ColumnEntity {
     private String datetimePrecision;
     private String isNullable;
     private boolean select;
-    private int length;
+    private long length;
     //ORDINAL_POSITION,COLUMN_DEFAULT,NUMERIC_PRECISION,NUMERIC_SCALE,DATETIME_PRECISION,IS_NULLABLE
 
     public String getOrdinalPosition() {
@@ -193,11 +193,11 @@ public class ColumnEntity {
         this.select = select;
     }
 
-    public int getLength() {
+    public long getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(long length) {
         this.length = length;
     }
 }
