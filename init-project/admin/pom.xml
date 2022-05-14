@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-thirdstorage</artifactId>
+            <artifactId>tongyi-module-thirdstorage</artifactId>
             <version>${component.version}</version>
         </dependency>
         <dependency>
