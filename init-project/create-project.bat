@@ -10,9 +10,10 @@ ECHO 开始创建项目 %~0
 
 
 xcopy /S/d/E admin ..\tongyi-%~1-admin\
-xcopy /S/d/E api\ ..\tongyi-%~1-api\
-xcopy /S/d/E core\ ..\tongyi-%~1-core\
-xcopy /S/d/E service\ ..\tongyi-%~1-service\
-
+xcopy /S/d/E api ..\tongyi-%~1-api\
+xcopy /S/d/E core ..\tongyi-%~1-core\
+xcopy /S/d/E service ..\tongyi-%~1-service\
+ECHO 创建完成 %~0
+ pause
 
 :END
