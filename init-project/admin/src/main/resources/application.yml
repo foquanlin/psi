@@ -143,7 +143,7 @@ qq:
 #    spbillCreateIp:  #APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
 #    baseNotifyUrl:  #支付回调通知地址
 
-platform:
+tongyi:
   file:
     path: file:D:/usr/local/nginx/html/upload/
 #logging:
