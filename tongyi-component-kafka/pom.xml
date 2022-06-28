@@ -20,6 +20,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <component.version>1.0.0</component.version>
+        <spring.kafka.version>2.8.7</spring.kafka.version>
+        <apache.kafka.version>2.4.1</apache.kafka.version>
     </properties>
 
     <dependencies>
@@ -32,12 +34,23 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>1.2.2.RELEASE</version>
+            <version>${spring.kafka.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.10</artifactId>
-            <version>0.10.0.1</version>
+            <artifactId>kafka_2.11</artifactId>
+            <version>${apache.kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 </project>

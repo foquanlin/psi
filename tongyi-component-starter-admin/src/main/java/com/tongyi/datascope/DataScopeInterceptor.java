@@ -12,7 +12,7 @@
 package com.tongyi.datascope;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
-import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
+//import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
 import com.tongyi.common.utils.ShiroUtils;
 import com.tongyi.common.utils.StringUtils;
 import com.tongyi.modules.sys.SysConstant;
@@ -37,13 +37,13 @@ import java.util.Properties;
  */
 @Slf4j
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
-public class DataScopeInterceptor extends SqlExplainInterceptor implements Interceptor {
+public class DataScopeInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         StatementHandler statementHandler = PluginUtils.realTarget(invocation.getTarget());
         MetaObject metaObject = SystemMetaObject.forObject(statementHandler);
-        this.sqlParser(metaObject);
+//        this.sqlParser(metaObject);
 
         // 不是SELECT操作直接返回
         MappedStatement mappedStatement = (MappedStatement) metaObject.getValue("delegate.mappedStatement");

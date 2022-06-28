@@ -2,7 +2,6 @@ package com.tongyi;
 
 import com.tongyi.alipay.config.AliPayProperties;
 import com.tongyi.alipay.service.AlipayServiceImpl;
-import org.junit.Test;
 
 import java.math.BigDecimal;
 

@@ -14,9 +14,17 @@ package com.tongyi.config;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 //import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+//import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.IllegalSQLInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 插件配置
@@ -31,10 +39,10 @@ public class MybatisPlusConfig {
      *
      * @return PaginationInterceptor
      */
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
-    }
+//    @Bean
+//    public PaginationInnerInterceptor paginationInterceptor() {
+//        return new PaginationInnerInterceptor();
+//    }
 
     /**
      * 逻辑删除插件
@@ -44,5 +52,18 @@ public class MybatisPlusConfig {
     @Bean
     public ISqlInjector sqlInjector() {
         return new DefaultSqlInjector();
+    }
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor(){
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+
+        List<InnerInterceptor> list = new ArrayList<>();
+        list.add(new BlockAttackInnerInterceptor());
+        list.add(new IllegalSQLInnerInterceptor());
+        list.add(new PaginationInnerInterceptor());
+        interceptor.setInterceptors(list);
+
+        return interceptor;
     }
 }

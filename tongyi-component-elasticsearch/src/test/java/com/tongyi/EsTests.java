@@ -13,7 +13,6 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.query.GetQuery;
 import org.springframework.data.elasticsearch.core.query.Query;
 
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class EsTests {
         System.out.println(exists);
 
         //通过id查询，已经废弃
-        User user = template.queryForObject(GetQuery.getById("1"), User.class);
+        User user = template.get("1", User.class);
         System.out.println(user);
 
         //和上一样

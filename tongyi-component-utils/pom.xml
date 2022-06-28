@@ -81,7 +81,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>20.0</version>
+            <version>${guava.version}</version>
         </dependency>
         <!-- commons工具包 -->
         <dependency>
@@ -136,7 +136,7 @@
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
-            <version>3.2.1</version>
+            <version>${zxing.version}</version>
         </dependency>
         <!-- lombok可使代码更简洁 -->
         <dependency>
@@ -154,17 +154,17 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>${jaxb.version}</version>
+            <version>${jaxb.api.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>${jaxb.version}</version>
+            <version>${jaxb.impl.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-core</artifactId>
-            <version>${jaxb.version}</version>
+            <version>${jaxb.core.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
@@ -185,13 +185,13 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.0.14.Final</version>
+            <version>${hibernate.validator.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 

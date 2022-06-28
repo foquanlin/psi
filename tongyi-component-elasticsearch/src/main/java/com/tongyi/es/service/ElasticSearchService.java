@@ -1,6 +1,6 @@
 package com.tongyi.es.service;
 
-import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.xcontent.XContentType;
 
 import java.util.List;
 import java.util.Map;

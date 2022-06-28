@@ -1,7 +1,7 @@
 package com.tongyi;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.apache.shiro.util.Assert;
+import org.junit.jupiter.api.Test;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -45,6 +45,5 @@ public class AppTest{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         System.out.println(sdf.parse("2020-06-25T16:00:00.000Z"));
-        Assert.assertTrue( true );
     }
 }
