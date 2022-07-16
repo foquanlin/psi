@@ -39,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -141,21 +142,13 @@ public class ActReModelServiceImpl extends ServiceImpl<ActReModelDao, ActReModel
     }
 
     @Override
-    public void export(String id, HttpServletResponse response) {
+    public BpmnModel getBpmModel(String id) {
         try {
             Model modelData = repositoryService.getModel(id);
             BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
             JsonNode editor = new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelData.getId()));
             BpmnModel bpmnModel = jsonConverter.convertToBpmnModel(editor);
-            BpmnXMLConverter xmlConverter = new BpmnXMLConverter();
-            byte[] bpmnBytes = xmlConverter.convertToXML(bpmnModel);
-
-            ByteArrayInputStream in = new ByteArrayInputStream(bpmnBytes);
-            IOUtils.copy(in, response.getOutputStream());
-            String filename = URLEncoder.encode(bpmnModel.getMainProcess().getName() + ".bpmn20.xml", "UTF-8");
-            response.setHeader("Content-Disposition", "attachment; filename="
-                    + filename);
-            response.flushBuffer();
+            return bpmnModel;
         } catch (Exception e) {
             throw new BusinessException("导出model的xml文件失败，模型ID=" + id, e);
         }

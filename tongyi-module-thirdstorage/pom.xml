@@ -65,6 +65,11 @@
             <artifactId>tongyi-component-mybatis</artifactId>
             <version>${component.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <resources>

@@ -12,16 +12,26 @@
 package com.tongyi.modules.act.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tongyi.common.annotation.SysLog;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.act.entity.ActReModelEntity;
 import com.tongyi.modules.act.service.ActReModelService;
+import org.activiti.bpmn.converter.BpmnXMLConverter;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.editor.language.json.converter.BpmnJsonConverter;
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Model;
+import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -33,6 +43,8 @@ import java.util.Map;
 public class ActReModelController {
     @Autowired
     private ActReModelService actReModelService;
+    @Autowired
+    private RepositoryService repositoryService;
 
     /**
      * 分页查询
@@ -90,7 +102,18 @@ public class ActReModelController {
      */
     @RequestMapping(value = "export")
     public void export(String id, HttpServletResponse response) {
-        actReModelService.export(id, response);
+        try {
+            BpmnModel bpmnModel = actReModelService.getBpmModel(id);
+            BpmnXMLConverter xmlConverter = new BpmnXMLConverter();
+            byte[] bpmnBytes = xmlConverter.convertToXML(bpmnModel);
+            ByteArrayInputStream in = new ByteArrayInputStream(bpmnBytes);
+            IOUtils.copy(in, response.getOutputStream());
+            String filename = URLEncoder.encode(bpmnModel.getMainProcess().getName() + ".bpmn20.xml", "UTF-8");
+            response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+            response.flushBuffer();
+        } catch (Exception e) {
+            throw new BusinessException("导出model的xml文件失败，模型ID=" + id, e);
+        }
     }
 
     /**
