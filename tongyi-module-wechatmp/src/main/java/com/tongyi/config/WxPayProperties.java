@@ -30,6 +30,7 @@ public class WxPayProperties {
      * 微信支付商户密钥
      */
     private String mchKey;
+    private String mchKey3;
 
     /**
      * 服务商模式下的子商户公众账号ID，普通模式请不要配置，请在配置文件中将对应项删除
@@ -45,6 +46,9 @@ public class WxPayProperties {
      * apiclient_cert.p12文件的绝对路径，或者如果放在项目中，请以classpath:开头指定
      */
     private String keyPath;
+
+    private String privateKeyPath;
+    private String privateCertPath;
 
     @Override
     public String toString() {

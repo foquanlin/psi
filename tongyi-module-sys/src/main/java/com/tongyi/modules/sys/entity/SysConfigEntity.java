@@ -11,6 +11,7 @@
  */
 package com.tongyi.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -34,7 +35,7 @@ public class SysConfigEntity implements Serializable {
      */
     public final static String CLOUD_STORAGE_CONFIG_KEY = "CLOUD_STORAGE_CONFIG_KEY";
 
-    @TableId
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     @NotBlank(message = "参数名不能为空")
     private String paramKey;

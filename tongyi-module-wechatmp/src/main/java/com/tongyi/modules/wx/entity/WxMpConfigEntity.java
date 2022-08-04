@@ -18,6 +18,7 @@
  */
 package com.tongyi.modules.wx.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -38,7 +39,7 @@ public class WxMpConfigEntity implements Serializable {
     /**
      * 
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     /**
      * 微信公众号appId

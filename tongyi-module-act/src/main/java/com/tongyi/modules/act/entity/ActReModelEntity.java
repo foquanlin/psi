@@ -11,6 +11,7 @@
  */
 package com.tongyi.modules.act.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -43,7 +44,7 @@ public class ActReModelEntity implements Serializable {
     /**
      *
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     /**
      * 乐观锁版本号

@@ -20,6 +20,7 @@ package com.tongyi.modules.wx.entity;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -40,7 +41,7 @@ public class WxMaConfigEntity implements Serializable {
     /**
      *
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     /**
      * 微信小程序appId

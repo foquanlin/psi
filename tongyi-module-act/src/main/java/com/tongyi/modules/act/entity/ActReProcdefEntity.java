@@ -11,6 +11,7 @@
  */
 package com.tongyi.modules.act.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -32,7 +33,7 @@ public class ActReProcdefEntity implements Serializable {
     /**
      * 流程ID，由“流程编号：流程版本号：自增长ID”组成
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     /**
      * 乐观锁版本号

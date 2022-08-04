@@ -11,6 +11,7 @@
  */
 package com.tongyi.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -32,7 +33,7 @@ import java.io.Serializable;
 public class SysDictEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @TableId
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     /**
      * 所属分组ID
