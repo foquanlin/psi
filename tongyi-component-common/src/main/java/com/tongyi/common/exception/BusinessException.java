@@ -11,8 +11,6 @@
  */
 package com.tongyi.common.exception;
 
-import org.springframework.http.HttpStatus;
-
 /**
  * 自定义异常
  *
@@ -22,7 +20,7 @@ public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     private String msg;
-    private int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
+    private int code = 500;
 
     public BusinessException(String msg) {
         super(msg);

@@ -1,6 +1,5 @@
 package com.tongyi.common.exception;
 
-import org.springframework.http.HttpStatus;
 
 /**
  * 惠州市酷天科技有限公司
@@ -10,7 +9,7 @@ import org.springframework.http.HttpStatus;
  */
 public class TongyiException extends Exception  {
     private String msg;
-    private int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
+    private int code = 500;
 
     public TongyiException(String msg) {
         super(msg);
