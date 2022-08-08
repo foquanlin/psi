@@ -54,6 +54,11 @@
             <version>${mybatisplus.extension.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>${mybatisplus.extension.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.tongyi</groupId>
             <artifactId>tongyi-component-utils</artifactId>
             <version>${component.version}</version>
