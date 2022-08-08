@@ -26,7 +26,6 @@ public class SwaggerResourceHandlerConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //swagger
-        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/static/swagger-ui/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
     }
 }
