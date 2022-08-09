@@ -42,6 +42,8 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: true
     static-path-pattern: /static/**
+    pathmatch:
+      matching-strategy: ant_path_matcher
   resources:
     add-mappings: false
   # 系统邮件配置一般不会有改动，所以采用硬编码

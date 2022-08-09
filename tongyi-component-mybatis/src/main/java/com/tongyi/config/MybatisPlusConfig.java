@@ -60,7 +60,7 @@ public class MybatisPlusConfig {
 
         List<InnerInterceptor> list = new ArrayList<>();
         list.add(new BlockAttackInnerInterceptor());
-        list.add(new IllegalSQLInnerInterceptor());
+//        list.add(new IllegalSQLInnerInterceptor());
         list.add(new PaginationInnerInterceptor());
         interceptor.setInterceptors(list);
 

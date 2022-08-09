@@ -37,6 +37,8 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: true
     static-path-pattern: /static/**
+    pathmatch:
+      matching-strategy: ant_path_matcher
   resources:
     add-mappings: false
   cache:
