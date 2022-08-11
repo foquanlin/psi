@@ -58,11 +58,13 @@ angular.module('activitiModeler')
                 groupArray.push(group);
                 return group;
             };
-
+            let modelId = $scope.editor.getModelMetaData().modelId
+            // console.log('-------------linfq---------------->')
+            // console.log(modelId)
             /*
              StencilSet items
              */
-            $http({method: 'GET', url: KISBPM.URL.getStencilSet()}).success(function (data, status, headers, config) {
+            $http({method: 'GET', url: KISBPM.URL.getStencilSet(modelId)}).success(function (data, status, headers, config) {
 
             	var quickMenuDefinition = ['UserTask', 'EndNoneEvent', 'ExclusiveGateway', 
             	                           'CatchTimerEvent', 'ThrowNoneEvent', 'TextAnnotation',

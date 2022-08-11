@@ -50,8 +50,8 @@ public class ActServiceController {
      *
      * @return stencilset.json
      */
-    @RequestMapping("/editor/stencilset")
-    public String getStencilset() {
+    @RequestMapping("/editor/stencilset/{modelId}")
+    public String getStencilset(@PathVariable("modelId")String modelId) {
         InputStream stencilsetStream = this.getClass().getResourceAsStream("/static/stencilset.json");
         try {
             return IOUtils.toString(stencilsetStream, "utf-8");
