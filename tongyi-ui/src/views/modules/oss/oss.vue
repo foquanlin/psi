@@ -8,49 +8,25 @@
         <el-button @click="getDataList()">查询</el-button>
         <el-button v-if="isAuth('sys:oss:config')" type="primary" @click="configHandle()">云存储配置</el-button>
         <el-button type="primary" @click="uploadHandle()">上传文件</el-button>
-        <el-button v-if="isAuth('sys:oss:delete')" type="danger" @click="deleteHandle()"
-                   :disabled="dataListSelections.length <= 0">批量删除
-        </el-button>
+        <el-button v-if="isAuth('sys:oss:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      :data="dataList"
-      border
-      @selection-change="selectionChangeHandle"
-      style="width: 100%;">
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
+    <el-table :data="dataList" border @selection-change="selectionChangeHandle" style="width: 100%;">
+      <el-table-column type="selection" header-align="center" align="center" width="50"/>
+      <el-table-column prop="url" header-align="center" align="center" label="URL地址">
+        <template slot-scope="scope">
+          <el-button type="text" size="small" v-clipboard:copy="scope.row.url" v-clipboard:success="onCopySuccess">
+            {{scope.row.url}}(点击复制)
+          </el-button>
+        </template>
       </el-table-column>
-      <el-table-column
-        prop="url"
-        header-align="center"
-        align="center"
-        label="URL地址">
-      </el-table-column>
-      <el-table-column
-        prop="url"
-        header-align="center"
-        align="center"
-        label="预览">
+      <el-table-column prop="url" header-align="center" align="center" label="预览">
         <template slot-scope="scope">
           <img style="height: 50%;width: 50%" @click="openImg(scope.row.url)" :src="scope.row.url"/>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="createDate"
-        header-align="center"
-        align="center"
-        label="创建时间">
-      </el-table-column>
-      <el-table-column
-        fixed="right"
-        header-align="center"
-        align="center"
-        width="150"
-        label="操作">
+      <el-table-column prop="createDate" header-align="center" align="center" label="创建时间"/>
+      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="showImg(scope.row.url)">预览</el-button>
           <el-button type="text" size="small" v-if="isAuth('sys:oss:delete')" @click="deleteHandle(scope.row.id)">删除
@@ -185,6 +161,9 @@
           })
         }).catch(() => {
         })
+      },
+      onCopySuccess () {
+        this.$message.success('已复制')
       }
     }
   }
