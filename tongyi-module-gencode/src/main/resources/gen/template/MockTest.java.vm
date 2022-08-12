@@ -1,13 +1,13 @@
 /*
  * 项目名称:${projectName}
- * 类名称:${className}ServiceTest.java
- * 包名称:${package}.ServiceTest
+ * 类名称:${className}MockTest.java
+ * 包名称:${package}.Mocktest
  * @author ${author}
  * @date ${datetime}
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package ${package};
-import ${package}.service.${className}Service;
+import ${package}.controller.${className}Controller;
 import ${package}.entity.${className}Entity;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -23,7 +26,7 @@ import java.util.Date;
 import java.math.BigDecimal;
 
 /**
- * ${comments}Service
+ * ${comments}Controller
  *
  * @author ${author}
  * @date ${datetime}
@@ -31,10 +34,14 @@ import java.math.BigDecimal;
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 @ActiveProfiles("junit")
-public class ${className}ServiceTest {
+public class ${className}MockTest {
+    @Autowired
+    protected WebApplicationContext wac;
+
+    protected MockMvc mockMvc;
 
     @Autowired
-    protected ${className}Service service; // 把要测试的service注入进来
+    protected ${className}Controller controller; // 把要测试的controller注入进来
 
     @Before
     public void setup() throws Exception {
@@ -42,7 +49,7 @@ public class ${className}ServiceTest {
     }
     @Test
     public void testAdd() {
-        for(int i=0;i<10;i++) {
+        for(int i=0;i<100;i++) {
             int idx = new Random().nextInt(1000000);
             String id = "id-" + idx;
             ${className}Entity item = new ${className}Entity();
@@ -63,7 +70,7 @@ public class ${className}ServiceTest {
             item.set$column.attrName (id);
 #end
 #end
-            service.addEntity(item);
+            controller.addEntity(item);
         }
     }
 
@@ -89,11 +96,11 @@ public class ${className}ServiceTest {
         item.set$column.attrName (id);
 #end
 #end
-        service.addEntity(item);
-        service.updateEntity(item);
-        service.getById(id);
-        service.listAll(new HashMap<>());
-        service.listPage(1,10,new HashMap<>());
-        service.deleteBatch(new String[]{id});
+        controller.addEntity(item);
+        controller.updateEntity(item);
+        controller.getById(id);
+        controller.listAll(new HashMap<>());
+        controller.listPage(1,10,new HashMap<>());
+        controller.deleteBatch(new String[]{id});
     }
 }

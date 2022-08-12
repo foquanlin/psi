@@ -38,8 +38,8 @@ public class GenUtils {
         templates.add("gen/template/Service.java.vm");
         templates.add("gen/template/ServiceImpl.java.vm");
         templates.add("gen/template/Controller.java.vm");
-        templates.add("gen/template/MockTest.java.vm");
         templates.add("gen/template/ServiceTest.java.vm");
+        templates.add("gen/template/MockTest.java.vm");
         templates.add("gen/template/menu.sql.vm");
         templates.add("gen/template/vue.vm");
         templates.add("gen/template/edit.vue.vm");
@@ -230,8 +230,8 @@ public class GenUtils {
         String strSJV = "Service.java.vm";
         String strSIJV = "ServiceImpl.java.vm";
         String strCJV = "Controller.java.vm";
-        String strMockTest = "MockTest.java.vm";
-        String strServiceTest = "ServiceTest.java.vm";
+        String strMockTest = "ServiceTest.java.vm";
+        String strServiceTest = "MockTest.java.vm";
         String strAouVV = "edit.vue.vm";
         String strVV = "vue.vm";
         String strMSV = "menu.sql.vm";
