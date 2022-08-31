@@ -26,6 +26,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -80,7 +81,12 @@ public class SysLogAspect {
         //请求的参数
         Object[] args = joinPoint.getArgs();
         try {
-            String params = new Gson().toJson(args);
+            String params = null;
+            if (args.length>0 && (args[0] instanceof MultipartFile)){
+                params = new Gson().toJson(((MultipartFile) args[0]).getName());
+            }else{
+                params = new Gson().toJson(args);
+            }
             sysLog.setParams(params);
 
             //获取request

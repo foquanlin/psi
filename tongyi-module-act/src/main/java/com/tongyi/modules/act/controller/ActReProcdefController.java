@@ -15,7 +15,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.act.entity.ActReModelEntity;
 import com.tongyi.modules.act.service.ActReProcdefService;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,16 +62,15 @@ public class ActReProcdefController{
      * @throws Exception 读写流异常
      */
     @RequestMapping("/read")
-    public void resourceRead(String id, String proInsId, String resType,
-                             HttpServletResponse response)
-            throws Exception {
+    public void resourceRead(String id, String proInsId, String resType, HttpServletResponse response) throws Exception {
         InputStream resourceAsStream = actReProcdefService.resourceRead(id, proInsId, resType);
-        byte[] b = new byte[1024];
-        int len = -1;
-        int lenEnd = 1024;
-        while ((len = resourceAsStream.read(b, 0, lenEnd)) != -1) {
-            response.getOutputStream().write(b, 0, len);
+        response.setContentType("text/xml; charset=utf-8");
+        if (ActReModelEntity.IMAGE.equals(resType)) {
+            response.setHeader("Content-Disposition", "attachment;fileName="+id+".png");
+        } else if (ActReModelEntity.XML.equals(resType)) {
+            response.setHeader("Content-Disposition", "attachment;fileName="+id+".bpmn.xml");
         }
+        IOUtils.copy(resourceAsStream, response.getOutputStream());
     }
 
     /**

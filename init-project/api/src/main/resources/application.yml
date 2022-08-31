@@ -6,9 +6,9 @@ server:
       worker: 5
     buffer-size: 1024
     direct-buffers: true
-  port: 8801
+  port: 8802
   servlet:
-    context-path: /admin
+    context-path: /api
 
 spring:
   cache:

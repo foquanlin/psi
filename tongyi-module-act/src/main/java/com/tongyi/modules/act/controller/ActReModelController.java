@@ -103,13 +103,15 @@ public class ActReModelController {
     @RequestMapping(value = "export")
     public void export(String id, HttpServletResponse response) {
         try {
+            response.setContentType("text/xml; charset=utf-8");
             BpmnModel bpmnModel = actReModelService.getBpmModel(id);
+            String filename = URLEncoder.encode(bpmnModel.getMainProcess().getName() + ".bpmn20.xml", "UTF-8");
+            response.setHeader("Content-Disposition", "attachment;fileName="+filename);
+
             BpmnXMLConverter xmlConverter = new BpmnXMLConverter();
             byte[] bpmnBytes = xmlConverter.convertToXML(bpmnModel);
             ByteArrayInputStream in = new ByteArrayInputStream(bpmnBytes);
             IOUtils.copy(in, response.getOutputStream());
-            String filename = URLEncoder.encode(bpmnModel.getMainProcess().getName() + ".bpmn20.xml", "UTF-8");
-            response.setHeader("Content-Disposition", "attachment; filename=" + filename);
             response.flushBuffer();
         } catch (Exception e) {
             throw new BusinessException("导出model的xml文件失败，模型ID=" + id, e);
