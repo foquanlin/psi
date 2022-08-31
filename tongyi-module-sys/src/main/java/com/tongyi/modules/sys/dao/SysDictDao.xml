@@ -17,6 +17,7 @@
         d.sort,
         d.status,
         d.remark,
+        d.edited,
         g.code as code
         from sys_dict d
         left join sys_dict_group g on d.group_id = g.id

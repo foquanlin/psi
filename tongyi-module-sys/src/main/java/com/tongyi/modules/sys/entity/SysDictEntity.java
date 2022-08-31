@@ -65,4 +65,9 @@ public class SysDictEntity implements Serializable {
 
     @TableField(exist = false)
     private String code;
+
+    /**
+     * 是否可编辑
+     */
+    private Boolean edited;
 }

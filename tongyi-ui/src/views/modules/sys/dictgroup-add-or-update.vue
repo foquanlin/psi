@@ -27,7 +27,8 @@
           id: '',
           code: '',
           name: '',
-          remark: ''
+          remark: '',
+          edited: true
         },
         dataRule: {
           code: [

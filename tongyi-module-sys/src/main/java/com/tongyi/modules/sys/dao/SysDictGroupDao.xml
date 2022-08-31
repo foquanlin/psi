@@ -8,7 +8,8 @@
         t.code,
         t.name,
         t.create_time,
-        t.remark
+        t.remark,
+        t.edited
         from sys_dict_group t
     </sql>
     <sql id="selectWhere">

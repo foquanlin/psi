@@ -53,4 +53,8 @@ public class SysDictGroupEntity implements Serializable {
      * 备注
      */
     private String remark;
+    /**
+     * 是否可编辑
+     */
+    private Boolean edited;
 }

@@ -49,7 +49,8 @@
           value: '',
           sort: '',
           status: 1,
-          remark: ''
+          remark: '',
+          edited: true
         },
         groupDataList: [],
         dataRule: {

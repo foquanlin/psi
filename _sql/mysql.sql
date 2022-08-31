@@ -341,17 +341,18 @@ create table `sys_dict` (
   `sort` int(11) default null comment '排序号',
   `status` int(11) default null comment '状态码',
   `remark` text comment '备注',
+  `edited` bit comment '是否可编辑',
   primary key (`id`)
 ) engine=innodb default charset=utf8 comment='数据字典';
 
 -- ----------------------------
 -- records of sys_dict
 -- ----------------------------
-insert into `sys_dict` values ('37f73ea6b07c40ab8baec7f58b10e69e', '0b5e3fc9c30a4839a881bef0f85fc8af', '男', '1', '1', '1', null);
-insert into `sys_dict` values ('979439be76954bc1852fdf2aeccf3cbc', '0b5e3fc9c30a4839a881bef0f85fc8af', '未知', '3', '3', '1', null);
-insert into `sys_dict` values ('fc982423addd41e3852c70f8396a0c6c', '0b5e3fc9c30a4839a881bef0f85fc8af', '女', '2', '2', '1', null);
-insert into `sys_dict` values ('7936bc509417490ba0df9d938ccd1ce4', '2bbfcb36f9414b71a5d65f497be93496', '是', '1', '1', '1', null);
-insert into `sys_dict` values ('f6cf775c5cea4c7b8858eb2ce0501177', '2bbfcb36f9414b71a5d65f497be93496', '否', '0', '2', '1', null);
+insert into `sys_dict` values ('37f73ea6b07c40ab8baec7f58b10e69e', '0b5e3fc9c30a4839a881bef0f85fc8af', '男', '1', '1', '1', null,0);
+insert into `sys_dict` values ('979439be76954bc1852fdf2aeccf3cbc', '0b5e3fc9c30a4839a881bef0f85fc8af', '未知', '3', '3', '1', null,0);
+insert into `sys_dict` values ('fc982423addd41e3852c70f8396a0c6c', '0b5e3fc9c30a4839a881bef0f85fc8af', '女', '2', '2', '1', null,0);
+insert into `sys_dict` values ('7936bc509417490ba0df9d938ccd1ce4', '2bbfcb36f9414b71a5d65f497be93496', '是', '1', '1', '1', null,0);
+insert into `sys_dict` values ('f6cf775c5cea4c7b8858eb2ce0501177', '2bbfcb36f9414b71a5d65f497be93496', '否', '0', '2', '1', null,0);
 
 -- ----------------------------
 -- table structure for `sys_dict_group`
@@ -363,14 +364,15 @@ create table `sys_dict_group` (
   `name` varchar(100) default null comment '分组名称',
   `create_time` datetime default null comment '创建时间',
   `remark` text comment '备注',
+  `edited` bit comment '是否可编辑',
   primary key (`id`,`code`)
 ) engine=innodb default charset=utf8 comment='数据字典分组';
 
 -- ----------------------------
 -- records of sys_dict_group
 -- ----------------------------
-insert into `sys_dict_group` values ('0b5e3fc9c30a4839a881bef0f85fc8af', 'sex', '性别', null, '性别，1：男 2：女 3：未知');
-insert into `sys_dict_group` values ('2bbfcb36f9414b71a5d65f497be93496', 'is_not', '是否', null, '1：是 0：否');
+insert into `sys_dict_group` values ('0b5e3fc9c30a4839a881bef0f85fc8af', 'sex', '性别', null, '性别，1：男 2：女 3：未知',0);
+insert into `sys_dict_group` values ('2bbfcb36f9414b71a5d65f497be93496', 'is_not', '是否', null, '1：是 0：否',0);
 
 -- ----------------------------
 -- table structure for `sys_log`

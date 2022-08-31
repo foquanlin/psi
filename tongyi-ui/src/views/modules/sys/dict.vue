@@ -23,8 +23,8 @@
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
-          <el-button v-if="isAuth('sys:dict:update')" type="text" size="small" @click="addOrUpdateDictHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="isAuth('sys:dict:delete')" type="text" size="small" @click="deleteDictHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="isAuth('sys:dict:update') && scope.row.edited == true" type="text" size="small" @click="addOrUpdateDictHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth('sys:dict:delete') && scope.row.edited == true" type="text" size="small" @click="deleteDictHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
