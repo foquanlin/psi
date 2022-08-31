@@ -1,31 +1,14 @@
 <template>
-  <el-dialog
-    :title="!dataForm.orgNo ? '新增' : '修改'"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="80px">
+  <el-dialog :title="!dataForm.orgNo ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
       <el-form-item label="机构名称" prop="orgName">
         <el-input v-model="dataForm.orgName" placeholder="机构名称"></el-input>
       </el-form-item>
       <el-form-item label="上级机构" prop="parentName">
-        <el-popover
-          ref="orgListPopover"
-          placement="top-start"
-          trigger="click">
-          <el-tree
-            :data="parentOptions"
-            :props="orgListTreeProps"
-            node-key="orgNo"
-            ref="orgListTree"
-            @current-change="orgListTreeCurrentChangeHandle"
-            :default-expand-all="true"
-            :highlight-current="true"
-            :expand-on-click-node="false">
-          </el-tree>
+        <el-popover ref="orgListPopover" placement="top-start" trigger="click">
+          <el-tree :data="parentOptions" :props="orgListTreeProps" node-key="orgNo" ref="orgListTree" @current-change="orgListTreeCurrentChangeHandle" :default-expand-all="true" :highlight-current="true" :expand-on-click-node="false"/>
         </el-popover>
-        <el-input v-model="dataForm.parentName" v-popover:orgListPopover :readonly="true" placeholder="点击选择上级机构"
-                  class="org-list__input"></el-input>
+        <el-input v-model="dataForm.parentName" v-popover:orgListPopover :readonly="true" placeholder="点击选择上级机构" class="org-list__input"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-radio-group v-model="dataForm.status">

@@ -1,10 +1,6 @@
 <template>
-  <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="80px">
+  <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
       <el-form-item label="用户名" prop="userName">
         <el-input v-model="dataForm.userName" placeholder="登录帐号"></el-input>
       </el-form-item>
@@ -21,10 +17,7 @@
         <el-input v-model="dataForm.mobile" placeholder="手机号"></el-input>
       </el-form-item>
       <el-form-item label="所属机构" prop="orgNo">
-        <el-popover
-          ref="orgListPopover"
-          placement="top-start"
-          trigger="click">
+        <el-popover ref="orgListPopover" placement="top-start" trigger="click">
           <el-tree
             :data="orgNoOptions"
             :props="orgListTreeProps"
@@ -36,17 +29,11 @@
             :expand-on-click-node="false">
           </el-tree>
         </el-popover>
-        <el-input v-model="dataForm.orgName" v-popover:orgListPopover :readonly="true" placeholder="点击选择上级机构"
-                  class="org-list__input"></el-input>
+        <el-input v-model="dataForm.orgName" v-popover:orgListPopover :readonly="true" placeholder="点击选择上级机构" class="org-list__input"></el-input>
       </el-form-item>
       <el-form-item label="角色" prop="roleIdList">
         <el-select v-model="dataForm.roleIdList" multiple clearable filterable placeholder="请选择" class="width100">
-          <el-option
-            v-for="role in roleList"
-            :key="role.roleId"
-            :label="role.roleName"
-            :value="role.roleId">
-          </el-option>
+          <el-option v-for="role in roleList" :key="role.roleId" :label="role.roleName" :value="role.roleId"/>
         </el-select>
       </el-form-item>
       <el-form-item label="状态" size="mini" prop="status">

@@ -7,9 +7,7 @@
       <el-form-item>
         <el-button @click="getDictDataList()">查询</el-button>
         <el-button v-if="isAuth('sys:dict:save')" type="primary" @click="addOrUpdateDictHandle()">新增</el-button>
-        <el-button v-if="isAuth('sys:dict:delete')" type="danger" @click="deleteDictHandle()"
-                   :disabled="dictDataListSelections.length <= 0">批量删除
-        </el-button>
+        <el-button v-if="isAuth('sys:dict:delete')" type="danger" @click="deleteDictHandle()" :disabled="dictDataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table

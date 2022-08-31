@@ -1,10 +1,6 @@
 <template>
-  <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="80px">
+  <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
       <el-form-item label="角色名称" prop="roleName">
         <el-input v-model="dataForm.roleName" placeholder="角色名称"></el-input>
       </el-form-item>
@@ -12,26 +8,10 @@
         <el-input type="textarea" v-model="dataForm.remark" placeholder="备注"></el-input>
       </el-form-item>
       <el-form-item size="mini" label="功能权限">
-        <el-tree
-          check-strictly
-          :data="menuList"
-          :props="menuListTreeProps"
-          node-key="menuId"
-          ref="menuListTree"
-          :default-expand-all="true"
-          show-checkbox>
-        </el-tree>
+        <el-tree check-strictly :data="menuList" :props="menuListTreeProps" node-key="menuId" ref="menuListTree" :default-expand-all="true" show-checkbox/>
       </el-form-item>
       <el-form-item size="mini" label="数据权限">
-        <el-tree
-          check-strictly
-          :data="orgList"
-          :props="orgListTreeProps"
-          node-key="orgNo"
-          ref="orgListTree"
-          :default-expand-all="true"
-          show-checkbox>
-        </el-tree>
+        <el-tree check-strictly :data="orgList" :props="orgListTreeProps" node-key="orgNo" ref="orgListTree" :default-expand-all="true" show-checkbox/>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">

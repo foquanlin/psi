@@ -3,73 +3,25 @@
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
         <el-select v-model="searchForm.type" placeholder="请选择">
-          <el-option
-            key="1"
-            label="请选择"
-            value="1">
-          </el-option>
-          <el-option
-            key="2"
-            label="session缓存"
-            value="2">
-          </el-option>
-          <el-option
-            key="3"
-            label="系统缓存"
-            value="3">
-          </el-option>
-          <el-option
-            key="4"
-            label="业务缓存"
-            value="4">
-          </el-option>
+          <el-option key="1" label="请选择" value="1"/>
+          <el-option key="2" label="session缓存" value="2"/>
+          <el-option key="3" label="系统缓存" value="3"/>
+          <el-option key="4" label="业务缓存" value="4"/>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('sys:cache:deleteCache')" type="danger" @click="deleteHandle()"
-                   :disabled="dataListSelections.length <= 0">批量删除
-        </el-button>
+        <el-button v-if="isAuth('sys:cache:deleteCache')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      border
-      :data="dataList"
-      @selection-change="selectionChangeHandle"
-      style="width: 100%">
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
-      </el-table-column>
-      <el-table-column
-        prop="cacheKey"
-        label="缓存KEY"
-        show-tooltip-when-overflow
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="value"
-        label="缓存VALUE"
-        flex="1">
-      </el-table-column>
-      <el-table-column
-        prop="seconds"
-        label="过期剩余时间(秒)"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        fixed="right"
-        header-align="center"
-        align="center"
-        width="150"
-        label="操作">
+    <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%">
+      <el-table-column type="selection" header-align="center" align="center" width="50"/>
+      <el-table-column prop="cacheKey" label="缓存KEY" show-tooltip-when-overflow width="180"/>
+      <el-table-column prop="value" label="缓存VALUE" flex="1"/>
+      <el-table-column prop="seconds" label="过期剩余时间(秒)" width="180"/>
+      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
-          <el-button v-if="isAuth('sys:cache:deleteCache')" type="text" size="small"
-                     @click="deleteHandle(scope.row.cacheKey)">
-            删除
-          </el-button>
+          <el-button v-if="isAuth('sys:cache:deleteCache')" type="text" size="small" @click="deleteHandle(scope.row.cacheKey)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

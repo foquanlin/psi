@@ -6,89 +6,33 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('sys:maillog:config')" type="primary" @click="configHandle()">邮箱配置
-        </el-button>
-        <el-button v-if="isAuth('sys:maillog:delete')" type="danger" @click="deleteHandle()"
-                   :disabled="dataListSelections.length <= 0">批量删除
-        </el-button>
+        <el-button v-if="isAuth('sys:maillog:config')" type="primary" @click="configHandle()">邮箱配置</el-button>
+        <el-button v-if="isAuth('sys:maillog:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      :data="dataList"
-      border
-      @selection-change="selectionChangeHandle"
-      style="width: 100%;">
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
-      </el-table-column>
-      <el-table-column
-        prop="sender"
-        header-align="center"
-        align="center"
-        label="发送人">
-      </el-table-column>
-      <el-table-column
-        show-overflow-tooltip
-        prop="receiver"
-        header-align="center"
-        align="center"
-        label="接收人">
-      </el-table-column>
-      <el-table-column
-        prop="subject"
-        header-align="center"
-        align="center"
-        label="邮件主题">
-      </el-table-column>
-      <el-table-column
-        show-tooltip-when-overflow
-        prop="content"
-        header-align="center"
-        align="center"
-        label="发送内容">
-      </el-table-column>
-      <el-table-column
-        prop="sendDate"
-        header-align="center"
-        align="center"
-        label="发送时间">
-      </el-table-column>
-      <el-table-column
-        prop="type"
-        header-align="center"
-        align="center"
-        label="发送类型">
+    <el-table :data="dataList" border @selection-change="selectionChangeHandle" style="width: 100%;">
+      <el-table-column type="selection" header-align="center" align="center" width="50"/>
+      <el-table-column prop="sender" header-align="center" align="center" label="发送人"/>
+      <el-table-column show-overflow-tooltip prop="receiver" header-align="center" align="center" label="接收人"/>
+      <el-table-column prop="subject" header-align="center" align="center" label="邮件主题"/>
+      <el-table-column show-tooltip-when-overflow prop="content" header-align="center" align="center" label="发送内容"/>
+      <el-table-column prop="sendDate" header-align="center" align="center" label="发送时间"/>
+      <el-table-column prop="type" header-align="center" align="center" label="发送类型">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.type === 0" size="small">系统发送邮件</el-tag>
           <el-tag v-else-if="scope.row.type === 1" size="small" type="success">用户发送邮件</el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="sendResult"
-        header-align="center"
-        align="center"
-        label="发送结果">
+      <el-table-column prop="sendResult" header-align="center" align="center" label="发送结果">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.sendResult === 1" size="small" type="danger">发送失败</el-tag>
           <el-tag v-else-if="scope.row.sendResult === 0" size="small" type="success">发送成功</el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        header-align="center"
-        align="center"
-        width="150"
-        label="操作">
+      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
-          <el-button v-if="isAuth('sys:maillog:info')" type="text" size="small"
-                     @click="lookHandle(scope.row.id)">查看
-          </el-button>
-          <el-button v-if="isAuth('sys:maillog:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">
-            删除
-          </el-button>
+          <el-button v-if="isAuth('sys:maillog:info')" type="text" size="small" @click="lookHandle(scope.row.id)">查看</el-button>
+          <el-button v-if="isAuth('sys:maillog:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

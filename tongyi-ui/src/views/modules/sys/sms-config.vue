@@ -1,10 +1,6 @@
 <template>
-  <el-dialog
-    title="短信配置"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="80px">
+  <el-dialog title="短信配置" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
       <el-form-item label="短信类型" size="mini" prop="type">
         <el-radio-group v-model="dataForm.type">
           <el-radio :label="1">创瑞云SMS</el-radio>

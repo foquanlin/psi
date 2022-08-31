@@ -1,16 +1,8 @@
 <template>
-  <el-dialog
-    title="发送短信"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="80px">
+  <el-dialog title="发送短信" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
       <el-form-item label="发送时间" prop="stime">
-        <el-date-picker
-          v-model="dataForm.stime"
-          type="datetime"
-          placeholder="发送时间，填写时已填写的时间发送，不填时为当前时间发送">
-        </el-date-picker>
+        <el-date-picker v-model="dataForm.stime" type="datetime" placeholder="发送时间，填写时已填写的时间发送，不填时为当前时间发送"/>
       </el-form-item>
       <el-form-item label="发送内容" prop="content">
         <el-input type="textarea" v-model="dataForm.content" placeholder="发送内容（1-500 个汉字）UTF-8编码"></el-input>

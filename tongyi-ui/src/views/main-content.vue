@@ -16,17 +16,9 @@
           <el-dropdown-item @click.native="tabsRefreshCurrentHandle">刷新当前标签页</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-tab-pane
-        v-for="item in mainTabs"
-        :key="item.name"
-        :label="item.title"
-        :name="item.name">
+      <el-tab-pane v-for="item in mainTabs" :key="item.name" :label="item.title" :name="item.name">
         <el-card :body-style="siteContentViewHeight">
-          <iframe
-            v-if="item.type === 'iframe'"
-            :src="item.iframeUrl"
-            width="100%" height="100%" frameborder="0" scrolling="yes">
-          </iframe>
+          <iframe v-if="item.type === 'iframe'" :src="item.iframeUrl" width="100%" height="100%" frameborder="0" scrolling="yes"/>
           <keep-alive v-else>
             <router-view v-if="item.name === mainTabsActiveName"/>
           </keep-alive>

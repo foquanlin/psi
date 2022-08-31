@@ -1,11 +1,8 @@
 <template>
-  <el-dialog
-    :title="!dataForm.code ? '新增' : !disabled ? '修改' : '查看'"
-    :close-on-click-modal="false" width="71%"
-    :visible.sync="visible">
+  <el-dialog :title="!dataForm.code ? '新增' : !disabled ? '修改' : '查看'" :close-on-click-modal="false" width="71%" :visible.sync="visible">
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="80px">
         <!-- @keyup.enter.native="dataFormSubmit()" -->
-    <el-form-item label="" prop="name">
+    <el-form-item label="名称" prop="name">
         <el-input v-model="dataForm.name" :disabled="disabled" placeholder="民族名称" clearable></el-input>
     </el-form-item>
     </el-form>

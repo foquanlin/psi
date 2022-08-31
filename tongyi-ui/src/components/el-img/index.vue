@@ -1,14 +1,9 @@
 <template>
   <div>
     <el-input v-if="false" v-model="imageUrl"></el-input>
-    <el-image style="max-width: 200px; max-height: 200px" v-if="imageUrl" :src="imageUrl"
-              @click="openImg(imageUrl)"></el-image>
+    <el-image style="max-width: 200px; max-height: 200px" v-if="imageUrl" :src="imageUrl" @click="openImg(imageUrl)"></el-image>
     <el-button icon="el-icon-upload" @click="visible = true" v-if="!disabled" circle></el-button>
-    <el-dialog :visible.sync="visible"
-               style="z-index: 1000"
-               width="950px"
-               title="选择图片"
-               append-to-body>
+    <el-dialog :visible.sync="visible" style="z-index: 1000" width="950px" title="选择图片" append-to-body>
       <el-form :inline="true" @keyup.enter.native="getDataList()">
         <el-form-item>
           <el-button type="primary" @click="uploadHandle()">上传文件</el-button>
@@ -17,18 +12,10 @@
       <el-row>
         <el-col :span="4" v-for="data in dataList" :key="data.id">
           <el-card style="width: 160px;height: 260px" shadow="hover">
-            <el-image
-              style="max-height: 150px"
-              :key="data.url"
-              @click="openImg(data.url)"
-              :src="data.url">
-
-            </el-image>
+            <el-image style="max-height: 150px" :key="data.url" @click="openImg(data.url)" :src="data.url"/>
             <div style="padding: 14px;">
-              <el-button type="success" icon="el-icon-circle-check" circle
-                         @click="selectImg(data.url)"></el-button>
-              <el-button v-if="isAuth('sys:oss:delete')" type="danger" icon="el-icon-delete" circle
-                         @click="deleteHandle(data.id)"></el-button>
+              <el-button type="success" icon="el-icon-circle-check" circle @click="selectImg(data.url)"></el-button>
+              <el-button v-if="isAuth('sys:oss:delete')" type="danger" icon="el-icon-delete" circle @click="deleteHandle(data.id)"></el-button>
             </div>
           </el-card>
         </el-col>

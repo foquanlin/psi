@@ -1,10 +1,6 @@
 <template>
-  <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" ref="dataForm"
-             label-width="80px">
+  <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" ref="dataForm" label-width="80px">
       <el-form-item label="发送人">
         <div v-html="dataForm.sender"></div>
       </el-form-item>

@@ -1,9 +1,5 @@
 <template>
-  <svg
-    :class="getClassName"
-    :width="width"
-    :height="height"
-    aria-hidden="true">
+  <svg :class="getClassName" :width="width" :height="height" aria-hidden="true">
     <use :xlink:href="getName"></use>
   </svg>
 </template>

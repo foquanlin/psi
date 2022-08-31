@@ -1,13 +1,7 @@
 <template>
   <div>
-    <el-select class="width100" v-model="selectValue" autocomplete clearable :disabled="disabled"
-               :placeholder="placeholder" filterable>
-      <el-option
-        v-for="item in options"
-        :key="item.key"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
+    <el-select class="width100" v-model="selectValue" autocomplete clearable :disabled="disabled" :placeholder="placeholder" filterable>
+      <el-option v-for="item in options" :key="item.key" :label="item.label" :value="item.value"/>
     </el-select>
   </div>
 </template>

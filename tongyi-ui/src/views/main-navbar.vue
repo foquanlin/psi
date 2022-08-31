@@ -6,21 +6,17 @@
       </h1>
     </div>
     <div class="site-navbar__body clearfix">
-      <el-menu
-        class="site-navbar__menu"
-        mode="horizontal">
+      <el-menu class="site-navbar__menu" mode="horizontal">
         <el-menu-item class="site-navbar__switch" index="0" @click="sidebarFold = !sidebarFold">
           <icon-svg name="zhedie"></icon-svg>
         </el-menu-item>
       </el-menu>
-      <el-menu
-        class="site-navbar__menu site-navbar__menu--right"
-        mode="horizontal">
-        <el-menu-item index="3" v-if="isAuth('wx:wxaccount:list')">
-          <template slot="title">
-            <wx-account-selector></wx-account-selector>
-          </template>
-        </el-menu-item>
+      <el-menu class="site-navbar__menu site-navbar__menu--right" mode="horizontal">
+<!--        <el-menu-item index="3" v-if="isAuth('wx:wxaccount:list')">-->
+<!--          <template slot="title">-->
+<!--            <wx-account-selector></wx-account-selector>-->
+<!--          </template>-->
+<!--        </el-menu-item>-->
         <el-menu-item index="1">
           <el-badge value="hot">
             <a href="//wxngrok.com/" target="_blank">官方社区</a>

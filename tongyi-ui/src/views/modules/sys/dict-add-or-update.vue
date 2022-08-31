@@ -1,18 +1,9 @@
 <template>
-  <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="80px">
+  <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
       <el-form-item label="所属分组" prop="groupId" :error="groupWrong">
         <el-select v-model="groupId" placeholder="所属分组" @change="changeGroup">
-          <el-option
-            v-for="item in groupDataList"
-            :key="item.value"
-            :label="item.name"
-            :value="item.id">
-          </el-option>
+          <el-option v-for="item in groupDataList" :key="item.value" :label="item.name" :value="item.id"/>
         </el-select>
       </el-form-item>
       <el-form-item label="字典名称" prop="name">
