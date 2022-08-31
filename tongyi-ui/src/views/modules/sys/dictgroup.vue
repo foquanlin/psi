@@ -1,7 +1,7 @@
 <template>
   <div class="mod-dictgroup">
     <el-row :gutter="24">
-      <el-col :span="14">
+      <el-col :span="11">
         <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
           <el-form-item>
             <el-input v-model="searchForm.code" placeholder="分组编码" clearable></el-input>
@@ -15,7 +15,7 @@
             <el-button v-if="isAuth('sys:dictgroup:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
           </el-form-item>
         </el-form>
-        <el-table :data="dataList" border @selection-change="selectionChangeHandle" style="width: 100%;">
+        <el-table :data="dataList" border @selection-change="selectionChangeHandle" style="width: 100%;" @row-click="rowClick" :row-style="selectRow">
           <el-table-column type="selection" header-align="center" align="center" width="50"/>
           <el-table-column prop="code" header-align="center" align="center" label="分组编码">
             <template slot-scope="scope">
@@ -43,7 +43,7 @@
         <!-- 弹窗, 新增 / 修改 -->
         <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
       </el-col>
-      <el-col :span="10">
+      <el-col :span="13">
         <dict ref="dict"></dict>
       </el-col>
     </el-row>
@@ -66,7 +66,8 @@
         pageSize: 10,
         totalPage: 0,
         dataListSelections: [],
-        addOrUpdateVisible: false
+        addOrUpdateVisible: false,
+        selectrow: {}
       }
     },
     components: {
@@ -77,6 +78,19 @@
       this.getDataList()
     },
     methods: {
+      selectRow ({row}) {
+        if (row.id === this.selectrow.id) {
+          return {
+            backgroundColor: '#cccccc'
+          }
+        }
+      },
+      rowClick (row, column, event) {
+        this.selectrow = row
+        this.$nextTick(() => {
+          this.$refs.dict.getDictDataList(row.id, row.code)
+        })
+      },
       showDict (groupId, code) {
         this.$nextTick(() => {
           this.$refs.dict.getDictDataList(groupId, code)

@@ -6,62 +6,25 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDictDataList()">查询</el-button>
-        <el-button v-if="isAuth('sys:dict:save')" type="primary" @click="addOrUpdateDictHandle()">新增</el-button>
+        <el-button v-if="isAuth('sys:dict:save')" type="primary" @click="addOrUpdateDictHandle()" >新增</el-button>
         <el-button v-if="isAuth('sys:dict:delete')" type="danger" @click="deleteDictHandle()" :disabled="dictDataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      :data="dictDataList"
-      border
-      @selection-change="selectionChangeDictHandle"
-      style="width: 100%;">
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
-      </el-table-column>
-      <el-table-column
-        prop="code"
-        header-align="center"
-        align="center"
-        label="分组编码">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        header-align="center"
-        align="center"
-        label="字典名称">
-      </el-table-column>
-      <el-table-column
-        prop="value"
-        header-align="center"
-        align="center"
-        label="字典值">
-      </el-table-column>
-      <el-table-column
-        prop="status"
-        header-align="center"
-        align="center"
-        label="状态">
+    <el-table :data="dictDataList" border @selection-change="selectionChangeDictHandle" style="width: 100%;">
+      <el-table-column type="selection" header-align="center" align="center" width="50"/>
+      <el-table-column prop="code" header-align="center" align="center" label="分组编码"/>
+      <el-table-column prop="name" header-align="center" align="center" label="字典名称"/>
+      <el-table-column prop="value" header-align="center" align="center" label="字典值"/>
+      <el-table-column prop="status" header-align="center" align="center" label="状态">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.status === 0" size="small" type="danger">禁用</el-tag>
           <el-tag v-else-if="scope.row.status === 1" size="small" type="success">正常</el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        header-align="center"
-        align="center"
-        width="150"
-        label="操作">
+      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
-          <el-button v-if="isAuth('sys:dict:update')" type="text" size="small"
-                     @click="addOrUpdateDictHandle(scope.row.id)">修改
-          </el-button>
-          <el-button v-if="isAuth('sys:dict:delete')" type="text" size="small" @click="deleteDictHandle(scope.row.id)">
-            删除
-          </el-button>
+          <el-button v-if="isAuth('sys:dict:update')" type="text" size="small" @click="addOrUpdateDictHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth('sys:dict:delete')" type="text" size="small" @click="deleteDictHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -75,8 +38,7 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <dict-add-or-update v-if="dictVisible" ref="dictAddOrUpdate"
-                        @refreshDataList="getDictDataList"></dict-add-or-update>
+    <dict-add-or-update v-if="dictVisible" ref="dictAddOrUpdate" @refreshDataList="getDictDataList"></dict-add-or-update>
   </div>
 </template>
 
@@ -147,6 +109,10 @@
       },
       // 新增 / 修改
       addOrUpdateDictHandle (id) {
+        if (this.groupId === '') {
+          this.$message({ message: '请先新增或选择分组', type: 'error', duration: 2500 })
+          return
+        }
         this.dictVisible = true
         this.$nextTick(() => {
           this.$refs.dictAddOrUpdate.init(id, this.groupId)
