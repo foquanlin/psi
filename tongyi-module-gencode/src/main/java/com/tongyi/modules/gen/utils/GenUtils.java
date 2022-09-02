@@ -271,7 +271,8 @@ public class GenUtils {
         }
 
         if (template.contains(strDXV)) {
-            return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + tablePrefix + File.separator + className + "Dao.xml";
+            return packagePath + "dao" + File.separator + className + "Dao.xml";
+//            return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + tablePrefix + File.separator + className + "Dao.xml";
         }
 
         if (template.contains(strAouVV)) {
