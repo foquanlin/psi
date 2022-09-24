@@ -29,4 +29,6 @@ public interface SysOrgService extends IService<SysOrgEntity> {
      * @return List
      */
     List<SysOrgEntity> queryListByOrgNo(String orgNo);
+
+    public String pathName(List<SysOrgEntity> list,String delimiter);
 }

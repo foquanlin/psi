@@ -60,4 +60,6 @@ public interface SysOrgDao extends BaseMapper<SysOrgEntity> {
      * @return List
      */
     List<SysOrgEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
+
+    List<SysOrgEntity> selectByParent(@Param("no") String orgNo);
 }

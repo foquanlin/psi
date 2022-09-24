@@ -47,4 +47,18 @@
 		<include refid="selectSql"/>
 		<include refid="selectWhere"/>
 	</select>
+
+	<select id="selectByParent" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
+		SELECT T2.org_no, T2.parent_no,T2.org_name
+		FROM (
+		SELECT
+		@r AS _id,
+		(SELECT @r := parent_no FROM sys_org WHERE org_no = _id) AS 2v2,
+		@l := @l + 1 AS lvl
+		FROM
+		(SELECT @r := #{no}) vars,
+		sys_org h
+		WHERE @r &lt;&gt; 0) T1
+		JOIN sys_org T2 ON T1._id = T2.org_no
+	</select>
 </mapper>

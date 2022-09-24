@@ -23,10 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 组织机构Service实现类
@@ -97,6 +94,15 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgDao, SysOrgEntity> impl
         return baseMapper.selectChildrensByOrgNo(orgNo);
     }
 
+    @Override
+    public String pathName(List<SysOrgEntity> list, String delimiter) {
+        StringJoiner sj = new StringJoiner(delimiter);
+        for(SysOrgEntity item:list){
+            sj.add(item.getOrgName());
+        }
+        return sj.toString();
+    }
+    
     private int getOrgType(String orgNo) {
         int two = 2;
         int four = 4;

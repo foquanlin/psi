@@ -22,16 +22,19 @@ import VueClipboard from 'vue-clipboard2'
 import { isAuth, treeDataTranslate, transOrg, transUser, transDict, openImg, transDate } from '@/utils'
 import cloneDeep from 'lodash/cloneDeep'
 import ElDict from './components/el-dict'
+import ElMDict from './components/el-mdict'
 import ElImg from './components/el-img'
 import Tinymce from './components/tinymce'
 
 Vue.use(VueCookie)
 Vue.use(ElDict)
+Vue.use(ElMDict)
 Vue.use(ElImg)
 Vue.use(VueClipboard)
 Vue.use(Tinymce)
 
 Vue.component('el-dict', ElDict)
+Vue.component('el-mdict', ElMDict)
 Vue.component('el-img', ElImg)
 Vue.component('el-editor', Tinymce)
 

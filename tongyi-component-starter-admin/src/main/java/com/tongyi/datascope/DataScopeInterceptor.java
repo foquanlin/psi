@@ -12,7 +12,6 @@
 package com.tongyi.datascope;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
-//import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
 import com.tongyi.common.utils.ShiroUtils;
 import com.tongyi.common.utils.StringUtils;
 import com.tongyi.modules.sys.SysConstant;
@@ -69,18 +68,29 @@ public class DataScopeInterceptor implements Interceptor {
                     String orgAlias = dataScope.getOrgAlias();
                     String alias = dataScope.getOrgNos();
                     boolean self = dataScope.getSelf();
-
-                    if (filterSql.indexOf("where")==-1){
-                        filterSql.append(" where 1=1");
+                    String sql = filterSql.toString().toLowerCase();
+                    int start = sql.lastIndexOf("limit");
+                    StringBuilder sb = new StringBuilder();
+                    if (sql.indexOf("where")==-1){
+                        sb.append(" where 1=1");
                     }
                     if (StringUtils.isNotBlank(alias)) {
-                        filterSql.append(" and (").append(orgAlias).append(" in (").append(alias).append(")");
+                        sb.append(" and (").append(orgAlias).append(" in (").append(alias).append(")");
                         if (self) {
-                            filterSql.append(" or ").append(userAlias).append("='").append(user.getUserId()).append("' ");
+                            if (StringUtils.isNotBlank(userAlias)) {
+                                sb.append(" or ").append(userAlias).append("='").append(user.getUserId()).append("' ");
+                            }
                         }
-                        filterSql.append(" ) ");
+                        sb.append(" ) ");
                     } else if (self) {
-                        filterSql.append(" and ").append(userAlias).append("='").append(user.getUserId()).append("' ");
+                        if (StringUtils.isNotBlank(userAlias)) {
+                            sb.append(" and ").append(userAlias).append("='").append(user.getUserId()).append("' ");
+                        }
+                    }
+                    if (start>0){
+                        filterSql.insert(start,sb,0,sb.length());
+                    }else{
+                        filterSql.append(sb);
                     }
                 }
                 metaObject.setValue("delegate.boundSql.sql", filterSql.toString());
