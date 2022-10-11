@@ -7,7 +7,7 @@
 			select table_name, engine, table_comment, create_time from information_schema.tables
 			where table_schema = (select database())
 			<if test="params.tableName != null and params.tableName.trim() != ''">
-				and table_name like '%${params.tableName}%'
+				and table_name like concat('%',#{params.tableName},'%')
 			</if>
 			order by create_time desc
 		</if>

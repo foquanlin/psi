@@ -70,7 +70,7 @@ public class ${className}MockTest {
             item.set$column.attrName (id);
 #end
 #end
-            controller.addEntity(item);
+            controller.save(item);
         }
     }
 
@@ -96,11 +96,11 @@ public class ${className}MockTest {
         item.set$column.attrName (id);
 #end
 #end
-        controller.addEntity(item);
-        controller.updateEntity(item);
-        controller.getById(id);
-        controller.listAll(new HashMap<>());
-        controller.listPage(1,10,new HashMap<>());
-        controller.deleteBatch(new String[]{id});
+        controller.save(item);
+        controller.update(item);
+        controller.info(id);
+        controller.queryAll(new HashMap<>());
+        controller.list(1,10,new HashMap<>());
+        controller.delete(new String[]{id});
     }
 }

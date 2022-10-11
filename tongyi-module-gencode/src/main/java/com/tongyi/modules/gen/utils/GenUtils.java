@@ -230,8 +230,8 @@ public class GenUtils {
         String strSJV = "Service.java.vm";
         String strSIJV = "ServiceImpl.java.vm";
         String strCJV = "Controller.java.vm";
-        String strMockTest = "ServiceTest.java.vm";
-        String strServiceTest = "MockTest.java.vm";
+        String strMockTest = "MockTest.java.vm";
+        String strServiceTest = "ServiceTest.java.vm";
         String strAouVV = "edit.vue.vm";
         String strVV = "vue.vm";
         String strMSV = "menu.sql.vm";
@@ -244,47 +244,47 @@ public class GenUtils {
         }
 
         if (template.contains(strEJV)) {
-            return packagePath + "entity" + File.separator + className + "Entity.java";
+            return String.format("tongyi-%s-core/src",tablePrefix) +File.separator + packagePath + "entity" + File.separator + className + "Entity.java";
         }
 
         if (template.contains(strDJV)) {
-            return packagePath + "dao" + File.separator + className + "Dao.java";
+            return String.format("tongyi-%s-service/src",tablePrefix) +File.separator + packagePath + "dao" + File.separator + className + "Dao.java";
         }
 
         if (template.contains(strSJV)) {
-            return packagePath + "service" + File.separator + className + "Service.java";
+            return String.format("tongyi-%s-core/src",tablePrefix) +File.separator + packagePath + "service" + File.separator + className + "Service.java";
         }
 
         if (template.contains(strSIJV)) {
-            return packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
+            return String.format("tongyi-%s-service/src",tablePrefix) +File.separator + packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
         }
 
         if (template.contains(strCJV)) {
-            return packagePath + "controller" + File.separator + className + "Controller.java";
+            return String.format("tongyi-%s-admin/src",tablePrefix) +File.separator + packagePath + "controller" + File.separator + className + "Controller.java";
         }
 
         if (template.contains(strMockTest)) {
-            return testPath  + File.separator + className + "MockTest.java";
+            return String.format("tongyi-%s-admin/src",tablePrefix) +File.separator + testPath  + File.separator + className + "MockTest.java";
         }
         if (template.contains(strServiceTest)) {
-            return testPath  + File.separator + className + "ServiceTest.java";
+            return String.format("tongyi-%s-admin/src",tablePrefix) +File.separator + testPath  + File.separator + className + "ServiceTest.java";
         }
 
         if (template.contains(strDXV)) {
-            return packagePath + "dao" + File.separator + className + "Dao.xml";
+            return String.format("tongyi-%s-service/src",tablePrefix) +File.separator + packagePath + "dao" + File.separator + className + "Dao.xml";
 //            return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + tablePrefix + File.separator + className + "Dao.xml";
         }
 
         if (template.contains(strAouVV)) {
-            return "modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + "-edit.vue";
+            return "tongyi-ui/src/views/modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + "-edit.vue";
         }
 
         if (template.contains(strVV)) {
-            return "modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + ".vue";
+            return "tongyi-ui/src/views/modules" + File.separator + tablePrefix + File.separator + className.toLowerCase().replaceFirst(tablePrefix, "") + ".vue";
         }
 
         if (template.contains(strMSV)) {
-            return "sql" + File.separator + className + ".sql";
+            return String.format("tongyi-%s-admin",tablePrefix) +File.separator + "sql" + File.separator + className + ".sql";
         }
 
         return null;

@@ -25,6 +25,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.tongyi</groupId>
             <artifactId>tongyi-xxx-core</artifactId>
             <version>${xxx.version}</version>
