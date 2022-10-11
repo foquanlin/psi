@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tongyi</groupId>
-    <artifactId>tongyi-component</artifactId>
+    <artifactId>tongyi-psi</artifactId>
     <version>1.0.0</version>
-    <name>tongyi-component</name>
+    <name>tongyi-psi</name>
     <packaging>pom</packaging>
 
     <description>酷天后台管理系统</description>
@@ -137,6 +137,12 @@
         <module>tongyi-module-gencode</module>
         <module>tongyi-module-mail</module>
         <module>tongyi-module-wechatmp</module>
+
+        <module>tongyi-psi-core</module>
+        <module>tongyi-psi-service</module>
+        <module>tongyi-psi-admin</module>
+        <module>tongyi-psi-api</module>
+
     </modules>
 
     <dependencyManagement>

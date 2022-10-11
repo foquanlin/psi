@@ -124,4 +124,9 @@ public class SysUserEntity implements Serializable {
      * 创建时间
      */
     private Date createTime;
+
+    public void cleanInfo() {
+        this.setSalt(null);
+        this.setPassword(null);
+    }
 }

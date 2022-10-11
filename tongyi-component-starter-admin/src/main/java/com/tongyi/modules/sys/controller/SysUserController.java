@@ -56,7 +56,9 @@ public class SysUserController extends AbstractController {
     @RequiresPermissions("sys:dict:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<SysUserEntity> list = sysUserService.listAll(params);
-
+        list.forEach(item->{
+            item.cleanInfo();
+        });
         return RestResponse.success().put("list", list);
     }
 
@@ -74,7 +76,10 @@ public class SysUserController extends AbstractController {
         params.put("dataScope", getDataScope());
 
         PageInfo page = sysUserService.listPage(current,size,params);
-
+        List<SysUserEntity> list = page.getList();
+        list.forEach(item->{
+            item.cleanInfo();
+        });
         return RestResponse.success().put("page", page);
     }
 
@@ -85,7 +90,9 @@ public class SysUserController extends AbstractController {
      */
     @GetMapping("/info")
     public RestResponse info() {
-        return RestResponse.success().put("user", getUser());
+        SysUserEntity user = sysUserService.getById(getUser().getUserId());
+        user.cleanInfo();
+        return RestResponse.success().put("user", user);
     }
 
     /**

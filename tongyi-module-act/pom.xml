@@ -10,7 +10,7 @@
 
     <parent>
         <groupId>com.tongyi</groupId>
-        <artifactId>tongyi-component</artifactId>
+        <artifactId>tongyi-psi</artifactId>
         <version>1.0.0</version>
     </parent>
 
