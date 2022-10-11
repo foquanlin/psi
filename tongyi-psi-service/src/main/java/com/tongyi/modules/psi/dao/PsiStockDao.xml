@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiStockDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiStockDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.supplier_id,
+            t.warehouse_id,
+            t.goods_id,
+            t.sku_id,
+            t.order_id,
+            t.catalog,
+            t.type,
+            t.num,
+            t.batch_no,
+            t.create_time,
+            t.status,
+            t.cost_price,
+            t.sale_price,
+            t.create_uid
+        from psi_stock t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.supplierId != null and params.supplierId != ''">
+                and t.supplier_id = #{params.supplierId}
+            </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and t.warehouse_id = #{params.warehouseId}
+            </if>
+            <if test="params.goodsId != null and params.goodsId != ''">
+                and t.goods_id = #{params.goodsId}
+            </if>
+            <if test="params.skuId != null and params.skuId != ''">
+                and t.sku_id = #{params.skuId}
+            </if>
+            <if test="params.orderId != null and params.orderId != ''">
+                and t.order_id = #{params.orderId}
+            </if>
+            <if test="params.catalog != null and params.catalog != ''">
+                and t.catalog = #{params.catalog}
+            </if>
+            <if test="params.type != null and params.type != ''">
+                and t.type = #{params.type}
+            </if>
+            <if test="params.batchNo != null and params.batchNo != ''">
+                and t.batch_no = #{params.batchNo}
+            </if>
+            <if test="params.createTimeStart != null and params.createTimeEnd != null">
+                and t.create_time between #{params.createTimeStart} and #{params.createTimeEnd}
+            </if>
+            <if test="params.status != null and params.status != ''">
+                and t.status = #{params.status}
+            </if>
+            <if test="params.createUid != null and params.createUid != ''">
+                and t.create_uid = #{params.createUid}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiStockEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiStockEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

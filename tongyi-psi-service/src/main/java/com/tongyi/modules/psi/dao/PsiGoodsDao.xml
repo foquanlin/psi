@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiGoodsDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiGoodsDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.brand_id,
+            t.no,
+            t.name,
+            t.create_date,
+            t.unit_id,
+            t.pic_urls,
+            t.memo,
+            t.status
+        from psi_goods t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.brandId != null and params.brandId != ''">
+                and t.brand_id = #{params.brandId}
+            </if>
+            <if test="params.no != null and params.no != ''">
+                and t.no = #{params.no}
+            </if>
+            <if test="params.name != null and params.name != ''">
+                and t.name = #{params.name}
+            </if>
+            <if test="params.createDateStart != null and params.createDateEnd != null">
+                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.unitId != null and params.unitId != ''">
+                and t.unit_id = #{params.unitId}
+            </if>
+            <if test="params.picUrls != null and params.picUrls != ''">
+                and t.pic_urls = #{params.picUrls}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+            <if test="params.status != null and params.status != ''">
+                and t.status = #{params.status}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiGoodsEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiGoodsEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

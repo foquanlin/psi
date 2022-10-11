@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiOrderInvoiceDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiOrderInvoiceDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.order_id,
+            t.attachment_urls
+        from psi_order_invoice t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.orderId != null and params.orderId != ''">
+                and t.order_id = #{params.orderId}
+            </if>
+            <if test="params.attachmentUrls != null and params.attachmentUrls != ''">
+                and t.attachment_urls = #{params.attachmentUrls}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiOrderInvoiceEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiOrderInvoiceEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

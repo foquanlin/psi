@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiCheckDetailDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiCheckDetailDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.warehouse_id,
+            t.goods_id,
+            t.before_num,
+            t.after_num,
+            t.create_date,
+            t.memo
+        from psi_check_detail t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and t.warehouse_id = #{params.warehouseId}
+            </if>
+            <if test="params.goodsId != null and params.goodsId != ''">
+                and t.goods_id = #{params.goodsId}
+            </if>
+            <if test="params.createDateStart != null and params.createDateEnd != null">
+                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

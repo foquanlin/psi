@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiAllocationGoodsDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiAllocationGoodsDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.allocation_id,
+            t.goods_id,
+            t.num,
+            t.memo
+        from psi_allocation_goods t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.allocationId != null and params.allocationId != ''">
+                and t.allocation_id = #{params.allocationId}
+            </if>
+            <if test="params.goodsId != null and params.goodsId != ''">
+                and t.goods_id = #{params.goodsId}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>
