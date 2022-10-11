@@ -9,20 +9,13 @@
 | 标准型存储容量 |200GB	  |1年	171元|
 | 下行流量      | 500GB	  |3个月	177元|
 
-[抢购地址：https://cloud.tencent.com](https://cloud.tencent.com/act/cps/redirect?redirect=1044&cps_key=30280f92fc381dfc9e1d9e0e23d25a18&from=console)
 
 #### 项目说明
-- platform-plus是一个轻量级的，前后端分离的Java快速开发平台
-- JavaDoc：https://apidoc.gitee.com/fuyang_lipengjun/platform-plus/
-- 前端地址：https://gitee.com/fuyang_lipengjun/platform-plus-ui
+- JavaDoc：
  
 ### 使用案例
-完整案例登记列表，请[【访问这里】](https://gitee.com/fuyang_lipengjun/platform-plus/issues/I10MHD)查看，欢迎登记更多的案例。
-
 以下为部分案例：
-- 江西省教育缴费云平台：https://edu.bstj.com/edupay-charge/#/login
-- 内务管理系统：http://interiorpc.etg.test.thinkinpower.net/#/login
-
+- 麻将馆管理系统：https://mahjong.wxngrok.com.com/#/login
 
 #### 优势
 - 严格遵循阿里编码规约开发，便于阅读及二次开发
@@ -108,7 +101,7 @@ platform-plus
 ```
 
 **项目演示**
-- 演示地址：http://www.meilyhome.com/platform-plus/#/login
+- 演示地址：http://www.wxngrok.com/platform-plus/#/login
 - 账号密码：
   - test/888888
   - test1/888888
@@ -124,24 +117,6 @@ platform-plus
 
 
 **效果图：**
-- ELK日志分析
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/elk.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/elk.png "ELK日志分析")
-- 流程操作
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/reprocdef.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/reprocdef.png "流程操作")
-- 模型管理
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/remodel.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/remodel.png "模型管理")
-- 流程编辑
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/editor.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/editor.png "流程编辑")
-- 菜单管理
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/platform-plus.jpg](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/platform-plus.jpg "菜单管理")
-- 字典管理
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/dict.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/dict.png "字典管理")
-- 在线人数
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/users.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/users.png "在线人数")
-- 缓存数据
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/doc.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/redis.png "缓存数据")
-- 接口文档
-![https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/doc.png](https://platform-wxmall.oss-cn-beijing.aliyuncs.com/upload/platform-plus/doc.png "接口文档")
 
 #### 后端部署
 - 通过git下载源码
@@ -159,11 +134,6 @@ platform-plus
 
 #### 提交反馈
 1. 欢迎提交 issue，请写清楚遇到问题的原因，开发环境，复显步骤。
-
-2. 官方QQ群：
-- <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ac742b7481b95fac926a3f2196085108bceeebcdf14bd716cbea519751e69445"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="酷天科技 ①群" title="酷天科技 ①群"></a>
-- <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=dcb460bfa21213a2712677bab7292fd8eb2138a1914af5af397b58e7c02690c5"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="酷天科技 ②群" title="酷天科技 ②群"></a>
-- <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=c7657db5d4e65a40e46ee5998534f7b9b9fa56d0347c3af3157c7f6240c0d0dd"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="酷天科技 ③群" title="酷天科技 ③群"></a>
 
 #### 常用API
 - [Mybatis-Plus](https://baomidou.gitee.io/mybatis-plus-doc/#/quick-start)
