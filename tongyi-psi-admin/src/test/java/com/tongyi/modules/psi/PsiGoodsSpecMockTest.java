@@ -1,14 +1,14 @@
 /*
  * 项目名称:项目名称
- * 类名称:PsiGoodsSkuMockTest.java
+ * 类名称:PsiGoodsSpecMockTest.java
  * 包名称:com.tongyi.modules.psi.Mocktest
  * @author 惠州市酷天科技有限公司
- * @date 2022-10-25 21:39:28
+ * @date 2022-10-25 21:39:27
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi;
-import com.tongyi.modules.psi.controller.PsiGoodsSkuController;
-import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
+import com.tongyi.modules.psi.controller.PsiGoodsSpecController;
+import com.tongyi.modules.psi.entity.PsiGoodsSpecEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,22 +26,22 @@ import java.util.Date;
 import java.math.BigDecimal;
 
 /**
- * 商品skuController
+ * Controller
  *
  * @author 惠州市酷天科技有限公司
- * @date 2022-10-25 21:39:28
+ * @date 2022-10-25 21:39:27
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 @ActiveProfiles("junit")
-public class PsiGoodsSkuMockTest {
+public class PsiGoodsSpecMockTest {
     @Autowired
     protected WebApplicationContext wac;
 
     protected MockMvc mockMvc;
 
     @Autowired
-    protected PsiGoodsSkuController controller; // 把要测试的controller注入进来
+    protected PsiGoodsSpecController controller; // 把要测试的controller注入进来
 
     @Before
     public void setup() throws Exception {
@@ -52,16 +52,9 @@ public class PsiGoodsSkuMockTest {
         for(int i=0;i<100;i++) {
             int idx = new Random().nextInt(1000000);
             String id = "id-" + idx;
-            PsiGoodsSkuEntity item = new PsiGoodsSkuEntity();
+            PsiGoodsSpecEntity item = new PsiGoodsSpecEntity();
             item.setId(id);
-            item.setWarehouseId (id);
             item.setGoodsId (id);
-            item.setNo (id);
-            item.setBarcode (id);
-            item.setCostPrice (new BigDecimal(idx));
-            item.setSalePrice (new BigDecimal(idx));
-            item.setNum (new BigDecimal(idx));
-            item.setStatus (id);
             item.setSpecName (id);
             item.setSpecValue (id);
             controller.save(item);
@@ -72,16 +65,9 @@ public class PsiGoodsSkuMockTest {
     public void testAll() {
         int idx = new Random().nextInt(1000000);
         String id = "id-" + idx;
-        PsiGoodsSkuEntity item = new PsiGoodsSkuEntity();
+        PsiGoodsSpecEntity item = new PsiGoodsSpecEntity();
         item.setId(id);
-        item.setWarehouseId (id);
         item.setGoodsId (id);
-        item.setNo (id);
-        item.setBarcode (id);
-        item.setCostPrice (new BigDecimal(idx));
-        item.setSalePrice (new BigDecimal(idx));
-        item.setNum (new BigDecimal(idx));
-        item.setStatus (id);
         item.setSpecName (id);
         item.setSpecValue (id);
         controller.save(item);

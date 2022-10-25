@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.tongyi.modules.psi.dao.PsiGoodsSkuDao">
-<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiGoodsSkuDao"/>-->
+<mapper namespace="com.tongyi.modules.psi.dao.PsiGoodsSpecDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiGoodsSpecDao"/>-->
 
     <sql id="selectSql">
         select
             t.id,
-            t.warehouse_id,
             t.goods_id,
-            t.no,
-            t.barcode,
-            t.cost_price,
-            t.sale_price,
-            t.num,
-            t.status,
             t.spec_name,
             t.spec_value
-        from psi_goods_sku t
+        from psi_goods_spec t
     </sql>
     <sql id="selectWhere">
         <where>
             <if test="params.id != null and params.id != ''">
                 and t.id = #{params.id}
             </if>
-            <if test="params.warehouseId != null and params.warehouseId != ''">
-                and t.warehouse_id = #{params.warehouseId}
-            </if>
             <if test="params.goodsId != null and params.goodsId != ''">
                 and t.goods_id = #{params.goodsId}
-            </if>
-            <if test="params.no != null and params.no != ''">
-                and t.no = #{params.no}
-            </if>
-            <if test="params.barcode != null and params.barcode != ''">
-                and t.barcode = #{params.barcode}
-            </if>
-            <if test="params.status != null and params.status != ''">
-                and t.status = #{params.status}
             </if>
             <if test="params.specName != null and params.specName != ''">
                 and t.spec_name = #{params.specName}
@@ -47,12 +28,12 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiGoodsSpecEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiGoodsSpecEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>

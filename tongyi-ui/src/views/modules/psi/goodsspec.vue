@@ -1,5 +1,5 @@
 <template>
-  <div class="mod-goodssku">
+  <div class="mod-goodsspec">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
         <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
@@ -7,27 +7,20 @@
       <el-form-item>
         <el-button @click="pageIndex = 1
         getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:goodssku:save')" type="primary" @click="editHandle()">新增</el-button>
-        <el-button v-if="isAuth('psi:goodssku:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('psi:goodsspec:save')" type="primary" @click="editHandle()">新增</el-button>
+        <el-button v-if="isAuth('psi:goodsspec:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库"/>
       <el-table-column prop="goodsId" header-align="center" align="center" label="商品"/>
-      <el-table-column prop="no" header-align="center" align="center" label="商品编码"/>
-      <el-table-column prop="barcode" header-align="center" align="center" label="条形码"/>
-      <el-table-column prop="costPrice" header-align="center" align="center" label="进货价格"/>
-      <el-table-column prop="salePrice" header-align="center" align="center" label="销售价格"/>
-      <el-table-column prop="num" header-align="center" align="center" label="数量"/>
-      <el-table-column prop="status" header-align="center" align="center" label="状态"/>
       <el-table-column prop="specName" header-align="center" align="center" label="规格名称"/>
       <el-table-column prop="specValue" header-align="center" align="center" label="规格值"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
-          <el-button v-if="isAuth('psi:goodssku:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
-          <el-button v-if="isAuth('psi:goodssku:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="isAuth('psi:goodssku:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="isAuth('psi:goodsspec:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
+          <el-button v-if="isAuth('psi:goodsspec:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth('psi:goodsspec:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -35,12 +28,12 @@
       :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <goodssku-edit v-if="editVisible" ref="goodsskuEdit" @refreshDataList="getDataList"/>
+    <goodsspec-edit v-if="editVisible" ref="goodsspecEdit" @refreshDataList="getDataList"/>
   </div>
 </template>
 
 <script>
-  import goodsskuEdit from './goodssku-edit'
+  import goodsspecEdit from './goodsspec-edit'
   import Options from '../sys/options'
   export default {
     data () {
@@ -57,7 +50,7 @@
       }
     },
     components: {
-      goodsskuEdit,
+      goodsspecEdit,
       Options
     },
     activated () {
@@ -70,7 +63,7 @@
       // 获取数据列表
       getDataList () {
         this.$http({
-          url: '/psi/goodssku/list',
+          url: '/psi/goodsspec/list',
           method: 'get',
           params: {
             page: this.pageIndex,
@@ -106,14 +99,14 @@
       showDetails (id) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.goodsskuEdit.init(id, true)
+          this.$refs.goodsspecEdit.init(id, true)
         })
       },
       // 新增 / 修改
       editHandle (id) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.goodsskuEdit.init(id)
+          this.$refs.goodsspecEdit.init(id)
         })
       },
       // 删除
@@ -127,7 +120,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: '/psi/goodssku/delete',
+            url: '/psi/goodsspec/delete',
             method: 'post',
             data: ids
           }).then(({data}) => {

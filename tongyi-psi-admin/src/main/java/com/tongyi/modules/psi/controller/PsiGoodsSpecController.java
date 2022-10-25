@@ -1,17 +1,17 @@
 /*
  * 项目名称:项目名称
- * 类名称:PsiGoodsSkuController.java
+ * 类名称:PsiGoodsSpecController.java
  * 包名称:com.tongyi.modules.psi.controller
  * @author 惠州市酷天科技有限公司
- * @date 2022-10-25 21:39:28
+ * @date 2022-10-25 21:39:27
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.controller;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.sys.controller.AbstractController;
-import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
-import com.tongyi.modules.psi.service.PsiGoodsSkuService;
+import com.tongyi.modules.psi.entity.PsiGoodsSpecEntity;
+import com.tongyi.modules.psi.service.PsiGoodsSpecService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +20,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 商品skuController
+ * Controller
  *
  * @author 惠州市酷天科技有限公司
- * @date 2022-10-25 21:39:28
+ * @date 2022-10-25 21:39:27
  */
 @RestController
-@RequestMapping("psi/goodssku")
-public class PsiGoodsSkuController extends AbstractController {
+@RequestMapping("psi/goodsspec")
+public class PsiGoodsSpecController extends AbstractController {
     @Autowired
-    private PsiGoodsSkuService psiGoodsSkuService;
+    private PsiGoodsSpecService psiGoodsSpecService;
 
     /**
      * 查看所有列表
@@ -38,22 +38,22 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/listAll")
-    @RequiresPermissions("psi:goodssku:list")
+    @RequiresPermissions("psi:goodsspec:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
-        List<PsiGoodsSkuEntity> list = psiGoodsSkuService.listAll(params);
+        List<PsiGoodsSpecEntity> list = psiGoodsSpecService.listAll(params);
         return RestResponse.success("list", list);
     }
 
     /**
-     * 分页查询商品sku
+     * 分页查询
      *
      * @param params 查询参数
      * @return RestResponse
      */
     @GetMapping("/list")
-    @RequiresPermissions("psi:goodssku:list")
+    @RequiresPermissions("psi:goodsspec:list")
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
-        PageInfo page = psiGoodsSkuService.listPage(current,size,params);
+        PageInfo page = psiGoodsSpecService.listPage(current,size,params);
         return RestResponse.success("page", page);
     }
 
@@ -64,51 +64,51 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("psi:goodssku:info")
+    @RequiresPermissions("psi:goodsspec:info")
     public RestResponse info(@PathVariable("id") String id) {
-        PsiGoodsSkuEntity psiGoodsSku = psiGoodsSkuService.getById(id);
-        return RestResponse.success("info", psiGoodsSku);
+        PsiGoodsSpecEntity psiGoodsSpec = psiGoodsSpecService.getById(id);
+        return RestResponse.success("info", psiGoodsSpec);
     }
 
     /**
-     * 新增商品sku
+     * 新增
      *
      * @param entity
      * @return RestResponse
      */
-    @SysLog("新增商品sku")
+    @SysLog("新增")
     @RequestMapping("/save")
-    @RequiresPermissions("psi:goodssku:save")
-    public RestResponse save(@RequestBody PsiGoodsSkuEntity entity) {
-        psiGoodsSkuService.addEntity(entity);
+    @RequiresPermissions("psi:goodsspec:save")
+    public RestResponse save(@RequestBody PsiGoodsSpecEntity entity) {
+        psiGoodsSpecService.addEntity(entity);
         return RestResponse.success();
     }
 
     /**
-     * 修改商品sku
+     * 修改
      *
      * @param entity
      * @return RestResponse
      */
-    @SysLog("修改商品sku")
+    @SysLog("修改")
     @RequestMapping("/update")
-    @RequiresPermissions("psi:goodssku:update")
-    public RestResponse update(@RequestBody PsiGoodsSkuEntity entity) {
-        psiGoodsSkuService.updateEntity(entity);
+    @RequiresPermissions("psi:goodsspec:update")
+    public RestResponse update(@RequestBody PsiGoodsSpecEntity entity) {
+        psiGoodsSpecService.updateEntity(entity);
         return RestResponse.success();
     }
 
     /**
-     * 根据主键删除商品sku
+     * 根据主键删除
      *
      * @param ids
      * @return RestResponse
      */
-    @SysLog("删除商品sku")
+    @SysLog("删除")
     @RequestMapping("/delete")
-    @RequiresPermissions("psi:goodssku:delete")
+    @RequiresPermissions("psi:goodsspec:delete")
     public RestResponse delete(@RequestBody String[] ids) {
-        psiGoodsSkuService.deleteBatch(ids);
+        psiGoodsSpecService.deleteBatch(ids);
         return RestResponse.success();
     }
 }

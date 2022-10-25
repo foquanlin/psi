@@ -3,29 +3,8 @@
     :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
     :close-on-click-modal="false" width="71%" :visible.sync="visible">
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
-      <el-form-item label="仓库" prop="warehouseId">
-        <el-input v-model="dataForm.warehouseId" :disabled="disabled" placeholder="仓库" clearable/>
-      </el-form-item>
       <el-form-item label="商品" prop="goodsId">
         <el-input v-model="dataForm.goodsId" :disabled="disabled" placeholder="商品" clearable/>
-      </el-form-item>
-      <el-form-item label="商品编码" prop="no">
-        <el-input v-model="dataForm.no" :disabled="disabled" placeholder="商品编码" clearable/>
-      </el-form-item>
-      <el-form-item label="条形码" prop="barcode">
-        <el-input v-model="dataForm.barcode" :disabled="disabled" placeholder="条形码" clearable/>
-      </el-form-item>
-      <el-form-item label="进货价格" prop="costPrice">
-        <el-input v-model="dataForm.costPrice" :disabled="disabled" placeholder="进货价格" clearable type="number"/>
-      </el-form-item>
-      <el-form-item label="销售价格" prop="salePrice">
-        <el-input v-model="dataForm.salePrice" :disabled="disabled" placeholder="销售价格" clearable type="number"/>
-      </el-form-item>
-      <el-form-item label="数量" prop="num">
-        <el-input v-model="dataForm.num" :disabled="disabled" placeholder="数量" clearable type="number"/>
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-input v-model="dataForm.status" :disabled="disabled" placeholder="状态" clearable/>
       </el-form-item>
       <el-form-item label="规格名称" prop="specName">
         <el-input v-model="dataForm.specName" :disabled="disabled" placeholder="规格名称" clearable/>
@@ -49,20 +28,10 @@
         visible: false,
         dataForm: {
           id: '',
-          warehouseId: '',
           goodsId: '',
-          no: '',
-          barcode: '',
-          costPrice: '',
-          salePrice: '',
-          num: '',
-          status: '',
           specName: '',
           specValue: ''},
         dataRule: {
-          warehouseId: [{required: true, message: '仓库不能为空', trigger: 'blur'}],
-          goodsId: [{required: true, message: '商品不能为空', trigger: 'blur'}],
-          num: [{required: true, message: '数量不能为空', trigger: 'blur'}],
           other: []
         }
       }
@@ -76,7 +45,7 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: `/psi/goodssku/info/${this.dataForm.id}`,
+              url: `/psi/goodsspec/info/${this.dataForm.id}`,
               method: 'get'
             }).then(({data}) => {
               if (data && data.code === 0) {
@@ -92,7 +61,7 @@
           .validate((valid) => {
             if (valid) {
               this.$http({
-                url: `/psi/goodssku/${!this.dataForm.id ? 'save' : 'update'}`,
+                url: `/psi/goodsspec/${!this.dataForm.id ? 'save' : 'update'}`,
                 method: 'post',
                 data: this.dataForm
               }).then(({data}) => {
