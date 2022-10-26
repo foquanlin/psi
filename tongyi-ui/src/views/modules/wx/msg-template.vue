@@ -22,17 +22,21 @@
             <el-table-column prop="templateId" show-overflow-tooltip header-align="center" align="center" label="模板ID">
             </el-table-column>
             <el-table-column prop="title" header-align="center" align="center" label="标题">
-                <a :href="scope.row.url" slot-scope="scope">{{scope.row.title}}</a>
+              <template v-slot="scope">
+                <a :href="scope.row.url">{{scope.row.title}}</a>
+              </template>
             </el-table-column>
             <el-table-column prop="name" header-align="center" align="center" label="模版名称">
             </el-table-column>
             <el-table-column prop="content" show-overflow-tooltip header-align="center" align="center" label="模版字段" width="200">
             </el-table-column>
             <el-table-column prop="status" header-align="center" align="center" label="是否有效">
-                <span slot-scope="scope">{{scope.row.status?"是":"否"}}</span>
+              <template v-slot="scope">
+                <span>{{scope.row.status?"是":"否"}}</span>
+              </template>
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                     <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">配置</el-button>
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
                 </template>

@@ -61,7 +61,7 @@
         align="center"
         width="200"
         label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('act:remodel:update')" type="text" size="small"
                      @click="editorHandle(scope.row.id)">编辑
           </el-button>

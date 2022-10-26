@@ -18,14 +18,14 @@
         <el-table :data="dataList" border @selection-change="selectionChangeHandle" style="width: 100%;" @row-click="rowClick" :row-style="selectRow">
           <el-table-column type="selection" header-align="center" align="center" width="50"/>
           <el-table-column prop="code" header-align="center" align="center" label="分组编码">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-button type="text" size="small" @click="showDict(scope.row.id,scope.row.code)">{{scope.row.code}}</el-button>
             </template>
           </el-table-column>
           <el-table-column prop="name" header-align="center" align="center" label="分组名称"/>
           <el-table-column prop="remark" header-align="center" align="center" show-tooltip-when-overflow label="备注"/>
           <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-button v-if="isAuth('sys:dictgroup:update') && scope.row.edited == true" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
               <el-button v-if="isAuth('sys:dictgroup:delete') && scope.row.edited == true" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
             </template>

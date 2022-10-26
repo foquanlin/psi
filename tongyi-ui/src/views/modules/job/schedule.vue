@@ -69,7 +69,7 @@
         header-align="center"
         align="center"
         label="状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.status === 0" size="small">正常</el-tag>
           <el-tag v-else size="small" type="danger">暂停</el-tag>
         </template>
@@ -80,7 +80,7 @@
         align="center"
         width="150"
         label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:schedule:update')" type="text" size="small"
                      @click="addOrUpdateHandle(scope.row.jobId)">修改
           </el-button>

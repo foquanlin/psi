@@ -43,7 +43,7 @@
         header-align="center"
         align="center"
         label="状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.status === 0" size="small">成功</el-tag>
           <el-tag v-else @click.native="showErrorInfo(scope.row.logId)" size="small" type="danger"
                   style="cursor: pointer;">失败

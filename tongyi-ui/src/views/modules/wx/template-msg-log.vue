@@ -27,7 +27,7 @@
             <el-table-column prop="templateId" header-align="center" align="center" label="模板ID"  width="150">
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.logId)">删除</el-button>
                 </template>
             </el-table-column>

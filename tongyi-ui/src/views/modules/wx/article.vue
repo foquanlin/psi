@@ -24,7 +24,9 @@
                 <el-table-column prop="type" header-align="center" align="center" :formatter="articleTypeFormat" label="文章类型">
                 </el-table-column>
                 <el-table-column prop="title" header-align="center" align="center" show-overflow-tooltip label="标题">
-                    <a :href="scope.row.targetLink" slot-scope="scope">{{scope.row.title}}</a>
+                  <template v-slot="scope">
+                    <a :href="scope.row.targetLink">{{scope.row.title}}</a>
+                  </template>
                 </el-table-column>
                 <el-table-column prop="category" header-align="center" align="center" label="一级分类">
                 </el-table-column>
@@ -33,7 +35,7 @@
                 <el-table-column prop="openCount" header-align="center" align="center" label="打开次数">
                 </el-table-column>
                 <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-                    <template slot-scope="scope">
+                    <template v-slot="scope">
                         <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
                         <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
                     </template>

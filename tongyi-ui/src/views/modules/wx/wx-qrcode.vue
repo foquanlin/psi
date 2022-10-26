@@ -16,20 +16,26 @@
             <el-table-column prop="id" header-align="center" align="center" label="ID">
             </el-table-column>
             <el-table-column prop="isTemp" header-align="center" align="center" label="类型">
-                <span slot-scope="scope">{{scope.row.isTemp?'临时':'永久'}}</span>
+              <template v-slot="scope">
+                <span>{{scope.row.isTemp?'临时':'永久'}}</span>
+              </template>
             </el-table-column>
             <el-table-column prop="sceneStr" header-align="center" align="center" label="场景值">
             </el-table-column>
             <el-table-column prop="ticket" header-align="center" align="center" show-overflow-tooltip label="二维码图片">
-                <a :href="'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='+scope.row.ticket" slot-scope="scope" target="_blank">{{scope.row.ticket}}</a>
+              <template v-slot="scope">
+                <a :href="'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='+scope.row.ticket" target="_blank">{{scope.row.ticket}}</a>
+              </template>
             </el-table-column>
             <el-table-column prop="url" header-align="center" align="center" show-overflow-tooltip label="解析后的地址">
-                <a :href="scope.row.url" slot-scope="scope" target="_blank">{{scope.row.url}}</a>
+              <template v-slot="scope">
+                <a :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
+              </template>
             </el-table-column>
             <el-table-column prop="expireTime" header-align="center" align="center" width="100" label="失效时间">
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>

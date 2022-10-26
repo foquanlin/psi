@@ -12,14 +12,14 @@
     <el-table :data="dataList" border @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="userId" header-align="center" align="center" label="用户名">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{transUser(scope.row.userId)}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="updateTime" header-align="center" align="center" label="登录时间"/>
       <el-table-column prop="expireTime" header-align="center" align="center" label="过期时间"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:usertoken:offline')" type="text" size="small" @click="offlineHandle(scope.row.userId)">强制下线</el-button>
         </template>
       </el-table-column>

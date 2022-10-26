@@ -16,7 +16,7 @@
       <el-table-column show-tooltip-when-overflow prop="remark" header-align="center" align="center" label="备注"/>
       <el-table-column prop="createTime" header-align="center" align="center" label="创建时间"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:role:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.roleId)">修改</el-button>
           <el-button v-if="isAuth('sys:role:delete')" type="text" size="small" @click="deleteHandle(scope.row.roleId)">删除</el-button>
         </template>

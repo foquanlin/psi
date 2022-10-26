@@ -18,7 +18,7 @@
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="sendId" header-align="center" align="center" label="发送编号"/>
       <el-table-column prop="userId" header-align="center" align="center" label="操作人">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{transUser(scope.row.userId)}}</span>
         </template>
       </el-table-column>
@@ -27,7 +27,7 @@
       <el-table-column prop="stime" header-align="center" align="center" label="发送时间"/>
       <el-table-column prop="sign" header-align="center" align="center" width="150" label="用户签名"/>
       <el-table-column prop="sendStatus" header-align="center" align="center" label="提交状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.sendStatus === 0" size="small">成功</el-tag>
           <el-tag v-else size="small" type="danger">异常</el-tag>
         </template>
@@ -37,7 +37,7 @@
       <el-table-column prop="blackNum" header-align="center" align="center" label="黑名单数"/>
       <el-table-column prop="returnMsg" header-align="center" align="center" label="返回消息"/>
       <el-table-column fixed="right" header-align="center" align="center" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:smslog:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>

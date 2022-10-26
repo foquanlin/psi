@@ -17,20 +17,20 @@
       <table-tree-column prop="orgName" header-align="center" treeKey="orgNo" parentKey="parentNo" width="200" label="机构名称"/>
       <el-table-column width="200" prop="parentName" header-align="center" align="center" label="上级机构"/>
       <el-table-column prop="status" header-align="center" align="center" label="状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.status === 0" size="small" type="danger">禁用</el-tag>
           <el-tag v-else-if="scope.row.status === 1" size="small" type="success">正常</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="sort" header-align="center" align="center" label="排序号"/>
       <el-table-column prop="createUserId" header-align="center" align="center" label="创建者">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{transUser(scope.row.createUserId)}}</span>
         </template>
       </el-table-column>
       <el-table-column width="250px" prop="createTime" header-align="center" align="center" label="创建时间"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:org:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.orgNo)">修改</el-button>
           <el-button v-if="isAuth('sys:org:delete')" type="text" size="small" @click="deleteHandle(scope.row.orgNo)">删除</el-button>
         </template>
