@@ -16,7 +16,7 @@
       <el-table-column prop="orderId" header-align="center" align="center" label="订单"/>
       <el-table-column prop="attachmentUrls" header-align="center" align="center" label="发票"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('psi:orderinvoice:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('psi:orderinvoice:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('psi:orderinvoice:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>

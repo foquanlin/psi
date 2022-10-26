@@ -21,7 +21,7 @@
       <el-table-column prop="master" header-align="center" align="center" label="负责人"/>
       <el-table-column prop="defaulted" header-align="center" align="center" label="默认仓库"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('psi:warehouse:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('psi:warehouse:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('psi:warehouse:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>

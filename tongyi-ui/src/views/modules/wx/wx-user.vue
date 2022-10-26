@@ -38,23 +38,27 @@
             <el-table-column prop="city" header-align="center" align="center" label="城市">
             </el-table-column>
             <el-table-column prop="headimgurl" header-align="center" align="center" label="头像">
-                <img class="headimg" slot-scope="scope" v-if="scope.row.headimgurl" :src="scope.row.headimgurl" />
+              <template v-slot="scope">
+                <img class="headimg" v-if="scope.row.headimgurl" :src="scope.row.headimgurl" />
+              </template>
             </el-table-column>
             <el-table-column prop="tagidList" header-align="center" align="center" label="标签" show-overflow-tooltip>
-                <template slot-scope="scope">
+                <template v-slot="scope">
                     <span v-for="tagid in scope.row.tagidList" :key="tagid">{{getTagName(tagid)}} </span>
                 </template>
             </el-table-column>
             <el-table-column prop="subscribeTime" header-align="center" align="center" label="订阅时间">
-                <template slot-scope="scope">{{$moment(scope.row.subscribeTime).calendar()}}</template>
+                <template v-slot="scope">{{$moment(scope.row.subscribeTime).calendar()}}</template>
             </el-table-column>
             <el-table-column prop="qrSceneStr" header-align="center" align="center" label="场景值">
             </el-table-column>
             <el-table-column prop="subscribe" header-align="center" align="center" label="是否关注">
-                <span slot-scope="scope">{{scope.row.subscribe?"是":"否"}}</span>
+              <template v-slot="scope">
+                <span>{{scope.row.subscribe?"是":"否"}}</span>
+              </template>
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.openid)">删除</el-button>
                 </template>
             </el-table-column>

@@ -14,20 +14,20 @@
     <el-table :data="dataList" border @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="url" header-align="center" align="center" label="URL地址">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="text" size="small" v-clipboard:copy="scope.row.url" v-clipboard:success="onCopySuccess">
             {{scope.row.url}}(点击复制)
           </el-button>
         </template>
       </el-table-column>
       <el-table-column prop="url" header-align="center" align="center" label="预览">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <img style="height: 50%;width: 50%" @click="openImg(scope.row.url)" :src="scope.row.url"/>
         </template>
       </el-table-column>
       <el-table-column prop="createDate" header-align="center" align="center" label="创建时间"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="text" size="small" @click="showImg(scope.row.url)">预览</el-button>
           <el-button type="text" size="small" v-if="isAuth('sys:oss:delete')" @click="deleteHandle(scope.row.id)">删除
           </el-button>

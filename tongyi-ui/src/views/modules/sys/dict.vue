@@ -16,13 +16,13 @@
       <el-table-column prop="name" header-align="center" align="center" label="字典名称"/>
       <el-table-column prop="value" header-align="center" align="center" label="字典值"/>
       <el-table-column prop="status" header-align="center" align="center" label="状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.status === 0" size="small" type="danger">禁用</el-tag>
           <el-tag v-else-if="scope.row.status === 1" size="small" type="success">正常</el-tag>
         </template>
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:dict:update') && scope.row.edited == true" type="text" size="small" @click="addOrUpdateDictHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('sys:dict:delete') && scope.row.edited == true" type="text" size="small" @click="deleteDictHandle(scope.row.id)">删除</el-button>
         </template>

@@ -17,7 +17,7 @@
       <el-table-column prop="specName" header-align="center" align="center" label="规格名称"/>
       <el-table-column prop="specValue" header-align="center" align="center" label="规格值"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('psi:goodsspec:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('psi:goodsspec:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('psi:goodsspec:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>

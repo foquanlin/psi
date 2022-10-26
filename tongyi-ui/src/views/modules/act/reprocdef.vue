@@ -61,7 +61,7 @@
         header-align="center"
         align="center"
         label="资源文件">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <a href="javascript:;" @click="read(scope.row.id,'xml')">{{scope.row.resourceName}}</a>
         </template>
       </el-table-column>
@@ -70,7 +70,7 @@
         header-align="center"
         align="center"
         label="图片资源文件">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <a href="javascript:;" @click="read(scope.row.id,'image')">{{scope.row.dgrmResourceName}}</a>
         </template>
       </el-table-column>
@@ -85,7 +85,7 @@
         header-align="center"
         align="center"
         label="是否挂起">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.suspensionState === 1" size="small" type="success">激活</el-tag>
           <el-tag v-else-if="scope.row.suspensionState === 2" size="small" type="danger">挂起</el-tag>
         </template>
@@ -103,7 +103,7 @@
         align="center"
         width="200"
         label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('act:reprocdef:update')&&scope.row.suspensionState===2" type="text" size="small"
                      @click="updateHandle(scope.row.id,1)">激活
           </el-button>

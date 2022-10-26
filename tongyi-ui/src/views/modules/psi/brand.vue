@@ -2,7 +2,7 @@
   <div class="mod-brand">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
+        <el-input v-model="searchForm.name" placeholder="品牌名称" clearable/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1
@@ -17,7 +17,7 @@
       <el-table-column prop="picUrls" header-align="center" align="center" label="图片"/>
       <el-table-column prop="status" header-align="center" align="center" label="状态"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('psi:brand:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('psi:brand:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('psi:brand:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>

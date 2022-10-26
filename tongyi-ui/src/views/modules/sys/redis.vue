@@ -20,7 +20,7 @@
       <el-table-column prop="value" label="缓存VALUE" flex="1"/>
       <el-table-column prop="seconds" label="过期剩余时间(秒)" width="180"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:cache:deleteCache')" type="text" size="small" @click="deleteHandle(scope.row.cacheKey)">删除</el-button>
         </template>
       </el-table-column>

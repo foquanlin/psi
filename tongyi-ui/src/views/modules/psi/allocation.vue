@@ -19,7 +19,7 @@
       <el-table-column prop="createDate" header-align="center" align="center" label="创建日期"/>
       <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('psi:allocation:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('psi:allocation:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('psi:allocation:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>

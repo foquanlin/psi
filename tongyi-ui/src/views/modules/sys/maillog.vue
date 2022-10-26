@@ -18,19 +18,19 @@
       <el-table-column show-tooltip-when-overflow prop="content" header-align="center" align="center" label="发送内容"/>
       <el-table-column prop="sendDate" header-align="center" align="center" label="发送时间"/>
       <el-table-column prop="type" header-align="center" align="center" label="发送类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.type === 0" size="small">系统发送邮件</el-tag>
           <el-tag v-else-if="scope.row.type === 1" size="small" type="success">用户发送邮件</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="sendResult" header-align="center" align="center" label="发送结果">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.sendResult === 1" size="small" type="danger">发送失败</el-tag>
           <el-tag v-else-if="scope.row.sendResult === 0" size="small" type="success">发送成功</el-tag>
         </template>
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:maillog:info')" type="text" size="small" @click="lookHandle(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('sys:maillog:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>

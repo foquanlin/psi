@@ -14,7 +14,7 @@
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('sys:nation:info')" type="text" size="small" @click="showDetails(scope.row.code)">查看</el-button>
           <el-button v-if="isAuth('sys:nation:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.code)">修改</el-button>
           <el-button v-if="isAuth('sys:nation:delete')" type="text" size="small" @click="deleteHandle(scope.row.code)">删除</el-button>

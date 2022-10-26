@@ -20,10 +20,12 @@
             <el-table-column prop="type" header-align="center" align="center" label="类型" :formatter="accountTypeFormat">
             </el-table-column>
             <el-table-column prop="verified" header-align="center" align="center" label="是否认证">
-                <span slot-scope="scope">{{scope.row.verified?"是":"否"}}</span>
+              <template v-slot="scope">
+                <span>{{scope.row.verified?"是":"否"}}</span>
+              </template>
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                     <el-button type="text" size="small" @click="accessInfo(scope.row)">接入</el-button>
                     <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row)">修改</el-button>
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.appid)">删除</el-button>

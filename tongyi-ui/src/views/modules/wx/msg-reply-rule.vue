@@ -12,7 +12,7 @@
         </el-form>
         <el-table :data="dataList" border type="expand" v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
             <el-table-column type="expand">
-                <template slot-scope="props">
+                <template v-slot="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                         <el-form-item label="作用范围">
                             <span>{{ props.row.appid?'当前公众号':'全部公众号' }}</span>
@@ -46,7 +46,7 @@
             <el-table-column prop="replyContent" header-align="center" align="center" show-overflow-tooltip label="回复内容">
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                     <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.ruleId)">修改</el-button>
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.ruleId)">删除</el-button>
                 </template>

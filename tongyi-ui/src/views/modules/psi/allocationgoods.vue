@@ -18,7 +18,7 @@
       <el-table-column prop="num" header-align="center" align="center" label="数量"/>
       <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button v-if="isAuth('psi:allocationgoods:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('psi:allocationgoods:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('psi:allocationgoods:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
