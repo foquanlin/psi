@@ -1,8 +1,8 @@
 <template>
   <el-dialog
     :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
-    :close-on-click-modal="false" width="71%" :visible.sync="visible">
-    <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
+    :close-on-click-modal="false" width="50%" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
 <!--      <el-form-item label="上级" prop="pid">-->
 <!--        <el-input v-model="dataForm.pid" :disabled="disabled" placeholder="上级" clearable/>-->
 <!--      </el-form-item>-->
