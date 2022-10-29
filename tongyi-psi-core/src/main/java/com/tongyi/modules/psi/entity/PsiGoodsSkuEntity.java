@@ -57,10 +57,6 @@ public class PsiGoodsSkuEntity implements Serializable {
      */
     private BigDecimal salePrice;
     /**
-     * 数量
-     */
-    private BigDecimal num;
-    /**
      * 状态
      */
     private String status;
@@ -72,4 +68,33 @@ public class PsiGoodsSkuEntity implements Serializable {
      * 规格值
      */
     private String specValue;
+
+    public enum Status {
+        UP("UP","上架"),
+        DOWN("DOWN","下架");
+
+        private String code;
+        private String name;
+
+        Status(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }

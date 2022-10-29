@@ -8,14 +8,17 @@
         select
             t.id,
             t.brand_id,
+            t.catalog_id,
+            t.unit_id,
             t.no,
             t.name,
             t.create_date,
-            t.unit_id,
             t.pic_urls,
-            t.memo,
-            t.status
+            t.memo
         from psi_goods t
+        left join psi_unit pu on pu.id = t.unit_id
+        left join psi_catalog pc on pc.id = t.catalog_id
+        left join psi_brand pb on pb.id = t.brand_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -24,6 +27,9 @@
             </if>
             <if test="params.brandId != null and params.brandId != ''">
                 and t.brand_id = #{params.brandId}
+            </if>
+            <if test="params.catalogId != null and params.catalogId != ''">
+                and t.catalog_id = #{params.catalogId}
             </if>
             <if test="params.no != null and params.no != ''">
                 and t.no = #{params.no}
@@ -43,18 +49,34 @@
             <if test="params.memo != null and params.memo != ''">
                 and t.memo = #{params.memo}
             </if>
-            <if test="params.status != null and params.status != ''">
-                and t.status = #{params.status}
+            <if test="params.barcode != null and params.barcode != ''">
+                and t.barcode = #{params.barcode}
             </if>
         </where>
     </sql>
-    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiGoodsEntity">
+    <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiGoodsEntity">
+    <select id="listAll" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
+    </select>
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsEntity">
+        <result column="brand_id" property="brandId"></result>
+        <result column="catalog_id" property="catalogId"></result>
+        <result column="unit_id" property="unitId"></result>
+
+        <association property="brand" javaType="com.tongyi.modules.psi.entity.PsiBrandEntity" select="com.tongyi.modules.psi.dao.PsiBrandDao.selectById" column="brand_id"/>
+        <association property="catalog" javaType="com.tongyi.modules.psi.entity.PsiCatalogEntity" select="com.tongyi.modules.psi.dao.PsiCatalogDao.selectById" column="catalog_id"/>
+        <association property="unit" javaType="com.tongyi.modules.psi.entity.PsiUnitEntity" select="com.tongyi.modules.psi.dao.PsiUnitDao.selectById" column="unit_id"/>
+
+        <collection property="specList" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiGoodsSpecEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSpecDao.selectByGoodsId" column="{goodsId=id}"></collection>
+        <collection property="skuList" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectByGoodsId" column="{goodsId=id}"></collection>
+    </resultMap>
+    <select id="selectById" resultMap="resultMap">
+        <include refid="selectSql"/>
+        where t.id = #{id}
     </select>
 </mapper>

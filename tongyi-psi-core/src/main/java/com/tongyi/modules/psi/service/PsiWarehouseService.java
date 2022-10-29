@@ -19,4 +19,7 @@ import com.tongyi.modules.psi.entity.PsiWarehouseEntity;
  */
 public interface PsiWarehouseService extends IService<PsiWarehouseEntity>{
 
+    void defaultWarehouse(String id);
+
+    void warehouseStatus(String id, String status);
 }

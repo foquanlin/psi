@@ -71,4 +71,9 @@ public class PsiBankServiceImpl extends ServiceImpl<PsiBankDao, PsiBankEntity> i
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(ids));
     }
+
+    @Override
+    public void defaultBank(String id) {
+        baseMapper.defaultBank(id);
+    }
 }

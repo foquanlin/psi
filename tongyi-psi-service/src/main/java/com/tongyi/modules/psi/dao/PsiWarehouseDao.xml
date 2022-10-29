@@ -22,7 +22,7 @@
                 and t.id = #{params.id}
             </if>
             <if test="params.name != null and params.name != ''">
-                and t.name = #{params.name}
+                and t.name like concat('%', #{params.name},'%')
             </if>
             <if test="params.location != null and params.location != ''">
                 and t.location = #{params.location}
@@ -50,4 +50,9 @@
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
+
+    <update id="defaultWarehouse">
+        update psi_warehouse set defaulted = 0 where id not in (#{id});
+        update psi_warehouse set defaulted = 1 where id =#{id} ;
+    </update>
 </mapper>

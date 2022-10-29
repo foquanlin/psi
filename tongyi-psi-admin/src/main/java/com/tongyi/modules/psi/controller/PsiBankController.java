@@ -111,4 +111,12 @@ public class PsiBankController extends AbstractController {
         psiBankService.deleteBatch(ids);
         return RestResponse.success();
     }
+
+    @SysLog("设置默认银行账户")
+    @RequestMapping("/default")
+    @RequiresPermissions("psi:bank:default")
+    public RestResponse defaultBank(@RequestParam("id") String id) {
+        psiBankService.defaultBank(id);
+        return RestResponse.success();
+    }
 }

@@ -9,13 +9,16 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.sql.Time;
+import java.util.List;
 
 /**
  * 商品实体
@@ -37,6 +40,10 @@ public class PsiGoodsEntity implements Serializable {
      * 品牌
      */
     private String brandId;
+    /**
+     * 分类
+     */
+    private String catalogId;
     /**
      * 商品编码
      */
@@ -61,8 +68,31 @@ public class PsiGoodsEntity implements Serializable {
      * 备注
      */
     private String memo;
+
     /**
-     * 状态
+     * 品牌
      */
-    private String status;
+    @TableField(exist = false)
+    private PsiBrandEntity brand;
+    /**
+     * 分类
+     */
+    @TableField(exist = false)
+    private PsiCatalogEntity catalog;
+    /**
+     * 单位
+     */
+    @TableField(exist = false)
+    private PsiUnitEntity unit;
+    /**
+     * 商品明细
+     */
+    @TableField(exist = false)
+    private List<PsiGoodsSkuEntity> skuList;
+
+    /**
+     * 商品规格
+     */
+    @TableField(exist = false)
+    private List<PsiGoodsSpecEntity> specList;
 }

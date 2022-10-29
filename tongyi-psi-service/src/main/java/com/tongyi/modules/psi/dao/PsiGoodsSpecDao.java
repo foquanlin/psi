@@ -44,4 +44,6 @@ public interface PsiGoodsSpecDao extends BaseMapper<PsiGoodsSpecEntity> {
      * @return List
      */
     List<PsiGoodsSpecEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
+
+    List<PsiGoodsSpecEntity> selectByGoodsId(@Param("goodsId")String goodsId);
 }

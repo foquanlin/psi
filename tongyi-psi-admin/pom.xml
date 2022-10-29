@@ -56,6 +56,11 @@
             <version>${psi.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-module-sms</artifactId>
+            <version>${component.version}</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>

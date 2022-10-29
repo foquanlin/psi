@@ -7,7 +7,8 @@
         <el-input v-model="dataForm.name" :disabled="disabled" placeholder="名称" clearable/>
       </el-form-item>
       <el-form-item label="图片" prop="picUrls">
-        <el-input v-model="dataForm.picUrls" :disabled="disabled" placeholder="图片" clearable/>
+        <el-img v-model="dataForm.picUrls" :disabled="disabled" placeholder="图片" clearable/>
+<!--        <el-input v-model="dataForm.picUrls" :disabled="disabled"/>-->
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-input v-model="dataForm.status" :disabled="disabled" placeholder="状态" clearable/>

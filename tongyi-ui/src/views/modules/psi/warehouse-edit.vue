@@ -6,24 +6,24 @@
       <el-form-item label="名称" prop="name">
         <el-input v-model="dataForm.name" :disabled="disabled" placeholder="名称" clearable/>
       </el-form-item>
-      <el-form-item label="位置" prop="location">
-        <el-input v-model="dataForm.location" :disabled="disabled" placeholder="位置" clearable/>
-      </el-form-item>
       <el-form-item label="容量" prop="capacity">
         <el-input v-model="dataForm.capacity" :disabled="disabled" placeholder="容量" clearable type="number"/>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-input v-model="dataForm.status" :disabled="disabled" placeholder="状态" clearable/>
+      <el-form-item label="位置" prop="location">
+        <el-input v-model="dataForm.location" :disabled="disabled" placeholder="位置" clearable/>
       </el-form-item>
+<!--      <el-form-item label="状态" prop="status">-->
+<!--        <el-input v-model="dataForm.status" :disabled="disabled" placeholder="状态" clearable/>-->
+<!--      </el-form-item>-->
       <el-form-item label="说明" prop="description">
         <el-input v-model="dataForm.description" :disabled="disabled" placeholder="说明" clearable/>
       </el-form-item>
       <el-form-item label="负责人" prop="master">
         <el-input v-model="dataForm.master" :disabled="disabled" placeholder="负责人" clearable/>
       </el-form-item>
-      <el-form-item label="默认仓库" prop="defaulted">
-        <el-switch v-model="dataForm.defaulted" :disabled="disabled" placeholder="默认仓库" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否"/>
-      </el-form-item>
+<!--      <el-form-item label="默认仓库" prop="defaulted">-->
+<!--        <el-switch v-model="dataForm.defaulted" :disabled="disabled" placeholder="默认仓库" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否"/>-->
+<!--      </el-form-item>-->
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>

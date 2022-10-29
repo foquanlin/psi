@@ -13,7 +13,6 @@
             t.barcode,
             t.cost_price,
             t.sale_price,
-            t.num,
             t.status,
             t.spec_name,
             t.spec_value
@@ -56,4 +55,10 @@
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
+
+    <select id="selectByGoodsId" resultType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+        <include refid="selectSql"/>
+        where t.goods_id = #{goodsId}
+    </select>
+
 </mapper>

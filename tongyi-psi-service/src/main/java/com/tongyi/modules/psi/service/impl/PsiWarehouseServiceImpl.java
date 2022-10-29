@@ -71,4 +71,16 @@ public class PsiWarehouseServiceImpl extends ServiceImpl<PsiWarehouseDao, PsiWar
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(ids));
     }
+
+    @Override
+    public void defaultWarehouse(String id) {
+        baseMapper.defaultWarehouse(id);
+    }
+
+    @Override
+    public void warehouseStatus(String id, String status) {
+        PsiWarehouseEntity item = baseMapper.selectById(id);
+        item.setStatus(status);
+        baseMapper.updateById(item);
+    }
 }

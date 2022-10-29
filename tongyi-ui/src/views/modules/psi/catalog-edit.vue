@@ -3,14 +3,14 @@
     :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
     :close-on-click-modal="false" width="71%" :visible.sync="visible">
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
-      <el-form-item label="上级" prop="pid">
-        <el-input v-model="dataForm.pid" :disabled="disabled" placeholder="上级" clearable/>
-      </el-form-item>
+<!--      <el-form-item label="上级" prop="pid">-->
+<!--        <el-input v-model="dataForm.pid" :disabled="disabled" placeholder="上级" clearable/>-->
+<!--      </el-form-item>-->
       <el-form-item label="名称" prop="name">
         <el-input v-model="dataForm.name" :disabled="disabled" placeholder="名称" clearable/>
       </el-form-item>
       <el-form-item label="权重" prop="weight">
-        <el-input v-model="dataForm.weight" :disabled="disabled" placeholder="权重" clearable/>
+        <el-input-number v-model="dataForm.weight" :disabled="disabled" placeholder="权重" clearable/>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">

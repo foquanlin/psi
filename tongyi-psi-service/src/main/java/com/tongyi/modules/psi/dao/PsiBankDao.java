@@ -44,4 +44,6 @@ public interface PsiBankDao extends BaseMapper<PsiBankEntity> {
      * @return List
      */
     List<PsiBankEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
+
+    int defaultBank(@Param("id")String id);
 }

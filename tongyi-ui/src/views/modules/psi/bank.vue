@@ -2,7 +2,7 @@
   <div class="mod-bank">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
+        <el-input v-model="searchForm.bankName" placeholder="银行名称" clearable/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1
@@ -13,8 +13,13 @@
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="defaulted" header-align="center" align="center" label="默认"/>
       <el-table-column prop="bankName" header-align="center" align="center" label="银行名称"/>
+      <el-table-column prop="defaulted" header-align="center" align="center" label="默认">
+        <template v-slot="scope">
+          <el-tag v-if="scope.row.defaulted" type="success">默认账户</el-tag>
+          <el-tag v-if="!scope.row.defaulted" @click="defaultHandler(scope.row)">设为默认</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="accountNo" header-align="center" align="center" label="银行账号"/>
       <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
       <el-table-column prop="bankSubname" header-align="center" align="center" label="支行"/>
@@ -70,7 +75,7 @@
           params: {
             page: this.pageIndex,
             limit: this.pageSize,
-            name: this.searchForm.name
+            ...this.searchForm
           }
         }).then(({data}) => {
           if (data && data.code === 0) {
@@ -132,6 +137,20 @@
             }
           })
         }).catch(() => {
+        })
+      },
+      defaultHandler (row) {
+        this.$http({
+          url: '/psi/bank/default',
+          method: 'get',
+          params: {
+            id: row.id
+          }
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.$message({ message: '操作成功', type: 'success', duration: 1500 })
+            this.getDataList()
+          }
         })
       }
     }

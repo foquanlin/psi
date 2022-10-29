@@ -19,4 +19,5 @@ import com.tongyi.modules.psi.entity.PsiBankEntity;
  */
 public interface PsiBankService extends IService<PsiBankEntity>{
 
+    void defaultBank(String id);
 }

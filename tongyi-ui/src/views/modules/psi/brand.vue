@@ -2,7 +2,7 @@
   <div class="mod-brand">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="品牌名称" clearable/>
+        <el-input v-model="searchForm.name" placeholder="品牌名称" clearable suffix-icon="el-icon-search"/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1
@@ -14,7 +14,11 @@
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称"/>
-      <el-table-column prop="picUrls" header-align="center" align="center" label="图片"/>
+      <el-table-column prop="picUrls" header-align="center" align="center" label="图片">
+        <template v-slot="scope">
+          <img style="height: 50%;width: 50%" @click="openImg(scope.row.listPicUrl)" :src="scope.row.picUrls"/>
+        </template>
+      </el-table-column>
       <el-table-column prop="status" header-align="center" align="center" label="状态"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
@@ -68,7 +72,7 @@
           params: {
             page: this.pageIndex,
             limit: this.pageSize,
-            name: this.searchForm.name
+            ...this.searchForm
           }
         }).then(({data}) => {
           if (data && data.code === 0) {

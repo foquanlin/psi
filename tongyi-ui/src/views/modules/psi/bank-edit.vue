@@ -2,10 +2,7 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
     :close-on-click-modal="false" width="71%" :visible.sync="visible">
-    <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
-      <el-form-item label="默认" prop="defaulted">
-        <el-switch v-model="dataForm.defaulted" :disabled="disabled" placeholder="默认" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否"/>
-      </el-form-item>
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item label="银行名称" prop="bankName">
         <el-input v-model="dataForm.bankName" :disabled="disabled" placeholder="银行名称" clearable/>
       </el-form-item>
@@ -34,7 +31,7 @@
         visible: false,
         dataForm: {
           id: '',
-          defaulted: '',
+          defaulted: false,
           bankName: '',
           accountNo: '',
           memo: '',

@@ -11,6 +11,7 @@ package com.tongyi.modules.psi.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
+import com.tongyi.modules.psi.entity.PsiGoodsSpecEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.CacheNamespace;
@@ -44,4 +45,6 @@ public interface PsiGoodsSkuDao extends BaseMapper<PsiGoodsSkuEntity> {
      * @return List
      */
     List<PsiGoodsSkuEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
+
+    List<PsiGoodsSkuEntity> selectByGoodsId(@Param("goodsId")String goodsId);
 }

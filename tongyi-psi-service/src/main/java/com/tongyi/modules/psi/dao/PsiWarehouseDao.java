@@ -44,4 +44,6 @@ public interface PsiWarehouseDao extends BaseMapper<PsiWarehouseEntity> {
      * @return List
      */
     List<PsiWarehouseEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
+
+    void defaultWarehouse(@Param("id")String id);
 }

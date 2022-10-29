@@ -37,4 +37,8 @@
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
+    <select id="selectByGoodsId" resultType="com.tongyi.modules.psi.entity.PsiGoodsSpecEntity">
+        <include refid="selectSql"/>
+        where t.goods_id = #{goodsId}
+    </select>
 </mapper>

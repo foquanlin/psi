@@ -111,4 +111,19 @@ public class PsiWarehouseController extends AbstractController {
         psiWarehouseService.deleteBatch(ids);
         return RestResponse.success();
     }
+
+    @SysLog("设置默认仓库")
+    @RequestMapping("/default")
+    @RequiresPermissions("psi:warehouse:default")
+    public RestResponse defaultWarehouse(@RequestParam("id") String id) {
+        psiWarehouseService.defaultWarehouse(id);
+        return RestResponse.success();
+    }
+    @SysLog("设置仓库状态")
+    @RequestMapping("/status")
+    @RequiresPermissions("psi:warehouse:status")
+    public RestResponse statusWarehouse(@RequestParam("id") String id,@RequestParam("status")String status) {
+        psiWarehouseService.warehouseStatus(id,status);
+        return RestResponse.success();
+    }
 }

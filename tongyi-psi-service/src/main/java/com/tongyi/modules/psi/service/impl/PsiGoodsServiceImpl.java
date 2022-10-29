@@ -12,8 +12,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiGoodsDao;
+import com.tongyi.modules.psi.dao.PsiGoodsSkuDao;
+import com.tongyi.modules.psi.dao.PsiGoodsSpecDao;
 import com.tongyi.modules.psi.entity.PsiGoodsEntity;
+import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
+import com.tongyi.modules.psi.entity.PsiGoodsSpecEntity;
 import com.tongyi.modules.psi.service.PsiGoodsService;
+import com.tongyi.modules.psi.service.PsiGoodsSkuService;
+import com.tongyi.modules.psi.service.PsiGoodsSpecService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +37,10 @@ import java.io.Serializable;
  */
 @Service("psiGoodsService")
 public class PsiGoodsServiceImpl extends ServiceImpl<PsiGoodsDao, PsiGoodsEntity> implements PsiGoodsService{
-
+    @Autowired
+    private PsiGoodsSkuDao goodsSkuDao;
+    @Autowired
+    private PsiGoodsSpecDao goodsSpecDao;
     @Override
     public PsiGoodsEntity getById(Serializable id){
         return super.getById(id);
@@ -51,7 +61,22 @@ public class PsiGoodsServiceImpl extends ServiceImpl<PsiGoodsDao, PsiGoodsEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiGoodsEntity entity) {
-        return super.save(entity);
+        boolean added = super.save(entity);
+        if (added) {
+            List<PsiGoodsSpecEntity> newsSpecList = entity.getSpecList();
+            List<PsiGoodsSkuEntity> newsSkuList = entity.getSkuList();
+            newsSpecList.forEach(item->{
+                item.setGoodsId(entity.getId());
+                goodsSpecDao.insert(item);
+            });
+            newsSkuList.forEach(item->{
+                item.setGoodsId(entity.getId());
+                goodsSkuDao.insert(item);
+            });
+//            List<PsiGoodsSpecEntity> oldSpecList = goodsSpecDao.selectByGoodsId(entity.getId());
+//            List<PsiGoodsSkuEntity> oldSkuList = goodsSkuDao.selectByGoodsId(entity.getId());
+        }
+        return added;
     }
 
     @Override
