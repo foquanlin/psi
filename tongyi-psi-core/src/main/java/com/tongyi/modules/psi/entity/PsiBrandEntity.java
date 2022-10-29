@@ -43,4 +43,34 @@ public class PsiBrandEntity implements Serializable {
      * 状态
      */
     private String status;
+
+
+    public enum Status {
+        RUN("RUN","启用"),
+        STOP("STOP","停用");
+
+        private String code;
+        private String name;
+
+        Status(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }

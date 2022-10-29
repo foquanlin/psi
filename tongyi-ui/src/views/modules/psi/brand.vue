@@ -16,10 +16,15 @@
       <el-table-column prop="name" header-align="center" align="center" label="名称"/>
       <el-table-column prop="picUrls" header-align="center" align="center" label="图片">
         <template v-slot="scope">
-          <img style="height: 50%;width: 50%" @click="openImg(scope.row.listPicUrl)" :src="scope.row.picUrls"/>
+          <img style="height: 150px;width: 150px" @click="openImg(scope.row.listPicUrl)" :src="scope.row.picUrls"/>
         </template>
       </el-table-column>
-      <el-table-column prop="status" header-align="center" align="center" label="状态"/>
+      <el-table-column prop="status" header-align="center" align="center" label="状态">
+        <template v-slot="scope">
+          <el-tag v-if="scope.row.status ==='RUN'">启用</el-tag>
+          <el-tag v-else>停用</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:brand:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>

@@ -28,11 +28,10 @@
         <el-input v-model="dataForm.weight" :disabled="disabled" placeholder="权重" clearable type="number"/>
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-radio-group v-model="dataForm.status">
+        <el-radio-group v-model="dataForm.status" :disabled="disabled">
           <el-radio-button :label="'RUN'">启用</el-radio-button>
           <el-radio-button :label="'STOP'">停用</el-radio-button>
         </el-radio-group>
-<!--        <el-input v-model="dataForm.status" :disabled="disabled" placeholder="状态" clearable/>-->
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
