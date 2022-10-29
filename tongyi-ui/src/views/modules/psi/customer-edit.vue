@@ -59,7 +59,7 @@
           memo: '',
           weight: '',
           status: '',
-          type: 'SUPPLIER'
+          type: 'CUSTOMER'
         },
         dataRule: {
           name: [{required: true, message: '名称不能为空', trigger: 'blur'}],

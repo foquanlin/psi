@@ -17,7 +17,9 @@
       <el-table-column prop="defaulted" header-align="center" align="center" label="默认">
         <template v-slot="scope">
           <el-tag v-if="scope.row.defaulted" type="success">默认账户</el-tag>
-          <el-tag v-if="!scope.row.defaulted" @click="defaultHandler(scope.row)">设为默认</el-tag>
+          <el-popover v-if="isAuth('psi:bank:default') && !scope.row.defaulted" placement="top-start" title="提示" width="200" trigger="hover" content="点击,设为默认账户。">
+            <el-tag slot="reference" @click="defaultHandler(scope.row)">设为默认</el-tag>
+          </el-popover>
         </template>
       </el-table-column>
       <el-table-column prop="accountNo" header-align="center" align="center" label="银行账号"/>

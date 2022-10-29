@@ -1,5 +1,5 @@
 <template>
-  <div class="mod-supplier">
+  <div class="mod-customer">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
         <el-input v-model="searchForm.name" placeholder="名称" clearable/>
@@ -7,8 +7,8 @@
       <el-form-item>
         <el-button @click="pageIndex = 1
         getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:supplier:save')" type="primary" @click="editHandle()">新增</el-button>
-        <el-button v-if="isAuth('psi:supplier:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('psi:customer:save')" type="primary" @click="editHandle()">新增</el-button>
+        <el-button v-if="isAuth('psi:customer:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
@@ -29,9 +29,9 @@
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:supplier:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
-          <el-button v-if="isAuth('psi:supplier:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="isAuth('psi:supplier:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="isAuth('psi:customer:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
+          <el-button v-if="isAuth('psi:customer:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth('psi:customer:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -39,12 +39,12 @@
       :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <supplier-edit v-if="editVisible" ref="supplierEdit" @refreshDataList="getDataList"/>
+    <customer-edit v-if="editVisible" ref="customerEdit" @refreshDataList="getDataList"/>
   </div>
 </template>
 
 <script>
-  import SupplierEdit from './supplier-edit'
+  import CustomerEdit from './customer-edit'
   import Options from '../sys/options'
   export default {
     data () {
@@ -61,7 +61,7 @@
       }
     },
     components: {
-      SupplierEdit,
+      CustomerEdit,
       Options
     },
     activated () {
@@ -79,7 +79,7 @@
           params: {
             page: this.pageIndex,
             limit: this.pageSize,
-            type: 'SUPPLIER',
+            type: 'CUSTOMER',
             ...this.searchForm
           }
         }).then(({data}) => {
@@ -111,14 +111,14 @@
       showDetails (id) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.supplierEdit.init(id, true)
+          this.$refs.customerEdit.init(id, true)
         })
       },
       // 新增 / 修改
       editHandle (id) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.supplierEdit.init(id)
+          this.$refs.customerEdit.init(id)
         })
       },
       // 删除
@@ -141,7 +141,6 @@
               this.getDataList()
             }
           })
-        }).catch(() => {
         })
       }
     }

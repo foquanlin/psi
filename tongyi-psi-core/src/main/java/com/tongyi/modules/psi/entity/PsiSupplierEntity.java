@@ -42,7 +42,7 @@ public class PsiSupplierEntity implements Serializable {
     /**
      * 联系人
      */
-    private String concat;
+    private String contacts;
     /**
      * 电话
      */
@@ -71,4 +71,61 @@ public class PsiSupplierEntity implements Serializable {
      * 类型
      */
     private String type;
+
+    public enum Type {
+        SUPPLIER("SUPPLIER","供应商"),
+        CUSTOMER("CUSTOMER","客户");
+
+        private String code;
+        private String name;
+
+        Type(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+    public enum Status {
+        RUN("RUN","启用"),
+        STOP("STOP","停用");
+
+        private String code;
+        private String name;
+
+        Status(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }

@@ -23,7 +23,7 @@
                 and t.defaulted = #{params.defaulted}
             </if>
             <if test="params.bankName != null and params.bankName != ''">
-                and t.bank_name = #{params.bankName}
+                and t.bank_name like concat('%', #{params.bankName},'%')
             </if>
             <if test="params.accountNo != null and params.accountNo != ''">
                 and t.account_no = #{params.accountNo}
