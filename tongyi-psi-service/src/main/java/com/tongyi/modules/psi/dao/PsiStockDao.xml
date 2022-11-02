@@ -20,8 +20,14 @@
             t.status,
             t.cost_price,
             t.sale_price,
-            t.create_uid
+            t.create_uid,
+            su.real_name as create_user_name
         from psi_stock t
+        left join sys_user su on su.user_id = t.create_uid
+        left join psi_warehouse pw on pw.id = t.warehouse_id
+        left join psi_supplier ps on ps.id = t.supplier_id
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_goods_sku pgs on pgs.id = t.sku_id and pgs.goods_id = t.goods_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -52,7 +58,7 @@
             <if test="params.batchNo != null and params.batchNo != ''">
                 and t.batch_no = #{params.batchNo}
             </if>
-            <if test="params.createTimeStart != null and params.createTimeEnd != null">
+            <if test="params.createTimeStart != null and params.createTimeStart.trim()!='' and params.createTimeEnd != null and params.createTimeEnd.trim()!=''">
                 and t.create_time between #{params.createTimeStart} and #{params.createTimeEnd}
             </if>
             <if test="params.status != null and params.status != ''">
@@ -61,15 +67,41 @@
             <if test="params.createUid != null and params.createUid != ''">
                 and t.create_uid = #{params.createUid}
             </if>
+            <if test="params.warehouseIds != null and params.warehouseIds.size()>0">
+                and t.warehouse_id in
+                <foreach item="id" index="index" collection="params.warehouseIds" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="params.supplierType != null and params.supplierType != ''">
+                and ps.type = #{params.supplierType}
+            </if>
+            <if test="params.supplierName != null and params.supplierName != ''">
+                and ps.name like concat('%',#{params.supplierName} ,'%')
+            </if>
+            <if test="params.skuStatus != null and params.skuStatus != ''">
+                and pgs.status = #{params.skuStatus}
+            </if>
         </where>
     </sql>
-    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiStockEntity">
+    <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiStockEntity">
+    <select id="listAll" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
+
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiStockEntity">
+        <result column="warehouse_id" property="warehouseId"/>
+        <result column="supplier_id" property="supplierId"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="sku_id" property="skuId"/>
+        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
+        <association property="supplier" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="supplier_id"/>
+        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
+        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
+    </resultMap>
 </mapper>

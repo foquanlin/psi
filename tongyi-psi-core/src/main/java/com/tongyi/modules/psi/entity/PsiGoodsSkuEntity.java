@@ -32,10 +32,7 @@ public class PsiGoodsSkuEntity implements Serializable {
      */
     @TableId
     private String id;
-    /**
-     * 仓库
-     */
-    private String warehouseId;
+
     /**
      * 商品
      */

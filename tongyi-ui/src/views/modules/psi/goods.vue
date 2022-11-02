@@ -8,7 +8,7 @@
         <el-input v-model="searchForm.name" placeholder="名称" clearable suffix-icon="el-icon-search"/>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchForm.barcode" placeholder="条形码" clearable suffix-icon="el-icon-search"/>
+        <el-input v-model="searchForm.barcode" placeholder="条形码,支持扫码枪录入" clearable suffix-icon="el-icon-search"/>
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchForm.catalogId" placeholder="分类" clearable>
@@ -29,42 +29,48 @@
       <el-form-item>
         <el-button @click="pageIndex = 1
         getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:goods:save')" type="primary" @click="editHandle()">新增</el-button>
+        <el-button v-if="isAuth('psi:goods:save')" type="primary" @click="editHandle()">新增商品</el-button>
         <el-button v-if="isAuth('psi:goods:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="brandId" header-align="center" align="center" label="品牌">
+      <el-table-column prop="name" header-align="center" align="center" label="名称">
         <template v-slot="scope">
-          <span>{{scope.row.brand.name}}</span>
+          <div style="display: flex">
+            <el-popover placement="right-start" trigger="hover">
+              <el-image fit="contain" style="width:400px" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
+              <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.picUrls"/>
+            </el-popover>
+            <div style="flex: 9;text-align: left;margin-left: 5px" >{{scope.row.name}}</div>
+          </div>
         </template>
       </el-table-column>
-      <el-table-column prop="catalogId" header-align="center" align="center" label="分类">
+      <el-table-column prop="catalogId" header-align="center" align="left" label="分类">
         <template v-slot="scope">
           <span>{{scope.row.catalog.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="no" header-align="center" align="center" label="编码"/>
-      <el-table-column prop="name" header-align="center" align="center" label="名称"/>
-      <el-table-column prop="name" header-align="center" align="center" label="平均进价"/>
-      <el-table-column prop="name" header-align="center" align="center" label="平均售价"/>
-      <el-table-column prop="createDate" header-align="center" align="center" label="创建时间"/>
-      <el-table-column prop="unitId" header-align="center" align="center" label="单位">
+      <el-table-column prop="no" header-align="center" align="left" label="编码"/>
+      <el-table-column prop="name" header-align="center" align="right" label="平均进价"/>
+      <el-table-column prop="name" header-align="center" align="right" label="平均售价"/>
+      <el-table-column prop="createDate" header-align="center" align="left" label="创建时间"/>
+      <el-table-column prop="unitId" header-align="center" align="left" label="单位">
         <template v-slot="scope">
           <span>{{scope.row.unit.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="picUrls" header-align="center" align="center" label="图片">
-        <template v-slot="scope">
-          <img style="height: 50%;width: 50%" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
-        </template>
-      </el-table-column>
-      <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
-      <el-table-column prop="status" header-align="center" align="center" label="状态"/>
+<!--      <el-table-column prop="picUrls" header-align="center" align="center" label="图片">-->
+<!--        <template v-slot="scope">-->
+<!--          <img style="height: 50%;width: 50%" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+      <el-table-column prop="memo" header-align="center" align="right" label="备注"/>
+      <el-table-column prop="status" header-align="center" align="right" label="状态"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:goods:stock')" type="text" size="small" @click="stockHandle(scope.row)">库存</el-button>
+          <el-button v-if="isAuth('psi:goods:instock')" type="text" size="small" @click="inStockHandle(scope.row)">入库</el-button>
+          <el-button v-if="isAuth('psi:goods:outstock')" type="text" size="small" @click="outStockHandle(scope.row)">出库</el-button>
           <el-button v-if="isAuth('psi:goods:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('psi:goods:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('psi:goods:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
@@ -76,14 +82,16 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <goods-edit v-if="editVisible" ref="goodsEdit" @refreshDataList="getDataList"/>
-    <goods-stock v-if="stockVisible" ref="goodsStock" @refreshDataList="getDataList"/>
+    <in-stock v-if="inStockVisible" ref="inStock" @refreshDataList="getDataList"/>
+    <out-stock v-if="outStockVisible" ref="outStock" @refreshDataList="getDataList"/>
   </div>
 </template>
 
 <script>
   import goodsEdit from './goods-edit'
   import Options from '../sys/options'
-  import GoodsStock from './goods-stock'
+  import InStock from './goods-instock'
+  import OutStock from './goods-outstock'
 
   export default {
     data () {
@@ -104,13 +112,15 @@
         totalPage: 0,
         dataListSelections: [],
         editVisible: false,
-        stockVisible: false
+        inStockVisible: false,
+        outStockVisible: false
       }
     },
     components: {
       goodsEdit,
       Options,
-      GoodsStock
+      InStock,
+      OutStock
     },
     activated () {
       this.$http({
@@ -213,10 +223,16 @@
         }).catch(() => {
         })
       },
-      stockHandle (row) {
-        this.stockVisible = true
+      inStockHandle (row) {
+        this.inStockVisible = true
         this.$nextTick(() => {
-          this.$refs.goodsStock.init(row.id)
+          this.$refs.inStock.init(row.id)
+        })
+      },
+      outStockHandle (row) {
+        this.outStockVisible = true
+        this.$nextTick(() => {
+          this.$refs.outStock.init(row.id)
         })
       }
     }

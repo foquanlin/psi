@@ -9,6 +9,7 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.sql.Time;
+import java.util.List;
 
 /**
  * 库存实体
@@ -90,4 +92,112 @@ public class PsiStockEntity implements Serializable {
      * 操作人
      */
     private String createUid;
+
+    @TableField(exist = false)
+    private PsiGoodsSkuEntity sku;
+    @TableField(exist = false)
+    private PsiSupplierEntity supplier;
+    @TableField(exist = false)
+    private PsiGoodsEntity goods;
+    @TableField(exist = false)
+    private PsiWarehouseEntity warehouse;
+    @TableField(exist = false)
+    private String createUserName;
+
+    /**
+     * 出入库类型
+     */
+    public enum Type {
+        IN("IN","入库"),
+        OUT("OUT","出库");
+
+        private String code;
+        private String name;
+
+        Type(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
+
+    /**
+     * 出入库分类
+     */
+    public enum Catalog {
+        TIAOZHENG("TIAOZHENG","库存调整"),
+        DIAOBO("DIAOBO","库存调拨"),
+        PANDIAN("PANDIAN","库存盘点"),
+        DINGDAN("DINGDAN","订单"),
+        XIAOSHOU("XIAOSHOU","销售");
+
+        private String code;
+        private String name;
+
+        Catalog(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
+    public enum Status {
+        RUN("RUN","启用"),
+        STOP("STOP","停用");
+
+        private String code;
+        private String name;
+
+        Status(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }

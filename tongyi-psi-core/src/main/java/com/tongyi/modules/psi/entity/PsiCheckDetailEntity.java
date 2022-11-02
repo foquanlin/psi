@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.sql.Time;
+import java.util.Map;
 
 /**
  * 盘点明细实体
@@ -35,6 +36,10 @@ public class PsiCheckDetailEntity implements Serializable {
     @TableId
     private String id;
     /**
+     * 盘点主单
+     */
+    private String cid;
+    /**
      * 仓库
      */
     private String warehouseId;
@@ -42,6 +47,10 @@ public class PsiCheckDetailEntity implements Serializable {
      * 商品
      */
     private String goodsId;
+    /**
+     * skuid
+     */
+    private String skuId;
     /**
      * 盘点前数量
      */
@@ -58,4 +67,23 @@ public class PsiCheckDetailEntity implements Serializable {
      * 备注
      */
     private String memo;
+
+    public static PsiCheckDetailEntity newEntity(PsiCheckEntity check, PsiCheckDetailEntity item) {
+        PsiCheckDetailEntity entity = new PsiCheckDetailEntity();
+        entity.setCid(check.getId());
+        entity.setWarehouseId(check.getWarehouseId());
+        entity.setSkuId(item.getSkuId());
+        entity.setGoodsId(item.getGoodsId());
+        entity.setBeforeNum(item.getBeforeNum());
+        entity.setAfterNum(item.getAfterNum());
+        entity.setCreateDate(new Date());
+        entity.setMemo(item.getMemo());
+        return entity;
+    }
+
+    public static PsiCheckDetailEntity newEntity(Map<String, Object> item) {
+        PsiCheckDetailEntity entity = new PsiCheckDetailEntity();
+        entity.setAfterNum(new BigDecimal((Integer) item.get("afterNum")));
+        return entity;
+    }
 }

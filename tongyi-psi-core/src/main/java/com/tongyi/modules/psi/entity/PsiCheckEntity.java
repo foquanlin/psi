@@ -9,13 +9,16 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tongyi.common.utils.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.sql.Time;
+import java.util.List;
 
 /**
  * 盘点实体
@@ -49,4 +52,13 @@ public class PsiCheckEntity implements Serializable {
      * 备注
      */
     private String memo;
+
+    public static PsiCheckEntity newEntity(String warehouseId, String memo) {
+        PsiCheckEntity item = new PsiCheckEntity();
+        item.setWarehouseId(warehouseId);
+        item.setMemo(memo);
+        item.setCreateDate(new Date());
+        item.setNo(StringUtils.generateOrderNumber("PD"));
+        return item;
+    }
 }

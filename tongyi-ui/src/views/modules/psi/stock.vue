@@ -2,35 +2,110 @@
   <div class="mod-stock">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
+        <el-date-picker v-model="searchForm.createTimeStart" placeholder="开始时间" clearable type="date" value-format="yyyy-MM-dd" />
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker v-model="searchForm.createTimeEnd" placeholder="结束时间" clearable type="date" value-format="yyyy-MM-dd"/>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="searchForm.type" placeholder="出入库" clearable>
+          <el-option value="IN" label="入库"></el-option>
+          <el-option value="OUT" label="出库"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="searchForm.catalog" placeholder="出入类型" clearable>
+          <el-option value="DIAOBO" label="调拨"></el-option>
+          <el-option value="PANDIAN" label="盘点"></el-option>
+          <el-option value="DINGDAN" label="订单"></el-option>
+          <el-option value="XIAOSHOU" label="销售"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="searchForm.goodsId" placeholder="商品名称" clearable filterable loading-text="加载中..." @focus="loadGoods" @change="changeGoods">
+          <el-option v-for="item in goodsList" :key="item.id" :label="item.name" :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="searchForm.skuId" :disabled="!searchForm.goodsId" placeholder="规格" clearable filterable loading-text="加载中..." @focus="loadSku">
+          <el-option v-for="item in skuList" :key="item.id" :label="item.specName" :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="searchForm.warehouseIds" placeholder="仓库" clearable :multiple="true">
+          <el-option v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="searchForm.skuStatus" placeholder="上架/下架" clearable>
+          <el-option value="UP" label="上架"></el-option>
+          <el-option value="DOWN" label="下架"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-radio-group v-model="searchForm.supplierType" @change="changeSupplier">
+          <el-radio-button label="CUSTOMER">客户</el-radio-button>
+          <el-radio-button label="SUPPLIER">供应商</el-radio-button>
+        </el-radio-group>
+        <el-select v-model="searchForm.supplierName" placeholder="客户供应商" clearable filterable loading-text="加载中..." @focus="loadSupplier">
+          <el-option v-for="item in supplierList" :key="item.id" :label="item.name" :value="item.name"/>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1
         getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:stock:save')" type="primary" @click="editHandle()">新增</el-button>
+<!--        <el-button v-if="isAuth('psi:stock:save')" type="primary" @click="editHandle()">新增</el-button>-->
         <el-button v-if="isAuth('psi:stock:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="supplierId" header-align="center" align="center" label="客户供应商"/>
-      <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库"/>
-      <el-table-column prop="goodsId" header-align="center" align="center" label="商品"/>
-      <el-table-column prop="skuId" header-align="center" align="center" label="skuid"/>
-      <el-table-column prop="orderId" header-align="center" align="center" label="关联单号"/>
-      <el-table-column prop="catalog" header-align="center" align="center" label="出入库分类"/>
-      <el-table-column prop="type" header-align="center" align="center" label="出入库类型"/>
+      <el-table-column prop="supplierId" header-align="center" align="center" label="客户供应商">
+        <template v-slot="scope">
+          <span>{{scope.row.supplier?scope.row.supplier.name:''}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库">
+        <template v-slot="scope">
+          <span>{{scope.row.warehouse?scope.row.warehouse.name:''}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="goodsId" header-align="center" align="center" label="商品">
+        <template v-slot="scope">
+          <span>{{scope.row.goods?scope.row.goods.name:''}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="skuId" header-align="center" align="center" label="规格">
+        <template v-slot="scope">
+          <span>{{scope.row.sku?scope.row.sku.specName:''}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="catalog" header-align="center" align="center" label="出入库分类">
+        <template v-slot="scope">
+          <span v-if="scope.row.catalog === 'TIAOZHENG'">库存调整</span>
+          <span v-else-if="scope.row.catalog === 'PANDIAN'">库存盘点</span>
+          <span v-else-if="scope.row.catalog === 'DINGDAN'">订单</span>
+          <span v-else-if="scope.row.catalog === 'DIAOBO'">调拨</span>
+          <span v-else-if="scope.row.catalog === 'XIAOSHOU'">销售</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="type" header-align="center" align="center" label="出入库类型">
+        <template v-slot="scope">
+          <span v-if="scope.row.type === 'IN'">入库</span>
+          <span v-else-if="scope.row.type === 'OUT'">出库</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="num" header-align="center" align="center" label="数量"/>
-      <el-table-column prop="batchNo" header-align="center" align="center" label="批次"/>
-      <el-table-column prop="createTime" header-align="center" align="center" label="时间"/>
-      <el-table-column prop="status" header-align="center" align="center" label="状态"/>
+<!--      <el-table-column prop="batchNo" header-align="center" align="center" label="批次"/>-->
+      <el-table-column prop="createTime" header-align="center" align="center" label="时间" width="150"/>
       <el-table-column prop="costPrice" header-align="center" align="center" label="平均进价"/>
       <el-table-column prop="salePrice" header-align="center" align="center" label="平均售价"/>
-      <el-table-column prop="createUid" header-align="center" align="center" label="操作人"/>
+      <el-table-column prop="orderId" header-align="center" align="center" label="关联单号"/>
+      <el-table-column prop="createUserName" header-align="center" align="center" label="操作人"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:stock:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
-          <el-button v-if="isAuth('psi:stock:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
+<!--          <el-button v-if="isAuth('psi:stock:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>-->
           <el-button v-if="isAuth('psi:stock:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -50,14 +125,27 @@
     data () {
       return {
         searchForm: {
-          name: ''
+          createTimeStart: '',
+          createTimeEnd: '',
+          catalog: '',
+          type: '',
+          goodsId: '',
+          skuId: '',
+          warehouseIds: [],
+          skuStatus: '',
+          supplierType: '',
+          supplierName: ''
         },
         dataList: [],
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
         dataListSelections: [],
-        editVisible: false
+        editVisible: false,
+        warehouseList: [],
+        goodsList: [],
+        skuList: [],
+        supplierList: []
       }
     },
     components: {
@@ -65,6 +153,17 @@
       Options
     },
     activated () {
+      this.$http({
+        url: '/psi/warehouse/listAll',
+        method: 'get',
+        params: {}
+      }).then(({data}) => {
+        if (data && data.code === 0) {
+          this.warehouseList = data.list
+        } else {
+          this.warehouseList = []
+        }
+      })
       this.getDataList()
     },
     methods: {
@@ -75,11 +174,11 @@
       getDataList () {
         this.$http({
           url: '/psi/stock/list',
-          method: 'get',
-          params: {
+          method: 'post',
+          data: {
             page: this.pageIndex,
             limit: this.pageSize,
-            name: this.searchForm.name
+            ...this.searchForm
           }
         }).then(({data}) => {
           if (data && data.code === 0) {
@@ -140,9 +239,75 @@
               this.getDataList()
             }
           })
-        }).catch(() => {
         })
+      },
+      loadGoods () {
+        if (this.goodsList.length > 0) {
+          return
+        }
+        this.$http({
+          url: '/psi/goods/listAll',
+          method: 'get',
+          loading: false,
+          params: {}
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.goodsList = data.list
+          } else {
+            this.goodsList = []
+          }
+        })
+      },
+      loadSku () {
+        if (this.skuList.length > 0) {
+          return
+        }
+        this.$http({
+          url: '/psi/goodssku/listAll',
+          method: 'get',
+          loading: false,
+          params: {
+            goodsId: this.searchForm.goodsId
+          }
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.skuList = data.list
+          } else {
+            this.skuList = []
+          }
+        })
+      },
+      changeGoods () {
+        this.searchForm.skuId = undefined
+        this.skuList = []
+      },
+      loadSupplier () {
+        if (this.supplierList.length > 0) {
+          return
+        }
+        this.$http({
+          url: '/psi/supplier/listAll',
+          method: 'get',
+          loading: false,
+          params: {
+            type: this.searchForm.supplierType
+          }
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.supplierList = data.list
+          } else {
+            this.supplierList = []
+          }
+        })
+      },
+      changeSupplier () {
+        this.supplierList = []
       }
     }
   }
 </script>
+<style>
+.input-with-select {
+  background-color: #fff;
+}
+</style>

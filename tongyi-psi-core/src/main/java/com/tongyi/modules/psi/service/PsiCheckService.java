@@ -9,7 +9,11 @@
 package com.tongyi.modules.psi.service;
 
 import com.tongyi.core.IService;
+import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
+import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
+
+import java.util.List;
 
 /**
  * 盘点Service接口
@@ -19,4 +23,5 @@ import com.tongyi.modules.psi.entity.PsiCheckEntity;
  */
 public interface PsiCheckService extends IService<PsiCheckEntity>{
 
+    public void addCheck(String warehouseId, String memo, List<PsiCheckDetailEntity> list);
 }

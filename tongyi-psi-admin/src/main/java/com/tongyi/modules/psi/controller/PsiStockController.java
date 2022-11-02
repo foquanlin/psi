@@ -14,6 +14,7 @@ import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiStockService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
 import java.util.List;
@@ -50,9 +51,17 @@ public class PsiStockController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @GetMapping("/list")
+    @PostMapping("/list")
     @RequiresPermissions("psi:stock:list")
-    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+    public RestResponse list(@RequestBody Map<String, Object> params, Model model) {
+        Integer current = (Integer)params.get("page");
+        Integer size = (Integer)params.get("limit");
+        if (current == null){
+            current =1;
+        }
+        if (size == null) {
+            size = 10;
+        }
         PageInfo page = psiStockService.listPage(current,size,params);
         return RestResponse.success("page", page);
     }
@@ -109,6 +118,29 @@ public class PsiStockController extends AbstractController {
     @RequiresPermissions("psi:stock:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiStockService.deleteBatch(ids);
+        return RestResponse.success();
+    }
+
+    @SysLog("入库-库存调整")
+    @RequestMapping("/in")
+    @RequiresPermissions("psi:stock:in")
+    public RestResponse instock(@RequestBody PsiStockEntity entity) {
+        entity.setCreateUid(this.getUserId());
+        entity.setType(PsiStockEntity.Type.IN.getCode());
+        entity.setCatalog(PsiStockEntity.Catalog.TIAOZHENG.getCode());
+        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
+        psiStockService.addEntity(entity);
+        return RestResponse.success();
+    }
+    @SysLog("出库-库存调整")
+    @RequestMapping("/out")
+    @RequiresPermissions("psi:stock:out")
+    public RestResponse outstock(@RequestBody PsiStockEntity entity) {
+        entity.setCreateUid(this.getUserId());
+        entity.setType(PsiStockEntity.Type.OUT.getCode());
+        entity.setCatalog(PsiStockEntity.Catalog.TIAOZHENG.getCode());
+        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
+        psiStockService.addEntity(entity);
         return RestResponse.success();
     }
 }

@@ -148,10 +148,7 @@ qq:
 tongyi:
   file:
     path: file:D:/usr/local/nginx/html/upload/
-#logging:
-#  level:
-#    com:
-#      tongyi: debug
-#        modules:
-#          mj:
-#            dao: debug
+logging:
+  level:
+    com:
+      tongyi: debug

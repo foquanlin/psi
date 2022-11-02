@@ -7,8 +7,14 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.controller;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.tongyi.common.annotation.SysLog;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
 import com.tongyi.modules.psi.service.PsiCheckService;
@@ -16,6 +22,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -72,15 +80,23 @@ public class PsiCheckController extends AbstractController {
 
     /**
      * 新增盘点
-     *
-     * @param entity
      * @return RestResponse
      */
     @SysLog("新增盘点")
     @RequestMapping("/save")
     @RequiresPermissions("psi:check:save")
-    public RestResponse save(@RequestBody PsiCheckEntity entity) {
-        psiCheckService.addEntity(entity);
+    public RestResponse save(@RequestBody Map<String,Object> map) {
+        String warehouseId = (String)map.get("warehouseId");
+        String memo = (String)map.get("memo");
+        List<Map<String,Object>> list  = (List)map.get("dataList");
+        if (null == list || list.isEmpty()) {
+            throw new BusinessException("请录入盘点明细");
+        }
+        List<PsiCheckDetailEntity> details = new ArrayList<>();
+        list.forEach(item ->{
+            details.add(PsiCheckDetailEntity.newEntity(item));
+        });
+        psiCheckService.addCheck(warehouseId,memo,details);
         return RestResponse.success();
     }
 

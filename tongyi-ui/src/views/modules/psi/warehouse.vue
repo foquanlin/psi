@@ -30,7 +30,7 @@
         <template v-slot="scope">
           <span v-if="isAuth('psi:warehouse:status')">
             <el-popover v-if="scope.row.status == 'RUN'" placement="top-start" title="提示" width="200" trigger="hover" content="点击,停用仓库。">
-              <el-tag  slot="reference" type="success" @click="statusHandler(scope.row)">启用</el-tag>
+              <el-tag slot="reference" type="success" @click="statusHandler(scope.row)">启用</el-tag>
             </el-popover>
             <el-popover v-else placement="top-start" title="提示" width="200" trigger="hover" content="点击,启用仓库。">
               <el-tag slot="reference" @click="statusHandler(scope.row)">停用</el-tag>

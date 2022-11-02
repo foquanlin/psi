@@ -7,8 +7,8 @@
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('101001','1010','新增',null,'psi:warehouse:save',2,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('101002','1010','修改',null,'psi:warehouse:update',2,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('101003','1010','删除',null,'psi:warehouse:delete',2,'admin',0,1);
-    INSERT INTO sys_menu (menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('101004','1010','默认仓库',NULL,'psi:warehouse:default',2,'admin',0,1);
-    INSERT INTO sys_menu (menu_id, parent_id, name, url, perms, type, icon, order_num, shows) VALUES ('101005', '1010', '仓库状态', NULL, 'psi:warehouse:status', 2, 'admin', 0, 1);
+    INSERT INTO sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('101004','1010','默认仓库',NULL,'psi:warehouse:default',2,'admin',0,1);
+    INSERT INTO sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('101005','1010','仓库状态',NULL,'psi:warehouse:status',2,'admin',0,1);
 insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('20','0','库存管理',null,null,0,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2001','20','调拨单管理','psi/allocation','psi:allocation:list,psi:allocation:info',1,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('200101','2001','新增',null,'psi:allocation:save',2,'admin',0,1);
@@ -49,6 +49,8 @@ insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows)
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('200801','2008','新增',null,'psi:goods:save',2,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('200802','2008','修改',null,'psi:goods:update',2,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('200803','2008','删除',null,'psi:goods:delete',2,'admin',0,1);
+    INSERT INTO sys_menu (menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('200804','2008','入库',NULL,'psi:goods:instock',2,'admin',1,1);
+    INSERT INTO sys_menu (menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('200805','2008','出库',NULL,'psi:goods:outstock',2,'admin',1,1);
 
 #     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2009','20','商品sku管理','psi/goodssku','psi:goodssku:list,psi:goodssku:info',1,'admin',0,1);
 #     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('200901','2009','新增',null,'psi:goodssku:save',2,'admin',0,1);
@@ -60,10 +62,12 @@ insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows)
 #     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('201002','2010','修改',null,'psi:goodsspec:update',2,'admin',0,1);
 #     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('201003','2010','删除',null,'psi:goodsspec:delete',2,'admin',0,1);
 
-    insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2011','20','库存管理','psi/stock','psi:stock:list,psi:stock:info',1,'admin',0,1);
-    insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('201101','2011','新增',null,'psi:stock:save',2,'admin',0,1);
-    insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('201102','2011','修改',null,'psi:stock:update',2,'admin',0,1);
+    insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2011','20','库存明细','psi/stock','psi:stock:list,psi:stock:info',1,'admin',0,1);
+#     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('201101','2011','新增',null,'psi:stock:save',2,'admin',0,1);
+#     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('201102','2011','修改',null,'psi:stock:update',2,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('201103','2011','删除',null,'psi:stock:delete',2,'admin',0,1);
+    INSERT INTO sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('201104','2011','入库',NULL,'psi:stock:in',2,'admin',0,1);
+    INSERT INTO sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('201105','2011','出库',NULL,'psi:stock:out',2,'admin',0,1);
 
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2012','20','出入库明细','psi/stockrecord','psi:stockrecord:list,psi:stockrecord:info',1,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('201201','2012','新增',null,'psi:stockrecord:save',2,'admin',0,1);
@@ -128,7 +132,7 @@ insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows)
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('240101','2401','新增',null,'psi:bank:save',2,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('240102','2401','修改',null,'psi:bank:update',2,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('240103','2401','删除',null,'psi:bank:delete',2,'admin',0,1);
-    INSERT INTO sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('240104', '2401', '设置默认账户', NULL, 'psi:bank:default', 2, 'admin', 0, 1);
+    INSERT INTO sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) VALUES ('240104','2401','设置默认账户',NULL,'psi:bank:default',2,'admin',0,1);
 
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2402','24','运杂费管理','psi/orderexpress','psi:orderexpress:list,psi:orderexpress:info',1,'admin',0,1);
     insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('240201','2402','新增',null,'psi:orderexpress:save',2,'admin',0,1);

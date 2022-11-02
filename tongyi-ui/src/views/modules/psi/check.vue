@@ -2,13 +2,21 @@
   <div class="mod-check">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
+        <el-input v-model="searchForm.no" placeholder="单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-button @click="pageIndex = 1
-        getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:check:save')" type="primary" @click="editHandle()">新增</el-button>
-        <el-button v-if="isAuth('psi:check:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-select v-model="searchForm.warehouseId" placeholder="仓库" clearable>
+          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker v-model="searchForm.createDateStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="开始日期" clearable/>
+        <el-date-picker v-model="searchForm.createDateEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="结束日期" clearable/>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
+        <el-button v-if="isAuth('psi:check:save')" type="primary" @click="editHandle()">新增盘点</el-button>
+<!--        <el-button v-if="isAuth('psi:check:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
@@ -19,8 +27,8 @@
       <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:check:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
-          <el-button v-if="isAuth('psi:check:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth('psi:check:info')" type="text" size="small" @click="showDetails(scope.row.id)">详情</el-button>
+<!--          <el-button v-if="isAuth('psi:check:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>-->
           <el-button v-if="isAuth('psi:check:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -40,14 +48,20 @@
     data () {
       return {
         searchForm: {
-          name: ''
+          no: '',
+          warehouseId: '',
+          createDateStart: '',
+          createDateEnd: ''
         },
         dataList: [],
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
         dataListSelections: [],
-        editVisible: false
+        editVisible: false,
+        selectVisible: false,
+        warehouseList: []
+
       }
     },
     components: {
@@ -55,6 +69,17 @@
       Options
     },
     activated () {
+      this.$http({
+        url: '/psi/warehouse/listAll',
+        method: 'get',
+        params: {}
+      }).then(({data}) => {
+        if (data && data.code === 0) {
+          this.warehouseList = data.list
+        } else {
+          this.warehouseList = []
+        }
+      })
       this.getDataList()
     },
     methods: {
@@ -69,7 +94,7 @@
           params: {
             page: this.pageIndex,
             limit: this.pageSize,
-            name: this.searchForm.name
+            ...this.searchForm
           }
         }).then(({data}) => {
           if (data && data.code === 0) {

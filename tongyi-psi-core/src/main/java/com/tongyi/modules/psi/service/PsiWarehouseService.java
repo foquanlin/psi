@@ -10,6 +10,7 @@ package com.tongyi.modules.psi.service;
 
 import com.tongyi.core.IService;
 import com.tongyi.modules.psi.entity.PsiWarehouseEntity;
+import org.apache.poi.hpsf.Decimal;
 
 /**
  * 仓库Service接口

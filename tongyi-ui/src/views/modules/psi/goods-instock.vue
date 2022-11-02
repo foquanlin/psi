@@ -11,14 +11,14 @@
           <el-option v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="日期" prop="createDate">
-        <el-date-picker v-model="dataForm.createDate" :disabled="disabled" placeholder="创建时间" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" clearable/>
+      <el-form-item label="日期" prop="createTime">
+        <el-date-picker v-model="dataForm.createTime" :disabled="disabled" placeholder="创建时间" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" clearable/>
       </el-form-item>
-      <el-form-item label="数量" prop="name">
-        <el-input v-model="dataForm.name" :disabled="disabled" placeholder="名称" clearable/>
+      <el-form-item label="数量" prop="num">
+        <el-input-number v-model="dataForm.num" :disabled="disabled" placeholder="数量" clearable/>
       </el-form-item>
       <el-form-item label="单价" prop="costPrice">
-        <el-input v-model="dataForm.costPrice" :disabled="disabled" placeholder="单价" clearable/>
+        <el-input-number v-model="dataForm.costPrice" precision="2" :disabled="disabled" placeholder="单价" clearable/>
       </el-form-item>
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>
@@ -38,16 +38,18 @@
         disabled: false,
         visible: false,
         dataForm: {
-          id: '',
+          goodsId: '',
           skuId: '',
           warehouseId: '',
-          name: '',
-          createDate: '',
+          num: 0,
+          costPrice: 0,
+          createTime: '',
           memo: ''
         },
         dataRule: {
-          warehouseId: [{required: true, message: '分类不能为空', trigger: 'blur'}],
-          createDate: [{required: true, message: '创建时间不能为空', trigger: 'blur'}],
+          skuId: [{required: true, message: 'sku不能为空', trigger: 'blur'}],
+          warehouseId: [{required: true, message: '仓库不能为空', trigger: 'blur'}],
+          createTime: [{required: true, message: '创建时间不能为空', trigger: 'blur'}],
           other: []
         },
         warehouseList: [],
@@ -70,37 +72,24 @@
     methods: {
       init (id, disabled) {
         this.disabled = disabled
-        this.dataForm.id = id || ''
+        this.dataForm.goodsId = id || ''
         this.specList = []
         this.skuList = []
         this.visible = true
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
-          if (this.dataForm.id) {
+          if (this.dataForm.goodsId) {
             this.$http({
               url: '/psi/goodssku/listAll',
               method: 'get',
               params: {
-                goodsId: this.dataForm.id
+                goodsId: this.dataForm.goodsId
               }
             }).then(({data}) => {
               if (data && data.code === 0) {
                 this.skuList = data.list
               } else {
                 this.skuList = []
-              }
-            })
-            this.$http({
-              url: `/psi/goods/info/${this.dataForm.id}`,
-              method: 'get'
-            }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.dataForm = data.info
-                if (this.dataForm.specList) {
-                  this.dataForm.specList.forEach(item => {
-                    item.specValue = item.specValue.split(',')
-                  })
-                }
               }
             })
           }
@@ -111,11 +100,8 @@
         this.$refs['dataForm']
           .validate((valid) => {
             if (valid) {
-              this.dataForm.specList.forEach(item => {
-                item.specValue = item.specValue.join(',')
-              })
               this.$http({
-                url: `/psi/goods/${!this.dataForm.id ? 'save' : 'update'}`,
+                url: `/psi/stock/in`,
                 method: 'post',
                 data: this.dataForm
               }).then(({data}) => {
