@@ -55,32 +55,21 @@
         <el-button @click="pageIndex = 1
         getDataList()">查询</el-button>
 <!--        <el-button v-if="isAuth('psi:stock:save')" type="primary" @click="editHandle()">新增</el-button>-->
-        <el-button v-if="isAuth('psi:stock:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+<!--        <el-button v-if="isAuth('psi:stock:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
       </el-form-item>
     </el-form>
-    <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
-      <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="supplierId" header-align="center" align="center" label="客户供应商">
+    <el-table border :data="dataList" style="width: 100%;">
+      <el-table-column prop="goodsId" header-align="center" align="left" fixed="fixed" label="商品">
         <template v-slot="scope">
-          <span>{{scope.row.supplier?scope.row.supplier.name:''}}</span>
+          <span @click="showDetails(scope.row)">{{scope.row.goods?scope.row.goods.name:''}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库">
+      <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="150">
         <template v-slot="scope">
-          <span>{{scope.row.warehouse?scope.row.warehouse.name:''}}</span>
+          <el-tag type="info" v-if="scope.row.sku" v-for="item in scope.row.sku.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="goodsId" header-align="center" align="center" label="商品">
-        <template v-slot="scope">
-          <span>{{scope.row.goods?scope.row.goods.name:''}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="skuId" header-align="center" align="center" label="规格">
-        <template v-slot="scope">
-          <span>{{scope.row.sku?scope.row.sku.specName:''}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="catalog" header-align="center" align="center" label="出入库分类">
+      <el-table-column prop="catalog" header-align="center" align="left" label="出入库分类">
         <template v-slot="scope">
           <span v-if="scope.row.catalog === 'TIAOZHENG'">库存调整</span>
           <span v-else-if="scope.row.catalog === 'PANDIAN'">库存盘点</span>
@@ -89,24 +78,33 @@
           <span v-else-if="scope.row.catalog === 'XIAOSHOU'">销售</span>
         </template>
       </el-table-column>
-      <el-table-column prop="type" header-align="center" align="center" label="出入库类型">
+      <el-table-column prop="type" header-align="center" align="left" label="出入库类型">
         <template v-slot="scope">
           <span v-if="scope.row.type === 'IN'">入库</span>
           <span v-else-if="scope.row.type === 'OUT'">出库</span>
         </template>
       </el-table-column>
-      <el-table-column prop="num" header-align="center" align="center" label="数量"/>
-<!--      <el-table-column prop="batchNo" header-align="center" align="center" label="批次"/>-->
-      <el-table-column prop="createTime" header-align="center" align="center" label="时间" width="150"/>
-      <el-table-column prop="costPrice" header-align="center" align="center" label="平均进价"/>
-      <el-table-column prop="salePrice" header-align="center" align="center" label="平均售价"/>
-      <el-table-column prop="orderId" header-align="center" align="center" label="关联单号"/>
-      <el-table-column prop="createUserName" header-align="center" align="center" label="操作人"/>
+      <el-table-column prop="warehouseId" header-align="center" align="left" label="仓库">
+        <template v-slot="scope">
+          <span>{{scope.row.warehouse?scope.row.warehouse.name:''}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="supplierId" header-align="center" align="left" label="客户供应商">
+        <template v-slot="scope">
+          <span>{{scope.row.supplier?scope.row.supplier.name:''}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="num" header-align="center" align="right" label="数量"/>
+      <el-table-column prop="createTime" header-align="center" align="left" label="时间" width="150"/>
+      <el-table-column prop="costPrice" header-align="center" align="right" label="平均进价"/>
+      <el-table-column prop="salePrice" header-align="center" align="right" label="平均售价"/>
+      <el-table-column prop="orderId" header-align="center" align="left" label="关联单号"/>
+      <el-table-column prop="createUserName" header-align="center" align="left" label="操作人"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:stock:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
+<!--          <el-button v-if="isAuth('psi:stock:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>-->
 <!--          <el-button v-if="isAuth('psi:stock:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>-->
-          <el-button v-if="isAuth('psi:stock:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="isAuth('psi:stock:delete') && scope.row.catalog==='TIAOZHENG'" type="text" size="small" @click="deleteHandle(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -114,13 +112,12 @@
       :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <stock-edit v-if="editVisible" ref="stockEdit" @refreshDataList="getDataList"/>
+    <goods-detail v-if="detailVisible" ref="goodsDetail"/>
   </div>
 </template>
 
 <script>
-  import stockEdit from './stock-edit'
-  import Options from '../sys/options'
+  import GoodsDetail from './goods-detail'
   export default {
     data () {
       return {
@@ -140,8 +137,7 @@
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
-        dataListSelections: [],
-        editVisible: false,
+        detailVisible: false,
         warehouseList: [],
         goodsList: [],
         skuList: [],
@@ -149,8 +145,7 @@
       }
     },
     components: {
-      stockEdit,
-      Options
+      GoodsDetail
     },
     activated () {
       this.$http({
@@ -167,9 +162,6 @@
       this.getDataList()
     },
     methods: {
-      formatBool: (row, column, cellValue, index) => Options.formatArray(Options.yesno, cellValue),
-      formatSex: (row, column, cellValue, index) => Options.formatArray(Options.genders, cellValue),
-      formatDate: (row, column, cellValue, index) => Options.formatDate(row, column, cellValue, index),
       // 获取数据列表
       getDataList () {
         this.$http({
@@ -201,30 +193,16 @@
         this.pageIndex = val
         this.getDataList()
       },
-      // 多选
-      selectionChangeHandle (val) {
-        this.dataListSelections = val
-      },
       // 查看详情
-      showDetails (id) {
-        this.editVisible = true
+      showDetails (row) {
+        this.detailVisible = true
         this.$nextTick(() => {
-          this.$refs.stockEdit.init(id, true)
-        })
-      },
-      // 新增 / 修改
-      editHandle (id) {
-        this.editVisible = true
-        this.$nextTick(() => {
-          this.$refs.stockEdit.init(id)
+          this.$refs.goodsDetail.init(row.goods.id)
         })
       },
       // 删除
-      deleteHandle (id) {
-        let ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
-        })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[删除]操作?`, '提示', {
+      deleteHandle (row) {
+        this.$confirm(`确定对[${row.goods.name}>>${row.sku.specName}]进行[删除]操作?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -232,7 +210,7 @@
           this.$http({
             url: '/psi/stock/delete',
             method: 'post',
-            data: ids
+            data: {id: row.id}
           }).then(({data}) => {
             if (data && data.code === 0) {
               this.$message({ message: '操作成功', type: 'success', duration: 1500 })
