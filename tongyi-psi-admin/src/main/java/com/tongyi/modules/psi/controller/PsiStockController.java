@@ -110,14 +110,14 @@ public class PsiStockController extends AbstractController {
     /**
      * 根据主键删除库存
      *
-     * @param ids
+     * @param id
      * @return RestResponse
      */
     @SysLog("删除库存")
     @RequestMapping("/delete")
     @RequiresPermissions("psi:stock:delete")
-    public RestResponse delete(@RequestBody String[] ids) {
-        psiStockService.deleteBatch(ids);
+    public RestResponse delete(@RequestBody String id) {
+        psiStockService.deleteEntity(id);
         return RestResponse.success();
     }
 

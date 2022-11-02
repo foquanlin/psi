@@ -7,6 +7,7 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -63,6 +64,10 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
+        PsiStockEntity entity = this.getById(id);
+        if (PsiStockEntity.Catalog.TIAOZHENG != PsiStockEntity.Catalog.valueOf(entity.getCatalog())){
+            throw new BusinessException("库存调整数据才可以删除");
+        }
         return super.removeById(id);
     }
 

@@ -16,6 +16,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.sql.Time;
 import java.util.List;
@@ -95,4 +96,10 @@ public class PsiGoodsEntity implements Serializable {
      */
     @TableField(exist = false)
     private List<PsiGoodsSpecEntity> specList;
+
+    /**
+     * 库存数量
+     */
+    @TableField(exist = false)
+    private BigDecimal warehouseNum;
 }

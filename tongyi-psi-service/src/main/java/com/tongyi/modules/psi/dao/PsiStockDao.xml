@@ -83,6 +83,7 @@
                 and pgs.status = #{params.skuStatus}
             </if>
         </where>
+        order by t.create_time desc
     </sql>
     <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
@@ -104,4 +105,8 @@
         <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
         <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
     </resultMap>
+
+    <select id="countByGoodsId" resultType="java.math.BigDecimal">
+        select sum(case t.type when 'IN' then t.num else -t.num end ) as num from psi_stock t where t.goods_id = #{goodsId}
+    </select>
 </mapper>
