@@ -73,7 +73,7 @@
                     #{id}
                 </foreach>
             </if>
-            <if test="params.supplierType != null and params.supplierType != ''">
+            <if test="params.supplierType != null and params.supplierType != '' and params.supplierName != null and params.supplierName != ''">
                 and ps.type = #{params.supplierType}
             </if>
             <if test="params.supplierName != null and params.supplierName != ''">
