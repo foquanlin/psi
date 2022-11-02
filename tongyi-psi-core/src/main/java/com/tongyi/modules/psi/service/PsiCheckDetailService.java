@@ -11,6 +11,8 @@ package com.tongyi.modules.psi.service;
 import com.tongyi.core.IService;
 import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 
+import java.io.Serializable;
+
 /**
  * 盘点明细Service接口
  *
@@ -19,4 +21,5 @@ import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
  */
 public interface PsiCheckDetailService extends IService<PsiCheckDetailEntity>{
 
+    public int deleteByCid(Serializable[] ids);
 }

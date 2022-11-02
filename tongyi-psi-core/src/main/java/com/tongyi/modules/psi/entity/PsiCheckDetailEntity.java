@@ -83,6 +83,9 @@ public class PsiCheckDetailEntity implements Serializable {
 
     public static PsiCheckDetailEntity newEntity(Map<String, Object> item) {
         PsiCheckDetailEntity entity = new PsiCheckDetailEntity();
+        entity.setGoodsId((String)item.get("goodsId"));
+        entity.setSkuId((String)item.get("skuId"));
+        entity.setBeforeNum(new BigDecimal((Integer) item.get("beforeNum")));
         entity.setAfterNum(new BigDecimal((Integer) item.get("afterNum")));
         return entity;
     }

@@ -99,7 +99,11 @@
       <el-table-column prop="costPrice" header-align="center" align="right" label="平均进价"/>
       <el-table-column prop="salePrice" header-align="center" align="right" label="平均售价"/>
       <el-table-column prop="orderId" header-align="center" align="left" label="关联单号"/>
-      <el-table-column prop="createUserName" header-align="center" align="left" label="操作人"/>
+      <el-table-column prop="createUserName" header-align="center" align="left" label="操作人">
+        <template v-slot="scope">
+          <span>{{scope.row.createUser?scope.row.createUser.realName:''}}</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
 <!--          <el-button v-if="isAuth('psi:stock:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>-->

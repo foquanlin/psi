@@ -52,4 +52,11 @@
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
+
+    <delete id="deleteByCid">
+        delete from psi_check_detail where cid in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

@@ -51,7 +51,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/list")
-    @RequiresPermissions("psi:goodssku:list")
+    @RequiresPermissions("psi:goods:list")
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         PageInfo page = psiGoodsSkuService.listPage(current,size,params);
         return RestResponse.success("page", page);
@@ -64,7 +64,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("psi:goodssku:info")
+    @RequiresPermissions("psi:goods:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiGoodsSkuEntity psiGoodsSku = psiGoodsSkuService.getById(id);
         return RestResponse.success("info", psiGoodsSku);
@@ -78,7 +78,7 @@ public class PsiGoodsSkuController extends AbstractController {
      */
     @SysLog("新增商品sku")
     @RequestMapping("/save")
-    @RequiresPermissions("psi:goodssku:save")
+    @RequiresPermissions("psi:goods:save")
     public RestResponse save(@RequestBody PsiGoodsSkuEntity entity) {
         psiGoodsSkuService.addEntity(entity);
         return RestResponse.success();
@@ -92,7 +92,7 @@ public class PsiGoodsSkuController extends AbstractController {
      */
     @SysLog("修改商品sku")
     @RequestMapping("/update")
-    @RequiresPermissions("psi:goodssku:update")
+    @RequiresPermissions("psi:goods:update")
     public RestResponse update(@RequestBody PsiGoodsSkuEntity entity) {
         psiGoodsSkuService.updateEntity(entity);
         return RestResponse.success();
@@ -106,7 +106,7 @@ public class PsiGoodsSkuController extends AbstractController {
      */
     @SysLog("删除商品sku")
     @RequestMapping("/delete")
-    @RequiresPermissions("psi:goodssku:delete")
+    @RequiresPermissions("psi:goods:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiGoodsSkuService.deleteBatch(ids);
         return RestResponse.success();

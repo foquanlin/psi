@@ -7,6 +7,7 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,7 +16,6 @@ import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiCheckDao;
 import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
-import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
 import com.tongyi.modules.psi.entity.PsiWarehouseEntity;
 import com.tongyi.modules.psi.service.PsiCheckDetailService;
 import com.tongyi.modules.psi.service.PsiCheckService;
@@ -45,7 +45,7 @@ public class PsiCheckServiceImpl extends ServiceImpl<PsiCheckDao, PsiCheckEntity
 
     @Override
     public PsiCheckEntity getById(Serializable id){
-        return super.getById(id);
+        return baseMapper.selectById(id);
     }
 
     @Override
@@ -75,18 +75,20 @@ public class PsiCheckServiceImpl extends ServiceImpl<PsiCheckDao, PsiCheckEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
+        checkDetailService.deleteByCid(new Serializable[]{id});
         return super.removeById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
-        return super.removeByIds(Arrays.asList(ids));
+        return super.baseMapper.deleteById(ids) >0;
+//         return super.removeByIds(Arrays.asList(ids));
     }
 
     @Transactional
     @Override
-    public void addCheck(String warehouseId, String memo, List<PsiCheckDetailEntity> list) {
+    public void addCheck(String userId, String warehouseId, String memo, List<PsiCheckDetailEntity> list) {
         PsiWarehouseEntity warehouse = warehouseService.getById(warehouseId);
         if (null == warehouse){
             throw new BusinessException("没有这个仓库");
@@ -94,7 +96,7 @@ public class PsiCheckServiceImpl extends ServiceImpl<PsiCheckDao, PsiCheckEntity
         if (PsiWarehouseEntity.Status.RUN != PsiWarehouseEntity.Status.valueOf(warehouse.getStatus())){
             throw new BusinessException("仓库未启用");
         }
-        PsiCheckEntity entity = PsiCheckEntity.newEntity(warehouseId,memo);
+        PsiCheckEntity entity = PsiCheckEntity.newEntity(userId,warehouseId,memo);
         this.addEntity(entity);
         list.forEach(item->{
             PsiCheckDetailEntity detail = PsiCheckDetailEntity.newEntity(entity,item);

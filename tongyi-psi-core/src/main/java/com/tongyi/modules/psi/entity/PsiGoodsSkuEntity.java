@@ -9,9 +9,11 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.apache.poi.hpsf.Decimal;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -65,6 +67,18 @@ public class PsiGoodsSkuEntity implements Serializable {
      * 规格值
      */
     private String specValue;
+
+    /**
+     * 商品信息
+     */
+    @TableField(exist = false)
+    private PsiGoodsEntity goods;
+
+    /**
+     * 库存数据
+     */
+    @TableField(exist = false)
+    private BigDecimal warehouseNum;
 
     public enum Status {
         UP("UP","上架"),

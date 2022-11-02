@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tongyi.common.utils.StringUtils;
+import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -52,9 +53,19 @@ public class PsiCheckEntity implements Serializable {
      * 备注
      */
     private String memo;
+    /**
+     * 操作人
+     */
+    private String createUid;
 
-    public static PsiCheckEntity newEntity(String warehouseId, String memo) {
+    @TableField(exist = false)
+    private PsiWarehouseEntity warehouse;
+    @TableField(exist = false)
+    private SysUserEntity createUser;
+
+    public static PsiCheckEntity newEntity(String userId,String warehouseId, String memo) {
         PsiCheckEntity item = new PsiCheckEntity();
+        item.setCreateUid(userId);
         item.setWarehouseId(warehouseId);
         item.setMemo(memo);
         item.setCreateDate(new Date());

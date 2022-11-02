@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.CacheNamespace;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -44,4 +45,6 @@ public interface PsiCheckDetailDao extends BaseMapper<PsiCheckDetailEntity> {
      * @return List
      */
     List<PsiCheckDetailEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
+
+    public int deleteByCid(@Param("ids") Serializable[] ids);
 }

@@ -20,10 +20,8 @@
             t.status,
             t.cost_price,
             t.sale_price,
-            t.create_uid,
-            su.real_name as create_user_name
+            t.create_uid
         from psi_stock t
-        left join sys_user su on su.user_id = t.create_uid
         left join psi_warehouse pw on pw.id = t.warehouse_id
         left join psi_supplier ps on ps.id = t.supplier_id
         left join psi_goods pg on pg.id = t.goods_id
@@ -104,9 +102,13 @@
         <association property="supplier" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="supplier_id"/>
         <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
         <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
+        <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
     </resultMap>
 
     <select id="countByGoodsId" resultType="java.math.BigDecimal">
-        select sum(case t.type when 'IN' then t.num else -t.num end ) as num from psi_stock t where t.goods_id = #{goodsId}
+        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.goods_id = #{goodsId}
+    </select>
+    <select id="countBySkuId" resultType="java.math.BigDecimal">
+        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.goods_id = #{goodsId} and t.sku_id = #{skuId}
     </select>
 </mapper>

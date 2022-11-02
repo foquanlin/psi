@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -102,7 +103,8 @@ public class PsiStockEntity implements Serializable {
     @TableField(exist = false)
     private PsiWarehouseEntity warehouse;
     @TableField(exist = false)
-    private String createUserName;
+    private SysUserEntity createUser;
+
 
     /**
      * 出入库类型

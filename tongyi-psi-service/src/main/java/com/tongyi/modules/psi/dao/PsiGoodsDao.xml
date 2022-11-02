@@ -64,9 +64,10 @@
         <include refid="selectWhere"/>
     </select>
     <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsEntity">
-        <result column="brand_id" property="brandId"></result>
-        <result column="catalog_id" property="catalogId"></result>
-        <result column="unit_id" property="unitId"></result>
+        <id column="id" property="id"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="catalog_id" property="catalogId"/>
+        <result column="unit_id" property="unitId"/>
 
         <association property="brand" javaType="com.tongyi.modules.psi.entity.PsiBrandEntity" select="com.tongyi.modules.psi.dao.PsiBrandDao.selectById" column="brand_id"/>
         <association property="catalog" javaType="com.tongyi.modules.psi.entity.PsiCatalogEntity" select="com.tongyi.modules.psi.dao.PsiCatalogDao.selectById" column="catalog_id"/>

@@ -71,4 +71,9 @@ public class PsiCheckDetailServiceImpl extends ServiceImpl<PsiCheckDetailDao, Ps
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(ids));
     }
+
+    @Override
+    public int deleteByCid(Serializable[] ids) {
+        return baseMapper.deleteByCid(ids);
+    }
 }

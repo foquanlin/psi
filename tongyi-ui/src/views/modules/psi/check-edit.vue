@@ -1,5 +1,5 @@
 <template>
-  <el-drawer :title="!dataForm.id ? '新增盘点' : !disabled ? '修改盘点' : '查看'" :close-on-click-modal="false" size="90%" :visible.sync="visible">
+  <el-drawer :title="!dataForm.id ? '新增盘点' : !disabled ? '修改盘点' : '查看'" :close-on-click-modal="false" size="85%" :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="80px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item label="仓库" prop="warehouseId">
         <el-select v-model="dataForm.warehouseId" placeholder="仓库" clearable>
@@ -86,6 +86,7 @@
       init (id, disabled) {
         this.disabled = disabled
         this.dataForm.id = id || ''
+        this.dataList = []
         this.visible = true
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields()
@@ -139,7 +140,11 @@
         this.dataList.splice(index, 1)
       },
       onSelect (list) {
-        console.log(list)
+        list.forEach(item => {
+          item.goodsId = item.id
+          item.beforeNum = item.warehouseNum
+          item.memo = ''
+        })
         this.dataList = list
       }
     }

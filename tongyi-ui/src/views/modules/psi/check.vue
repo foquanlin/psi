@@ -21,9 +21,18 @@
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="no" header-align="center" align="center" label="单号"/>
-      <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库"/>
-      <el-table-column prop="createDate" header-align="center" align="center" label="盘点日期"/>
+      <el-table-column prop="no" header-align="center" align="left" label="单号"/>
+      <el-table-column prop="warehouseId" header-align="center" align="left" label="仓库">
+        <template v-slot="scope">
+          <span>{{scope.row.warehouse?scope.row.warehouse.name:''}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="createDate" header-align="center" align="left" label="盘点日期"/>
+      <el-table-column prop="createDate" header-align="center" align="left" label="操作人">
+        <template v-slot="scope">
+          <span>{{scope.row.createUser?scope.row.createUser.realName:''}}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">

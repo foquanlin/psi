@@ -47,4 +47,5 @@ public interface PsiStockDao extends BaseMapper<PsiStockEntity> {
     List<PsiStockEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 
     public BigDecimal countByGoodsId(@Param("goodsId")String goodsId);
+    public BigDecimal countBySkuId(@Param("goodsId")String goodsId,@Param("skuId")String skuId);
 }

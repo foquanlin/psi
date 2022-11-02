@@ -1,5 +1,5 @@
 <template>
-  <el-drawer title="选择商品" :close-on-click-modal="false" size="50%" :append-to-body="true" :visible.sync="visible">
+  <el-drawer title="选择商品" :close-on-click-modal="false" size="60%" :append-to-body="true" :visible.sync="visible">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
         <el-input v-model="searchForm.no" placeholder="编码" clearable suffix-icon="el-icon-search"/>
@@ -21,22 +21,27 @@
     </el-form>
     <el-table border :data="dataList" ref="fileTable" style="width: 100%;" @selection-change="selectionChangeHandle" row-key="id">
       <el-table-column type="selection" header-align="center" align="center" width="50" :reserve-selection="true"/>
-      <el-table-column prop="name" header-align="center" align="center" label="名称"/>
+      <el-table-column prop="name" header-align="center" align="center" label="名称">
+        <template v-slot="scope">
+          {{scope.row.goods.name}}
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" header-align="center" align="center" label="规格">
+        <template v-slot="scope">
+          <el-tag type="info" v-if="scope.row.specName" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="catalogId" header-align="center" align="left" label="分类">
         <template v-slot="scope">
-          <span>{{scope.row.catalog.name}}</span>
+          <span>{{scope.row.goods.catalog.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="no" header-align="center" align="left" label="编码"/>
-      <el-table-column prop="name" header-align="center" align="right" label="平均进价"/>
-      <el-table-column prop="name" header-align="center" align="right" label="平均售价"/>
-      <el-table-column prop="createDate" header-align="center" align="left" label="创建时间"/>
+      <el-table-column prop="warehouseNum" header-align="center" align="right" label="库存"/>
       <el-table-column prop="unitId" header-align="center" align="left" label="单位">
         <template v-slot="scope">
-          <span>{{scope.row.unit.name}}</span>
+          <span>{{scope.row.goods.unit.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="memo" header-align="center" align="right" label="备注"/>
     </el-table>
     <el-row>
       <span style="text-align: right;">
@@ -117,7 +122,7 @@
       // 获取数据列表
       getDataList () {
         this.$http({
-          url: '/psi/goods/list',
+          url: '/psi/goodssku/list',
           method: 'get',
           params: {
             page: this.pageIndex,

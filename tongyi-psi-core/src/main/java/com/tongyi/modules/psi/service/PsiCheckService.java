@@ -12,6 +12,7 @@ import com.tongyi.core.IService;
 import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
 import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,5 +24,6 @@ import java.util.List;
  */
 public interface PsiCheckService extends IService<PsiCheckEntity>{
 
-    public void addCheck(String warehouseId, String memo, List<PsiCheckDetailEntity> list);
+    public void addCheck(String userId,String warehouseId, String memo, List<PsiCheckDetailEntity> list);
+
 }
