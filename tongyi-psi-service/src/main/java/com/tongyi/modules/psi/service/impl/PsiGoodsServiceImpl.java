@@ -7,6 +7,7 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.tongyi.common.utils.StringUtils;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -82,6 +83,26 @@ public class PsiGoodsServiceImpl extends ServiceImpl<PsiGoodsDao, PsiGoodsEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateEntity(PsiGoodsEntity entity) {
+        //应该是没用的代码
+        // PsiGoodsEntity newsItem = this.getById(entity.getId());
+//        List<PsiGoodsSpecEntity> newsSpecList = entity.getSpecList();
+//        List<PsiGoodsSkuEntity> newsSkuList = entity.getSkuList();
+//        newsSpecList.forEach(item->{
+//            item.setGoodsId(entity.getId());
+//            if (StringUtils.isBlank(item.getId())) {
+//                goodsSpecDao.insert(item);
+//            }else {
+//                goodsSpecDao.updateById(item);
+//            }
+//        });
+//        newsSkuList.forEach(item->{
+//            item.setGoodsId(entity.getId());
+//            if (StringUtils.isBlank(item.getId())) {
+//                goodsSkuDao.insert(item);
+//            }else{
+//                goodsSkuDao.updateById(item);
+//            }
+//        });
         return super.updateById(entity);
     }
 

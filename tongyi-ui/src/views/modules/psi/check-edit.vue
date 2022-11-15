@@ -13,17 +13,33 @@
         <el-button type="primary" @click="appendGoods">增加商品</el-button>
       </el-form-item>
       <el-table border :data="dataList" style="width: 100%;">
-        <el-table-column prop="name" header-align="center" align="center" label="商品"/>
-        <el-table-column prop="goodsId" header-align="center" align="center" label="规格"/>
-        <el-table-column prop="goodsId" header-align="center" align="center" label="分类"/>
+        <el-table-column prop="name" header-align="center" align="center" label="商品">
+          <template v-slot="scope">
+            <span>{{scope.row.goodsName}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="skuId" header-align="center" align="center" label="规格">
+          <template v-slot="scope">
+            <span>{{scope.row.specName}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="catalog" header-align="center" align="center" label="分类">
+          <template v-slot="scope">
+            <span>{{scope.row.catalogName}}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="beforeNum" header-align="center" align="center" label="库存数量"/>
         <el-table-column prop="afterNum" header-align="center" align="center" label="盘点数量" width="250px">
           <template v-slot="scope">
             <el-input-number v-model="scope.row.afterNum" placeholder="盘点数量"></el-input-number>
           </template>
         </el-table-column>
-        <el-table-column prop="goodsId" header-align="center" align="center" label="单位"/>
-        <el-table-column prop="goodsId" header-align="center" align="center" label="备注">
+        <el-table-column prop="unitId" header-align="center" align="center" label="单位">
+          <template v-slot="scope">
+            <span>{{scope.row.unitName}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="memo" header-align="center" align="center" label="备注">
           <template v-slot="scope">
             <el-input v-model="scope.row.memo" placeholder="备注"></el-input>
           </template>
@@ -140,12 +156,22 @@
         this.dataList.splice(index, 1)
       },
       onSelect (list) {
+        let datalist = []
+        console.log(list)
         list.forEach(item => {
-          item.goodsId = item.id
-          item.beforeNum = item.warehouseNum
-          item.memo = ''
+          datalist.push({
+            goodsId: item.goodsId,
+            goodsName: item.goods.name,
+            specName: item.specName,
+            catalogName: item.goods.catalog.name,
+            unitName: item.goods.unit.name,
+            skuId: item.id,
+            beforeNum: item.warehouseNum,
+            afterNum: 0,
+            memo: ''
+          })
         })
-        this.dataList = list
+        this.dataList = datalist
       }
     }
   }

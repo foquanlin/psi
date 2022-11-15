@@ -51,7 +51,12 @@
         <result column="create_uid" property="createUid"></result>
         <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
         <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
+        <collection property="details" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity" select="com.tongyi.modules.psi.dao.PsiCheckDetailDao.selectByCid" column="{cid=id}"></collection>
     </resultMap>
+    <select id="selectById" resultMap="resultMap">
+        <include refid="selectSql"></include>
+        where t.id= #{id}
+    </select>
 <!--  删除盘点记录以及盘点明细  -->
     <delete id="deleteById">
         delete from psi_check where id in <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>;

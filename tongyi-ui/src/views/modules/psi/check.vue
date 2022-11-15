@@ -36,7 +36,7 @@
       <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:check:info')" type="text" size="small" @click="showDetails(scope.row.id)">详情</el-button>
+          <el-button v-if="isAuth('psi:check:info')" type="text" size="small" @click="showDetails(scope.row)">详情</el-button>
 <!--          <el-button v-if="isAuth('psi:check:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>-->
           <el-button v-if="isAuth('psi:check:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
@@ -47,12 +47,15 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <check-edit v-if="editVisible" ref="checkEdit" @refreshDataList="getDataList"/>
+    <check-detail v-if="detailVisible" ref="checkDetail"/>
   </div>
 </template>
 
 <script>
   import checkEdit from './check-edit'
   import Options from '../sys/options'
+  import CheckDetail from './check-detail'
+
   export default {
     data () {
       return {
@@ -69,13 +72,15 @@
         dataListSelections: [],
         editVisible: false,
         selectVisible: false,
+        detailVisible: false,
         warehouseList: []
 
       }
     },
     components: {
       checkEdit,
-      Options
+      Options,
+      CheckDetail
     },
     activated () {
       this.$http({
@@ -131,10 +136,10 @@
         this.dataListSelections = val
       },
       // 查看详情
-      showDetails (id) {
-        this.editVisible = true
+      showDetails (row) {
+        this.detailVisible = true
         this.$nextTick(() => {
-          this.$refs.checkEdit.init(id, true)
+          this.$refs.checkDetail.init(row.id, true)
         })
       },
       // 新增 / 修改

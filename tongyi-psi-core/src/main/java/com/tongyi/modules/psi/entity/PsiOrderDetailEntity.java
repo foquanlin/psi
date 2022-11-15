@@ -9,6 +9,7 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -41,13 +42,13 @@ public class PsiOrderDetailEntity implements Serializable {
      */
     private String goodsId;
     /**
-     * 数量
-     */
-    private BigDecimal num;
-    /**
      * skuid
      */
     private String skuId;
+    /**
+     * 数量
+     */
+    private BigDecimal num;
     /**
      * 进货价
      */
@@ -60,4 +61,11 @@ public class PsiOrderDetailEntity implements Serializable {
      * 备注
      */
     private String memo;
+
+    @TableField(exist = false)
+    private PsiOrderEntity order;
+    @TableField(exist = false)
+    private PsiGoodsSkuEntity sku;
+    @TableField(exist = false)
+    private PsiGoodsEntity goods;
 }

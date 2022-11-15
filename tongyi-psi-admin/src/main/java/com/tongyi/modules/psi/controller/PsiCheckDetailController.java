@@ -38,7 +38,7 @@ public class PsiCheckDetailController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/listAll")
-    @RequiresPermissions("psi:checkdetail:list")
+    @RequiresPermissions("psi:check:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiCheckDetailEntity> list = psiCheckDetailService.listAll(params);
         return RestResponse.success("list", list);
@@ -51,7 +51,7 @@ public class PsiCheckDetailController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/list")
-    @RequiresPermissions("psi:checkdetail:list")
+    @RequiresPermissions("psi:check:list")
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         PageInfo page = psiCheckDetailService.listPage(current,size,params);
         return RestResponse.success("page", page);
@@ -64,7 +64,7 @@ public class PsiCheckDetailController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("psi:checkdetail:info")
+    @RequiresPermissions("psi:check:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiCheckDetailEntity psiCheckDetail = psiCheckDetailService.getById(id);
         return RestResponse.success("info", psiCheckDetail);
@@ -78,7 +78,7 @@ public class PsiCheckDetailController extends AbstractController {
      */
     @SysLog("新增盘点明细")
     @RequestMapping("/save")
-    @RequiresPermissions("psi:checkdetail:save")
+    @RequiresPermissions("psi:check:save")
     public RestResponse save(@RequestBody PsiCheckDetailEntity entity) {
         psiCheckDetailService.addEntity(entity);
         return RestResponse.success();
@@ -92,7 +92,7 @@ public class PsiCheckDetailController extends AbstractController {
      */
     @SysLog("修改盘点明细")
     @RequestMapping("/update")
-    @RequiresPermissions("psi:checkdetail:update")
+    @RequiresPermissions("psi:check:update")
     public RestResponse update(@RequestBody PsiCheckDetailEntity entity) {
         psiCheckDetailService.updateEntity(entity);
         return RestResponse.success();
@@ -106,7 +106,7 @@ public class PsiCheckDetailController extends AbstractController {
      */
     @SysLog("删除盘点明细")
     @RequestMapping("/delete")
-    @RequiresPermissions("psi:checkdetail:delete")
+    @RequiresPermissions("psi:check:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiCheckDetailService.deleteBatch(ids);
         return RestResponse.success();

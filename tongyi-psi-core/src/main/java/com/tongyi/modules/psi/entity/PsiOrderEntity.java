@@ -9,8 +9,10 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -94,4 +96,9 @@ public class PsiOrderEntity implements Serializable {
      * 订单金额
      */
     private BigDecimal orderAmount;
+
+    @TableField(exist = false)
+    private PsiSupplierEntity supplier;
+    @TableField(exist = false)
+    private SysUserEntity createUser;
 }

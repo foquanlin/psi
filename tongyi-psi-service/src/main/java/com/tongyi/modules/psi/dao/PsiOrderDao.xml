@@ -70,13 +70,25 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiOrderEntity">
+    <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiOrderEntity">
+    <select id="listAll" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
+    </select>
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiOrderEntity">
+        <id column="id" property="id"/>
+        <result column="supplier_id" property="supplierId"/>
+        <result column="create_uid" property="createUid"></result>
+
+        <association property="supplier" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="supplier_id"/>
+        <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
+    </resultMap>
+    <select id="selectById" resultMap="resultMap">
+        <include refid="selectSql"/>
+        where t.id = #{id}
     </select>
 </mapper>

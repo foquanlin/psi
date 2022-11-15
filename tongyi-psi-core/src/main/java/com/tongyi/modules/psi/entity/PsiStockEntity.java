@@ -12,11 +12,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tongyi.common.utils.StringUtils;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Time;
 import java.util.List;
@@ -201,5 +203,23 @@ public class PsiStockEntity implements Serializable {
         public void setName(String name) {
             this.name = name;
         }
+    }
+
+    /**
+     * 生成盘单的出入库明细
+     * @param userId
+     * @param checkEntity
+     * @return
+     */
+    public List<PsiStockEntity> newForCheck(String userId,PsiCheckEntity checkEntity){
+        List<PsiCheckDetailEntity> details = checkEntity.getDetails();
+        List<PsiStockEntity> list = new ArrayList<>();
+        details.forEach(item->{
+            PsiStockEntity entity = item.newCheckStock(userId,checkEntity.getNo());
+            entity.setCreateUid(userId);
+            entity.setOrderId(checkEntity.getNo());
+            list.add(entity);
+        });
+        return list;
     }
 }

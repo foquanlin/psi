@@ -132,6 +132,9 @@
         }).then(({data}) => {
           if (data && data.code === 0) {
             this.dataList = data.page.list
+            this.dataList.forEach(item => {
+              item.memo = ''
+            })
             this.totalPage = data.page.total
           } else {
             this.dataList = []

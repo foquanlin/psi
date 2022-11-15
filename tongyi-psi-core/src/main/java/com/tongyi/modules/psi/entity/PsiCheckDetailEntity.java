@@ -9,6 +9,7 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -68,6 +69,33 @@ public class PsiCheckDetailEntity implements Serializable {
      */
     private String memo;
 
+    @TableField(exist = false)
+    private PsiGoodsSkuEntity sku;
+    @TableField(exist = false)
+    private PsiGoodsEntity goods;
+    @TableField(exist = false)
+    private PsiWarehouseEntity warehouse;
+
+    public BigDecimal getStockNum(){
+        return beforeNum.subtract(afterNum).abs();
+    }
+    /**
+     * 判断盘点前后应该是生成入库单还是出库单
+     * @return
+     */
+    public PsiStockEntity.Type getStockType(){
+        if (beforeNum.compareTo(afterNum)>=0){
+            return PsiStockEntity.Type.OUT;
+        }
+        return PsiStockEntity.Type.IN;
+    }
+
+    /**
+     * 创建盘点明细
+     * @param check
+     * @param item
+     * @return
+     */
     public static PsiCheckDetailEntity newEntity(PsiCheckEntity check, PsiCheckDetailEntity item) {
         PsiCheckDetailEntity entity = new PsiCheckDetailEntity();
         entity.setCid(check.getId());
@@ -81,12 +109,37 @@ public class PsiCheckDetailEntity implements Serializable {
         return entity;
     }
 
-    public static PsiCheckDetailEntity newEntity(Map<String, Object> item) {
+    /**
+     * 创建盘点明细
+     * @param warehouseId
+     * @param item
+     * @return
+     */
+    public static PsiCheckDetailEntity newEntity(String warehouseId,Map<String, Object> item) {
         PsiCheckDetailEntity entity = new PsiCheckDetailEntity();
+        entity.setWarehouseId(warehouseId);
         entity.setGoodsId((String)item.get("goodsId"));
         entity.setSkuId((String)item.get("skuId"));
         entity.setBeforeNum(new BigDecimal((Integer) item.get("beforeNum")));
         entity.setAfterNum(new BigDecimal((Integer) item.get("afterNum")));
+        entity.setMemo((String)item.get("memo"));
+        return entity;
+    }
+
+    //根据盘点明细创建库存明细
+    public PsiStockEntity newCheckStock(String userId,String orderId){
+        PsiStockEntity entity = new PsiStockEntity();
+        entity.setType(this.getStockType().getCode());
+        entity.setCatalog(PsiStockEntity.Catalog.PANDIAN.getCode());
+        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
+        entity.setWarehouseId(this.getWarehouseId());
+        entity.setSupplierId(null);
+        entity.setGoodsId(this.getGoodsId());
+        entity.setSkuId(this.getSkuId());
+        entity.setNum(this.getStockNum());
+        entity.setCreateTime(new Date());
+        entity.setCreateUid(userId);
+        entity.setOrderId(orderId);
         return entity;
     }
 }

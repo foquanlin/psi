@@ -43,15 +43,31 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
+    <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
+    <select id="listAll" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
+
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
+        <id column="id" property="id"/>
+        <result column="cid" property="cid"/>
+        <result column="warehouse_id" property="warehouseId"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="before_num" property="beforeNum"/>
+        <result column="after_num" property="afterNum"/>
+        <result column="create_date" property="createDate"/>
+        <result column="memo" property="memo"/>
+
+        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
+        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
+        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
+    </resultMap>
 
     <delete id="deleteByCid">
         delete from psi_check_detail where cid in
@@ -59,4 +75,9 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectByCid" resultMap="resultMap">
+        <include refid="selectSql"/>
+        where t.cid = #{cid}
+    </select>
 </mapper>

@@ -30,7 +30,7 @@
         <el-button @click="pageIndex = 1
         getDataList()">查询</el-button>
         <el-button v-if="isAuth('psi:goods:save')" type="primary" @click="editHandle()">新增商品</el-button>
-        <el-button v-if="isAuth('psi:goods:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+<!--        <el-button v-if="isAuth('psi:goods:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
@@ -52,8 +52,8 @@
         </template>
       </el-table-column>
       <el-table-column prop="no" header-align="center" align="left" label="编码"/>
-      <el-table-column prop="name" header-align="center" align="right" label="平均进价"/>
-      <el-table-column prop="name" header-align="center" align="right" label="平均售价"/>
+<!--      <el-table-column prop="name" header-align="center" align="right" label="平均进价"/>-->
+<!--      <el-table-column prop="name" header-align="center" align="right" label="平均售价"/>-->
       <el-table-column prop="createDate" header-align="center" align="left" label="创建时间"/>
       <el-table-column prop="unitId" header-align="center" align="left" label="单位">
         <template v-slot="scope">
@@ -65,15 +65,16 @@
 <!--          <img style="height: 50%;width: 50%" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-      <el-table-column prop="memo" header-align="center" align="right" label="备注"/>
+      <el-table-column prop="memo" header-align="center" align="right" label="备注" show-overflow-tooltip/>
       <el-table-column prop="status" header-align="center" align="right" label="状态"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:goods:instock')" type="text" size="small" @click="inStockHandle(scope.row)">入库</el-button>
           <el-button v-if="isAuth('psi:goods:outstock')" type="text" size="small" @click="outStockHandle(scope.row)">出库</el-button>
-          <el-button v-if="isAuth('psi:goods:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
-          <el-button v-if="isAuth('psi:goods:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="isAuth('psi:goods:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="isAuth('psi:goods:outstock')" type="text" size="small" @click="addSkuGoods(scope.row)">添加明细</el-button>
+          <el-button v-if="isAuth('psi:goods:update')" type="text" size="small" @click="skuHandle(scope.row)">规格管理</el-button>
+          <el-button v-if="isAuth('psi:goods:info')" type="text" size="small" @click="showDetails(scope.row)">详情</el-button>
+          <el-button v-if="isAuth('psi:goods:delete')" type="text" size="small" @click="deleteHandle(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -82,17 +83,20 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <goods-edit v-if="editVisible" ref="goodsEdit" @refreshDataList="getDataList"/>
+    <goods-detail v-if="detailVisible" ref="goodsDetail"/>
+    <goods-sku v-if="goodsSkuVisible" ref="goodsSku"/>
     <in-stock v-if="inStockVisible" ref="inStock" @refreshDataList="getDataList"/>
     <out-stock v-if="outStockVisible" ref="outStock" @refreshDataList="getDataList"/>
   </div>
 </template>
 
 <script>
-  import goodsEdit from './goods-edit'
+  import GoodsEdit from './goods-edit'
   import Options from '../sys/options'
   import InStock from './goods-instock'
   import OutStock from './goods-outstock'
-
+  import GoodsDetail from './goods-detail'
+  import GoodsSku from './goods-sku'
   export default {
     data () {
       return {
@@ -113,14 +117,19 @@
         dataListSelections: [],
         editVisible: false,
         inStockVisible: false,
-        outStockVisible: false
+        outStockVisible: false,
+        detailVisible: false,
+        skuVisible: false,
+        goodsSkuVisible: false
       }
     },
     components: {
-      goodsEdit,
+      GoodsEdit,
       Options,
       InStock,
-      OutStock
+      OutStock,
+      GoodsDetail,
+      GoodsSku
     },
     activated () {
       this.$http({
@@ -187,10 +196,10 @@
         this.dataListSelections = val
       },
       // 查看详情
-      showDetails (id) {
-        this.editVisible = true
+      showDetails (row) {
+        this.detailVisible = true
         this.$nextTick(() => {
-          this.$refs.goodsEdit.init(id, true)
+          this.$refs.goodsDetail.init(row.id)
         })
       },
       // 新增 / 修改
@@ -201,11 +210,8 @@
         })
       },
       // 删除
-      deleteHandle (id) {
-        let ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
-        })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[删除]操作?`, '提示', {
+      deleteHandle (row) {
+        this.$confirm(`确定对[${row.name}]进行[删除]操作?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -213,14 +219,13 @@
           this.$http({
             url: '/psi/goods/delete',
             method: 'post',
-            data: ids
+            data: [row.id]
           }).then(({data}) => {
             if (data && data.code === 0) {
               this.$message({ message: '操作成功', type: 'success', duration: 1500 })
               this.getDataList()
             }
           })
-        }).catch(() => {
         })
       },
       inStockHandle (row) {
@@ -233,6 +238,14 @@
         this.outStockVisible = true
         this.$nextTick(() => {
           this.$refs.outStock.init(row.id)
+        })
+      },
+      skuHandle (row) {
+      },
+      addSkuGoods (row) {
+        this.goodsSkuVisible = true
+        this.$nextTick(() => {
+          this.$refs.goodsSku.init(row.id)
         })
       }
     }

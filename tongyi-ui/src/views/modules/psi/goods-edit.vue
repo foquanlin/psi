@@ -53,7 +53,7 @@
             </tr>
             <tr v-for="(spec,idx) in dataForm.specList">
               <th><el-select v-model="spec.specName" :disabled="disabled" placeholder="选择规格或输入自定义规格按回车" style="width:100%" clearable allow-create filterable default-first-option/></th>
-              <th><el-select v-model="spec.specValue" :disabled="disabled" placeholder="输入完成按回车或点击保存可新增多个规格值" @change="changeSpecValue" style="width:100%" multiple clearable allow-create filterable default-first-option/></th>
+              <th><el-select v-model="spec.specValue" :disabled="disabled" placeholder="输入完成按回车或点击保存可新增多个规格值" @change="changeSpecValue" @remove-tag="changeSpecValue" style="width:100%" multiple allow-create filterable default-first-option/></th>
               <th>
 <!--                <el-button @click="saveSpec(idx)">保存</el-button>-->
                 <el-button @click="delSpec(idx)">删除</el-button>
@@ -146,8 +146,7 @@
         warehouseList: [],
         catalogList: [],
         brandList: [],
-        unitList: [],
-        skuList: []
+        unitList: []
       }
     },
     created () {
@@ -273,7 +272,7 @@
       saveSpec (index) {
       },
       changeSpecValue (val) {
-        this.dataForm.skuList = []
+        this.dataForm.skuList = this.oldSkuList
         if (this.dataForm.specList.length === 0) {
           this.dataForm.skuList.push({
             id: '',

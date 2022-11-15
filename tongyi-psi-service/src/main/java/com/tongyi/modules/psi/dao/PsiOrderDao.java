@@ -44,4 +44,6 @@ public interface PsiOrderDao extends BaseMapper<PsiOrderEntity> {
      * @return List
      */
     List<PsiOrderEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
+
+    public PsiOrderEntity selectById(@Param("id")String id);
 }

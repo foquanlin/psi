@@ -94,7 +94,7 @@ public class PsiCheckController extends AbstractController {
         }
         List<PsiCheckDetailEntity> details = new ArrayList<>();
         list.forEach(item ->{
-            details.add(PsiCheckDetailEntity.newEntity(item));
+            details.add(PsiCheckDetailEntity.newEntity(warehouseId,item));
         });
         psiCheckService.addCheck(getUserId(),warehouseId,memo,details);
         return RestResponse.success();

@@ -47,4 +47,6 @@ public interface PsiCheckDetailDao extends BaseMapper<PsiCheckDetailEntity> {
     List<PsiCheckDetailEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 
     public int deleteByCid(@Param("ids") Serializable[] ids);
+
+    public List<PsiCheckDetailEntity> selectByCid(@Param("cid")String cid);
 }
