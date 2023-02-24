@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.sys.dao.SysOrgDao">
+
+    <select id="queryMaxIdByParentNo" resultType="string">
+		select max(org_no) from sys_org where parent_no = #{parentNo}
+	</select>
+
+	<select id="selectChildrensByOrgNo" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
+		select
+		org_name
+		from sys_org where parent_no = #{orgNo}
+	</select>
+
+	<sql id="selectSql">
+		select o.org_no,
+		o.org_name,
+		o.parent_no,
+		o.org_type,
+		o.status,
+		o.sort,
+		o.create_time,
+		o.create_user_id,
+		so.org_name parent_name
+		from sys_org o
+		left join sys_org so on o.parent_no = so.org_no
+	</sql>
+	<sql id="selectWhere">
+		<where>
+			<if test="params.orgName != null and params.orgName.trim() != ''">
+				and o.org_name like '%${params.orgName}%'
+			</if>
+			<if test="params.orgType != null">
+				and o.org_type = #{params.orgType}
+			</if>
+			<if test="params.parentName != null and params.parentName.trim() != ''">
+				and so.org_name like '%${params.parentName}%'
+			</if>
+		</where>
+	</sql>
+	<select id="listAll" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+	<select id="listPage" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+
+	<select id="selectByParent" resultType="com.tongyi.modules.sys.entity.SysOrgEntity">
+		SELECT T2.org_no, T2.parent_no,T2.org_name
+		FROM (
+		SELECT
+		@r AS _id,
+		(SELECT @r := parent_no FROM sys_org WHERE org_no = _id) AS 2v2,
+		@l := @l + 1 AS lvl
+		FROM
+		(SELECT @r := #{no}) vars,
+		sys_org h
+		WHERE @r &lt;&gt; 0) T1
+		JOIN sys_org T2 ON T1._id = T2.org_no
+	</select>
+</mapper>

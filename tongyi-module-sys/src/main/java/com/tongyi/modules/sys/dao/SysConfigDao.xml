@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">    
+<mapper namespace="com.tongyi.modules.sys.dao.SysConfigDao">
+
+	<!-- 根据key，更新value -->
+	<update id="updateValueByKey" parameterType="map">
+		update sys_config set param_value = #{paramValue} where param_key = #{paramKey}
+	</update>
+
+	<!-- 根据key，查询value -->
+	<select id="queryByKey" parameterType="string" resultType="com.tongyi.modules.sys.entity.SysConfigEntity">
+		select
+        t.id,
+        t.param_key,
+        t.param_value,
+        t.status,
+        t.remark
+        from sys_config t
+        where t.param_key = #{paramKey}
+	</select>
+
+    <sql id="selectSql">
+        select
+        t.id,
+        t.param_key,
+        t.param_value,
+        t.status,
+        t.remark
+        from sys_config t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.paramKey != null and params.paramKey.trim() != ''">
+                and t.param_key = #{params.paramKey}
+            </if>
+            <if test="params.status != null and params.status.trim() != ''">
+                and t.status = #{params.status}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysConfigEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysConfigEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

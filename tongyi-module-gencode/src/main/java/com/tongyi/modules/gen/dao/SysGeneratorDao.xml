@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.gen.dao.SysGeneratorDao">
+	<select id="listPage" resultType="com.tongyi.modules.gen.entity.ResultMapEntity">
+		<if test="params.driverClassName != null and params.driverClassName == 'com.mysql.cj.jdbc.Driver'">
+			select table_name, engine, table_comment, create_time from information_schema.tables
+			where table_schema = (select database())
+			<if test="params.tableName != null and params.tableName.trim() != ''">
+				and table_name like concat('%',#{params.tableName},'%')
+			</if>
+			order by create_time desc
+		</if>
+		<if test="params.driverClassName != null and params.driverClassName == 'oracle.jdbc.driver.OracleDriver'">
+			select table_name, comments table_comment from
+				(select rownum as rn,user_tab_comments.table_name table_name,user_tab_comments.comments comments,user_tables.tablespace_name
+				from user_tab_comments
+				left join user_tables
+				on user_tables.table_name = user_tab_comments.table_name
+				where 1 = 1
+				<if test="params.tableName != null and params.tableName.trim() != ''">
+					and user_tables.table_name like concat(concat('%', #{params.tableName}), '%')
+				</if>
+				)
+		</if>
+	</select>
+
+	<select id="queryTable" resultType="com.tongyi.modules.gen.entity.ResultMapEntity">
+		<if test="driverClassName != null and driverClassName == 'com.mysql.cj.jdbc.Driver'">
+			select table_name tablename, engine, table_comment tablecomment, create_time createtime from information_schema.tables
+				where table_schema = (select database()) and table_name = #{tableName}
+		</if>
+
+		<if test="driverClassName != null and driverClassName == 'oracle.jdbc.driver.OracleDriver'">
+			select user_tab_comments.table_name table_name,
+				user_tab_comments.comments   table_comment,
+				user_tables.tablespace_name
+			from user_tab_comments
+			left join user_tables
+			on user_tables.table_name = user_tab_comments.table_name
+			where user_tab_comments.table_name = #{tableName}
+		</if>
+	</select>
+
+	<select id="queryColumns" resultType="com.tongyi.modules.gen.entity.ColumnEntity">
+		<if test="driverClassName != null and driverClassName == 'com.mysql.cj.jdbc.Driver'">
+			select ordinal_position,column_default,numeric_precision,numeric_scale,datetime_precision,is_nullable,column_name, data_type, column_comment comments, column_key, extra,character_maximum_length as length from information_schema.columns
+				where table_name = #{tableName} and table_schema = (select database()) order by ordinal_position
+		</if>
+
+		<if test="driverClassName != null and driverClassName == 'oracle.jdbc.driver.OracleDriver'">
+			select column_name column_name,
+				lower(data_type || decode(data_type, 'date', '', '(' || nvl(data_precision, data_length) || nvl2(nullif(data_scale, 0), ',' || data_scale, '') || ')')) data_type,
+				(select comments from user_col_comments where table_name = #{tableName} and column_name = user_tab_columns.column_name) comments,
+				(select col.column_name from user_constraints con, user_cons_columns col where con.constraint_name = col.constraint_name and con.constraint_type = 'P' and col.table_name = #{params.tableName}) column_key
+			from user_tab_columns
+			left join user_tables
+				on user_tables.table_name = user_tab_columns.table_name
+				where user_tab_columns.table_name = #{tableName}
+		</if>
+	</select>
+
+	<select id="queryForeign" resultType="com.tongyi.modules.gen.entity.ForeignEntity">
+			select f.id as id,
+			substring_index(f.for_name,'/',-1) as forName,
+			substring_index(f.ref_name,'/',-1) as refName,
+		    r.for_col_name as forColName,
+			r.ref_col_name as refColName,
+			f.n_cols as cols,f.type as type ,r.pos as pos
+			from information_schema.innodb_sys_foreign f,information_schema.innodb_sys_foreign_cols r
+			where f.id=r.id and f.ref_name like concat(database(),'/%') and f.for_name =concat(database(),'/',#{tableName});
+	</select>
+
+</mapper>

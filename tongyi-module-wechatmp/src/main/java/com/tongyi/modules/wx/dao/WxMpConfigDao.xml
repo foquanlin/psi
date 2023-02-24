@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.wx.dao.WxMpConfigDao">
+
+    <sql id="selectSql">
+        select
+        t.id,
+        t.app_id,
+        t.secret,
+        t.token,
+        t.aes_key,
+        t.content
+        from wx_mp_config t
+        where 1=1
+        <if test="params.appId != null and params.appId.trim() != ''">
+            and t.app_id like = #{params.appId}
+        </if>
+    </sql>
+
+    <select id="selectWxMpConfigPage" resultType="com.tongyi.modules.wx.entity.WxMpConfigEntity">
+        <include refid="selectSql"/>
+    </select>
+
+    <select id="queryAll" resultType="com.tongyi.modules.wx.entity.WxMpConfigEntity">
+        <include refid="selectSql"/>
+    </select>
+</mapper>

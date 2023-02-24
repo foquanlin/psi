@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.sys.dao.SysUserDao">
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPerms" resultType="string">
+		select m.perms from sys_user_role ur
+			left join sys_role_menu rm on ur.role_id = rm.role_id
+			left join sys_menu m on rm.menu_id = m.menu_id
+		where ur.user_id = #{userId}
+	</select>
+	
+	<!-- 查询用户的所有菜单ID --> 
+	<select id="queryAllMenuId" resultType="string">
+		select distinct rm.menu_id from sys_user_role ur
+			left join sys_role_menu rm on ur.role_id = rm.role_id
+		where ur.user_id = #{userId}
+	</select>
+
+	<sql id="selectSql">
+		select
+		t.user_id,
+		t.sex,
+		t.real_name,
+		t.user_name,
+		t.org_no,
+		t.email_host,
+		t.email_port,
+		t.email,
+		t.email_pw,
+		t.mobile,
+		t.status,
+		t.create_time,
+		t.create_user_id,
+		t.create_user_org_no
+		from sys_user t
+	</sql>
+	<sql id="selectWhere">
+		<where>
+			<if test="params.userName != null and params.userName != ''">
+				and t.user_name like '%${params.userName}%'
+			</if>
+			<if test="params.orgNo != null and params.orgNo != ''">
+				and t.org_no = #{params.orgNo}
+			</if>
+		</where>
+	</sql>
+	<select id="listPage" resultType="com.tongyi.modules.sys.entity.SysUserEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+	<select id="listAll" resultType="com.tongyi.modules.sys.entity.SysUserEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+</mapper>

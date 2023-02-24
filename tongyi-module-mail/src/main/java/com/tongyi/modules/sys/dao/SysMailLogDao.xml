@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.sys.dao.SysMailLogDao">
+
+    <sql id="selectSql">
+        select
+        t.id,
+        t.sender,
+        t.receiver,
+        t.subject,
+        t.content,
+        t.send_date,
+        t.type,
+        t.send_result,
+        t.create_user_id,
+        t.create_user_org_no
+        from sys_mail_log t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.sender != null and params.sender.trim() != ''">
+                and t.sender like '%${params.sender}%'
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysMailLogEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysMailLogEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

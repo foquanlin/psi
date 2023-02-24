@@ -1,0 +1,7 @@
+{
+  "id": "hashs",
+  "url": "https://www.baidu.com",
+  "modules": "consumer",
+  "table" : "consumer",
+  "columns": [{"name":"id","type": "Date","select": true,"comment": "关键字"}]
+}

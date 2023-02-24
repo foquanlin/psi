@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;DatabaseName=master
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: 12345678
+
+#连接池配置
+    initialSize: 5
+    maxActive: 50
+    minIdle: 5
+  #连接等待超时时间
+    maxWait: 60000

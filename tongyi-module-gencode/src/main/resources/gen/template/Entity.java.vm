@@ -1,0 +1,53 @@
+/*
+ * 项目名称:${projectName}
+ * 类名称:${className}Entity.java
+ * 包名称:${package}.entity
+ * @author ${author}
+ * @date ${datetime}
+ * Copyright (c) 2019-2021 惠州市酷天科技有限公司
+ */
+package ${package}.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import java.io.Serializable;
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+#if(${hasDate})
+import java.util.Date;
+import java.sql.Time;
+#end
+
+/**
+ * ${comments}实体
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+@TableName(value = "${tableName}",autoResultMap = true)
+public class ${className}Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+#if($column.columnName == $pk.columnName)
+    /**
+     * $column.comments
+     */
+#if($column.extra == 'auto_increment')
+    @TableId(type=IdType.AUTO)
+#else
+    @TableId
+#end
+    private $column.attrType $column.attrname;
+#else
+    /**
+     * $column.comments
+     */
+    private $column.attrType $column.attrname;
+#end#end
+}

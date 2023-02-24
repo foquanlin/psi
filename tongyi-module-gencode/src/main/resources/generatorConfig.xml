@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!--mysql的jar包路径-->
+    <classPathEntry location="D:\dev-tools\apache-maven-3.3.1\repository\com\microsoft\sqlserver\mssql-jdbc\8.2.2.jre8\mssql-jdbc-8.2.2.jre8.jar"/>
+
+    <context id="default" targetRuntime="MyBatis3">
+
+        <property name="javaFileEncoding" value="utf-8"/>
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+            <property name="useActualColumnNames" value="true" />
+        </commentGenerator>
+
+        <!--数据库连接参数-->
+        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                        connectionURL="jdbc:sqlserver://127.0.0.1:1433;DatabaseName=master"
+                        userId="sa"
+                        password="12345678"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <!--生成pojo实体类,targetPackage指定包名，targetProject指定路径-->
+        <javaModelGenerator targetPackage="pojo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--生成mapper.xml-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--生成mapper-->
+        <javaClientGenerator targetPackage="mapper" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--对哪张表做操作-->
+        <table tableName="spt_fallback_db" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+
+    </context>
+</generatorConfiguration>

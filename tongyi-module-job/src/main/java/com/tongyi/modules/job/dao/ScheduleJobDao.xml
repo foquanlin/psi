@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.job.dao.ScheduleJobDao">
+
+	<!-- 批量更新状态 -->
+	<update id="updateBatch">
+		update schedule_job set status = #{status} where job_id in
+		<foreach item="jobId" collection="list"  open="(" separator="," close=")">
+			#{jobId}
+		</foreach>
+	</update>
+
+	<sql id="selectSql">
+		select
+		t.job_id,
+		t.bean_name,
+		t.method_name,
+		t.params,
+		t.cron_expression,
+		t.status,
+		t.remark,
+		t.create_time
+		from schedule_job t
+	</sql>
+
+	<sql id="selectWhere">
+		<where>
+			<if test="params.beanName != null and params.beanName.trim() != ''">
+				and t.bean_name like '%${params.beanName}%'
+			</if>
+		</where>
+	</sql>
+	<select id="listPage" resultType="com.tongyi.modules.job.entity.ScheduleJobEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+	<select id="listAll" resultType="com.tongyi.modules.job.entity.ScheduleJobEntity">
+		<include refid="selectSql"/>
+		<include refid="selectWhere"/>
+	</select>
+</mapper>

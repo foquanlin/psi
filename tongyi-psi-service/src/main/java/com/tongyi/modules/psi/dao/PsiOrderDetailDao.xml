@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiOrderDetailDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiOrderDetailDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.order_id,
+            t.goods_id,
+            t.num,
+            t.sku_id,
+            t.price,
+            t.in_stock_num,
+            t.memo
+        from psi_order_detail t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.orderId != null and params.orderId != ''">
+                and t.order_id = #{params.orderId}
+            </if>
+            <if test="params.goodsId != null and params.goodsId != ''">
+                and t.goods_id = #{params.goodsId}
+            </if>
+            <if test="params.skuId != null and params.skuId != ''">
+                and t.sku_id = #{params.skuId}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
+        <id column="id" property="id"/>
+        <result column="cid" property="cid"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="sku_id" property="skuId"/>
+        <association property="order" javaType="com.tongyi.modules.psi.entity.PsiOrderEntity" select="com.tongyi.modules.psi.dao.PsiOrderDao.selectById" column="order_id"/>
+        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
+        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
+    </resultMap>
+    <select id="selectById" resultMap="resultMap">
+        <include refid="selectSql"/>
+        where t.id = #{id}
+    </select>
+</mapper>

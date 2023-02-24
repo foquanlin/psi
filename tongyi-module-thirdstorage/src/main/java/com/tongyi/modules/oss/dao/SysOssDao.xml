@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.oss.dao.SysOssDao">
+
+    <select id="selectSysOssPage" resultType="com.tongyi.modules.oss.entity.SysOssEntity">
+        select
+        t.id,
+        t.url,
+        t.create_date
+        from sys_oss t
+        where 1=1
+        <if test="params.url != null and params.url.trim() != ''">
+            and t.url like '%${params.url}%'
+        </if>
+    </select>
+</mapper>

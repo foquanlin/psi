@@ -1,0 +1,15 @@
+-- 菜单
+-- name: ${comments}
+-- url: ${pre}/${pathName}
+-- perms: ${pre}:${pathName}:list,${pre}:${pathName}:info
+
+-- 按钮权限
+-- 新增: ${pre}:${pathName}:save
+-- 修改: ${pre}:${pathName}:update
+-- 删除: ${pre}:${pathName}:delete
+
+insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('20','0','${comments}管理','${pre}/${pathName}','${pre}:${pathName}:list,${pre}:${pathName}:info',1,'admin',0,1);
+insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2001','20','新增',null,'${pre}:${pathName}:save',2,'admin',0,1);
+insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2002','20','修改',null,'${pre}:${pathName}:update',2,'admin',0,1);
+insert into sys_menu(menu_id,parent_id,name,url,perms,type,icon,order_num,shows) values ('2003','20','删除',null,'${pre}:${pathName}:delete',2,'admin',0,1);
+

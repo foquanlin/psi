@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiAllocationDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiAllocationDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.no,
+            t.out_warehouse_id,
+            t.in_warehouse_id,
+            t.create_date,
+            t.memo
+        from psi_allocation t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.no != null and params.no != ''">
+                and t.no = #{params.no}
+            </if>
+            <if test="params.outWarehouseId != null and params.outWarehouseId != ''">
+                and t.out_warehouse_id = #{params.outWarehouseId}
+            </if>
+            <if test="params.inWarehouseId != null and params.inWarehouseId != ''">
+                and t.in_warehouse_id = #{params.inWarehouseId}
+            </if>
+            <if test="params.createDateStart != null and params.createDateEnd != null">
+                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiAllocationEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiAllocationEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

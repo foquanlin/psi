@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.tongyi</groupId>
+    <artifactId>tongyi-psi</artifactId>
+    <version>1.0.0</version>
+    <name>tongyi-psi</name>
+    <packaging>pom</packaging>
+
+    <description>酷天后台管理系统</description>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring.boot.version>2.7.0</spring.boot.version>
+        <mybatisplus.boot.version>3.5.2</mybatisplus.boot.version>
+        <mybatisplus.extension.version>3.5.2</mybatisplus.extension.version>
+        <jedis.version>3.8.0</jedis.version>
+        <jaxb.core.version>4.0.0</jaxb.core.version>
+        <jaxb.api.version>2.3.1</jaxb.api.version>
+        <jaxb.impl.version>4.0.0</jaxb.impl.version>
+        <activation.version>1.1.1</activation.version>
+        <mysql.version>8.0.29</mysql.version>
+        <oracle.version>11.2.0.3</oracle.version>
+        <quartz.version>2.3.2</quartz.version>
+        <commons.lang.version>2.6</commons.lang.version>
+        <commons.lang3.version>3.10</commons.lang3.version>
+        <commons.fileupload.version>1.4</commons.fileupload.version>
+        <commons.io.version>1.3.2</commons.io.version>
+        <commons.codec.version>1.15</commons.codec.version>
+        <commons.configuration.version>1.10</commons.configuration.version>
+        <shiro.version>1.9.1</shiro.version>
+        <jwt.version>0.9.1</jwt.version>
+        <kaptcha.version>0.0.9</kaptcha.version>
+
+        <qiniu.version>7.11.0</qiniu.version>
+        <aliyun.oss.version>3.15.0</aliyun.oss.version>
+        <qcloud.cos.version>5.6.93</qcloud.cos.version>
+
+        <swagger.version>3.0.0</swagger.version>
+        <joda.time.version>2.10.14</joda.time.version>
+        <gson.version>2.9.0</gson.version>
+        <velocity.version>1.7</velocity.version>
+        <velocity.tools.version>2.0</velocity.tools.version>
+        <easypoi.version>4.4.0</easypoi.version>
+        <lombok.version>1.18.24</lombok.version>
+        <activiti.version>6.0.0</activiti.version>
+        <batik.version>1.14</batik.version>
+        <logstash.version>7.2</logstash.version>
+        <javamail.version>1.6.2</javamail.version>
+        <actable.version>1.5.0.RELEASE</actable.version>
+        <guava.version>20.0</guava.version>
+        <zxing.version>3.2.1</zxing.version>
+        <hibernate.validator.version>6.0.14.Final</hibernate.validator.version>
+        <junit.version>4.11</junit.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <httpmime.version>4.5.13</httpmime.version>
+        <spring.redis.version>1.4.7.RELEASE</spring.redis.version>
+
+
+        <weixin-java-cp.version>4.3.0</weixin-java-cp.version>
+        <weixin-java-mp.version>4.3.0</weixin-java-mp.version>
+        <weixin-java-miniapp.version>4.3.0</weixin-java-miniapp.version>
+        <weixin-java-pay.version>4.3.0</weixin-java-pay.version>
+        <weixin-java-open.version>4.3.0</weixin-java-open.version>
+        <alipay-sdk.version>4.31.28.ALL</alipay-sdk.version>
+        <alipay-easysdk.version>2.2.1</alipay-easysdk.version>
+        <dist.release.server>release-server</dist.release.server>
+        <dist.snapshot.server>snapshot-server</dist.snapshot.server>
+        <dist.release.url>http://nexus.wxngrok.com/nexus/content/repositories/releases</dist.release.url>
+        <dist.snapshot.url>http://nexus.wxngrok.com/nexus/content/repositories/snapshots</dist.snapshot.url>
+    </properties>
+
+    <dependencies>
+        <!--测试依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>tongyi-core</module>
+        <module>tongyi-component-utils</module>
+        <module>tongyi-component-common</module>
+        <module>tongyi-component-swagger</module>
+        <module>tongyi-component-freemarker</module>
+        <module>tongyi-component-elasticsearch</module>
+        <module>tongyi-component-elk</module>
+        <module>tongyi-component-mybatis</module>
+        <module>tongyi-component-redis</module>
+        <module>tongyi-component-activemq</module>
+        <module>tongyi-component-kafka</module>
+        <module>tongyi-component-excel</module>
+        <module>tongyi-component-mssql</module>
+        <module>tongyi-component-webconfig</module>
+        <module>tongyi-component-shiro</module>
+        <module>tongyi-component-alibaba</module>
+        <module>tongyi-component-alipay</module>
+        <module>tongyi-component-tencentcloud</module>
+        <module>tongyi-component-tester</module>
+        <module>tongyi-component-starter-admin</module>
+        <module>tongyi-component-starter-api</module>
+        <module>tongyi-module-thirdstorage</module>
+        <module>tongyi-module-sms</module>
+        <module>tongyi-module-sys</module>
+        <module>tongyi-module-act</module>
+        <module>tongyi-module-job</module>
+        <module>tongyi-module-gencode</module>
+        <module>tongyi-module-mail</module>
+        <module>tongyi-module-wechatmp</module>
+
+        <module>tongyi-psi-core</module>
+        <module>tongyi-psi-service</module>
+        <module>tongyi-psi-admin</module>
+        <module>tongyi-psi-api</module>
+
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <compilerArgument>-Xlint:unchecked</compilerArgument>
+                    </configuration>
+                </plugin>
+                <!-- 跳过单元测试 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
+                </plugin>
+                <!-- javadoc plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>public</id>-->
+<!--            <name>aliyun nexus</name>-->
+<!--            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+<!--    <pluginRepositories>-->
+<!--        <pluginRepository>-->
+<!--            <id>public</id>-->
+<!--            <name>aliyun nexus</name>-->
+<!--            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </pluginRepository>-->
+<!--    </pluginRepositories>-->
+
+    <distributionManagement>
+        <repository>
+            <name>Release Respository</name>
+            <id>${dist.release.server}</id>
+            <url>${dist.release.url}</url>
+        </repository>
+        <snapshotRepository>
+            <name>Snapshot Respository</name>
+            <id>${dist.snapshot.server}</id>
+            <url>${dist.snapshot.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

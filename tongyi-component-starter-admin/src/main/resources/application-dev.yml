@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/db?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: abcdefg
+  mail:
+    host: smtp.qq.com
+    protocol: smtp
+    port: 465
+    username: 147657060@qq.com
+    password: abcdefg
+tongyi:
+  file:
+    path: file:D:/usr/local/nginx/html/upload/

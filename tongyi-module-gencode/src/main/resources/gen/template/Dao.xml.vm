@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${package}.dao.${className}Dao">
+<!--        <cache-ref namespace="${package}.dao.${className}Dao"/>-->
+
+    <sql id="selectSql">
+        select
+#foreach($column in $columns)
+            t.$column.columnName#if($velocityCount != $columns.size()),
+#end
+#end
+
+        from ${tableName} t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+#foreach($column in $columns)
+    #set($param='#{params.'+$column.attrname+'}')
+#if($column.attrType=='String')
+            <if test="params.$column.attrname != null and params.$column.attrname.trim() != ''">
+                and t.$column.columnName = $param
+            </if>
+#elseif($column.attrType=='Integer')
+            <if test="params.$column.attrname != null">
+                and t.$column.columnName = $param
+            </if>
+#elseif($column.attrType=='Boolean')
+            <if test="params.$column.attrname != null">
+                and t.$column.columnName = $param
+            </if>
+#elseif($column.attrType=='Long')
+            <if test="params.$column.attrname != null">
+                and t.$column.columnName = $param
+            </if>
+#elseif($column.attrType=='Float')
+            <if test="params.$column.attrname != null">
+                and t.$column.columnName = $param
+            </if>
+#elseif($column.attrType=='Date')
+    #set($sparam='#{params.'+$column.attrname+'Start}')
+    #set($eparam='#{params.'+$column.attrname+'End}')
+    #set($params=$column.attrname+'Start')
+    #set($parame=$column.attrname+'End')
+            <if test="params.$params != null and params.$parame != null">
+                and t.$column.columnName between $sparam and $eparam
+            </if>
+#end
+#end
+        </where>
+    </sql>
+    <select id="listPage" resultType="${package}.entity.${className}Entity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="${package}.entity.${className}Entity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

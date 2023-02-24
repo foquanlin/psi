@@ -1,0 +1,114 @@
+/*
+ * 项目名称:${projectName}
+ * 类名称:${className}Controller.java
+ * 包名称:${package}.controller
+ * @author ${author}
+ * @date ${datetime}
+ * Copyright (c) 2019-2021 惠州市酷天科技有限公司
+ */
+package ${package}.controller;
+import com.tongyi.common.annotation.SysLog;
+import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.sys.controller.AbstractController;
+import ${package}.entity.${className}Entity;
+import ${package}.service.${className}Service;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.tongyi.core.PageInfo;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * ${comments}Controller
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("${pre}/${pathName}")
+public class ${className}Controller extends AbstractController {
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+    /**
+     * 查看所有列表
+     *
+     * @param params 查询参数
+     * @return RestResponse
+     */
+    @RequestMapping("/listAll")
+    @RequiresPermissions("${pre}:${pathName}:list")
+    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+        List<${className}Entity> list = ${classname}Service.listAll(params);
+        return RestResponse.success("list", list);
+    }
+
+    /**
+     * 分页查询${comments}
+     *
+     * @param params 查询参数
+     * @return RestResponse
+     */
+    @GetMapping("/list")
+    @RequiresPermissions("${pre}:${pathName}:list")
+    public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
+        PageInfo page = ${classname}Service.listPage(current,size,params);
+        return RestResponse.success("page", page);
+    }
+
+    /**
+     * 根据主键查询详情
+     *
+     * @param ${pk.attrname} 主键
+     * @return RestResponse
+     */
+    @RequestMapping("/info/{${pk.attrname}}")
+    @RequiresPermissions("${pre}:${pathName}:info")
+    public RestResponse info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
+        ${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});
+        return RestResponse.success("info", ${classname});
+    }
+
+    /**
+     * 新增${comments}
+     *
+     * @param entity
+     * @return RestResponse
+     */
+    @SysLog("新增${comments}")
+    @RequestMapping("/save")
+    @RequiresPermissions("${pre}:${pathName}:save")
+    public RestResponse save(@RequestBody ${className}Entity entity) {
+        ${classname}Service.addEntity(entity);
+        return RestResponse.success();
+    }
+
+    /**
+     * 修改${comments}
+     *
+     * @param entity
+     * @return RestResponse
+     */
+    @SysLog("修改${comments}")
+    @RequestMapping("/update")
+    @RequiresPermissions("${pre}:${pathName}:update")
+    public RestResponse update(@RequestBody ${className}Entity entity) {
+        ${classname}Service.updateEntity(entity);
+        return RestResponse.success();
+    }
+
+    /**
+     * 根据主键删除${comments}
+     *
+     * @param ${pk.attrname}s
+     * @return RestResponse
+     */
+    @SysLog("删除${comments}")
+    @RequestMapping("/delete")
+    @RequiresPermissions("${pre}:${pathName}:delete")
+    public RestResponse delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s) {
+        ${classname}Service.deleteBatch(${pk.attrname}s);
+        return RestResponse.success();
+    }
+}

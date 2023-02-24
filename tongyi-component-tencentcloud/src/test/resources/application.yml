@@ -1,0 +1,18 @@
+tencent:
+  cloud:
+    endpoint:
+    secretId: AKID0L9dM4Kd8KgD46emELuPMXPrh19Bxhnh
+    secretKey: mmIG81Cg7gY3qF6m3NAVdd8jlNPBGcAL
+    # 5d246d53b2f6ac5796d5e03142bea7e70d1463353d191c2b822ee855b0b994b6
+    region: ap-beijing
+    # ap-guangzhou
+    version:
+    appid: 1400607513
+    reqMethod: POST
+    connTimeout: 30
+    writeTimeout: 30
+    readTimeout: 30
+    signMethod: HmacSHA256
+    debug: false
+    language:
+    callbackKey: kutian1234

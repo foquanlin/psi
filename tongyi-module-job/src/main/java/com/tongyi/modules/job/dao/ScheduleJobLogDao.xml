@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.job.dao.ScheduleJobLogDao">
+
+    <sql id="selectSql">
+        select
+        t.log_id,
+        t.job_id,
+        t.bean_name,
+        t.method_name,
+        t.params,
+        t.status,
+        t.error,
+        t.times,
+        t.create_time
+        from schedule_job_log t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.beanName != null and params.beanName.trim() != ''">
+                and t.bean_name like '%${params.beanName}%'
+            </if>
+            <if test="params.methodName != null and params.methodName.trim() != ''">
+                and t.method_name like '%${params.methodName}%'
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.job.entity.ScheduleJobLogEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <select id="listAll" resultType="com.tongyi.modules.job.entity.ScheduleJobLogEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

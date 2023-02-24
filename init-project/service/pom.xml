@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>tongyi-psi</artifactId>
+        <groupId>com.tongyi</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>tongyi-psi-service</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0</version>
+
+    <name>tongyi-psi-service</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <component.version>1.0.0</component.version>
+        <psi.version>1.0.0</psi.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-psi-core</artifactId>
+            <version>${psi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tongyi</groupId>
+            <artifactId>tongyi-component-mybatis</artifactId>
+            <version>${component.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*Dao.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

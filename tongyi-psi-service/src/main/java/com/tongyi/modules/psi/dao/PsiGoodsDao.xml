@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiGoodsDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiGoodsDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.brand_id,
+            t.catalog_id,
+            t.unit_id,
+            t.no,
+            t.name,
+            t.create_date,
+            t.pic_urls,
+            t.memo
+        from psi_goods t
+        left join psi_unit pu on pu.id = t.unit_id
+        left join psi_catalog pc on pc.id = t.catalog_id
+        left join psi_brand pb on pb.id = t.brand_id
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.brandId != null and params.brandId != ''">
+                and t.brand_id = #{params.brandId}
+            </if>
+            <if test="params.catalogId != null and params.catalogId != ''">
+                and t.catalog_id = #{params.catalogId}
+            </if>
+            <if test="params.no != null and params.no != ''">
+                and t.no = #{params.no}
+            </if>
+            <if test="params.name != null and params.name != ''">
+                and t.name = #{params.name}
+            </if>
+            <if test="params.createDateStart != null and params.createDateEnd != null">
+                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.unitId != null and params.unitId != ''">
+                and t.unit_id = #{params.unitId}
+            </if>
+            <if test="params.picUrls != null and params.picUrls != ''">
+                and t.pic_urls = #{params.picUrls}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+            <if test="params.barcode != null and params.barcode != ''">
+                and t.barcode = #{params.barcode}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsEntity">
+        <id column="id" property="id"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="catalog_id" property="catalogId"/>
+        <result column="unit_id" property="unitId"/>
+
+        <association property="brand" javaType="com.tongyi.modules.psi.entity.PsiBrandEntity" select="com.tongyi.modules.psi.dao.PsiBrandDao.selectById" column="brand_id"/>
+        <association property="catalog" javaType="com.tongyi.modules.psi.entity.PsiCatalogEntity" select="com.tongyi.modules.psi.dao.PsiCatalogDao.selectById" column="catalog_id"/>
+        <association property="unit" javaType="com.tongyi.modules.psi.entity.PsiUnitEntity" select="com.tongyi.modules.psi.dao.PsiUnitDao.selectById" column="unit_id"/>
+        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.countByGoodsId" column="id"/>
+
+        <collection property="specList" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiGoodsSpecEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSpecDao.selectByGoodsId" column="{goodsId=id}"></collection>
+        <collection property="skuList" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectByGoodsId" column="{goodsId=id}"></collection>
+    </resultMap>
+    <select id="selectById" resultMap="resultMap">
+        <include refid="selectSql"/>
+        where t.id = #{id}
+    </select>
+</mapper>

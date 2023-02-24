@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiStockDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiStockDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.supplier_id,
+            t.warehouse_id,
+            t.goods_id,
+            t.sku_id,
+            t.order_id,
+            t.catalog,
+            t.type,
+            t.num,
+            t.batch_no,
+            t.create_time,
+            t.status,
+            t.cost_price,
+            t.sale_price,
+            t.create_uid
+        from psi_stock t
+        left join psi_warehouse pw on pw.id = t.warehouse_id
+        left join psi_supplier ps on ps.id = t.supplier_id
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_goods_sku pgs on pgs.id = t.sku_id and pgs.goods_id = t.goods_id
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.supplierId != null and params.supplierId != ''">
+                and t.supplier_id = #{params.supplierId}
+            </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and t.warehouse_id = #{params.warehouseId}
+            </if>
+            <if test="params.goodsId != null and params.goodsId != ''">
+                and t.goods_id = #{params.goodsId}
+            </if>
+            <if test="params.skuId != null and params.skuId != ''">
+                and t.sku_id = #{params.skuId}
+            </if>
+            <if test="params.orderId != null and params.orderId != ''">
+                and t.order_id = #{params.orderId}
+            </if>
+            <if test="params.catalog != null and params.catalog != ''">
+                and t.catalog = #{params.catalog}
+            </if>
+            <if test="params.type != null and params.type != ''">
+                and t.type = #{params.type}
+            </if>
+            <if test="params.batchNo != null and params.batchNo != ''">
+                and t.batch_no = #{params.batchNo}
+            </if>
+            <if test="params.createTimeStart != null and params.createTimeStart.trim()!='' and params.createTimeEnd != null and params.createTimeEnd.trim()!=''">
+                and t.create_time between #{params.createTimeStart} and #{params.createTimeEnd}
+            </if>
+            <if test="params.status != null and params.status != ''">
+                and t.status = #{params.status}
+            </if>
+            <if test="params.createUid != null and params.createUid != ''">
+                and t.create_uid = #{params.createUid}
+            </if>
+            <if test="params.warehouseIds != null and params.warehouseIds.size()>0">
+                and t.warehouse_id in
+                <foreach item="id" index="index" collection="params.warehouseIds" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="params.supplierType != null and params.supplierType != '' and params.supplierName != null and params.supplierName != ''">
+                and ps.type = #{params.supplierType}
+            </if>
+            <if test="params.supplierName != null and params.supplierName != ''">
+                and ps.name like concat('%',#{params.supplierName} ,'%')
+            </if>
+            <if test="params.skuStatus != null and params.skuStatus != ''">
+                and pgs.status = #{params.skuStatus}
+            </if>
+        </where>
+        order by t.create_time desc
+    </sql>
+    <select id="listPage" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiStockEntity">
+        <result column="warehouse_id" property="warehouseId"/>
+        <result column="supplier_id" property="supplierId"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="sku_id" property="skuId"/>
+        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
+        <association property="supplier" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="supplier_id"/>
+        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
+        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
+        <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
+    </resultMap>
+
+    <select id="countByGoodsId" resultType="java.math.BigDecimal">
+        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.goods_id = #{goodsId}
+    </select>
+    <select id="countBySkuId" resultType="java.math.BigDecimal">
+        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.goods_id = #{goodsId} and t.sku_id = #{skuId}
+    </select>
+</mapper>

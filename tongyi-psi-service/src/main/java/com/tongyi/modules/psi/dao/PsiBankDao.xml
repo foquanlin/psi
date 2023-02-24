@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiBankDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiBankDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.defaulted,
+            t.bank_name,
+            t.account_no,
+            t.memo,
+            t.bank_subname
+        from psi_bank t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.defaulted != null">
+                and t.defaulted = #{params.defaulted}
+            </if>
+            <if test="params.bankName != null and params.bankName != ''">
+                and t.bank_name like concat('%', #{params.bankName},'%')
+            </if>
+            <if test="params.accountNo != null and params.accountNo != ''">
+                and t.account_no = #{params.accountNo}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+            <if test="params.bankSubname != null and params.bankSubname != ''">
+                and t.bank_subname = #{params.bankSubname}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiBankEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiBankEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <update id="defaultBank">
+        update psi_bank set defaulted = 0 where id not in (#{id});
+        update psi_bank set defaulted = 1 where id =#{id} ;
+    </update>
+</mapper>

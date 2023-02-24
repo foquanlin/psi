@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiGoodsSkuDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiGoodsSkuDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.goods_id,
+            t.no,
+            t.barcode,
+            t.cost_price,
+            t.sale_price,
+            t.status,
+            t.spec_name,
+            t.spec_value,
+            coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) as warehouse_num
+        from psi_goods_sku t
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.goodsId != null and params.goodsId != ''">
+                and t.goods_id = #{params.goodsId}
+            </if>
+            <if test="params.no != null and params.no != ''">
+                and t.no = #{params.no}
+            </if>
+            <if test="params.barcode != null and params.barcode != ''">
+                and t.barcode = #{params.barcode}
+            </if>
+            <if test="params.status != null and params.status != ''">
+                and t.status = #{params.status}
+            </if>
+            <if test="params.specName != null and params.specName != ''">
+                and t.spec_name = #{params.specName}
+            </if>
+            <if test="params.specValue != null and params.specValue != ''">
+                and t.spec_value = #{params.specValue}
+            </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and ps.warehouse_id = #{params.warehouseId}
+            </if>
+        </where>
+        group by t.id, t.goods_id, t.no, t.barcode, t.cost_price, t.sale_price, t.status, t.spec_name, t.spec_value
+    </sql>
+    <select id="listPage" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="selectByGoodsId" resultType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+        <include refid="selectSql"/>
+        where t.goods_id = #{goodsId}
+        group by t.id, t.goods_id, t.no, t.barcode, t.cost_price, t.sale_price, t.status, t.spec_name, t.spec_value
+    </select>
+
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+        <id column="id" property="id"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="cost_price" property="costPrice"/>
+        <result column="sale_price" property="salePrice"/>
+        <result column="spec_name" property="specName"/>
+        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
+<!--        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.countBySkuId" column="{goodsId=goods_id,skuId=id}"/>-->
+    </resultMap>
+</mapper>

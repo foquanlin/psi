@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.sys.dao.SysSmsLogDao">
+
+    <sql id="selectSql">
+        select
+        t.id,
+        t.user_id,
+        t.content,
+        t.mobile,
+        t.stime,
+        t.sign,
+        t.type,
+        t.extno,
+        t.send_status,
+        t.send_id,
+        t.invalid_num,
+        t.success_num,
+        t.black_num,
+        t.return_msg
+        from sys_sms_log t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.sendId != null and params.sendId.trim() != ''">
+                and t.send_id like '%${params.sendId}%'
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysSmsLogEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysSmsLogEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

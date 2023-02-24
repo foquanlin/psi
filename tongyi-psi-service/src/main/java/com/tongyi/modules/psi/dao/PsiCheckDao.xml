@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiCheckDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiCheckDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.no,
+            t.warehouse_id,
+            t.create_date,
+            t.memo,
+            t.create_uid
+        from psi_check t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.no != null and params.no != ''">
+                and t.no = #{params.no}
+            </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and t.warehouse_id = #{params.warehouseId}
+            </if>
+            <if test="params.createDateStart != null and params.createDateStart.trim() != '' and params.createDateEnd != null and params.createDateEnd.trim() != ''">
+                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+            <if test="params.createUid != null and params.createUid != ''">
+                and t.create_uid = #{params.createUid}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultMap="resultMap">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiCheckEntity">
+        <result column="warehouse_id" property="warehouseId"></result>
+        <result column="create_uid" property="createUid"></result>
+        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
+        <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
+        <collection property="details" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity" select="com.tongyi.modules.psi.dao.PsiCheckDetailDao.selectByCid" column="{cid=id}"></collection>
+    </resultMap>
+    <select id="selectById" resultMap="resultMap">
+        <include refid="selectSql"></include>
+        where t.id= #{id}
+    </select>
+<!--  删除盘点记录以及盘点明细  -->
+    <delete id="deleteById">
+        delete from psi_check where id in <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>;
+        delete from psi_check_detail where cid in <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>;
+    </delete>
+</mapper>

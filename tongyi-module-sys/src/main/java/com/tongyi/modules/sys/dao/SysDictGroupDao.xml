@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.sys.dao.SysDictGroupDao">
+    <sql id="selectSql">
+        select
+        t.id,
+        t.code,
+        t.name,
+        t.create_time,
+        t.remark,
+        t.edited
+        from sys_dict_group t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.code != null and params.code.trim() != ''">
+                and t.code like '%${params.code}%'
+            </if>
+            <if test="params.name != null and params.name.trim() != ''">
+                and t.name like '%${params.name}%'
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.sys.entity.SysDictGroupEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+    <select id="listAll" resultType="com.tongyi.modules.sys.entity.SysDictGroupEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>
