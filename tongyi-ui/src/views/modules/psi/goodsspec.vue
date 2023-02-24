@@ -1,136 +1,165 @@
 <template>
-  <div class="mod-goodsspec">
-    <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
-      <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="pageIndex = 1
-        getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:goodsspec:save')" type="primary" @click="editHandle()">新增</el-button>
-        <el-button v-if="isAuth('psi:goodsspec:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
-      </el-form-item>
-    </el-form>
-    <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
-      <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="goodsId" header-align="center" align="center" label="商品"/>
-      <el-table-column prop="specName" header-align="center" align="center" label="规格名称"/>
-      <el-table-column prop="specValue" header-align="center" align="center" label="规格值"/>
-      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-        <template v-slot="scope">
-          <el-button v-if="isAuth('psi:goodsspec:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
-          <el-button v-if="isAuth('psi:goodsspec:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="isAuth('psi:goodsspec:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex"
-      :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
-    </el-pagination>
-    <!-- 弹窗, 新增 / 修改 -->
-    <goodsspec-edit v-if="editVisible" ref="goodsspecEdit" @refreshDataList="getDataList"/>
-  </div>
+  <el-dialog :close-on-click-modal="false" width="71%" :visible.sync="visible">
+    <el-descriptions title="商品信息" :column="2" style="margin-left: 10px">
+      <el-descriptions-item label="商品名称">{{goods.name}}</el-descriptions-item>
+      <el-descriptions-item label="商品分类">{{goods.catalog?goods.catalog.name:''}}</el-descriptions-item>
+      <el-descriptions-item label="商品编码">{{goods.no}}</el-descriptions-item>
+      <el-descriptions-item label="创建时间">{{goods.createDate}}</el-descriptions-item>
+      <el-descriptions-item label="单位">{{goods.unit?goods.unit.name:''}}</el-descriptions-item>
+      <el-descriptions-item label="库存">{{goods.warehouseNum}}</el-descriptions-item>
+      <el-descriptions-item label="备注" :span="2">{{goods.memo}}</el-descriptions-item>
+    </el-descriptions>
+    <table style="width:100%">
+      <tr>
+        <th style="background-color: #bfcbd9;width:25%">规格名称</th>
+        <th style="background-color: #bfcbd9;width:55%">规格值</th>
+        <th style="background-color: #bfcbd9;width:20%">操作</th>
+        <th></th>
+      </tr>
+      <tr v-for="(spec,idx) in dataList">
+        <th>
+          <el-select v-model="spec.specName" :disabled="!spec.edited" placeholder="选择规格或输入自定义规格按回车" style="width:100%" clearable allow-create filterable default-first-option/>
+        </th>
+        <th>
+          <el-select v-model="spec.specValues" :disabled="!spec.edited" placeholder="输入完成按回车或点击保存可新增多个规格值" style="width:100%" multiple allow-create filterable default-first-option>
+            <el-option v-for="(item,idx) in spec.specValues" :key="item" :value="item" :label="item"/>
+          </el-select>
+        </th>
+        <th>
+          <el-button @click="saveHandle(spec,idx)" v-if="spec.edited">保存</el-button>
+          <el-button @click="editHandle(spec,idx)" v-else>修改</el-button>
+          <el-button @click="delSpec(spec,idx)">删除</el-button>
+        </th>
+      </tr>
+      <tr>
+        <td><el-button icon="el-icon-plus" @click="addSpec" >添加规格</el-button></td>
+      </tr>
+    </table>
+<!--      <el-table border :data="dataList" style="width: 100%;">-->
+<!--        <el-table-column prop="specName" header-align="center" align="center" label="规格名称">-->
+<!--          <template v-slot="scope">-->
+<!--            <el-input v-if="scope.row.modify" v-model="scope.row.specName" placeholder="规格名称"></el-input>-->
+<!--            <span v-else>{{scope.row.specName}}</span>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+<!--        <el-table-column prop="specValue" header-align="center" align="center" label="规格值">-->
+<!--          <template v-slot="scope">-->
+<!--            <el-select v-model="scope.row.specValue" :disabled="scope.row.modify" placeholder="规格值" clearable>-->
+<!--              <el-option v-for="item in scope.row.specValue.split(',')" :key="item.id" :label="item.name" :value="item.id"/>-->
+<!--            </el-select>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+<!--        <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">-->
+<!--          <template v-slot="scope">-->
+<!--            <el-button type="text" size="small" @click="saveHandle(scope.row)">保存</el-button>-->
+<!--            <el-button type="text" size="small" @click="editHandle(scope.row)">修改</el-button>-->
+<!--            <el-button type="text" size="small" @click="deleteHandle(scope.row)">删除</el-button>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+<!--      </el-table>-->
+  </el-dialog>
 </template>
 
 <script>
-  import goodsspecEdit from './goodsspec-edit'
   import Options from '../sys/options'
   export default {
     data () {
       return {
-        searchForm: {
-          name: ''
-        },
+        goodsId: '',
+        visible: false,
+        goods: {},
         dataList: [],
-        pageIndex: 1,
-        pageSize: 10,
-        totalPage: 0,
-        dataListSelections: [],
         editVisible: false
       }
     },
     components: {
-      goodsspecEdit,
       Options
-    },
-    activated () {
-      this.getDataList()
     },
     methods: {
       formatBool: (row, column, cellValue, index) => Options.formatArray(Options.yesno, cellValue),
       formatSex: (row, column, cellValue, index) => Options.formatArray(Options.genders, cellValue),
       formatDate: (row, column, cellValue, index) => Options.formatDate(row, column, cellValue, index),
+      init (id) {
+        this.goodsId = id
+        this.goods = {}
+        this.dataList = []
+        this.visible = true
+        this.$http({
+          loading: false,
+          url: `/psi/goods/info/${this.goodsId}`,
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.goods = data.info
+          } else {
+            this.goods = {}
+          }
+        })
+        this.getDataList()
+      },
       // 获取数据列表
       getDataList () {
         this.$http({
-          url: '/psi/goodsspec/list',
+          url: '/psi/goodsspec/listAll',
           method: 'get',
           params: {
-            page: this.pageIndex,
-            limit: this.pageSize,
-            name: this.searchForm.name
+            goodsId: this.goodsId
           }
         }).then(({data}) => {
           if (data && data.code === 0) {
-            this.dataList = data.page.list
-            this.totalPage = data.page.total
+            this.dataList = data.list
+            this.dataList.forEach(item => {
+              item.specValues = item.specValue.split(',')
+            })
           } else {
             this.dataList = []
-            this.totalPage = 0
           }
         })
       },
-      // 每页数
-      sizeChangeHandle (val) {
-        this.pageSize = val
-        this.pageIndex = 1
-        this.getDataList()
-      },
-      // 当前页
-      currentChangeHandle (val) {
-        this.pageIndex = val
-        this.getDataList()
-      },
-      // 多选
-      selectionChangeHandle (val) {
-        this.dataListSelections = val
-      },
-      // 查看详情
-      showDetails (id) {
-        this.editVisible = true
-        this.$nextTick(() => {
-          this.$refs.goodsspecEdit.init(id, true)
-        })
-      },
-      // 新增 / 修改
-      editHandle (id) {
-        this.editVisible = true
-        this.$nextTick(() => {
-          this.$refs.goodsspecEdit.init(id)
+      saveHandle (spec, index) {
+        spec.specValue = spec.specValues.join(',')
+        this.$http({
+          loading: false,
+          url: `/psi/goodsspec/${!spec.id ? 'save' : 'update'}`,
+          method: 'post',
+          data: spec
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            spec.edited = false
+            this.$forceUpdate()
+          }
         })
       },
       // 删除
-      deleteHandle (id) {
-        let ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
+      delSpec (spec, index) {
+        if (spec.id === '') {
+          this.dataList.splice(index, 1)
+          return
+        }
+        this.$http({
+          loading: false,
+          url: `/psi/goodsspec/delete`,
+          method: 'post',
+          data: [spec.id]
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.dataList.splice(index, 1)
+          }
         })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[删除]操作?`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http({
-            url: '/psi/goodsspec/delete',
-            method: 'post',
-            data: ids
-          }).then(({data}) => {
-            if (data && data.code === 0) {
-              this.$message({ message: '操作成功', type: 'success', duration: 1500 })
-              this.getDataList()
-            }
-          })
-        }).catch(() => {
+      },
+      addSpec () {
+        this.dataList.push({
+          id: '',
+          goodsId: this.goodsId,
+          specName: '',
+          specValue: '',
+          specValues: [],
+          edited: true
         })
+      },
+      editHandle (spec, index) {
+        spec.edited = true
+        this.$forceUpdate()
       }
     }
   }

@@ -87,6 +87,7 @@
     <goods-sku v-if="goodsSkuVisible" ref="goodsSku"/>
     <in-stock v-if="inStockVisible" ref="inStock" @refreshDataList="getDataList"/>
     <out-stock v-if="outStockVisible" ref="outStock" @refreshDataList="getDataList"/>
+    <goods-spec v-if="specVisible" ref="goodsSpec"></goods-spec>
   </div>
 </template>
 
@@ -97,6 +98,7 @@
   import OutStock from './goods-outstock'
   import GoodsDetail from './goods-detail'
   import GoodsSku from './goods-sku'
+  import GoodsSpec from './goodsspec'
   export default {
     data () {
       return {
@@ -120,7 +122,8 @@
         outStockVisible: false,
         detailVisible: false,
         skuVisible: false,
-        goodsSkuVisible: false
+        goodsSkuVisible: false,
+        specVisible: false
       }
     },
     components: {
@@ -129,7 +132,8 @@
       InStock,
       OutStock,
       GoodsDetail,
-      GoodsSku
+      GoodsSku,
+      GoodsSpec
     },
     activated () {
       this.$http({
@@ -241,6 +245,10 @@
         })
       },
       skuHandle (row) {
+        this.specVisible = true
+        this.$nextTick(() => {
+          this.$refs.goodsSpec.init(row.id)
+        })
       },
       addSkuGoods (row) {
         this.goodsSkuVisible = true

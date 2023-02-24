@@ -38,7 +38,7 @@ public class PsiGoodsSpecController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/listAll")
-    @RequiresPermissions("psi:goodsspec:list")
+    @RequiresPermissions("psi:goods:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiGoodsSpecEntity> list = psiGoodsSpecService.listAll(params);
         return RestResponse.success("list", list);
@@ -51,7 +51,7 @@ public class PsiGoodsSpecController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/list")
-    @RequiresPermissions("psi:goodsspec:list")
+    @RequiresPermissions("psi:goods:list")
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         PageInfo page = psiGoodsSpecService.listPage(current,size,params);
         return RestResponse.success("page", page);
@@ -64,7 +64,7 @@ public class PsiGoodsSpecController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("psi:goodsspec:info")
+    @RequiresPermissions("psi:goods:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiGoodsSpecEntity psiGoodsSpec = psiGoodsSpecService.getById(id);
         return RestResponse.success("info", psiGoodsSpec);
@@ -78,7 +78,7 @@ public class PsiGoodsSpecController extends AbstractController {
      */
     @SysLog("新增")
     @RequestMapping("/save")
-    @RequiresPermissions("psi:goodsspec:save")
+    @RequiresPermissions("psi:goods:save")
     public RestResponse save(@RequestBody PsiGoodsSpecEntity entity) {
         psiGoodsSpecService.addEntity(entity);
         return RestResponse.success();
@@ -92,7 +92,7 @@ public class PsiGoodsSpecController extends AbstractController {
      */
     @SysLog("修改")
     @RequestMapping("/update")
-    @RequiresPermissions("psi:goodsspec:update")
+    @RequiresPermissions("psi:goods:update")
     public RestResponse update(@RequestBody PsiGoodsSpecEntity entity) {
         psiGoodsSpecService.updateEntity(entity);
         return RestResponse.success();
@@ -106,7 +106,7 @@ public class PsiGoodsSpecController extends AbstractController {
      */
     @SysLog("删除")
     @RequestMapping("/delete")
-    @RequiresPermissions("psi:goodsspec:delete")
+    @RequiresPermissions("psi:goods:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiGoodsSpecService.deleteBatch(ids);
         return RestResponse.success();
