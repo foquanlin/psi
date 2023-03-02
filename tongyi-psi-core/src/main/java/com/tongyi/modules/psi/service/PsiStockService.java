@@ -9,7 +9,12 @@
 package com.tongyi.modules.psi.service;
 
 import com.tongyi.core.IService;
+import com.tongyi.modules.psi.entity.PsiAllocationEntity;
+import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 库存Service接口
@@ -18,5 +23,22 @@ import com.tongyi.modules.psi.entity.PsiStockEntity;
  * @date 2022-10-12 01:48:52
  */
 public interface PsiStockService extends IService<PsiStockEntity>{
+
+    /**
+     * 库存数量
+     * @param warehouseId
+     * @param goodsId
+     * @return
+     */
+    public BigDecimal stockNum(String warehouseId,String goodsId);
+
+    /**
+     * 库存数量
+     * @param warehouseId
+     * @param goodsId
+     * @param skuId
+     * @return
+     */
+    public BigDecimal stockNum(String warehouseId,String goodsId,String skuId);
 
 }

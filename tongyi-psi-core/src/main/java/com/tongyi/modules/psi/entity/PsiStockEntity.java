@@ -12,15 +12,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tongyi.common.utils.StringUtils;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.sql.Time;
 import java.util.List;
 
 /**
@@ -78,7 +79,8 @@ public class PsiStockEntity implements Serializable {
     /**
      * 时间
      */
-    private Date createTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
     /**
      * 状态
      */
@@ -106,6 +108,28 @@ public class PsiStockEntity implements Serializable {
     private PsiWarehouseEntity warehouse;
     @TableField(exist = false)
     private SysUserEntity createUser;
+
+    public static PsiStockEntity newStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,Type type,String orderId) {
+        PsiStockEntity entity = new PsiStockEntity();
+        entity.setCatalog(catalog.getCode());
+        entity.setCreateTime(LocalDateTime.now());
+        entity.setNum(num);
+        entity.setSkuId(skuId);
+        entity.setGoodsId(goodsId);
+        entity.setWarehouseId(warehouseId);
+        entity.setStatus(Status.RUN.getCode());
+        entity.setType(type.getCode());
+        entity.setOrderId(orderId);
+        return entity;
+    }
+
+    public static PsiStockEntity outStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
+        return newStock(catalog,warehouseId,goodsId,skuId,num,Type.OUT,orderId);
+    }
+
+    public static PsiStockEntity inStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
+        return newStock(catalog,warehouseId,goodsId,skuId,num,Type.IN,orderId);
+    }
 
 
     /**

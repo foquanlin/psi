@@ -105,10 +105,10 @@
         <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
     </resultMap>
 
-    <select id="countByGoodsId" resultType="java.math.BigDecimal">
-        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.goods_id = #{goodsId}
+    <select id="sumStockByGoods" resultType="java.math.BigDecimal">
+        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.warehouse_id= #{warehouseId} and t.goods_id = #{goodsId}
     </select>
-    <select id="countBySkuId" resultType="java.math.BigDecimal">
-        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.goods_id = #{goodsId} and t.sku_id = #{skuId}
+    <select id="sumStockBySku" resultType="java.math.BigDecimal">
+        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.warehouse_id= #{warehouseId} and  t.goods_id = #{goodsId} and t.sku_id = #{skuId}
     </select>
 </mapper>

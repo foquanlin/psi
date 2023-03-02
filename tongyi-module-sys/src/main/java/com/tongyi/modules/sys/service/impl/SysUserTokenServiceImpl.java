@@ -113,30 +113,6 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysUserTokenEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysUserTokenEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysUserTokenEntity entity, Map<String, Object> params, ModuleExecute<SysUserTokenEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysUserTokenEntity entity, Map<String, Object> params, ModuleExecute<SysUserTokenEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(SysUserTokenEntity entity) {
         return super.save(entity);

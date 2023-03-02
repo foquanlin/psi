@@ -7,6 +7,8 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.google.gson.JsonObject;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -21,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 调拨单Service实现类
@@ -46,6 +49,30 @@ public class PsiAllocationServiceImpl extends ServiceImpl<PsiAllocationDao, PsiA
         Page<PsiAllocationEntity> page = new Query<PsiAllocationEntity>(current,size,params).getPage();
         List<PsiAllocationEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<PsiAllocationEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    public void execute(Serializable id, JsonObject params, ModuleExecute<PsiAllocationEntity, JsonObject, Void> fun) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(fun);
+        PsiAllocationEntity entity = this.getById(id);
+        this.execute(entity,params,fun);
+    }
+
+    @Override
+    public void execute(PsiAllocationEntity entity, JsonObject params, ModuleExecute<PsiAllocationEntity, JsonObject, Void> fun) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(fun);
+        fun.apply(entity,params);
+    }
+
+    @Override
+    public void execute(PsiAllocationEntity entity, JsonObject params, ModuleExecute<PsiAllocationEntity, JsonObject, Void>... funs) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(funs);
+        Arrays.stream(funs).forEach(fun->{
+            fun.apply(entity,params);
+        });
     }
 
     @Override

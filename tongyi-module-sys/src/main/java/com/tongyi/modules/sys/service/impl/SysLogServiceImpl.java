@@ -59,30 +59,6 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogDao, SysLogEntity> impl
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysLogEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysLogEntity entity, Map<String, Object> params, ModuleExecute<SysLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysLogEntity entity, Map<String, Object> params, ModuleExecute<SysLogEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(SysLogEntity entity) {
         return super.save(entity);

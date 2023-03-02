@@ -78,29 +78,4 @@ public class SysNationServiceImpl extends ServiceImpl<SysNationDao, SysNationEnt
         return super.removeByIds(Arrays.asList(ids));
     }
 
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysNationEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysNationEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysNationEntity entity, Map<String, Object> params, ModuleExecute<SysNationEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysNationEntity entity, Map<String, Object> params, ModuleExecute<SysNationEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
 }

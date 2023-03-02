@@ -103,30 +103,6 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
         return new PageInfo<SysConfigEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
     }
 
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysConfigEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysConfigEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysConfigEntity entity, Map<String, Object> params, ModuleExecute<SysConfigEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysConfigEntity entity, Map<String, Object> params, ModuleExecute<SysConfigEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
     @CachePut()
     @Override
     @Transactional(rollbackFor = Exception.class)

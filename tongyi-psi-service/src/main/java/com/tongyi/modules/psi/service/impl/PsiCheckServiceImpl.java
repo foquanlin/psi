@@ -8,6 +8,7 @@
  */
 package com.tongyi.modules.psi.service.impl;
 import com.tongyi.common.exception.BusinessException;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,7 +16,6 @@ import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiCheckDao;
 import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
-import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.entity.PsiWarehouseEntity;
 import com.tongyi.modules.psi.service.PsiCheckDetailService;
 import com.tongyi.modules.psi.service.PsiCheckService;
@@ -25,9 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 盘点Service实现类
@@ -61,6 +63,30 @@ public class PsiCheckServiceImpl extends ServiceImpl<PsiCheckDao, PsiCheckEntity
         Page<PsiCheckEntity> page = new Query<PsiCheckEntity>(current,size,params).getPage();
         List<PsiCheckEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<PsiCheckEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<PsiCheckEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(fun);
+        PsiCheckEntity entity = this.getById(id);
+        this.execute(entity,params,fun);
+    }
+
+    @Override
+    public void execute(PsiCheckEntity entity, Map<String, Object> params, ModuleExecute<PsiCheckEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(fun);
+        fun.apply(entity,params);
+    }
+
+    @Override
+    public void execute(PsiCheckEntity entity, Map<String, Object> params, ModuleExecute<PsiCheckEntity, Map<String, Object>, Void>... funs) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(funs);
+        Arrays.stream(funs).forEach(fun->{
+            fun.apply(entity,params);
+        });
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tongyi.common.utils.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -72,10 +73,12 @@ public class PsiAllocationEntity implements Serializable {
 
     public static PsiAllocationEntity newEntity(String inWarehouseId, String outWarehouseId, String memo) {
         PsiAllocationEntity entity = new PsiAllocationEntity();
+        String no = StringUtils.generateOrderNumber("DB");
         entity.setInWarehouseId(inWarehouseId);
         entity.setOutWarehouseId(outWarehouseId);
         entity.setCreateDate(LocalDate.now());
         entity.setMemo(memo);
+        entity.setNo(no);
         return entity;
     }
 }

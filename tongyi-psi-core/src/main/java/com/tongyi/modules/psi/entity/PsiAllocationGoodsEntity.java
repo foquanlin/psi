@@ -41,6 +41,10 @@ public class PsiAllocationGoodsEntity implements Serializable {
      */
     private String goodsId;
     /**
+     * skuid
+     */
+    private String skuId;
+    /**
      * 数量
      */
     private BigDecimal num;

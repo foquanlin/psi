@@ -7,10 +7,10 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.controller;
+import com.google.gson.*;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
-import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
-import com.tongyi.modules.psi.service.PsiAllocationGoodsService;
+import com.tongyi.modules.psi.service.execute.OrderAllocationExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
 import com.tongyi.modules.psi.service.PsiAllocationService;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 调拨单Controller
@@ -34,7 +33,7 @@ public class PsiAllocationController extends AbstractController {
     @Autowired
     private PsiAllocationService psiAllocationService;
     @Autowired
-    private PsiAllocationGoodsService psiAllocationGoodsService;
+    private OrderAllocationExecute allocationExecute;
 
     /**
      * 查看所有列表
@@ -83,20 +82,13 @@ public class PsiAllocationController extends AbstractController {
     @SysLog("新增调拨单")
     @RequestMapping("/save")
     @RequiresPermissions("psi:allocation:save")
-    public RestResponse save(@RequestBody Map<String,Object> map) {
-        String inWarehouseId = (String)map.get("inWarehouseId");
-        String outWarehouseId = (String)map.get("outWarehouseId");
-        String memo = (String)map.get("memo");
-        List<PsiAllocationGoodsEntity> list = (List)map.get("dataList");
-
+    public RestResponse save(@RequestBody String body) {
+        JsonObject map = JsonParser.parseString(body).getAsJsonObject();
+        String inWarehouseId = map.get("inWarehouseId").getAsString();
+        String outWarehouseId = map.get("outWarehouseId").getAsString();
+        String memo = map.get("memo").getAsString();
         PsiAllocationEntity entity = PsiAllocationEntity.newEntity(inWarehouseId,outWarehouseId,memo);
-        Objects.requireNonNull(entity);
-        psiAllocationService.addEntity(entity);
-        Objects.requireNonNull(list);
-        list.forEach(item->{
-            item.setAllocationId(entity.getId());
-            psiAllocationGoodsService.addEntity(item);
-        });
+         psiAllocationService.execute(entity,map,allocationExecute);
         return RestResponse.success();
     }
 
