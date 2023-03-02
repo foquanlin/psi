@@ -9,6 +9,8 @@
 package com.tongyi.modules.psi.controller;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
+import com.tongyi.modules.psi.service.PsiAllocationGoodsService;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
 import com.tongyi.modules.psi.service.PsiAllocationService;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 调拨单Controller
@@ -30,6 +33,8 @@ import java.util.Map;
 public class PsiAllocationController extends AbstractController {
     @Autowired
     private PsiAllocationService psiAllocationService;
+    @Autowired
+    private PsiAllocationGoodsService psiAllocationGoodsService;
 
     /**
      * 查看所有列表
@@ -73,14 +78,25 @@ public class PsiAllocationController extends AbstractController {
     /**
      * 新增调拨单
      *
-     * @param entity
      * @return RestResponse
      */
     @SysLog("新增调拨单")
     @RequestMapping("/save")
     @RequiresPermissions("psi:allocation:save")
-    public RestResponse save(@RequestBody PsiAllocationEntity entity) {
+    public RestResponse save(@RequestBody Map<String,Object> map) {
+        String inWarehouseId = (String)map.get("inWarehouseId");
+        String outWarehouseId = (String)map.get("outWarehouseId");
+        String memo = (String)map.get("memo");
+        List<PsiAllocationGoodsEntity> list = (List)map.get("dataList");
+
+        PsiAllocationEntity entity = PsiAllocationEntity.newEntity(inWarehouseId,outWarehouseId,memo);
+        Objects.requireNonNull(entity);
         psiAllocationService.addEntity(entity);
+        Objects.requireNonNull(list);
+        list.forEach(item->{
+            item.setAllocationId(entity.getId());
+            psiAllocationGoodsService.addEntity(item);
+        });
         return RestResponse.success();
     }
 

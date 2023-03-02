@@ -69,4 +69,13 @@ public class PsiAllocationEntity implements Serializable {
      */
     @TableField(exist = false)
     private PsiWarehouseEntity outWarehouse;
+
+    public static PsiAllocationEntity newEntity(String inWarehouseId, String outWarehouseId, String memo) {
+        PsiAllocationEntity entity = new PsiAllocationEntity();
+        entity.setInWarehouseId(inWarehouseId);
+        entity.setOutWarehouseId(outWarehouseId);
+        entity.setCreateDate(LocalDate.now());
+        entity.setMemo(memo);
+        return entity;
+    }
 }
