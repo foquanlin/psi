@@ -99,25 +99,26 @@ platform-plus
 ```
 
 **项目演示**
-- 演示地址：http://www.wxngrok.com/platform-plus/#/login
+- 演示地址：http://psi.wxngrok.com/#/login
 - 账号密码：
+  - admin/admin 
   - test/888888
 
 **效果图：**
 
 #### 后端部署
 - 通过git下载源码
-- 创建数据库plaftorm-plus
+- 创建数据库tongyi-psi
 - mysql执行sql/mysql.sql文件(oracle执行sql/oracle.sql)，初始化数据
 - 修改admin、api模块下application-dev.yml，修改MySQL、Oracle驱动、账号和密码
-- 运行PlatformAdminApplication.java启动后台管理接口服务
+- 运行AdminApplication.java启动后台管理接口服务
        
-      -接口：http://localhost:8888/admin
-- 运行PlatformApiApplication.java启动api接口服务
+      -接口：http://localhost:8801/admin
+- 运行ApiApplication.java启动api接口服务
  
-      -接口：http://localhost:8889/api
+      -接口：http://localhost:8802/api
         
-- Swagger路径：http://localhost:8889/api/doc.html
+- Swagger路径：http://localhost:8802/api/doc.html
 
 #### 提交反馈
 1. 欢迎提交 issue，请写清楚遇到问题的原因，开发环境，复显步骤。
