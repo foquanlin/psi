@@ -100,6 +100,7 @@
         this.disabled = disabled
         this.dataForm.id = id || ''
         this.visible = true
+        this.dataList = []
         this.$nextTick(() => {
           this.$http({
             url: '/psi/warehouse/listAll',
