@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.gson.JsonObject;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -86,7 +87,7 @@ public class PsiCheckDetailEntity implements Serializable {
      * 判断盘点前后应该是生成入库单还是出库单
      * @return
      */
-    public PsiStockEntity.Type getStockType(){
+    private PsiStockEntity.Type getStockType(){
         if (beforeNum.compareTo(afterNum)>=0){
             return PsiStockEntity.Type.OUT;
         }
@@ -115,17 +116,16 @@ public class PsiCheckDetailEntity implements Serializable {
     /**
      * 创建盘点明细
      * @param warehouseId
-     * @param item
      * @return
      */
-    public static PsiCheckDetailEntity newEntity(String warehouseId,Map<String, Object> item) {
+    public static PsiCheckDetailEntity newEntity(String warehouseId, String goodsId,String skuId,BigDecimal beforeNum,BigDecimal afterNum,String memo) {
         PsiCheckDetailEntity entity = new PsiCheckDetailEntity();
         entity.setWarehouseId(warehouseId);
-        entity.setGoodsId((String)item.get("goodsId"));
-        entity.setSkuId((String)item.get("skuId"));
-        entity.setBeforeNum(new BigDecimal((Integer) item.get("beforeNum")));
-        entity.setAfterNum(new BigDecimal((Integer) item.get("afterNum")));
-        entity.setMemo((String)item.get("memo"));
+        entity.setGoodsId(goodsId);
+        entity.setSkuId(skuId);
+        entity.setBeforeNum(beforeNum);
+        entity.setAfterNum(afterNum);
+        entity.setMemo(memo);
         return entity;
     }
 

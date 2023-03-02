@@ -10,7 +10,7 @@ package com.tongyi.modules.psi.controller;
 import com.google.gson.*;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
-import com.tongyi.modules.psi.service.execute.OrderAllocationExecute;
+import com.tongyi.modules.psi.service.execute.StockAllocationExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
 import com.tongyi.modules.psi.service.PsiAllocationService;
@@ -33,7 +33,7 @@ public class PsiAllocationController extends AbstractController {
     @Autowired
     private PsiAllocationService psiAllocationService;
     @Autowired
-    private OrderAllocationExecute allocationExecute;
+    private StockAllocationExecute allocationExecute;
 
     /**
      * 查看所有列表

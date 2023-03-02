@@ -18,6 +18,7 @@ import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -81,5 +82,11 @@ public class PsiCheckEntity implements Serializable {
         item.setCreateDate(LocalDateTime.now());
         item.setNo(StringUtils.generateOrderNumber("PD"));
         return item;
+    }
+    public PsiCheckDetailEntity newDetail(String goodsId, String skuId, BigDecimal beforeNum, BigDecimal afterNum, String memo){
+        PsiCheckDetailEntity entity = PsiCheckDetailEntity.newEntity(warehouseId,goodsId,skuId,beforeNum,afterNum,memo);
+        entity.setWarehouseId(warehouseId);
+        entity.setCid(id);
+        return entity;
     }
 }

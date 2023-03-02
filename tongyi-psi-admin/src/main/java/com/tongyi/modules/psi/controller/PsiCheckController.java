@@ -11,10 +11,12 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
+import com.tongyi.modules.psi.service.execute.StockCheckExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
 import com.tongyi.modules.psi.service.PsiCheckService;
@@ -38,7 +40,8 @@ import java.util.Map;
 public class PsiCheckController extends AbstractController {
     @Autowired
     private PsiCheckService psiCheckService;
-
+    @Autowired
+    private StockCheckExecute stockCheckExecute;
     /**
      * 查看所有列表
      *
@@ -85,18 +88,13 @@ public class PsiCheckController extends AbstractController {
     @SysLog("新增盘点")
     @RequestMapping("/save")
     @RequiresPermissions("psi:check:save")
-    public RestResponse save(@RequestBody Map<String,Object> map) {
-        String warehouseId = (String)map.get("warehouseId");
-        String memo = (String)map.get("memo");
-        List<Map<String,Object>> list  = (List)map.get("dataList");
-        if (null == list || list.isEmpty()) {
-            throw new BusinessException("请录入盘点明细");
-        }
-        List<PsiCheckDetailEntity> details = new ArrayList<>();
-        list.forEach(item ->{
-            details.add(PsiCheckDetailEntity.newEntity(warehouseId,item));
-        });
-        psiCheckService.addCheck(getUserId(),warehouseId,memo,details);
+    public RestResponse save(@RequestBody String json) {
+        JsonObject params = JsonParser.parseString(json).getAsJsonObject();
+        String warehouseId = params.get("warehouseId").getAsString();
+        String memo = params.get("memo").getAsString();
+        params.addProperty("userId",getUserId());
+        PsiCheckEntity entity = PsiCheckEntity.newEntity(getUserId(),warehouseId,memo);
+        stockCheckExecute.execute(entity,params);
         return RestResponse.success();
     }
 
