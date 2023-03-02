@@ -111,30 +111,6 @@ public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, Result
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<ResultMapEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        ResultMapEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(ResultMapEntity entity, Map<String, Object> params, ModuleExecute<ResultMapEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(ResultMapEntity entity, Map<String, Object> params, ModuleExecute<ResultMapEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(ResultMapEntity entity) {
         return super.save(entity);

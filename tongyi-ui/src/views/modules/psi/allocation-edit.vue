@@ -13,9 +13,6 @@
           <el-radio-button v-for="item in warehouseList" :key="item.value" :label="item.id">{{item.name}}</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="创建日期" prop="createDate">
-        <el-date-picker v-model="dataForm.createDate" :disabled="disabled" placeholder="创建日期" type="date" value-format="yyyy-MM-dd" clearable/>
-      </el-form-item>
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>
       </el-form-item>

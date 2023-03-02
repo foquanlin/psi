@@ -51,30 +51,6 @@ public class PsiOrderDetailServiceImpl extends ServiceImpl<PsiOrderDetailDao, Ps
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<PsiOrderDetailEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        PsiOrderDetailEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(PsiOrderDetailEntity entity, Map<String, Object> params, ModuleExecute<PsiOrderDetailEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(PsiOrderDetailEntity entity, Map<String, Object> params, ModuleExecute<PsiOrderDetailEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiOrderDetailEntity entity) {
         return super.save(entity);

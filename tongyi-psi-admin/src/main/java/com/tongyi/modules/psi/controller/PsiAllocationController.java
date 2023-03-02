@@ -88,7 +88,7 @@ public class PsiAllocationController extends AbstractController {
         String outWarehouseId = map.get("outWarehouseId").getAsString();
         String memo = map.get("memo").getAsString();
         PsiAllocationEntity entity = PsiAllocationEntity.newEntity(inWarehouseId,outWarehouseId,memo);
-         psiAllocationService.execute(entity,map,allocationExecute);
+        allocationExecute.apply(entity,map);
         return RestResponse.success();
     }
 

@@ -60,30 +60,6 @@ public class PsiGoodsServiceImpl extends ServiceImpl<PsiGoodsDao, PsiGoodsEntity
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<PsiGoodsEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        PsiGoodsEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(PsiGoodsEntity entity, Map<String, Object> params, ModuleExecute<PsiGoodsEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(PsiGoodsEntity entity, Map<String, Object> params, ModuleExecute<PsiGoodsEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiGoodsEntity entity) {
         boolean added = super.save(entity);

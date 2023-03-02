@@ -51,30 +51,6 @@ public class PsiStockRecordServiceImpl extends ServiceImpl<PsiStockRecordDao, Ps
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<PsiStockRecordEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        PsiStockRecordEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(PsiStockRecordEntity entity, Map<String, Object> params, ModuleExecute<PsiStockRecordEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(PsiStockRecordEntity entity, Map<String, Object> params, ModuleExecute<PsiStockRecordEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiStockRecordEntity entity) {
         return super.save(entity);

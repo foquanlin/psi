@@ -51,30 +51,6 @@ public class PsiCheckDetailServiceImpl extends ServiceImpl<PsiCheckDetailDao, Ps
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<PsiCheckDetailEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        PsiCheckDetailEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(PsiCheckDetailEntity entity, Map<String, Object> params, ModuleExecute<PsiCheckDetailEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(PsiCheckDetailEntity entity, Map<String, Object> params, ModuleExecute<PsiCheckDetailEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiCheckDetailEntity entity) {
         return super.save(entity);

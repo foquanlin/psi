@@ -52,30 +52,6 @@ public class PsiAllocationServiceImpl extends ServiceImpl<PsiAllocationDao, PsiA
     }
 
     @Override
-    public void execute(Serializable id, JsonObject params, ModuleExecute<PsiAllocationEntity, JsonObject, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        PsiAllocationEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(PsiAllocationEntity entity, JsonObject params, ModuleExecute<PsiAllocationEntity, JsonObject, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(PsiAllocationEntity entity, JsonObject params, ModuleExecute<PsiAllocationEntity, JsonObject, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiAllocationEntity entity) {
         return super.save(entity);
