@@ -41,6 +41,10 @@ public class PsiAllocationGoodsEntity implements Serializable {
      */
     private String goodsId;
     /**
+     * skuid
+     */
+    private String skuId;
+    /**
      * 数量
      */
     private BigDecimal num;
@@ -48,4 +52,14 @@ public class PsiAllocationGoodsEntity implements Serializable {
      * 备注
      */
     private String memo;
+
+    public static PsiAllocationGoodsEntity newEntity(String allocationId,String goodsId,String skuId,BigDecimal num,String memo){
+        PsiAllocationGoodsEntity entity = new PsiAllocationGoodsEntity();
+        entity.setAllocationId(allocationId);
+        entity.setGoodsId(goodsId);
+        entity.setSkuId(skuId);
+        entity.setNum(num);
+        entity.setMemo(memo);
+        return entity;
+    }
 }

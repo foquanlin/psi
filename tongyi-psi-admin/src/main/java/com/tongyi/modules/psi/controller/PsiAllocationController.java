@@ -7,8 +7,10 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.controller;
+import com.google.gson.*;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.service.execute.StockAllocationExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
 import com.tongyi.modules.psi.service.PsiAllocationService;
@@ -30,6 +32,8 @@ import java.util.Map;
 public class PsiAllocationController extends AbstractController {
     @Autowired
     private PsiAllocationService psiAllocationService;
+    @Autowired
+    private StockAllocationExecute allocationExecute;
 
     /**
      * 查看所有列表
@@ -73,14 +77,18 @@ public class PsiAllocationController extends AbstractController {
     /**
      * 新增调拨单
      *
-     * @param entity
      * @return RestResponse
      */
     @SysLog("新增调拨单")
     @RequestMapping("/save")
     @RequiresPermissions("psi:allocation:save")
-    public RestResponse save(@RequestBody PsiAllocationEntity entity) {
-        psiAllocationService.addEntity(entity);
+    public RestResponse save(@RequestBody String body) {
+        JsonObject map = JsonParser.parseString(body).getAsJsonObject();
+        String inWarehouseId = map.get("inWarehouseId").getAsString();
+        String outWarehouseId = map.get("outWarehouseId").getAsString();
+        String memo = map.get("memo").getAsString();
+        PsiAllocationEntity entity = PsiAllocationEntity.newEntity(inWarehouseId,outWarehouseId,memo);
+        allocationExecute.apply(entity,map);
         return RestResponse.success();
     }
 

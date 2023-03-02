@@ -3,7 +3,7 @@ spring:
     url: jdbc:sqlserver://localhost:1433;DatabaseName=master
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
     username: sa
-    password: 12345678
+    password: sendmiss
 
 #连接池配置
     initialSize: 5

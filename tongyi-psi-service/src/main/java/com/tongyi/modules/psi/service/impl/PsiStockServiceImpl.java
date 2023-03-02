@@ -8,19 +8,21 @@
  */
 package com.tongyi.modules.psi.service.impl;
 import com.tongyi.common.exception.BusinessException;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiStockDao;
+import com.tongyi.modules.psi.entity.PsiAllocationEntity;
+import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiStockService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 import java.io.Serializable;
 
 /**
@@ -75,5 +77,15 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(ids));
+    }
+
+    @Override
+    public BigDecimal stockNum(String warehouseId, String goodsId) {
+        return baseMapper.sumStockByGoods(warehouseId,goodsId);
+    }
+
+    @Override
+    public BigDecimal stockNum(String warehouseId, String goodsId, String skuId) {
+        return baseMapper.sumStockBySku(warehouseId,goodsId,skuId);
     }
 }

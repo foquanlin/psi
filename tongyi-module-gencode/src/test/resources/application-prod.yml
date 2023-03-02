@@ -2,9 +2,9 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://127.0.0.1:3306/platform-plus?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://devdb.wxngrok.com:3305/platform-plus?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: 12345678
+    password: sendmiss
     hikari:
       minimum-idle: 10
       maximum-pool-size: 25

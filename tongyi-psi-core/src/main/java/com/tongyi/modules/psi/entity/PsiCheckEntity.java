@@ -12,11 +12,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tongyi.common.utils.StringUtils;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.sql.Time;
 import java.util.List;
@@ -48,7 +52,8 @@ public class PsiCheckEntity implements Serializable {
     /**
      * 盘点日期
      */
-    private Date createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createDate;
     /**
      * 备注
      */
@@ -74,8 +79,14 @@ public class PsiCheckEntity implements Serializable {
         item.setCreateUid(userId);
         item.setWarehouseId(warehouseId);
         item.setMemo(memo);
-        item.setCreateDate(new Date());
+        item.setCreateDate(LocalDateTime.now());
         item.setNo(StringUtils.generateOrderNumber("PD"));
         return item;
+    }
+    public PsiCheckDetailEntity newDetail(String goodsId, String skuId, BigDecimal beforeNum, BigDecimal afterNum, String memo){
+        PsiCheckDetailEntity entity = PsiCheckDetailEntity.newEntity(warehouseId,goodsId,skuId,beforeNum,afterNum,memo);
+        entity.setWarehouseId(warehouseId);
+        entity.setCid(id);
+        return entity;
     }
 }

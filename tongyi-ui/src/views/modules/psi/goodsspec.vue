@@ -27,8 +27,8 @@
         </th>
         <th>
           <el-button @click="saveHandle(spec,idx)" v-if="spec.edited">保存</el-button>
-          <el-button @click="editHandle(spec,idx)" v-else>修改</el-button>
-          <el-button @click="delSpec(spec,idx)">删除</el-button>
+          <el-button @click="editHandle(spec,idx)" v-if="!spec.edited">修改</el-button>
+          <el-button @click="delSpec(spec,idx)" v-if="!spec.edited">删除</el-button>
         </th>
       </tr>
       <tr>

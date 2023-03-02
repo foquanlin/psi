@@ -7,7 +7,8 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
-import com.tongyi.common.utils.StringUtils;
+
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,8 +20,6 @@ import com.tongyi.modules.psi.entity.PsiGoodsEntity;
 import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
 import com.tongyi.modules.psi.entity.PsiGoodsSpecEntity;
 import com.tongyi.modules.psi.service.PsiGoodsService;
-import com.tongyi.modules.psi.service.PsiGoodsSkuService;
-import com.tongyi.modules.psi.service.PsiGoodsSpecService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 商品Service实现类

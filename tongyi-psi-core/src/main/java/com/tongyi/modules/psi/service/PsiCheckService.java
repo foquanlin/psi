@@ -23,7 +23,4 @@ import java.util.List;
  * @date 2022-10-12 01:48:53
  */
 public interface PsiCheckService extends IService<PsiCheckEntity>{
-
-    public void addCheck(String userId,String warehouseId, String memo, List<PsiCheckDetailEntity> list);
-
 }

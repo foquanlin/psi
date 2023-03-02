@@ -4,7 +4,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=visitor
     username: sa
-    password: 12345678
+    password: Sendmiss101010
     hikari:
       minimum-idle: 10
       maximum-pool-size: 25

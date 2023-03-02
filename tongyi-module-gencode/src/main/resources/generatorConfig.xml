@@ -20,7 +20,7 @@
         <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
                         connectionURL="jdbc:sqlserver://127.0.0.1:1433;DatabaseName=master"
                         userId="sa"
-                        password="12345678"/>
+                        password="Sendmiss101010"/>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="true"/>

@@ -9,6 +9,7 @@
             t.id,
             t.allocation_id,
             t.goods_id,
+            t.sku_id,
             t.num,
             t.memo
         from psi_allocation_goods t

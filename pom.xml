@@ -85,11 +85,11 @@
         <spring.redis.version>1.4.7.RELEASE</spring.redis.version>
 
 
-        <weixin-java-cp.version>4.3.0</weixin-java-cp.version>
-        <weixin-java-mp.version>4.3.0</weixin-java-mp.version>
-        <weixin-java-miniapp.version>4.3.0</weixin-java-miniapp.version>
-        <weixin-java-pay.version>4.3.0</weixin-java-pay.version>
-        <weixin-java-open.version>4.3.0</weixin-java-open.version>
+        <weixin-java-cp.version>4.4.0</weixin-java-cp.version>
+        <weixin-java-mp.version>4.4.0</weixin-java-mp.version>
+        <weixin-java-miniapp.version>4.4.0</weixin-java-miniapp.version>
+        <weixin-java-pay.version>4.4.0</weixin-java-pay.version>
+        <weixin-java-open.version>4.4.0</weixin-java-open.version>
         <alipay-sdk.version>4.31.28.ALL</alipay-sdk.version>
         <alipay-easysdk.version>2.2.1</alipay-easysdk.version>
         <dist.release.server>release-server</dist.release.server>

@@ -1,6 +1,6 @@
 <template>
   <el-drawer title="选择商品" :close-on-click-modal="false" size="60%" :append-to-body="true" :visible.sync="visible">
-    <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
+    <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()" style="margin-left: 10px;margin-right: 10px;">
       <el-form-item>
         <el-input v-model="searchForm.no" placeholder="编码" clearable suffix-icon="el-icon-search"/>
       </el-form-item>
@@ -19,7 +19,7 @@
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table border :data="dataList" ref="fileTable" style="width: 100%;" @selection-change="selectionChangeHandle" row-key="id">
+    <el-table border :data="dataList" ref="fileTable" style="margin-left:10px;margin-right:10px;width: 80%;" @selection-change="selectionChangeHandle" row-key="id">
       <el-table-column type="selection" header-align="center" align="center" width="50" :reserve-selection="true"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称">
         <template v-slot="scope">
@@ -43,14 +43,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-row>
+    <el-row style="margin-left:10px;margin-right:10px;width: 80%;">
       <span style="text-align: right;">
       <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex"
                      :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
       </span>
     </el-row>
-    <el-row>
+    <el-row style="margin-left:10px;margin-right:10px;">
       <span style="text-align: right;">
         <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
         <el-button @click="visible = false">取消</el-button>
@@ -112,6 +112,7 @@
     },
     methods: {
       init (warehouseId, list) {
+        console.log('warehouseId', warehouseId)
         this.visible = true
         if (warehouseId) {
           this.dataListSelections = list

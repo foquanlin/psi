@@ -9,7 +9,10 @@
 package com.tongyi.modules.psi.service;
 
 import com.tongyi.core.IService;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
+
+import java.util.Map;
 
 /**
  * 调拨单Service接口
@@ -17,6 +20,6 @@ import com.tongyi.modules.psi.entity.PsiAllocationEntity;
  * @author 惠州市酷天科技有限公司
  * @date 2022-10-12 01:48:55
  */
-public interface PsiAllocationService extends IService<PsiAllocationEntity>{
+public interface PsiAllocationService extends IService<PsiAllocationEntity> {
 
 }
