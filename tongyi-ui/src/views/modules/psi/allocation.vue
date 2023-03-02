@@ -2,11 +2,23 @@
   <div class="mod-allocation">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
+        <el-input v-model="searchForm.no" placeholder="调拨单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-button @click="pageIndex = 1
-        getDataList()">查询</el-button>
+        <el-select v-model="searchForm.outWarehouseId" placeholder="调出仓库" clearable>
+          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="searchForm.inWarehouseId" placeholder="调入仓库" clearable>
+          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker v-model="searchForm.createDate" placeholder="调拨日期" clearable type="date" value-format="yyyy-MM-dd"/>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
         <el-button v-if="isAuth('psi:allocation:save')" type="primary" @click="editHandle()">新增</el-button>
         <el-button v-if="isAuth('psi:allocation:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
@@ -14,8 +26,11 @@
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="no" header-align="center" align="center" label="单号"/>
-      <el-table-column prop="outWarehouseId" header-align="center" align="center" label="出库仓库"/>
-      <el-table-column prop="inWarehouseId" header-align="center" align="center" label="入库仓库"/>
+      <el-table-column prop="outWarehouseId" header-align="center" align="center" label="出入仓库">
+        <template v-slot="scope">
+          {{scope.row.outWarehouse?scope.row.outWarehouse.name:'-'}}-->{{scope.row.inWarehouse?scope.row.inWarehouse.name:'-'}}
+        </template>
+      </el-table-column>
       <el-table-column prop="createDate" header-align="center" align="center" label="创建日期"/>
       <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
@@ -48,7 +63,8 @@
         pageSize: 10,
         totalPage: 0,
         dataListSelections: [],
-        editVisible: false
+        editVisible: false,
+        warehouseList: []
       }
     },
     components: {
@@ -56,6 +72,17 @@
       Options
     },
     activated () {
+      this.$http({
+        url: '/psi/warehouse/listAll',
+        method: 'get',
+        params: {}
+      }).then(({data}) => {
+        if (data && data.code === 0) {
+          this.warehouseList = data.list
+        } else {
+          this.warehouseList = []
+        }
+      })
       this.getDataList()
     },
     methods: {
@@ -70,7 +97,7 @@
           params: {
             page: this.pageIndex,
             limit: this.pageSize,
-            name: this.searchForm.name
+            ...this.searchForm
           }
         }).then(({data}) => {
           if (data && data.code === 0) {
@@ -131,7 +158,6 @@
               this.getDataList()
             }
           })
-        }).catch(() => {
         })
       }
     }

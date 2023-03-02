@@ -9,11 +9,15 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.sql.Time;
 
@@ -48,9 +52,21 @@ public class PsiAllocationEntity implements Serializable {
     /**
      * 创建日期
      */
-    private Date createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate createDate;
     /**
      * 备注
      */
     private String memo;
+
+    /**
+     * 入库仓库
+     */
+    @TableField(exist = false)
+    private PsiWarehouseEntity inWarehouse;
+    /**
+     * 出库仓库
+     */
+    @TableField(exist = false)
+    private PsiWarehouseEntity outWarehouse;
 }

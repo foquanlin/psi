@@ -1,16 +1,20 @@
 <template>
-  <el-dialog
-    :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
-    :close-on-click-modal="false" width="71%" :visible.sync="visible">
-    <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
+  <el-drawer
+    :title="!dataForm.id ? '新增调拨单' : !disabled ? '修改调拨单' : '查看调拨单'"
+    :close-on-click-modal="false" size="80%" :visible.sync="visible">
+    <el-form :model="dataForm"  :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item label="单号" prop="no">
         <el-input v-model="dataForm.no" :disabled="disabled" placeholder="单号" clearable/>
       </el-form-item>
-      <el-form-item label="出库仓库" prop="outWarehouseId">
-        <el-input v-model="dataForm.outWarehouseId" :disabled="disabled" placeholder="出库仓库" clearable/>
+      <el-form-item label="调出仓库" prop="outWarehouseId">
+        <el-radio-group v-model="dataForm.outWarehouseId" placeholder="调出仓库" clearable :disabled="disabled">
+          <el-radio-button v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
+        </el-radio-group>
       </el-form-item>
-      <el-form-item label="入库仓库" prop="inWarehouseId">
-        <el-input v-model="dataForm.inWarehouseId" :disabled="disabled" placeholder="入库仓库" clearable/>
+      <el-form-item label="调入仓库" prop="inWarehouseId">
+        <el-radio-group v-model="dataForm.inWarehouseId" placeholder="调入仓库" clearable :disabled="disabled">
+          <el-radio-button v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="创建日期" prop="createDate">
         <el-date-picker v-model="dataForm.createDate" :disabled="disabled" placeholder="创建日期" type="date" value-format="yyyy-MM-dd" clearable/>
@@ -18,12 +22,12 @@
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>
       </el-form-item>
+      <el-form-item style="margin-top:20px;text-align: center">
+        <el-button @click="visible = false">取消</el-button>
+        <el-button v-if="!disabled" type="primary" @click="dataFormSubmit()">确定</el-button>
+      </el-form-item>
     </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button v-if="!disabled" type="primary" @click="dataFormSubmit()">确定</el-button>
-    </span>
-  </el-dialog>
+  </el-drawer>
 </template>
 
 <script>
@@ -38,7 +42,9 @@
           outWarehouseId: '',
           inWarehouseId: '',
           createDate: '',
-          memo: ''},
+          memo: ''
+        },
+        warehouseList: [],
         dataRule: {
           no: [{required: true, message: '单号不能为空', trigger: 'blur'}],
           outWarehouseId: [{required: true, message: '出库仓库不能为空', trigger: 'blur'}],
@@ -54,6 +60,17 @@
         this.dataForm.id = id || ''
         this.visible = true
         this.$nextTick(() => {
+          this.$http({
+            url: '/psi/warehouse/listAll',
+            method: 'get',
+            params: {}
+          }).then(({data}) => {
+            if (data && data.code === 0) {
+              this.warehouseList = data.list
+            } else {
+              this.warehouseList = []
+            }
+          })
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
