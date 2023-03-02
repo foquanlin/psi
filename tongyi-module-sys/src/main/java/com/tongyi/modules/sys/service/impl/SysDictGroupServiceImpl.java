@@ -14,6 +14,7 @@ package com.tongyi.modules.sys.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysDictGroupDao;
 import com.tongyi.modules.sys.entity.SysDictGroupEntity;
@@ -22,10 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 数据字典分组Service实现类
@@ -53,6 +51,30 @@ public class SysDictGroupServiceImpl extends ServiceImpl<SysDictGroupDao, SysDic
         Page<SysDictGroupEntity> page = new Query<SysDictGroupEntity>(current,size,params).getPage();
         List<SysDictGroupEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysDictGroupEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysDictGroupEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(fun);
+        SysDictGroupEntity entity = this.getById(id);
+        this.execute(entity,params,fun);
+    }
+
+    @Override
+    public void execute(SysDictGroupEntity entity, Map<String, Object> params, ModuleExecute<SysDictGroupEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(fun);
+        fun.apply(entity,params);
+    }
+
+    @Override
+    public void execute(SysDictGroupEntity entity, Map<String, Object> params, ModuleExecute<SysDictGroupEntity, Map<String, Object>, Void>... funs) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(funs);
+        Arrays.stream(funs).forEach(fun->{
+            fun.apply(entity,params);
+        });
     }
 
     @Override

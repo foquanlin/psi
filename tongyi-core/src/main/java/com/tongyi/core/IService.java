@@ -18,4 +18,8 @@ public interface IService<T> {
     public boolean deleteBatch(Serializable[] ids);
     public List<T> listAll(Map<String, Object> params);
     public PageInfo<T> listPage(int current, int size, Map<String,Object> params);
+
+    public void execute(Serializable id,Map<String,Object> params,ModuleExecute<T,Map<String,Object>,Void> fun);
+    public void execute(T entity,Map<String,Object> params,ModuleExecute<T,Map<String,Object>,Void> fun);
+    public void execute(T entity,Map<String,Object> params,ModuleExecute<T,Map<String,Object>,Void>... funs);
 }

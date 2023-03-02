@@ -6,7 +6,7 @@ package com.tongyi.core;
  * @author foquanlin@163.com 林佛权
  * 2021-08-22
  */
-public class ServiceException extends Exception {
+public class ServiceException extends RuntimeException {
 
     private int code = 500;
     private String msg;

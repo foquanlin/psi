@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Query;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.SysConstant;
 import com.tongyi.modules.sys.dao.SysRoleDao;
@@ -26,10 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 林佛权
@@ -91,6 +89,30 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
         Page<SysRoleEntity> page = new Query<SysRoleEntity>(current,size,params).getPage();
         List<SysRoleEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysRoleEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysRoleEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(fun);
+        SysRoleEntity entity = this.getById(id);
+        this.execute(entity,params,fun);
+    }
+
+    @Override
+    public void execute(SysRoleEntity entity, Map<String, Object> params, ModuleExecute<SysRoleEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(fun);
+        fun.apply(entity,params);
+    }
+
+    @Override
+    public void execute(SysRoleEntity entity, Map<String, Object> params, ModuleExecute<SysRoleEntity, Map<String, Object>, Void>... funs) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(funs);
+        Arrays.stream(funs).forEach(fun->{
+            fun.apply(entity,params);
+        });
     }
 
     @Override

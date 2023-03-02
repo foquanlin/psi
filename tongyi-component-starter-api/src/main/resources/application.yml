@@ -53,24 +53,24 @@ spring:
       email: foquanlin@163.com
   mail:
     default-encoding: utf-8
-    properties.mail.smtp.auth: true
-    #    properties.mail.smtp.port: 465 #465或者994
-    #    properties.mail.display.sendmail: aaa #可以任意
-    #    properties.mail.display.sendname: bbb #可以任意
-    properties.mail.smtp.starttls.enable: true
-    properties.mail.smtp.starttls.required: true
-    properties.mail.smtp.ssl.enable: true #开启SSL
     properties:
       mail:
         smtp:
-          ssl:
-            enable: true
+          auth: true
+        #    properties.mail.smtp.port: 465 #465或者994
+        #    properties.mail.display.sendmail: aaa #可以任意
+        #    properties.mail.display.sendname: bbb #可以任意
+        starttls:
+          enable: true
+          required: true
+        ssl:
+        enable: true #开启SSL
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      minimum-idle: 10
-      maximum-pool-size: 25
+      minimum-idle: 1
+      maximum-pool-size: 3
       auto-commit: true
       idle-timeout: 30000
       pool-name: ExpendHikariCP

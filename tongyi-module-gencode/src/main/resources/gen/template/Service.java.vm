@@ -19,4 +19,7 @@ import ${package}.entity.${className}Entity;
  */
 public interface ${className}Service extends IService<${className}Entity>{
 
+    public void execute(String id,ModuleExecute<${className}}Entity,Void> execute);
+    public void execute(${className}}Entity module, ModuleExecute<${className}}Entity,Void> execute);
+    public void execute(${className}}Entity module, ModuleExecute<${className}}Entity,Void>... funs);
 }

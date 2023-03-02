@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.StringUtils;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysLogDao;
 import com.tongyi.modules.sys.entity.SysLogEntity;
@@ -27,6 +28,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author 林佛权
@@ -54,6 +56,30 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogDao, SysLogEntity> impl
                         .or().like(StringUtils.isNotBlank(key), "OPERATION", key)
                         .orderByDesc("CREATE_TIME"));
         return new PageInfo<SysLogEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(page.getRecords());
+    }
+
+    @Override
+    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysLogEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(fun);
+        SysLogEntity entity = this.getById(id);
+        this.execute(entity,params,fun);
+    }
+
+    @Override
+    public void execute(SysLogEntity entity, Map<String, Object> params, ModuleExecute<SysLogEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(fun);
+        fun.apply(entity,params);
+    }
+
+    @Override
+    public void execute(SysLogEntity entity, Map<String, Object> params, ModuleExecute<SysLogEntity, Map<String, Object>, Void>... funs) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(funs);
+        Arrays.stream(funs).forEach(fun->{
+            fun.apply(entity,params);
+        });
     }
 
     @Override
