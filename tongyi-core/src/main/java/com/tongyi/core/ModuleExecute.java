@@ -4,7 +4,7 @@ import java.util.function.BiFunction;
 
 @FunctionalInterface
 public interface ModuleExecute<T,U,R> extends BiFunction<T,U,R> {
-    default R apply(T module, U params){
+    default R apply(T module, U params) throws ServiceException{
         R r = null;
         if (this.checker(module,params)) {
             r = this.execute(module,params);
@@ -16,7 +16,7 @@ public interface ModuleExecute<T,U,R> extends BiFunction<T,U,R> {
         return true;
     }
 
-    public R execute(T module, U params);
+    public R execute(T module, U params) throws ServiceException;
 
     default void onFinish(T module){
 

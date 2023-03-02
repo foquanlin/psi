@@ -14,6 +14,7 @@ package com.tongyi.modules.sys.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysRoleMenuDao;
 import com.tongyi.modules.sys.entity.SysRoleMenuEntity;
@@ -22,10 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 角色与菜单对应关系
@@ -77,6 +75,30 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleM
         Page<SysRoleMenuEntity> page = new Query<SysRoleMenuEntity>(current,size,params).getPage();
         List<SysRoleMenuEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysRoleMenuEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysRoleMenuEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(fun);
+        SysRoleMenuEntity entity = this.getById(id);
+        this.execute(entity,params,fun);
+    }
+
+    @Override
+    public void execute(SysRoleMenuEntity entity, Map<String, Object> params, ModuleExecute<SysRoleMenuEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(fun);
+        fun.apply(entity,params);
+    }
+
+    @Override
+    public void execute(SysRoleMenuEntity entity, Map<String, Object> params, ModuleExecute<SysRoleMenuEntity, Map<String, Object>, Void>... funs) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(funs);
+        Arrays.stream(funs).forEach(fun->{
+            fun.apply(entity,params);
+        });
     }
 
     @Override

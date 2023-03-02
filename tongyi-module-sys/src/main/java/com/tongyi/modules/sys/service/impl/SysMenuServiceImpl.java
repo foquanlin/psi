@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.StringUtils;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.SysConstant;
 import com.tongyi.modules.sys.dao.SysMenuDao;
@@ -128,6 +129,30 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
         Page<SysMenuEntity> page = new Query<SysMenuEntity>(current,size,params).getPage();
         List<SysMenuEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysMenuEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
+    }
+
+    @Override
+    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysMenuEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(fun);
+        SysMenuEntity entity = this.getById(id);
+        this.execute(entity,params,fun);
+    }
+
+    @Override
+    public void execute(SysMenuEntity entity, Map<String, Object> params, ModuleExecute<SysMenuEntity, Map<String, Object>, Void> fun) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(fun);
+        fun.apply(entity,params);
+    }
+
+    @Override
+    public void execute(SysMenuEntity entity, Map<String, Object> params, ModuleExecute<SysMenuEntity, Map<String, Object>, Void>... funs) {
+        Objects.requireNonNull(entity);
+        Objects.requireNonNull(funs);
+        Arrays.stream(funs).forEach(fun->{
+            fun.apply(entity,params);
+        });
     }
 
     @Override
