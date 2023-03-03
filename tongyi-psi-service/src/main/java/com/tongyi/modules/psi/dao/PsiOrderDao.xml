@@ -11,7 +11,7 @@
             t.catalog,
             t.type,
             t.create_date,
-            t.supplier_id,
+            t.order_uid,
             t.express_no,
             t.create_uid,
             t.stock_status,
@@ -21,7 +21,9 @@
             t.memo,
             t.attachment_urls,
             t.settlement_amount,
-            t.order_amount
+            t.order_amount,
+            t.owner_uid,
+            t.pay_amount
         from psi_order t
     </sql>
     <sql id="selectWhere">
@@ -41,14 +43,17 @@
             <if test="params.createDateStart != null and params.createDateEnd != null">
                 and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
             </if>
-            <if test="params.supplierId != null and params.supplierId != ''">
-                and t.supplier_id = #{params.supplierId}
+            <if test="params.orderUid != null and params.orderUid != ''">
+                and t.order_uid = #{params.orderUid}
             </if>
             <if test="params.expressNo != null and params.expressNo != ''">
                 and t.express_no = #{params.expressNo}
             </if>
             <if test="params.createUid != null and params.createUid != ''">
                 and t.create_uid = #{params.createUid}
+            </if>
+            <if test="params.ownerUid != null and params.ownerUid != ''">
+                and t.owner_uid = #{params.ownerUid}
             </if>
             <if test="params.stockStatus != null and params.stockStatus != ''">
                 and t.stock_status = #{params.stockStatus}
@@ -65,9 +70,6 @@
             <if test="params.memo != null and params.memo != ''">
                 and t.memo = #{params.memo}
             </if>
-            <if test="params.attachmentUrls != null and params.attachmentUrls != ''">
-                and t.attachment_urls = #{params.attachmentUrls}
-            </if>
         </where>
     </sql>
     <select id="listPage" resultMap="resultMap">
@@ -81,11 +83,12 @@
     </select>
     <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiOrderEntity">
         <id column="id" property="id"/>
-        <result column="supplier_id" property="supplierId"/>
+        <result column="order_uid" property="orderUid"/>
         <result column="create_uid" property="createUid"></result>
 
-        <association property="supplier" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="supplier_id"/>
+        <association property="orderUser" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="order_uid"/>
         <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
+        <association property="ownerUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="owner_uid"/>
     </resultMap>
     <select id="selectById" resultMap="resultMap">
         <include refid="selectSql"/>

@@ -48,7 +48,7 @@ public class PsiSupplierServiceTest {
             item.setId(id);
             item.setName (id);
             item.setCompanyName (id);
-            item.setConcat (id);
+            item.setContacts(id);
             item.setPhone (id);
             item.setEmail (id);
             item.setAddress (id);
@@ -68,7 +68,7 @@ public class PsiSupplierServiceTest {
         item.setId(id);
         item.setName (id);
         item.setCompanyName (id);
-        item.setConcat (id);
+        item.setContacts (id);
         item.setPhone (id);
         item.setEmail (id);
         item.setAddress (id);

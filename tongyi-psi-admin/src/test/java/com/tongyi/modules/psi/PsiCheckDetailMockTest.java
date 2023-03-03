@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -58,7 +59,7 @@ public class PsiCheckDetailMockTest {
             item.setGoodsId (id);
             item.setBeforeNum (new BigDecimal(idx));
             item.setAfterNum (new BigDecimal(idx));
-            item.setCreateDate (new Date());
+            item.setCreateDate (LocalDateTime.now());
             item.setMemo (id);
             controller.save(item);
         }
@@ -74,7 +75,7 @@ public class PsiCheckDetailMockTest {
         item.setGoodsId (id);
         item.setBeforeNum (new BigDecimal(idx));
         item.setAfterNum (new BigDecimal(idx));
-        item.setCreateDate (new Date());
+        item.setCreateDate (LocalDateTime.now());
         item.setMemo (id);
         controller.save(item);
         controller.update(item);

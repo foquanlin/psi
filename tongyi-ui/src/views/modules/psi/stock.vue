@@ -15,8 +15,9 @@
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchForm.catalog" placeholder="出入类型" clearable>
-          <el-option value="DIAOBO" label="调拨"></el-option>
-          <el-option value="PANDIAN" label="盘点"></el-option>
+          <el-option value="TIAOZHENG" label="库存调整"></el-option>
+          <el-option value="DIAOBO" label="库存调拨"></el-option>
+          <el-option value="PANDIAN" label="库存盘点"></el-option>
           <el-option value="DINGDAN" label="订单"></el-option>
           <el-option value="XIAOSHOU" label="销售"></el-option>
         </el-select>
@@ -52,8 +53,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button @click="pageIndex = 1
-        getDataList()">查询</el-button>
+        <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
 <!--        <el-button v-if="isAuth('psi:stock:save')" type="primary" @click="editHandle()">新增</el-button>-->
 <!--        <el-button v-if="isAuth('psi:stock:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
       </el-form-item>
@@ -73,9 +73,9 @@
         <template v-slot="scope">
           <span v-if="scope.row.catalog === 'TIAOZHENG'">库存调整</span>
           <span v-else-if="scope.row.catalog === 'PANDIAN'">库存盘点</span>
-          <span v-else-if="scope.row.catalog === 'DINGDAN'">订单</span>
-          <span v-else-if="scope.row.catalog === 'DIAOBO'">调拨</span>
+          <span v-else-if="scope.row.catalog === 'DIAOBO'">库存调拨</span>
           <span v-else-if="scope.row.catalog === 'XIAOSHOU'">销售</span>
+          <span v-else-if="scope.row.catalog === 'DINGDAN'">订单</span>
         </template>
       </el-table-column>
       <el-table-column prop="type" header-align="center" align="left" label="出入库类型">
@@ -86,22 +86,22 @@
       </el-table-column>
       <el-table-column prop="warehouseId" header-align="center" align="left" label="仓库">
         <template v-slot="scope">
-          <span>{{scope.row.warehouse?scope.row.warehouse.name:''}}</span>
+          <span>{{scope.row.warehouse?scope.row.warehouse.name:'-'}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="supplierId" header-align="center" align="left" label="客户供应商">
         <template v-slot="scope">
-          <span>{{scope.row.supplier?scope.row.supplier.name:''}}</span>
+          <span>{{scope.row.supplier?scope.row.supplier.name:'-'}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="num" header-align="center" align="right" label="数量"/>
-      <el-table-column prop="createTime" header-align="center" align="left" label="时间" width="150"/>
+      <el-table-column prop="createTime" header-align="center" align="left" label="时间" width="160"/>
       <el-table-column prop="costPrice" header-align="center" align="right" label="平均进价"/>
       <el-table-column prop="salePrice" header-align="center" align="right" label="平均售价"/>
-      <el-table-column prop="orderId" header-align="center" align="left" label="关联单号"/>
+<!--      <el-table-column prop="orderId" header-align="center" align="left" label="关联单号"/>-->
       <el-table-column prop="createUserName" header-align="center" align="left" label="操作人">
         <template v-slot="scope">
-          <span>{{scope.row.createUser?scope.row.createUser.realName:''}}</span>
+          <span>{{scope.row.createUser?scope.row.createUser.realName:'-'}}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">

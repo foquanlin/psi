@@ -54,30 +54,6 @@ public class SysMailLogServiceImpl extends ServiceImpl<SysMailLogDao, SysMailLog
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysMailLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysMailLogEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysMailLogEntity entity, Map<String, Object> params, ModuleExecute<SysMailLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysMailLogEntity entity, Map<String, Object> params, ModuleExecute<SysMailLogEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(SysMailLogEntity entity) {
         return super.save(entity);

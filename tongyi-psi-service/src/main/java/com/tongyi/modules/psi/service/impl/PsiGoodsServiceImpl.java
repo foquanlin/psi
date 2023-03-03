@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,7 @@ public class PsiGoodsServiceImpl extends ServiceImpl<PsiGoodsDao, PsiGoodsEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiGoodsEntity entity) {
+        entity.setCreateDate(LocalDateTime.now());
         boolean added = super.save(entity);
         if (added) {
             List<PsiGoodsSpecEntity> newsSpecList = entity.getSpecList();

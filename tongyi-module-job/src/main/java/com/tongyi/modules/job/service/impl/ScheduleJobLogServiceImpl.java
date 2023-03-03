@@ -51,30 +51,6 @@ public class ScheduleJobLogServiceImpl extends ServiceImpl<ScheduleJobLogDao, Sc
     }
 
     @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<ScheduleJobLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        ScheduleJobLogEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(ScheduleJobLogEntity entity, Map<String, Object> params, ModuleExecute<ScheduleJobLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(ScheduleJobLogEntity entity, Map<String, Object> params, ModuleExecute<ScheduleJobLogEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(ScheduleJobLogEntity entity) {
         return super.save(entity);

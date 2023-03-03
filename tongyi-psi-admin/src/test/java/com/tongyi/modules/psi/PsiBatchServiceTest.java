@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -48,7 +49,7 @@ public class PsiBatchServiceTest {
             item.setId(id);
             item.setNo (id);
             item.setName (id);
-            item.setCreateDate (new Date());
+            item.setCreateDate (LocalDateTime.now());
             service.addEntity(item);
         }
     }
@@ -61,7 +62,7 @@ public class PsiBatchServiceTest {
         item.setId(id);
         item.setNo (id);
         item.setName (id);
-        item.setCreateDate (new Date());
+        item.setCreateDate (LocalDateTime.now());
         service.addEntity(item);
         service.updateEntity(item);
         service.getById(id);

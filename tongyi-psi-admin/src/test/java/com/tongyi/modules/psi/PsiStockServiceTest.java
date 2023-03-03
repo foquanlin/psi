@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -55,7 +56,7 @@ public class PsiStockServiceTest {
             item.setType (id);
             item.setNum (new BigDecimal(idx));
             item.setBatchNo (id);
-            item.setCreateTime (new Date());
+            item.setCreateTime (LocalDateTime.now());
             item.setStatus (id);
             item.setCostPrice (new BigDecimal(idx));
             item.setSalePrice (new BigDecimal(idx));
@@ -79,7 +80,7 @@ public class PsiStockServiceTest {
         item.setType (id);
         item.setNum (new BigDecimal(idx));
         item.setBatchNo (id);
-        item.setCreateTime (new Date());
+        item.setCreateTime (LocalDateTime.now());
         item.setStatus (id);
         item.setCostPrice (new BigDecimal(idx));
         item.setSalePrice (new BigDecimal(idx));

@@ -27,8 +27,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button @click="pageIndex = 1
-        getDataList()">查询</el-button>
+        <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
         <el-button v-if="isAuth('psi:goods:save')" type="primary" @click="editHandle()">新增商品</el-button>
 <!--        <el-button v-if="isAuth('psi:goods:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
       </el-form-item>
@@ -52,21 +51,13 @@
         </template>
       </el-table-column>
       <el-table-column prop="no" header-align="center" align="left" label="编码"/>
-<!--      <el-table-column prop="name" header-align="center" align="right" label="平均进价"/>-->
-<!--      <el-table-column prop="name" header-align="center" align="right" label="平均售价"/>-->
       <el-table-column prop="createDate" header-align="center" align="left" label="创建时间"/>
       <el-table-column prop="unitId" header-align="center" align="left" label="单位">
         <template v-slot="scope">
           <span>{{scope.row.unit.name}}</span>
         </template>
       </el-table-column>
-<!--      <el-table-column prop="picUrls" header-align="center" align="center" label="图片">-->
-<!--        <template v-slot="scope">-->
-<!--          <img style="height: 50%;width: 50%" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
       <el-table-column prop="memo" header-align="center" align="right" label="备注" show-overflow-tooltip/>
-      <el-table-column prop="status" header-align="center" align="right" label="状态"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:goods:instock')" type="text" size="small" @click="inStockHandle(scope.row)">入库</el-button>

@@ -27,9 +27,6 @@
           <el-form-item label="名称" prop="name">
             <el-input v-model="dataForm.name" :disabled="disabled" placeholder="名称" clearable/>
           </el-form-item>
-          <el-form-item label="创建时间" prop="createDate">
-            <el-date-picker v-model="dataForm.createDate" :disabled="disabled" placeholder="创建时间" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" clearable/>
-          </el-form-item>
           <el-form-item label="单位" prop="unitId">
             <el-select v-model="dataForm.unitId" :disabled="disabled" placeholder="单位" clearable>
               <el-option v-for="item in unitList" :key="item.id" :label="item.name" :value="item.id"/>

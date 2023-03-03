@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -56,7 +57,7 @@ public class PsiOrderOperationMockTest {
             item.setId(id);
             item.setOrderId (id);
             item.setDesc (id);
-            item.setCreateDate (new Date());
+            item.setCreateDate (LocalDateTime.now());
             item.setOperationUid (id);
             controller.save(item);
         }
@@ -70,7 +71,7 @@ public class PsiOrderOperationMockTest {
         item.setId(id);
         item.setOrderId (id);
         item.setDesc (id);
-        item.setCreateDate (new Date());
+        item.setCreateDate (LocalDateTime.now());
         item.setOperationUid (id);
         controller.save(item);
         controller.update(item);

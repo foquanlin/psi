@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -56,7 +57,7 @@ public class PsiBatchMockTest {
             item.setId(id);
             item.setNo (id);
             item.setName (id);
-            item.setCreateDate (new Date());
+            item.setCreateDate (LocalDateTime.now());
             controller.save(item);
         }
     }
@@ -69,7 +70,7 @@ public class PsiBatchMockTest {
         item.setId(id);
         item.setNo (id);
         item.setName (id);
-        item.setCreateDate (new Date());
+        item.setCreateDate (LocalDateTime.now());
         controller.save(item);
         controller.update(item);
         controller.info(id);

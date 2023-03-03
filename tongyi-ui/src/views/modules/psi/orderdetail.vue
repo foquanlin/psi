@@ -5,8 +5,7 @@
         <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-button @click="pageIndex = 1
-        getDataList()">查询</el-button>
+        <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
         <el-button v-if="isAuth('psi:orderdetail:save')" type="primary" @click="editHandle()">新增</el-button>
         <el-button v-if="isAuth('psi:orderdetail:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
