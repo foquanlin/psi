@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
@@ -50,8 +51,8 @@ public class PsiOrderServiceTest {
             item.setNo (id);
             item.setCatalog (id);
             item.setType (id);
-            item.setCreateDate (LocalDateTime.now());
-            item.setSupplierId (id);
+            item.setCreateDate (LocalDate.now());
+            item.setOrderUid (id);
             item.setExpressNo (id);
             item.setCreateUid (id);
             item.setStockStatus (id);
@@ -75,8 +76,8 @@ public class PsiOrderServiceTest {
         item.setNo (id);
         item.setCatalog (id);
         item.setType (id);
-        item.setCreateDate (LocalDateTime.now());
-        item.setSupplierId (id);
+        item.setCreateDate (LocalDate.now());
+        item.setOrderUid (id);
         item.setExpressNo (id);
         item.setCreateUid (id);
         item.setStockStatus (id);

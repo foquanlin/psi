@@ -8,6 +8,7 @@
         select
             t.id,
             t.order_id,
+            t.warehouse_id,
             t.goods_id,
             t.num,
             t.sku_id,
@@ -23,6 +24,9 @@
             </if>
             <if test="params.orderId != null and params.orderId != ''">
                 and t.order_id = #{params.orderId}
+            </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and t.warehouse_id = #{params.warehouseId}
             </if>
             <if test="params.goodsId != null and params.goodsId != ''">
                 and t.goods_id = #{params.goodsId}
@@ -50,6 +54,7 @@
         <result column="goods_id" property="goodsId"/>
         <result column="sku_id" property="skuId"/>
         <association property="order" javaType="com.tongyi.modules.psi.entity.PsiOrderEntity" select="com.tongyi.modules.psi.dao.PsiOrderDao.selectById" column="order_id"/>
+        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
         <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
         <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
     </resultMap>

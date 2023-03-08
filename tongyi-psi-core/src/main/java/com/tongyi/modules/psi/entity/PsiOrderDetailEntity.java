@@ -38,6 +38,10 @@ public class PsiOrderDetailEntity implements Serializable {
      */
     private String orderId;
     /**
+     * 入库仓库
+     */
+    private String warehouseId;
+    /**
      * 商品
      */
     private String goodsId;
@@ -68,4 +72,18 @@ public class PsiOrderDetailEntity implements Serializable {
     private PsiGoodsSkuEntity sku;
     @TableField(exist = false)
     private PsiGoodsEntity goods;
+    @TableField(exist = false)
+    private PsiWarehouseEntity warehouse;
+
+    public static PsiOrderDetailEntity newEntity(String orderId,String warehouseId, String goodsId, String skuId, BigDecimal costPrice, BigDecimal num, BigDecimal inStockNum) {
+        PsiOrderDetailEntity entity = new PsiOrderDetailEntity();
+        entity.setOrderId(orderId);
+        entity.setWarehouseId(warehouseId);
+        entity.setGoodsId(goodsId);
+        entity.setSkuId(skuId);
+        entity.setPrice(costPrice);
+        entity.setNum(num);
+        entity.setInStockNum(inStockNum);
+        return entity;
+    }
 }

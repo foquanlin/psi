@@ -18,6 +18,7 @@
           <el-option value="TIAOZHENG" label="库存调整"></el-option>
           <el-option value="DIAOBO" label="库存调拨"></el-option>
           <el-option value="PANDIAN" label="库存盘点"></el-option>
+          <el-option value="CAIGOU" label="采购"></el-option>
           <el-option value="DINGDAN" label="订单"></el-option>
           <el-option value="XIAOSHOU" label="销售"></el-option>
         </el-select>
@@ -74,6 +75,7 @@
           <span v-if="scope.row.catalog === 'TIAOZHENG'">库存调整</span>
           <span v-else-if="scope.row.catalog === 'PANDIAN'">库存盘点</span>
           <span v-else-if="scope.row.catalog === 'DIAOBO'">库存调拨</span>
+          <span v-else-if="scope.row.catalog === 'CAIGOU'">采购</span>
           <span v-else-if="scope.row.catalog === 'XIAOSHOU'">销售</span>
           <span v-else-if="scope.row.catalog === 'DINGDAN'">订单</span>
         </template>

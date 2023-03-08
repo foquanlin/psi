@@ -172,6 +172,7 @@ public class PsiStockEntity implements Serializable {
         TIAOZHENG("TIAOZHENG","库存调整"),
         DIAOBO("DIAOBO","库存调拨"),
         PANDIAN("PANDIAN","库存盘点"),
+        CAIGOU("CAIGOU","采购"),
         DINGDAN("DINGDAN","订单"),
         XIAOSHOU("XIAOSHOU","销售");
 

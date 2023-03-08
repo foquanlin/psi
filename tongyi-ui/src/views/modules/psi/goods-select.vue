@@ -16,6 +16,11 @@
         </el-select>
       </el-form-item>
       <el-form-item>
+        <el-select v-model="searchForm.warehouseId" placeholder="仓库" clearable v-if="selectWarehouseId">
+          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
       </el-form-item>
     </el-form>
@@ -71,6 +76,7 @@
           barcode: '',
           status: ''
         },
+        selectWarehouseId: true,
         dataList: [],
         warehouseList: [],
         catalogList: [],
@@ -95,6 +101,17 @@
           this.catalogList = []
         }
       })
+      this.$http({
+        url: '/psi/warehouse/listAll',
+        method: 'get',
+        params: {}
+      }).then(({data}) => {
+        if (data && data.code === 0) {
+          this.warehouseList = data.list
+        } else {
+          this.warehouseList = []
+        }
+      })
     },
     watch: {
       dataList: function () {
@@ -112,7 +129,9 @@
     },
     methods: {
       init (warehouseId, list) {
-        console.log('warehouseId', warehouseId)
+        console.log('warehouseId=', warehouseId)
+        this.selectWarehouseId = !warehouseId
+        console.log('this.selectWarehouseId=', this.selectWarehouseId)
         this.visible = true
         if (warehouseId) {
           this.dataListSelections = list

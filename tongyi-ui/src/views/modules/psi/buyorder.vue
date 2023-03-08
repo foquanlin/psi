@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.stockStatus" placeholder="出库状态" clearable >
+        <el-select v-model="searchForm.stockStatus" placeholder="入库状态" clearable >
           <el-option value="UNFINISH" label="未完成"></el-option>
           <el-option value="FINISH" label="已完成"></el-option>
         </el-select>
@@ -27,10 +27,10 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchForm.no" placeholder="订单号" clearable suffix-icon="el-icon-search"/>
+        <el-input v-model="searchForm.no" placeholder="订单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.supplierId" placeholder="客户" clearable>
+        <el-select v-model="searchForm.orderUid" placeholder="客户" clearable>
           <el-option v-for="item in supplierList" :key="item.id" :value="item.id" :label="item.name"/>
         </el-select>
       </el-form-item>
@@ -42,16 +42,16 @@
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchForm.createUid" placeholder="制单人" clearable>
-          <el-option v-for="item in userList" :key="item.id" :value="item.id" :label="item.realName"/>
+          <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchForm.ownerUid" placeholder="负责人" clearable>
-          <el-option v-for="item in userList" :key="item.id" :value="item.id" :label="item.realName"/>
+          <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchForm.memo" placeholder="订单备注" clearable suffix-icon="el-icon-search"/>
+        <el-input v-model="searchForm.memo" placeholder="订单备注" clearable/>
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchForm.goodsId" placeholder="商品名称" clearable>
@@ -66,10 +66,14 @@
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="no" header-align="center" align="center" label="订单编号"/>
+      <el-table-column prop="no" header-align="center" align="center" label="订单编号">
+        <template v-slot="scope">
+          <el-button type="text" @click="showDetails(scope.row.id)">{{scope.row.no}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column prop="supplierName" header-align="center" align="center" label="供应商">
         <template v-slot="scope">
-          <span>{{scope.row.orderUser?scope.row.orderUser.name:'-'}}</span>
+          <el-button type="text" @click="showSupplier(scope.row.orderUser.id)">{{scope.row.orderUser?scope.row.orderUser.name:'-'}}</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="createDate" header-align="center" align="center" label="采购时间"/>
@@ -83,8 +87,8 @@
           <span>{{scope.row.ownerUser?scope.row.ownerUser.realName:'-'}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="payAmount" header-align="center" align="center" label="已付款"/>
-      <el-table-column prop="orderAmount" header-align="center" align="center" label="订单总价"/>
+      <el-table-column prop="payAmount" header-align="center" align="right" label="已付款"/>
+      <el-table-column prop="orderAmount" header-align="center" align="right" label="订单总价"/>
       <el-table-column prop="payStatus" header-align="center" align="center" label="付款状态">
         <template v-slot="scope">
           <el-tag v-if="scope.row.payStatus === 'DEBT'">有欠款</el-tag>
@@ -92,7 +96,7 @@
           <el-tag v-else-if="scope.row.payStatus === 'FINISH'">已完成</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="stockStatus" header-align="center" align="center" label="入库情况">
+      <el-table-column prop="stockStatus" header-align="center" align="center" label="入库状态">
         <template v-slot="scope">
           <el-tag v-if="scope.row.stockStatus === 'UNFINISH'">未完成</el-tag>
           <el-tag v-else-if="scope.row.stockStatus === 'FINISH'">已完成</el-tag>
@@ -118,17 +122,23 @@
         </template>
       </el-table-column>
     </el-table>
+
     <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex"
                    :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <brand-edit v-if="editVisible" ref="brandEdit" @refreshDataList="getDataList"/>
     <order-edit v-if="orderVisible" ref="orderEdit"/>
+    <supplier-edit v-if="supplierVisible" ref="supplierEdit"/>
+    <buyorder-edit v-if="buyorderVisible" ref="buyorderEdit" @refreshDataList="getDataList"/>
+
   </div>
 </template>
 
 <script>
 import OrderEdit from './order-edit'
+import SupplierEdit from './supplier-edit'
+import BuyorderEdit from './buyorder-edit'
 export default {
   data () {
     return {
@@ -139,7 +149,12 @@ export default {
         payStatus: '',
         status: '',
         ownerUid: '',
-        createUid: ''
+        createUid: '',
+        orderUid: '',
+        createDateStart: '',
+        createDateEnd: '',
+        memo: '',
+        goodsId: ''
       },
       dataList: [],
       pageIndex: 1,
@@ -148,13 +163,17 @@ export default {
       dataListSelections: [],
       editVisible: false,
       orderVisible: false,
+      supplierVisible: false,
+      buyorderVisible: false,
       supplierList: [],
       userList: [],
       goodsList: []
     }
   },
   components: {
-    OrderEdit
+    OrderEdit,
+    SupplierEdit,
+    BuyorderEdit
   },
   activated () {
     this.loadSupplier()
@@ -167,7 +186,7 @@ export default {
       this.$http({
         url: '/psi/order/list',
         method: 'get',
-        data: {
+        params: {
           page: this.pageIndex,
           limit: this.pageSize,
           ...this.searchForm
@@ -206,9 +225,9 @@ export default {
     },
     // 新增 / 修改
     editHandle (id) {
-      this.orderVisible = true
+      this.buyorderVisible = true
       this.$nextTick(() => {
-        this.$refs.orderEdit.init(id)
+        this.$refs.buyorderEdit.init()
       })
     },
     // 删除
@@ -237,7 +256,7 @@ export default {
       this.$http({
         url: '/psi/supplier/listAll',
         method: 'get',
-        data: {
+        params: {
           type: 'CUSTOMER'
         }
       }).then(({data}) => {
@@ -274,6 +293,12 @@ export default {
         } else {
           this.userList = []
         }
+      })
+    },
+    showSupplier (id) {
+      this.supplierVisible = true
+      this.$nextTick(() => {
+        this.$refs.supplierEdit.init(id, true)
       })
     }
   }

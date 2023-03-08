@@ -55,8 +55,8 @@ public class PsiOrderEntity implements Serializable {
     /**
      * 订单日期
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate createDate;
     /**
      * 客户供应商
      */
@@ -117,6 +117,8 @@ public class PsiOrderEntity implements Serializable {
     @TableField(exist = false)
     private SysUserEntity ownerUser;
 
+    @TableField(exist = false)
+    private PsiOrderDetailEntity details;
 
     public void setStatus(StockStatus stockStatus, InvoiceStatus invoiceStatus
             , PayStatus payStatus, OrderStatus status){
@@ -131,7 +133,7 @@ public class PsiOrderEntity implements Serializable {
         this.ownerUid = ownerUid;
     }
     public static PsiOrderEntity newEntity(String no,Catalog catalog, Type type, StockStatus stockStatus, InvoiceStatus invoiceStatus
-            , PayStatus payStatus, OrderStatus status, LocalDateTime createDate, String orderUid
+            , PayStatus payStatus, OrderStatus status, LocalDate createDate, String orderUid
             , String createUid, String ownerUid,BigDecimal orderAmount){
         PsiOrderEntity entity = new PsiOrderEntity();
         entity.no = no;
@@ -148,15 +150,37 @@ public class PsiOrderEntity implements Serializable {
         entity.ownerUid = ownerUid;
         return entity;
     }
-    public static PsiOrderEntity newBuyOrder(Type type, LocalDateTime createDate,BigDecimal orderAmount){
+    public static PsiOrderEntity newBuyOrder(Type type, LocalDate createDate,BigDecimal orderAmount,String expressNo,String ownerUid,String createUid){
         PsiOrderEntity entity = new PsiOrderEntity();
+        entity.setCatalog(Catalog.BUY.getCode());
         entity.setNo(StringUtils.generateOrderNumber("CG"));
         entity.setType(type.getCode());
         entity.setOrderAmount(orderAmount);
         entity.setCreateDate(createDate);
+        entity.setExpressNo(expressNo);
+        entity.setOwnerUid(ownerUid);
+        entity.setCreateUid(createUid);
+        entity.setStockStatus(StockStatus.UNFINISH.code);
+        entity.setInvoiceStatus(InvoiceStatus.UNFINISH.code);
+        entity.setPayStatus(PayStatus.PAYMENT.code);
+        entity.setStatus(StockStatus.UNFINISH.code);
         return entity;
     }
-    public static PsiOrderEntity newSaleOrder(Type type, LocalDateTime createDate,BigDecimal orderAmount){
+    public static PsiOrderEntity newBuyOrder(Type type){
+        PsiOrderEntity entity = new PsiOrderEntity();
+        entity.setCatalog(Catalog.BUY.getCode());
+        entity.setNo(StringUtils.generateOrderNumber("CG"));
+        entity.setType(type.getCode());
+        entity.setStockStatus(StockStatus.UNFINISH.code);
+        entity.setInvoiceStatus(InvoiceStatus.UNFINISH.code);
+        entity.setPayStatus(PayStatus.PAYMENT.code);
+        entity.setStatus(StockStatus.UNFINISH.code);
+        entity.setOrderAmount(BigDecimal.ZERO);
+        entity.setPayAmount(BigDecimal.ZERO);
+        entity.setSettlementAmount(BigDecimal.ZERO);
+        return entity;
+    }
+    public static PsiOrderEntity newSaleOrder(Type type, LocalDate createDate,BigDecimal orderAmount){
         PsiOrderEntity entity = new PsiOrderEntity();
         entity.setNo(StringUtils.generateOrderNumber("XS"));
         entity.setType(type.getCode());
@@ -264,6 +288,7 @@ public class PsiOrderEntity implements Serializable {
      */
     public enum StockStatus {
         UNFINISH("UNFINISH","未完成"),
+        PARTS("PARTS","部分完成"),
         FINISH("FINISH","已完成");
 
         private String code;
