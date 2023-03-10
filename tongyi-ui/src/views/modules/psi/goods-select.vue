@@ -134,7 +134,7 @@
         console.log('this.selectWarehouseId=', this.selectWarehouseId)
         this.visible = true
         if (warehouseId) {
-          this.dataListSelections = list
+          this.dataListSelections = list || []
           this.searchForm.warehouseId = warehouseId
           this.getDataList()
         }

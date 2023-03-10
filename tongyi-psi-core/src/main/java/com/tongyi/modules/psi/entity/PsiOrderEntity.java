@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.sql.Time;
+import java.util.List;
 
 /**
  * 采购单实体
@@ -118,7 +119,7 @@ public class PsiOrderEntity implements Serializable {
     private SysUserEntity ownerUser;
 
     @TableField(exist = false)
-    private PsiOrderDetailEntity details;
+    private List<PsiOrderDetailEntity> details;
 
     public void setStatus(StockStatus stockStatus, InvoiceStatus invoiceStatus
             , PayStatus payStatus, OrderStatus status){

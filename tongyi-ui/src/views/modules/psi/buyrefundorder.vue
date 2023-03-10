@@ -129,14 +129,14 @@
     <!-- 弹窗, 新增 / 修改 -->
     <brand-edit v-if="editVisible" ref="brandEdit"/>
     <supplier-edit v-if="supplierVisible" ref="supplierEdit"/>
-    <buy-order-edit v-if="buyorderVisible" ref="buyorderEdit" @refreshDataList="getDataList"/>
+    <buy-refund-order-edit v-if="buyRefundOrderVisible" ref="buyRefundOrderEdit" @refreshDataList="getDataList"/>
 
   </div>
 </template>
 
 <script>
 import SupplierEdit from './supplier-edit'
-import BuyOrderEdit from './buyorder-edit'
+import BuyRefundOrderEdit from './buyrefundorder-edit'
 export default {
   data () {
     return {
@@ -161,7 +161,7 @@ export default {
       dataListSelections: [],
       editVisible: false,
       supplierVisible: false,
-      buyorderVisible: false,
+      buyRefundOrderVisible: false,
       supplierList: [],
       userList: [],
       goodsList: []
@@ -169,7 +169,7 @@ export default {
   },
   components: {
     SupplierEdit,
-    BuyOrderEdit
+    BuyRefundOrderEdit
   },
   activated () {
     this.loadSupplier()
@@ -214,16 +214,16 @@ export default {
     },
     // 查看详情
     showDetails (id) {
-      this.buyorderVisible = true
+      this.buyRefundOrderVisible = true
       this.$nextTick(() => {
-        this.$refs.buyorderEdit.init(id, true)
+        this.$refs.buyRefundOrderEdit.init(id, true)
       })
     },
     // 新增 / 修改
     editHandle (id) {
-      this.buyorderVisible = true
+      this.buyRefundOrderVisible = true
       this.$nextTick(() => {
-        this.$refs.buyorderEdit.init(id, false)
+        this.$refs.buyRefundOrderEdit.init(id, false)
       })
     },
     // 删除

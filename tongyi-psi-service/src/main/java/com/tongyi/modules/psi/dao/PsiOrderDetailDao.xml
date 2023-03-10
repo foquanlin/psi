@@ -62,4 +62,9 @@
         <include refid="selectSql"/>
         where t.id = #{id}
     </select>
+
+    <select id="selectByOrderId" resultType="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
+        <include refid="selectSql"/>
+        where t.order_id = #{orderId}
+    </select>
 </mapper>

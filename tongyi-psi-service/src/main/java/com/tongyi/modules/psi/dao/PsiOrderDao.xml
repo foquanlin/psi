@@ -94,6 +94,8 @@
         <association property="orderUser" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="order_uid"/>
         <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
         <association property="ownerUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="owner_uid"/>
+        <!--在order/info接口里实现-->
+        <!--        <collection property="details" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiOrderDetailEntity" select="com.tongyi.modules.psi.dao.PsiOrderDetailDao.selectByOrderId" column="{orderId=id}"></collection>-->
     </resultMap>
     <select id="selectById" resultMap="resultMap">
         <include refid="selectSql"/>

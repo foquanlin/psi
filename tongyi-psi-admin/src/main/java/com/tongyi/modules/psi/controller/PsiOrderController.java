@@ -9,6 +9,8 @@
 package com.tongyi.modules.psi.controller;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.entity.PsiOrderDetailEntity;
+import com.tongyi.modules.psi.service.PsiOrderDetailService;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiOrderEntity;
 import com.tongyi.modules.psi.service.PsiOrderService;
@@ -17,6 +19,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +35,8 @@ import java.util.Map;
 public class PsiOrderController extends AbstractController {
     @Autowired
     private PsiOrderService psiOrderService;
+    @Autowired
+    private PsiOrderDetailService orderDetailService;
 
     /**
      * 查看所有列表
@@ -68,6 +74,10 @@ public class PsiOrderController extends AbstractController {
     @RequiresPermissions(value={"psi:order:info","psi:buyorder:info","psi:saleorder:info"},logical = Logical.OR)
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderEntity psiOrder = psiOrderService.getById(id);
+        Map<String,Object> params = new HashMap<>();
+        params.put("orderId",psiOrder.getId());
+        List<PsiOrderDetailEntity> details = orderDetailService.listAll(params);
+        psiOrder.setDetails(details);
         return RestResponse.success("info", psiOrder);
     }
 

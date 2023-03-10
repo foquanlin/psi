@@ -9,6 +9,7 @@
 package com.tongyi.modules.psi;
 import com.tongyi.modules.psi.controller.PsiOrderController;
 import com.tongyi.modules.psi.entity.PsiOrderEntity;
+import com.tongyi.modules.psi.service.PsiOrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +45,9 @@ public class PsiOrderMockTest {
 
     @Autowired
     protected PsiOrderController controller; // 把要测试的controller注入进来
+
+    @Autowired
+    private PsiOrderService orderService;
 
     @Before
     public void setup() throws Exception {
@@ -102,5 +106,11 @@ public class PsiOrderMockTest {
         controller.queryAll(new HashMap<>());
         controller.list(1,10,new HashMap<>());
         controller.delete(new String[]{id});
+    }
+
+    @Test
+    public void orderInfo(){
+        PsiOrderEntity order = orderService.getById("5154d038f1d64921f2b527bc04468e86");//selectByOrderId;
+        System.out.print(order);
     }
 }
