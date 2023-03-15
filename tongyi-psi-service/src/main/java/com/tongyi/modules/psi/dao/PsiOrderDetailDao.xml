@@ -50,7 +50,8 @@
     </select>
     <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
         <id column="id" property="id"/>
-        <result column="cid" property="cid"/>
+        <result column="warehouse_id" property="warehouseId"/>
+        <result column="order_id" property="orderId"/>
         <result column="goods_id" property="goodsId"/>
         <result column="sku_id" property="skuId"/>
         <association property="order" javaType="com.tongyi.modules.psi.entity.PsiOrderEntity" select="com.tongyi.modules.psi.dao.PsiOrderDao.selectById" column="order_id"/>

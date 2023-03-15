@@ -219,6 +219,16 @@ public class PsiOrderEntity implements Serializable {
         public void setName(String name) {
             this.name = name;
         }
+
+        public String newNo(){// 根据订单分类生成不同订单号
+            if (this == BUY) {
+                return StringUtils.generateOrderNumber("CG");
+            }
+            if (this == SALE){
+                return StringUtils.generateOrderNumber("XS");
+            }
+            return null;
+        }
     }
 
     /**

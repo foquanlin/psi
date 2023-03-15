@@ -7,13 +7,17 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.controller;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.entity.PsiOrderAmountEntity;
 import com.tongyi.modules.psi.entity.PsiOrderDetailEntity;
-import com.tongyi.modules.psi.service.PsiOrderDetailService;
+import com.tongyi.modules.psi.service.*;
+import com.tongyi.modules.psi.service.execute.BuyOrderCreateExecute;
+import com.tongyi.modules.psi.service.execute.BuyOrderUpdateExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiOrderEntity;
-import com.tongyi.modules.psi.service.PsiOrderService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +41,20 @@ public class PsiOrderController extends AbstractController {
     private PsiOrderService psiOrderService;
     @Autowired
     private PsiOrderDetailService orderDetailService;
+    @Autowired
+    private BuyOrderCreateExecute buyOrderCreateExecute;
+    @Autowired
+    private BuyOrderUpdateExecute buyOrderUpdateExecute;
+
+    @Autowired
+    private PsiOrderAmountService orderAmountService;
+    @Autowired
+    private PsiOrderInvoiceService orderInvoiceService;
+
+    @Autowired
+    private PsiOrderExpressService orderExpressService;
+    @Autowired
+    private PsiOrderOperationService orderOperationService;
 
     /**
      * 查看所有列表
@@ -78,7 +96,8 @@ public class PsiOrderController extends AbstractController {
         params.put("orderId",psiOrder.getId());
         List<PsiOrderDetailEntity> details = orderDetailService.listAll(params);
         psiOrder.setDetails(details);
-        return RestResponse.success("info", psiOrder);
+        List<PsiOrderAmountEntity> accountList = orderAmountService.listAll(params);
+        return RestResponse.success("info", psiOrder).put("accountList",accountList);
     }
 
     /**
@@ -120,6 +139,52 @@ public class PsiOrderController extends AbstractController {
     @RequiresPermissions(value={"psi:order:delete","psi:buyorder:delete","psi:saleorder:delete"},logical = Logical.OR)
     public RestResponse delete(@RequestBody String[] ids) {
         psiOrderService.deleteBatch(ids);
+        return RestResponse.success();
+    }
+
+
+    /**
+     * 新增采购单
+     *
+     * @return RestResponse
+     */
+    @SysLog("新增采购单")
+    @RequestMapping("/buyorder")
+    @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save"},logical = Logical.OR)
+    public RestResponse save(@RequestBody String json) {
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        String createUid = getUserId();
+        jsonObject.addProperty("userId",createUid); //填写制单人
+        PsiOrderEntity entity = PsiOrderEntity.newBuyOrder(PsiOrderEntity.Type.ORDER);
+        buyOrderCreateExecute.apply(entity,jsonObject);
+        return RestResponse.success();
+    }
+
+    /**
+     * 修改采购单
+     * @param json
+     * @return
+     */
+    @SysLog("修改采购单")
+    @RequestMapping("/buyorderupdate")
+    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
+    public RestResponse updateBuyOrder(@RequestBody String json) {
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        String createUid = getUserId();
+        jsonObject.addProperty("userId",createUid); //填写制单人
+
+        String orderId = jsonObject.get("id").getAsString();
+        PsiOrderEntity entity = psiOrderService.getById(orderId);
+        buyOrderUpdateExecute.apply(entity,jsonObject);
+        return RestResponse.success();
+    }
+    @SysLog("修改发票状态")
+    @RequestMapping("/invoiceStatus")
+    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
+    public RestResponse invoiceStatus(@RequestParam("id") String orderId,@RequestParam("invoiceStatus")String invoiceStatus) {
+        PsiOrderEntity order = psiOrderService.getById(orderId);
+        order.setInvoiceStatus(invoiceStatus);
+        psiOrderService.updateEntity(order);
         return RestResponse.success();
     }
 }

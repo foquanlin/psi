@@ -6,19 +6,19 @@
           <el-option v-for="item in skuList" :key="item.id" :label="item.specName" :value="item.id"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="仓库" prop="warehouseId">
-        <el-select v-model="dataForm.warehouseId" :disabled="disabled" placeholder="仓库" clearable>
-          <el-option v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
-        </el-select>
-      </el-form-item>
       <el-form-item label="日期" prop="createTime">
-        <el-date-picker v-model="dataForm.createTime" :disabled="disabled" placeholder="创建时间" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" clearable/>
+        <el-date-picker v-model="dataForm.createTime" :disabled="disabled" placeholder="创建时间" type="date" value-format="yyyy-MM-dd" clearable/>
+      </el-form-item>
+      <el-form-item label="仓库" prop="warehouseId">
+        <el-radio-group v-model="dataForm.warehouseId" :disabled="disabled" placeholder="仓库" clearable>
+          <el-radio-button v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="数量" prop="num">
         <el-input-number v-model="dataForm.num" :disabled="disabled" placeholder="数量" clearable/>
       </el-form-item>
       <el-form-item label="单价" prop="costPrice">
-        <el-input-number v-model="dataForm.costPrice" precision="2" :disabled="disabled" placeholder="单价" clearable/>
+        <el-input-number v-model="dataForm.costPrice" :disabled="disabled" placeholder="单价" clearable/>
       </el-form-item>
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>

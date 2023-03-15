@@ -90,6 +90,7 @@
         <id column="id" property="id"/>
         <result column="order_uid" property="orderUid"/>
         <result column="create_uid" property="createUid"></result>
+        <result column="owner_uid" property="ownerUid"></result>
 
         <association property="orderUser" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="order_uid"/>
         <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>

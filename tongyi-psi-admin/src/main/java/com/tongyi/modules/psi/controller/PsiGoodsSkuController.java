@@ -8,6 +8,7 @@
  */
 package com.tongyi.modules.psi.controller;
 import com.tongyi.common.annotation.SysLog;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
@@ -16,8 +17,11 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 商品skuController
@@ -80,6 +84,14 @@ public class PsiGoodsSkuController extends AbstractController {
     @RequestMapping("/save")
     @RequiresPermissions("psi:goods:save")
     public RestResponse save(@RequestBody PsiGoodsSkuEntity entity) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("goodsId",entity.getGoodsId());
+        params.put("specName",entity.getSpecName());
+        List<PsiGoodsSkuEntity> skuList = psiGoodsSkuService.listAll(params);
+        if (null != skuList && !skuList.isEmpty()){
+            throw new BusinessException("此商品明细已存在");
+        }
+        entity.setStatus(PsiGoodsSkuEntity.Status.UP.getCode());
         psiGoodsSkuService.addEntity(entity);
         return RestResponse.success();
     }
@@ -109,6 +121,16 @@ public class PsiGoodsSkuController extends AbstractController {
     @RequiresPermissions("psi:goods:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiGoodsSkuService.deleteBatch(ids);
+        return RestResponse.success();
+    }
+
+    @SysLog("商品sku上下线")
+    @RequestMapping("/updown")
+    @RequiresPermissions("psi:goods:updown")
+    public RestResponse updown(@RequestParam("id")String id) {
+        PsiGoodsSkuEntity sku = psiGoodsSkuService.getById(id);
+        sku.reverseStatus();
+        psiGoodsSkuService.updateEntity(sku);
         return RestResponse.success();
     }
 }

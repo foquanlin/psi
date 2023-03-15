@@ -19,6 +19,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Time;
 import java.util.List;
@@ -92,13 +93,13 @@ public class PsiGoodsEntity implements Serializable {
      * 商品明细
      */
     @TableField(exist = false)
-    private List<PsiGoodsSkuEntity> skuList;
+    private List<PsiGoodsSkuEntity> skuList = new ArrayList<>();
 
     /**
      * 商品规格
      */
     @TableField(exist = false)
-    private List<PsiGoodsSpecEntity> specList;
+    private List<PsiGoodsSpecEntity> specList = new ArrayList<>();
 
     /**
      * 库存数量

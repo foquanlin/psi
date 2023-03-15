@@ -28,7 +28,7 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:goods:save')" type="primary" @click="editHandle()">新增商品</el-button>
+        <el-button v-if="isAuth('psi:goods:save')" type="primary" @click="addHandle()">新增商品</el-button>
 <!--        <el-button v-if="isAuth('psi:goods:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
       </el-form-item>
     </el-form>
@@ -58,13 +58,14 @@
         </template>
       </el-table-column>
       <el-table-column prop="memo" header-align="center" align="right" label="备注" show-overflow-tooltip/>
-      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+      <el-table-column fixed="right" header-align="center" align="center" width="200" label="操作">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:goods:instock')" type="text" size="small" @click="inStockHandle(scope.row)">入库</el-button>
-          <el-button v-if="isAuth('psi:goods:outstock')" type="text" size="small" @click="outStockHandle(scope.row)">出库</el-button>
-          <el-button v-if="isAuth('psi:goods:outstock')" type="text" size="small" @click="addSkuGoods(scope.row)">添加明细</el-button>
+          <el-button v-if="isAuth('psi:goods:outstock')" type="text" size="small" @click="addSkuGoods(scope.row)">商品明细</el-button>
           <el-button v-if="isAuth('psi:goods:update')" type="text" size="small" @click="skuHandle(scope.row)">规格管理</el-button>
           <el-button v-if="isAuth('psi:goods:info')" type="text" size="small" @click="showDetails(scope.row)">详情</el-button>
+          <el-button v-if="isAuth('psi:goods:update')" type="text" size="small" @click="editHandle(scope.row)">修改</el-button>
+          <el-button v-if="isAuth('psi:goods:instock')" type="text" size="small" @click="inStockHandle(scope.row)">入库</el-button>
+          <el-button v-if="isAuth('psi:goods:outstock')" type="text" size="small" @click="outStockHandle(scope.row)">出库</el-button>
           <el-button v-if="isAuth('psi:goods:delete')" type="text" size="small" @click="deleteHandle(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -73,6 +74,7 @@
       :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
+    <goods-add v-if="addVisible" ref="goodsAdd" @refreshDataList="getDataList"/>
     <goods-edit v-if="editVisible" ref="goodsEdit" @refreshDataList="getDataList"/>
     <goods-detail v-if="detailVisible" ref="goodsDetail"/>
     <goods-sku v-if="goodsSkuVisible" ref="goodsSku"/>
@@ -83,6 +85,7 @@
 </template>
 
 <script>
+  import GoodsAdd from './goods-add'
   import GoodsEdit from './goods-edit'
   import Options from '../sys/options'
   import InStock from './goods-instock'
@@ -108,16 +111,18 @@
         pageSize: 10,
         totalPage: 0,
         dataListSelections: [],
-        editVisible: false,
+        addVisible: false,
         inStockVisible: false,
         outStockVisible: false,
         detailVisible: false,
         skuVisible: false,
         goodsSkuVisible: false,
-        specVisible: false
+        specVisible: false,
+        editVisible: false
       }
     },
     components: {
+      GoodsAdd,
       GoodsEdit,
       Options,
       InStock,
@@ -198,10 +203,16 @@
         })
       },
       // 新增 / 修改
-      editHandle (id) {
+      addHandle () {
+        this.addVisible = true
+        this.$nextTick(() => {
+          this.$refs.goodsAdd.init(undefined)
+        })
+      },
+      editHandle (row) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.goodsEdit.init(id)
+          this.$refs.goodsEdit.init(row.id)
         })
       },
       // 删除

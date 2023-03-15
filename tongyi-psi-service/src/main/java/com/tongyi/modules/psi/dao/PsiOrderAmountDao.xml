@@ -45,13 +45,19 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiOrderAmountEntity">
+    <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiOrderAmountEntity">
+    <select id="listAll" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
+
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiOrderAmountEntity">
+        <id column="id" property="id"/>
+        <result column="bank_id" property="bankId"/>
+        <association property="bank" javaType="com.tongyi.modules.psi.entity.PsiBankEntity" select="com.tongyi.modules.psi.dao.PsiBankDao.selectById" column="bank_id"/>
+    </resultMap>
 </mapper>

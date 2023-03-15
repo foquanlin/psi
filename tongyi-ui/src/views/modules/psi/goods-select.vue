@@ -24,14 +24,14 @@
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table border :data="dataList" ref="fileTable" style="margin-left:10px;margin-right:10px;width: 80%;" @selection-change="selectionChangeHandle" row-key="id">
+    <el-table border :data="dataList" ref="fileTable" style="margin-left:10px;margin-right:10px;width: 95%;" @selection-change="selectionChangeHandle" row-key="id">
       <el-table-column type="selection" header-align="center" align="center" width="50" :reserve-selection="true"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称">
         <template v-slot="scope">
           {{scope.row.goods.name}}
         </template>
       </el-table-column>
-      <el-table-column prop="name" header-align="center" align="center" label="规格">
+      <el-table-column prop="name" header-align="center" align="center" label="规格" width="280">
         <template v-slot="scope">
           <el-tag type="info" v-if="scope.row.specName" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
         </template>
@@ -93,6 +93,7 @@
       this.$http({
         url: '/psi/catalog/listAll',
         method: 'get',
+        loading: false,
         params: {}
       }).then(({data}) => {
         if (data && data.code === 0) {
@@ -104,6 +105,7 @@
       this.$http({
         url: '/psi/warehouse/listAll',
         method: 'get',
+        loading: false,
         params: {}
       }).then(({data}) => {
         if (data && data.code === 0) {
@@ -136,8 +138,8 @@
         if (warehouseId) {
           this.dataListSelections = list || []
           this.searchForm.warehouseId = warehouseId
-          this.getDataList()
         }
+        this.getDataList()
       },
       // 获取数据列表
       getDataList () {

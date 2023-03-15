@@ -9,6 +9,8 @@
 package com.tongyi.modules.psi.controller;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
+import com.tongyi.modules.psi.service.PsiGoodsSkuService;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiGoodsSpecEntity;
 import com.tongyi.modules.psi.service.PsiGoodsSpecService;
@@ -30,6 +32,8 @@ import java.util.Map;
 public class PsiGoodsSpecController extends AbstractController {
     @Autowired
     private PsiGoodsSpecService psiGoodsSpecService;
+    @Autowired
+    private PsiGoodsSkuService skuService;
 
     /**
      * 查看所有列表

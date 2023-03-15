@@ -18,6 +18,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.sql.Time;
@@ -140,7 +141,7 @@ public class PsiCheckDetailEntity implements Serializable {
         entity.setGoodsId(this.getGoodsId());
         entity.setSkuId(this.getSkuId());
         entity.setNum(this.getStockNum());
-        entity.setCreateTime(LocalDateTime.now());
+        entity.setCreateTime(LocalDate.now());
         entity.setCreateUid(userId);
         entity.setOrderId(orderId);
         return entity;

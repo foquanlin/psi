@@ -15,30 +15,27 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 
 /**
- * 创建采购单
+ * 修改采购单
  */
 @Slf4j
 @Service
-public class BuyOrderExecute implements ModuleExecute<PsiOrderEntity, JsonObject,Void> {
+public class BuyOrderUpdateExecute implements ModuleExecute<PsiOrderEntity, JsonObject,Void> {
     @Autowired
     private PsiOrderService orderService;
     @Autowired
     private PsiOrderDetailService orderDetailService;
     @Autowired
-    private PsiStockService stockService;
-    @Autowired
-    private PsiWarehouseService warehouseService;
-    @Autowired
     private PsiGoodsSkuService goodsSkuService;
     @Autowired
     private PsiGoodsService goodsService;
 
+    @Autowired
+    private PsiBankService bankService;
     /**
      * 检查采购单数据,如果数据不合规则抛出异常
      * 1.自动生成采购单号
@@ -74,19 +71,12 @@ public class BuyOrderExecute implements ModuleExecute<PsiOrderEntity, JsonObject
         Iterator<JsonElement> it = list.iterator(); // 检查选择的商品是否合法
         while (it.hasNext()){
             JsonObject item = it.next().getAsJsonObject();
-            String warehouseId = item.get("warehouseId").getAsString();
+
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
             BigDecimal inStockNum = item.get("inStockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
-            PsiWarehouseEntity warehouse = warehouseService.getById(warehouseId);
-            if (null == warehouse){
-                throw new BusinessException("请选择仓库");
-            }
-            if(PsiWarehouseEntity.Status.STOP == PsiWarehouseEntity.Status.valueOf(warehouse.getStatus())){
-                throw new BusinessException("仓库已停用:"+warehouse.getName());
-            }
             if(BigDecimal.ZERO.compareTo(num)>=0){
                 throw new BusinessException("采购数量必须大于1");
             }
@@ -125,12 +115,12 @@ public class BuyOrderExecute implements ModuleExecute<PsiOrderEntity, JsonObject
     public Void execute(PsiOrderEntity module, JsonObject params) throws ServiceException {
         String createUid = params.get("userId").getAsString();
         JsonArray list = params.getAsJsonArray("dataList");
-        List<PsiOrderDetailEntity> details = new ArrayList<>();
         Iterator<JsonElement> it = list.iterator();
-        orderService.addEntity(module);
+        orderService.updateEntity(module);
         BigDecimal total = BigDecimal.ZERO;
         while (it.hasNext()){
             JsonObject item = it.next().getAsJsonObject();
+            String id = item.get("id").getAsString();
             String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
@@ -139,11 +129,12 @@ public class BuyOrderExecute implements ModuleExecute<PsiOrderEntity, JsonObject
             String skuId = item.get("skuId").getAsString();
             total = total.add(costPrice.multiply(num));
             PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),warehouseId,goodsId,skuId,costPrice,num,inStockNum);
-            orderDetailService.addEntity(detail);
-            PsiStockEntity stock = PsiStockEntity.inStock(PsiStockEntity.Catalog.CAIGOU,warehouseId,goodsId,skuId,inStockNum,module.getId());
-            stock.setCostPrice(costPrice);
-            stock.setCreateUid(createUid);
-            stockService.addEntity(stock);
+            detail.setId(id);
+            if (StringUtils.isBlank(id)) {
+                orderDetailService.addEntity(detail);
+            }else{
+                orderDetailService.updateEntity(detail);
+            }
         }
         module.setOrderAmount(total);
         orderService.updateEntity(module);

@@ -19,6 +19,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,8 +80,8 @@ public class PsiStockEntity implements Serializable {
     /**
      * 时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate createTime;
     /**
      * 状态
      */
@@ -112,7 +113,7 @@ public class PsiStockEntity implements Serializable {
     public static PsiStockEntity newStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,Type type,String orderId) {
         PsiStockEntity entity = new PsiStockEntity();
         entity.setCatalog(catalog.getCode());
-        entity.setCreateTime(LocalDateTime.now());
+        entity.setCreateTime(LocalDate.now());
         entity.setNum(num);
         entity.setSkuId(skuId);
         entity.setGoodsId(goodsId);

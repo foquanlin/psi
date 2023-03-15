@@ -1,5 +1,5 @@
 <template>
-  <div class="mod-buyorder">
+  <div class="mod-order">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
         <el-select v-model="searchForm.status" placeholder="订单状态" clearable >
@@ -60,7 +60,7 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:buyorder:save')" type="primary" @click="editHandle()">新增</el-button>
+        <el-button v-if="isAuth('psi:buyorder:save')" type="primary" @click="addHandle()">新增</el-button>
         <el-button v-if="isAuth('psi:buyorder:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
@@ -129,14 +129,16 @@
     <!-- 弹窗, 新增 / 修改 -->
     <brand-edit v-if="editVisible" ref="brandEdit"/>
     <supplier-edit v-if="supplierVisible" ref="supplierEdit"/>
-    <buy-refund-order-edit v-if="buyRefundOrderVisible" ref="buyRefundOrderEdit" @refreshDataList="getDataList"/>
+    <order-add v-if="orderAddVisible" ref="orderAdd" @refreshDataList="getDataList"/>
+    <order-edit v-if="orderEditVisible" ref="orderEdit" @refreshDataList="getDataList"/>
 
   </div>
 </template>
 
 <script>
 import SupplierEdit from './supplier-edit'
-import BuyRefundOrderEdit from './buyrefundorder-edit'
+import OrderAdd from './order-add'
+import OrderEdit from './order-edit'
 export default {
   data () {
     return {
@@ -161,7 +163,8 @@ export default {
       dataListSelections: [],
       editVisible: false,
       supplierVisible: false,
-      buyRefundOrderVisible: false,
+      orderAddVisible: false,
+      orderEditVisible: false,
       supplierList: [],
       userList: [],
       goodsList: []
@@ -169,7 +172,8 @@ export default {
   },
   components: {
     SupplierEdit,
-    BuyRefundOrderEdit
+    OrderAdd,
+    OrderEdit
   },
   activated () {
     this.loadSupplier()
@@ -180,11 +184,13 @@ export default {
   methods: {
     getDataList () {
       this.$http({
-        url: '/psi/buyorder/list',
+        url: '/psi/order/list',
         method: 'get',
         params: {
           page: this.pageIndex,
           limit: this.pageSize,
+          catalog: 'BUY', // 采购单
+          type: 'REFUND', // 退单
           ...this.searchForm
         }
       }).then(({data}) => {
@@ -214,16 +220,23 @@ export default {
     },
     // 查看详情
     showDetails (id) {
-      this.buyRefundOrderVisible = true
+      this.orderAddVisible = true
       this.$nextTick(() => {
-        this.$refs.buyRefundOrderEdit.init(id, true)
+        this.$refs.orderAdd.init(id, true)
       })
     },
-    // 新增 / 修改
-    editHandle (id) {
-      this.buyRefundOrderVisible = true
+    // 新增
+    addHandle (id) {
+      this.orderAddVisible = true
       this.$nextTick(() => {
-        this.$refs.buyRefundOrderEdit.init(id, false)
+        this.$refs.orderAdd.init(id, false)
+      })
+    },
+    // 修改
+    editHandle (id) {
+      this.orderEditVisible = true
+      this.$nextTick(() => {
+        this.$refs.orderEdit.init(id, false)
       })
     },
     // 删除
@@ -237,7 +250,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: '/psi/buyorder/delete',
+          url: '/psi/order/delete',
           method: 'post',
           data: ids
         }).then(({data}) => {
@@ -252,6 +265,7 @@ export default {
       this.$http({
         url: '/psi/supplier/listAll',
         method: 'get',
+        loading: false,
         params: {
           type: 'CUSTOMER'
         }
@@ -267,6 +281,7 @@ export default {
       this.$http({
         url: '/psi/goods/listAll',
         method: 'get',
+        loading: false,
         data: {
         }
       }).then(({data}) => {
@@ -281,8 +296,8 @@ export default {
       this.$http({
         url: '/sys/user/queryAll',
         method: 'get',
-        data: {
-        }
+        loading: false,
+        params: {}
       }).then(({data}) => {
         if (data && data.code === 0) {
           this.userList = data.list

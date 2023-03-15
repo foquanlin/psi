@@ -74,6 +74,7 @@ public class PsiGoodsServiceImpl extends ServiceImpl<PsiGoodsDao, PsiGoodsEntity
             });
             newsSkuList.forEach(item->{
                 item.setGoodsId(entity.getId());
+                item.setStatus(PsiGoodsSkuEntity.Status.UP.getCode());
                 goodsSkuDao.insert(item);
             });
 //            List<PsiGoodsSpecEntity> oldSpecList = goodsSpecDao.selectByGoodsId(entity.getId());
