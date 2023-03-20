@@ -14,7 +14,8 @@
             t.name,
             t.create_date,
             t.pic_urls,
-            t.memo
+            t.memo,
+            pu.name as unit_name
         from psi_goods t
         left join psi_unit pu on pu.id = t.unit_id
         left join psi_catalog pc on pc.id = t.catalog_id
@@ -54,31 +55,42 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultMap="resultMap">
+    <select id="listPage" resultMap="resultList">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultMap="resultMap">
+    <select id="listAll" resultMap="resultList">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
-    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsEntity">
+    <resultMap id="resultList" type="com.tongyi.modules.psi.entity.PsiGoodsEntity">
         <id column="id" property="id"/>
         <result column="brand_id" property="brandId"/>
         <result column="catalog_id" property="catalogId"/>
         <result column="unit_id" property="unitId"/>
+        <result column="unit_name" property="unitName"/>
 
         <association property="brand" javaType="com.tongyi.modules.psi.entity.PsiBrandEntity" select="com.tongyi.modules.psi.dao.PsiBrandDao.selectById" column="brand_id"/>
         <association property="catalog" javaType="com.tongyi.modules.psi.entity.PsiCatalogEntity" select="com.tongyi.modules.psi.dao.PsiCatalogDao.selectById" column="catalog_id"/>
-        <association property="unit" javaType="com.tongyi.modules.psi.entity.PsiUnitEntity" select="com.tongyi.modules.psi.dao.PsiUnitDao.selectById" column="unit_id"/>
         <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.sumStockByGoods" column="id"/>
 
         <collection property="specList" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiGoodsSpecEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSpecDao.selectByGoodsId" column="{goodsId=id}"></collection>
         <collection property="skuList" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectByGoodsId" column="{goodsId=id}"></collection>
     </resultMap>
-    <select id="selectById" resultMap="resultMap">
+    <select id="selectById" resultMap="resultId">
         <include refid="selectSql"/>
         where t.id = #{id}
     </select>
+    <resultMap id="resultId" type="com.tongyi.modules.psi.entity.PsiGoodsEntity">
+        <id column="id" property="id"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="catalog_id" property="catalogId"/>
+        <result column="unit_id" property="unitId"/>
+        <result column="unit_name" property="unitName"/>
+
+        <association property="brand" javaType="com.tongyi.modules.psi.entity.PsiBrandEntity" select="com.tongyi.modules.psi.dao.PsiBrandDao.selectById" column="brand_id"/>
+        <association property="catalog" javaType="com.tongyi.modules.psi.entity.PsiCatalogEntity" select="com.tongyi.modules.psi.dao.PsiCatalogDao.selectById" column="catalog_id"/>
+        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.sumStockByGoods" column="id"/>
+    </resultMap>
 </mapper>

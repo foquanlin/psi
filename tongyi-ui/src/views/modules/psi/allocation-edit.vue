@@ -1,7 +1,7 @@
 <template>
   <el-drawer
     :title="!dataForm.id ? '新增调拨单' : !disabled ? '修改调拨单' : '查看调拨单'"
-    :close-on-click-modal="false" size="80%" :visible.sync="visible">
+    :close-on-click-modal="false" size="90%" :visible.sync="visible">
     <el-form :model="dataForm"  :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item label="调出仓库" prop="outWarehouseId">
         <el-radio-group v-model="dataForm.outWarehouseId" placeholder="调出仓库" clearable :disabled="disabled">
@@ -17,9 +17,9 @@
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="appendGoods">增加商品</el-button>
+        <el-button type="primary" @click="appendGoods" v-if="!disabled">增加商品</el-button>
       </el-form-item>
-      <el-table border :data="dataList" style="width: 100%;">
+      <el-table border :data="dataList" style="margin-left: 10px;margin-right: 10px;">
         <el-table-column prop="name" header-align="center" align="center" label="商品">
           <template v-slot="scope">
             <span>{{scope.row.goodsName}}</span>

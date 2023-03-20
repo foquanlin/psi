@@ -82,6 +82,8 @@ public class PsiGoodsSkuEntity implements Serializable {
 
     @TableField(exist = false)
     private String goodsName;
+    @TableField(exist = false)
+    private String unitName;
 
 
     public void reverseStatus(){

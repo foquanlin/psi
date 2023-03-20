@@ -10,6 +10,9 @@ package com.tongyi.modules.psi.controller;
 import com.google.gson.*;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
+import com.tongyi.modules.psi.service.PsiAllocationGoodsService;
+import com.tongyi.modules.psi.service.PsiStockService;
 import com.tongyi.modules.psi.service.execute.StockAllocationExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
@@ -18,6 +21,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
+
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +39,11 @@ public class PsiAllocationController extends AbstractController {
     @Autowired
     private PsiAllocationService psiAllocationService;
     @Autowired
+    private PsiAllocationGoodsService allocationGoodsService;
+    @Autowired
     private StockAllocationExecute allocationExecute;
+    @Autowired
+    private PsiStockService stockService;
 
     /**
      * 查看所有列表
@@ -71,7 +81,10 @@ public class PsiAllocationController extends AbstractController {
     @RequiresPermissions("psi:allocation:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiAllocationEntity psiAllocation = psiAllocationService.getById(id);
-        return RestResponse.success("info", psiAllocation);
+        Map<String,Object> params = new HashMap<>();
+        params.put("allocationId",id);
+        List<PsiAllocationGoodsEntity> list = allocationGoodsService.listAll(params);
+        return RestResponse.success("info", psiAllocation).put("goodsList",list);
     }
 
     /**
@@ -98,13 +111,13 @@ public class PsiAllocationController extends AbstractController {
      * @param entity
      * @return RestResponse
      */
-    @SysLog("修改调拨单")
-    @RequestMapping("/update")
-    @RequiresPermissions("psi:allocation:update")
-    public RestResponse update(@RequestBody PsiAllocationEntity entity) {
-        psiAllocationService.updateEntity(entity);
-        return RestResponse.success();
-    }
+//    @SysLog("修改调拨单")
+//    @RequestMapping("/update")
+//    @RequiresPermissions("psi:allocation:update")
+//    public RestResponse update(@RequestBody PsiAllocationEntity entity) {
+//        psiAllocationService.updateEntity(entity);
+//        return RestResponse.success();
+//    }
 
     /**
      * 根据主键删除调拨单
@@ -116,6 +129,9 @@ public class PsiAllocationController extends AbstractController {
     @RequestMapping("/delete")
     @RequiresPermissions("psi:allocation:delete")
     public RestResponse delete(@RequestBody String[] ids) {
+        Arrays.stream(ids).forEach(id->{
+            stockService.deleteByOrderId(id);
+        });
         psiAllocationService.deleteBatch(ids);
         return RestResponse.success();
     }

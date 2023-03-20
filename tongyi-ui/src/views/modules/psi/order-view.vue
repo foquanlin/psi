@@ -136,17 +136,17 @@ export default {
             }
           })
         }
-        this.loadAccountList()
+        this.loadAccountList(id)
       })
     },
-    loadAccountList () {
+    loadAccountList (id) {
       this.$nextTick(() => {
         this.$http({
           url: `/psi/orderamount/listAll`,
           method: 'post',
           loading: false,
           params: {
-            orderId: this.id
+            orderId: id
           }
         }).then(({data}) => {
           if (data && data.code === 0) {

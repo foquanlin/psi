@@ -11,8 +11,12 @@
             t.out_warehouse_id,
             t.in_warehouse_id,
             t.create_date,
-            t.memo
+            t.memo,
+            pwi.name as in_warehouse_name,
+            pwo.name as out_warehouse_name
         from psi_allocation t
+        left join psi_warehouse pwi on pwi.id = t.in_warehouse_id
+        left join psi_warehouse pwo on pwo.id = t.out_warehouse_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -39,20 +43,18 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultMap="resultMap">
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiAllocationEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultMap="resultMap">
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiAllocationEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiAllocationEntity">
-        <result property="inWarehouseId" column="in_warehouse_id"></result>
-        <result property="outWarehouseId" column="out_warehouse_id"></result>
-        <association property="inWarehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="in_warehouse_id"/>
-        <association property="outWarehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="out_warehouse_id"/>
-    </resultMap>
+    <select id="selectById" resultType="com.tongyi.modules.psi.entity.PsiAllocationEntity">
+        <include refid="selectSql"/>
+        where t.id = #{id}
+    </select>
 </mapper>

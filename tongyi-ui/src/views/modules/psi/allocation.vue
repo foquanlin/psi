@@ -20,15 +20,15 @@
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
         <el-button v-if="isAuth('psi:allocation:save')" type="primary" @click="editHandle()">新增</el-button>
-        <el-button v-if="isAuth('psi:allocation:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+<!--        <el-button v-if="isAuth('psi:allocation:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="no" header-align="center" align="center" label="单号"/>
+      <el-table-column prop="no" header-align="center" align="left" label="单号"/>
       <el-table-column prop="outWarehouseId" header-align="center" align="center" label="出入仓库">
         <template v-slot="scope">
-          {{scope.row.outWarehouse?scope.row.outWarehouse.name:'-'}}-->{{scope.row.inWarehouse?scope.row.inWarehouse.name:'-'}}
+          {{scope.row.outWarehouseName}}-->{{scope.row.inWarehouseName}}
         </template>
       </el-table-column>
       <el-table-column prop="createDate" header-align="center" align="center" label="创建日期"/>
@@ -46,11 +46,13 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <allocation-edit v-if="editVisible" ref="allocationEdit" @refreshDataList="getDataList"/>
+    <allocation-view v-if="viewVisible" ref="allocationView"/>
   </div>
 </template>
 
 <script>
   import allocationEdit from './allocation-edit'
+  import allocationView from './allocation-view'
   import Options from '../sys/options'
   export default {
     data () {
@@ -64,11 +66,13 @@
         totalPage: 0,
         dataListSelections: [],
         editVisible: false,
+        viewVisible: false,
         warehouseList: []
       }
     },
     components: {
       allocationEdit,
+      allocationView,
       Options
     },
     activated () {
@@ -126,9 +130,9 @@
       },
       // 查看详情
       showDetails (id) {
-        this.editVisible = true
+        this.viewVisible = true
         this.$nextTick(() => {
-          this.$refs.allocationEdit.init(id, true)
+          this.$refs.allocationView.init(id)
         })
       },
       // 新增 / 修改
@@ -143,7 +147,7 @@
         let ids = id ? [id] : this.dataListSelections.map(item => {
           return item.id
         })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[删除]操作?`, '提示', {
+        this.$confirm(`确定进行[删除]操作?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

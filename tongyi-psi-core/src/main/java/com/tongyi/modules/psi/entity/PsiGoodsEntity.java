@@ -85,11 +85,6 @@ public class PsiGoodsEntity implements Serializable {
     @TableField(exist = false)
     private PsiCatalogEntity catalog;
     /**
-     * 单位
-     */
-    @TableField(exist = false)
-    private PsiUnitEntity unit;
-    /**
      * 商品明细
      */
     @TableField(exist = false)
@@ -106,4 +101,6 @@ public class PsiGoodsEntity implements Serializable {
      */
     @TableField(exist = false)
     private BigDecimal warehouseNum;
+    @TableField(exist = false)
+    private String unitName;
 }

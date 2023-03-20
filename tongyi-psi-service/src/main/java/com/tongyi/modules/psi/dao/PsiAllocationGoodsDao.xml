@@ -11,8 +11,16 @@
             t.goods_id,
             t.sku_id,
             t.num,
-            t.memo
+            t.memo,
+            pg.name as goods_name,
+            pu.name as unit_name,
+            pgs.spec_name as spec_name,
+            pgs.spec_value as spec_value
+
         from psi_allocation_goods t
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_unit pu on pu.id = pg.unit_id
+        left join psi_goods_sku pgs on pgs.id = t.sku_id
     </sql>
     <sql id="selectWhere">
         <where>

@@ -7,6 +7,7 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
@@ -87,5 +88,18 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     @Override
     public BigDecimal stockNum(String warehouseId, String goodsId, String skuId) {
         return baseMapper.sumStockBySku(warehouseId,goodsId,skuId);
+    }
+
+    @Override
+    public void deleteByOrderId(String orderId) {
+        baseMapper.delete(new LambdaQueryWrapper<PsiStockEntity>().eq(PsiStockEntity::getOrderId,orderId));
+    }
+
+    @Override
+    public void deleteByAllocationGoods(PsiAllocationGoodsEntity item) {
+        baseMapper.delete(new LambdaQueryWrapper<PsiStockEntity>()
+                .eq(PsiStockEntity::getOrderId,item.getAllocationId())
+                .eq(PsiStockEntity::getGoodsId,item.getGoodsId())
+                .eq(PsiStockEntity::getSkuId,item.getSkuId()));
     }
 }

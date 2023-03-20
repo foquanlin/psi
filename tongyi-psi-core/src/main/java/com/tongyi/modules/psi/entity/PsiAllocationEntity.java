@@ -60,16 +60,10 @@ public class PsiAllocationEntity implements Serializable {
      */
     private String memo;
 
-    /**
-     * 入库仓库
-     */
     @TableField(exist = false)
-    private PsiWarehouseEntity inWarehouse;
-    /**
-     * 出库仓库
-     */
+    private String inWarehouseName;
     @TableField(exist = false)
-    private PsiWarehouseEntity outWarehouse;
+    private String outWarehouseName;
 
     public static PsiAllocationEntity newEntity(String inWarehouseId, String outWarehouseId, String memo) {
         PsiAllocationEntity entity = new PsiAllocationEntity();

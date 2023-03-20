@@ -41,4 +41,12 @@ public interface PsiStockService extends IService<PsiStockEntity>{
      */
     public BigDecimal stockNum(String warehouseId,String goodsId,String skuId);
 
+    /**
+     * 根据订单删除库存
+     * @param orderId
+     */
+    void deleteByOrderId(String orderId);
+
+    public void deleteByAllocationGoods(PsiAllocationGoodsEntity item);
+
 }
