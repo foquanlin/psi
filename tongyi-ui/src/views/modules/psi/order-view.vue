@@ -33,10 +33,10 @@
     </el-descriptions>
     <el-table border :data="dataList" style="align-content: center;align-items: center; margin-bottom: 20px" empty-text="暂无内容">
       <el-table-column prop="goodsName" header-align="center" align="center" label="商品" width="180px"/>
-      <el-table-column prop="skuid" header-align="center" align="center" label="规格">
+      <el-table-column prop="skuid" header-align="center" align="left" label="规格">
         <template v-slot="scope">
         <span  v-if="scope.row.specName">
-          <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
+          <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
         </span>
         </template>
       </el-table-column>
@@ -44,7 +44,6 @@
       <el-table-column prop="unitName" header-align="center" align="center" label="单位" width="80px"/>
       <el-table-column prop="costPrice" header-align="center" align="center" label="进价" width="80px"/>
       <el-table-column prop="num" header-align="center" align="center" label="订购数量" width="80px"/>
-      <el-table-column prop="warehouseName" header-align="center" align="center" label="仓库" width="80px"/>
       <el-table-column prop="inStockNum" header-align="center" align="center" label="入库数量" width="80px"/>
       <el-table-column prop="total" header-align="center" align="center" label="小计" fixed="right" width="100px">
         <template v-slot="scope">
@@ -55,9 +54,9 @@
     <el-descriptions title="付款详情">
     </el-descriptions>
     <el-table border :data="accountList" style="align-content: center;align-items: center;" empty-text="暂无内容">
-      <el-table-column header-align="center" align="center" label="账户">
+      <el-table-column prop="bankId" header-align="center" align="center" label="账户">
         <template v-slot="scope">
-          <span>{{scope.row.bank.name}}</span>
+          <span>{{scope.row.bank.bankName}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="amount" header-align="center" align="center" label="金额"/>
@@ -67,7 +66,6 @@
 </template>
 
 <script>
-import GoodsSelect from './goods-select'
 export default {
   data () {
     return {
@@ -103,16 +101,6 @@ export default {
     }
   },
   components: {
-    GoodsSelect
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.loadSupplier()
-      this.loadGoods()
-      this.loadUser()
-      this.loadWarehouse()
-      this.loadBank()
-    })
   },
   methods: {
     init (id) {
@@ -137,7 +125,6 @@ export default {
                   unitName: item.goods.unit.name,
                   skuId: item.sku.id,
                   warehouseId: item.warehouseId,
-                  warehouseName: item.warehouse.name,
                   num: item.num,
                   costPrice: item.price,
                   warehouseNum: 0,
@@ -149,79 +136,23 @@ export default {
             }
           })
         }
+        this.loadAccountList()
       })
     },
-
-    loadSupplier () {
-      this.$http({
-        url: '/psi/supplier/listAll',
-        method: 'get',
-        loading: false,
-        params: {
-          type: 'SUPPLIER'
-        }
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.supplierList = data.list
-        } else {
-          this.supplierList = []
-        }
-      })
-    },
-    loadGoods () {
-      this.$http({
-        url: '/psi/goods/listAll',
-        method: 'get',
-        loading: false,
-        data: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.goodsList = data.list
-        } else {
-          this.goodsList = []
-        }
-      })
-    },
-    loadUser () {
-      this.$http({
-        url: '/sys/user/queryAll',
-        method: 'get',
-        loading: false,
-        data: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.userList = data.list
-        } else {
-          this.userList = []
-        }
-      })
-    },
-    loadBank () {
-      this.$http({
-        url: '/psi/bank/listAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.bankList = data.list
-        } else {
-          this.bankList = []
-        }
-      })
-    },
-    loadWarehouse () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
+    loadAccountList () {
+      this.$nextTick(() => {
+        this.$http({
+          url: `/psi/orderamount/listAll`,
+          method: 'post',
+          loading: false,
+          params: {
+            orderId: this.id
+          }
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.accountList = data.list
+          }
+        })
       })
     },
     onCopySuccess () {

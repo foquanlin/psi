@@ -1,5 +1,5 @@
 <template>
-  <order-list catalog="BUY" type="REFUND"/>
+  <order-list catalog="SALE" type="ORDER"/>
 </template>
 
 <script>

@@ -121,14 +121,13 @@ public class BuyOrderUpdateExecute implements ModuleExecute<PsiOrderEntity, Json
         while (it.hasNext()){
             JsonObject item = it.next().getAsJsonObject();
             String id = item.get("id").getAsString();
-            String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
             BigDecimal inStockNum = item.get("inStockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
             total = total.add(costPrice.multiply(num));
-            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),warehouseId,goodsId,skuId,costPrice,num,inStockNum);
+            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,costPrice,num,inStockNum);
             detail.setId(id);
             if (StringUtils.isBlank(id)) {
                 orderDetailService.addEntity(detail);

@@ -88,7 +88,9 @@ import {
   Message,
   Notification,
   Descriptions,
-  DescriptionsItem
+  DescriptionsItem,
+  Result,
+  Statistic
 } from 'element-ui'
 
 Vue.use(Pagination)
@@ -167,6 +169,8 @@ Vue.use(Drawer)
 Vue.use(CascaderPanel)
 Vue.use(Descriptions)
 Vue.use(DescriptionsItem)
+Vue.use(Result)
+Vue.use(Statistic)
 
 Vue.use(Loading.directive)
 

@@ -19,7 +19,7 @@
     "babel-polyfill": "^6.26.0",
     "crypto-js": "^4.0.0",
     "echarts": "^4.9.0",
-    "element-ui": "^2.15.10",
+    "element-ui": "^2.15.13",
     "gulp-concat": "^2.6.1",
     "gulp-load-plugins": "^1.5.0",
     "gulp-replace": "^0.6.1",

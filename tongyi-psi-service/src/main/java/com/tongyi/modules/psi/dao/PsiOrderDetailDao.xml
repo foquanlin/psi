@@ -8,14 +8,18 @@
         select
             t.id,
             t.order_id,
-            t.warehouse_id,
             t.goods_id,
             t.num,
             t.sku_id,
             t.price,
             t.in_stock_num,
-            t.memo
+            t.memo,
+            pg.name as goods_name,
+            pgs.spec_name as spec_name,
+            pgs.spec_value as spec_value
         from psi_order_detail t
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_goods_sku pgs on pgs.id = t.sku_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -24,9 +28,6 @@
             </if>
             <if test="params.orderId != null and params.orderId != ''">
                 and t.order_id = #{params.orderId}
-            </if>
-            <if test="params.warehouseId != null and params.warehouseId != ''">
-                and t.warehouse_id = #{params.warehouseId}
             </if>
             <if test="params.goodsId != null and params.goodsId != ''">
                 and t.goods_id = #{params.goodsId}
@@ -50,12 +51,13 @@
     </select>
     <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
         <id column="id" property="id"/>
-        <result column="warehouse_id" property="warehouseId"/>
         <result column="order_id" property="orderId"/>
         <result column="goods_id" property="goodsId"/>
         <result column="sku_id" property="skuId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="spec_name" property="specName"/>
+        <result column="spec_value" property="specName"/>
         <association property="order" javaType="com.tongyi.modules.psi.entity.PsiOrderEntity" select="com.tongyi.modules.psi.dao.PsiOrderDao.selectById" column="order_id"/>
-        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
         <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
         <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
     </resultMap>

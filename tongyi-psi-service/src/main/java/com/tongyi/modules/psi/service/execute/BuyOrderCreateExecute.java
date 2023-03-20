@@ -155,7 +155,7 @@ public class BuyOrderCreateExecute implements ModuleExecute<PsiOrderEntity, Json
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
             total = total.add(costPrice.multiply(num));
-            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),warehouseId,goodsId,skuId,costPrice,num,inStockNum);
+            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,costPrice,num,inStockNum);
             orderDetailService.addEntity(detail);
             PsiStockEntity stock = PsiStockEntity.inStock(PsiStockEntity.Catalog.CAIGOU,warehouseId,goodsId,skuId,inStockNum,module.getId());
             stock.setCostPrice(costPrice);

@@ -80,6 +80,10 @@ public class PsiGoodsSkuEntity implements Serializable {
     @TableField(exist = false)
     private BigDecimal warehouseNum;
 
+    @TableField(exist = false)
+    private String goodsName;
+
+
     public void reverseStatus(){
         this.status  = Status.valueOf(status)==Status.UP?Status.DOWN.getCode():Status.UP.getCode();
     }

@@ -72,6 +72,8 @@ public class PsiOrderAmountEntity implements Serializable {
      * 附件
      */
     private String attachmentUrls;
+    @TableField(exist = false)
+    private String bankName;
 
     @TableField(exist = false)
     private PsiBankEntity bank;

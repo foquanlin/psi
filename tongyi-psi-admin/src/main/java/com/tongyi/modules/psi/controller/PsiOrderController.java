@@ -96,8 +96,7 @@ public class PsiOrderController extends AbstractController {
         params.put("orderId",psiOrder.getId());
         List<PsiOrderDetailEntity> details = orderDetailService.listAll(params);
         psiOrder.setDetails(details);
-        List<PsiOrderAmountEntity> accountList = orderAmountService.listAll(params);
-        return RestResponse.success("info", psiOrder).put("accountList",accountList);
+        return RestResponse.success("info", psiOrder);
     }
 
     /**

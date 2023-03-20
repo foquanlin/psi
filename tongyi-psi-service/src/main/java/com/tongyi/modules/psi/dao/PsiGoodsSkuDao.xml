@@ -15,7 +15,8 @@
             t.status,
             t.spec_name,
             t.spec_value,
-            coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) as warehouse_num
+            coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) as warehouse_num,
+            pg.name as goods_name
         from psi_goods_sku t
         left join psi_goods pg on pg.id = t.goods_id
         left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id
@@ -64,13 +65,19 @@
         where t.goods_id = #{goodsId}
         group by t.id, t.goods_id, t.no, t.barcode, t.cost_price, t.sale_price, t.status, t.spec_name, t.spec_value
     </select>
+    <select id="selectById" resultMap="resultMap">
+        <include refid="selectSql"/>
+        where t.id = #{id}
+    </select>
 
     <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
         <id column="id" property="id"/>
         <result column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
         <result column="cost_price" property="costPrice"/>
         <result column="sale_price" property="salePrice"/>
         <result column="spec_name" property="specName"/>
+        <result column="spec_value" property="specValue"/>
         <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
 <!--        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.countBySkuId" column="{goodsId=goods_id,skuId=id}"/>-->
     </resultMap>

@@ -99,6 +99,11 @@ public class PsiStockEntity implements Serializable {
      */
     private String createUid;
 
+    /**
+     * 备注
+     */
+    private String memo;
+
     @TableField(exist = false)
     private PsiGoodsSkuEntity sku;
     @TableField(exist = false)
@@ -109,6 +114,20 @@ public class PsiStockEntity implements Serializable {
     private PsiWarehouseEntity warehouse;
     @TableField(exist = false)
     private SysUserEntity createUser;
+
+    @TableField(exist = false)
+    private String specName;
+    @TableField(exist = false)
+    private String specValue;
+    @TableField(exist = false)
+    private String warehouseName;
+    @TableField(exist = false)
+    private String goodsName;
+    @TableField(exist = false)
+    private String supplierName;
+
+
+
 
     public static PsiStockEntity newStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,Type type,String orderId) {
         PsiStockEntity entity = new PsiStockEntity();

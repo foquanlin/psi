@@ -1,73 +1,97 @@
 <!--订单付款列表-->
 <template>
   <div>
-  <el-table border :data="accountList" style="align-content: center;align-items: center;">
-    <el-table-column prop="createDate" header-align="center" align="center" label="日期"/>
-    <el-table-column prop="bankId" header-align="center" align="center" label="账户">
-      <template v-slot="scope">
-        {{scope.row.bank.bankName}}
-      </template>
-    </el-table-column>
-    <el-table-column prop="amount" header-align="center" align="center" label="金额"/>
-    <el-table-column fixed="right" header-align="center" align="center" width="150">
-      <template v-slot="scope">
-        <el-button type="text" size="small" @click="editPay(scope.row.id)">修改</el-button>
-        <el-button type="text" size="small" @click="deleteHandle(scope.row)">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
-  <el-button type="text" @click="editPay('')" size="mini" icon="el-icon-plus">增加付款</el-button>
-    <order-amount-edit v-if="amountEditVisible" ref="orderAmountEdit" @refreshDataList="getDataList"/>
+    <el-table border :data="dataList">
+      <el-table-column prop="createDate" header-align="center" align="center" label="日期">
+        <template v-slot="scope">
+          <el-date-picker v-if="scope.row.edited" v-model="scope.row.createDate" placeholder="日期" clearable type="date" value-format="yyyy-MM-dd" size="mini"/>
+          <span v-else>{{scope.row.createDate}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="bankId" header-align="center" align="center" label="账户">
+        <template v-slot="scope">
+          <el-select v-if="scope.row.edited" v-model="scope.row.bankId" placeholder="付款账户" clearable size="mini">
+            <el-option v-for="item in bankList" :key="item.id" :value="item.id" :label="item.bankName"/>
+          </el-select>
+          <span v-else>{{scope.row.bankName}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="amount" header-align="center" align="center" label="金额">
+        <template v-slot="scope">
+          <el-input-number v-if="scope.row.edited" v-model="scope.row.amount" placeholder="金额" size="mini"/>
+          <span v-else>{{scope.row.amount}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" header-align="center" align="center" label="操作" width="150">
+        <template v-slot="scope">
+          <el-button type="text" size="small" @click="savePay(scope.row, scope.$index)" v-if="scope.row.edited">保存</el-button>
+          <el-button type="text" size="small" @click="cancelPay(scope.row, scope.$index)" v-if="scope.row.id && scope.row.edited">取消</el-button>
+          <el-button type="text" size="small" @click="editPay(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">修改</el-button>
+          <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-button type="text" @click="addRow()" size="mini" icon="el-icon-plus">增加付款</el-button>
   </div>
 </template>
 
 <script>
-import OrderAmountEdit from './order-amount-edit'
 
 export default {
   data () {
     return {
-      accountList: [],
       edited: false,
-      amountEditVisible: false
+      amountEditVisible: false,
+      bankList: []
     }
   },
   props: {
-    orderId: {
-      type: String,
-      default: true
+    order: {
+      type: Object
+    },
+    dataList: {
+      type: Array
     }
   },
   watch: {
-    orderId: {
+    order: {
       immediate: true,
       handler (value) {
-        this.orderId = value
-        this.getDataList()
+        this.order = value
       }
+    },
+    dataList: {
+      immediate: true,
+      handler (value) {
+        this.dataList = value
+        console.log('watch.dataList')
+      },
+      deep: true
     }
   },
-  components: {
-    OrderAmountEdit
-  },
-  mounted () {
-    this.getDataList()
+  created () {
+    this.loadBank()
   },
   methods: {
-    getDataList () {
+    loadBank () {
       this.$http({
-        url: `/psi/orderamount/listAll`,
-        method: 'post',
-        params: {
-          orderId: this.orderId
-        }
+        url: '/psi/bank/listAll',
+        method: 'get',
+        loading: false,
+        params: {}
       }).then(({data}) => {
         if (data && data.code === 0) {
-          this.accountList = data.list
+          this.bankList = data.list
+        } else {
+          this.bankList = []
         }
       })
     },
-    deleteHandle (row) {
+    deleteHandle (row, index) {
+      if (!row.id) {
+        this.dataList.splice(index, 1)
+        return
+      }
       this.$confirm(`确定进行[删除]操作?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -80,16 +104,34 @@ export default {
         }).then(({data}) => {
           if (data && data.code === 0) {
             this.$message({ message: '操作成功', type: 'success', duration: 1500 })
-            this.getDataList()
+            this.$emit('refreshDataList')
           }
         })
       })
     },
-    editPay (id) {
-      this.amountEditVisible = true
-      this.$nextTick(() => {
-        this.$refs.orderAmountEdit.init(this.orderId, id)
+    addRow () {
+      this.dataList.push({edited: true, createDate: '', amount: 0, type: 'PAY'})
+    },
+    savePay (row, index) {
+      this.$http({
+        url: `/psi/orderamount/${!row.id ? 'save' : 'update'}`,
+        method: 'post',
+        data: {
+          orderId: this.order.id,
+          ...row
+        }
+      }).then(({data}) => {
+        if (data && data.code === 0) {
+          this.$message({ message: '操作成功', type: 'success', duration: 1500 })
+          this.$emit('refreshDataList')
+        }
       })
+    },
+    editPay (row, index) {
+      row.edited = true
+    },
+    cancelPay (row, index) {
+      row.edited = false
     }
   }
 }

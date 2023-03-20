@@ -89,6 +89,7 @@ public class PsiStockController extends AbstractController {
     @RequestMapping("/save")
     @RequiresPermissions("psi:stock:save")
     public RestResponse save(@RequestBody PsiStockEntity entity) {
+        entity.setCreateUid(getUserId());
         psiStockService.addEntity(entity);
         return RestResponse.success();
     }

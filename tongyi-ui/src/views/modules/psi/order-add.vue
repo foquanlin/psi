@@ -22,19 +22,16 @@
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="appendGoods"  v-if="!disabled">增加商品</el-button>
-      </el-form-item>
-      <el-table border :data="dataList" style="align-content: center;align-items: center; margin-bottom: 20px">
+      <el-table border :data="dataList">
           <el-table-column prop="name" header-align="center" align="center" label="商品">
             <template v-slot="scope">
               <span>{{scope.row.goodsName}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="skuId" header-align="center" align="center" label="规格">
+          <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="250">
             <template v-slot="scope">
             <span  v-if="scope.row.specName">
-              <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
+              <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
             </span>
             </template>
           </el-table-column>
@@ -60,7 +57,7 @@
           </el-table-column>
           <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库" width="150px">
             <template v-slot="scope">
-              <el-select v-model="scope.row.warehouseId" placeholder="入库仓库" clearable style="width:100%" :disabled="disabled">
+              <el-select v-model="scope.row.warehouseId" placeholder="入库仓库" clearable style="width:100%" size="mini" :disabled="disabled">
                 <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
               </el-select>
             </template>
@@ -82,6 +79,7 @@
             </template>
           </el-table-column>
         </el-table>
+      <el-button type="text" size="small" class="el-icon-plus" @click="appendGoods"  style="margin-bottom: 20px">增加商品</el-button>
       <el-table border :data="accountList" style="align-content: center;align-items: center;">
         <el-table-column header-align="center" align="center" label="账户">
           <template v-slot="scope">
@@ -101,7 +99,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button type="text" size="small" @click="addAccountHandler">添加付款</el-button>
+      <el-button type="text" size="small" class="el-icon-plus" @click="addAccountHandler">添加付款</el-button>
     </el-form>
     <el-form :inline="false" style="margin-left: 10px;">
       <el-form-item label="发票状态" prop="invoiceStatus">
