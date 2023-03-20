@@ -157,14 +157,13 @@
       },
       onSelect (list) {
         let datalist = []
-        console.log(list)
         list.forEach(item => {
           datalist.push({
             goodsId: item.goodsId,
-            goodsName: item.goods.name,
+            goodsName: item.goodsName,
             specName: item.specName,
-            catalogName: item.goods.catalog.name,
-            unitName: item.goods.unit.name,
+            catalogName: item.catalogName,
+            unitName: item.unitName,
             skuId: item.id,
             beforeNum: item.warehouseNum,
             afterNum: 0,

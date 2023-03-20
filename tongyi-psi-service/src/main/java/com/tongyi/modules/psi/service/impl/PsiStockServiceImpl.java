@@ -17,6 +17,7 @@ import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiStockDao;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
 import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
+import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiStockService;
 import org.springframework.stereotype.Service;
@@ -82,7 +83,7 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
 
     @Override
     public BigDecimal stockNum(String warehouseId, String goodsId) {
-        return baseMapper.sumStockByGoods(warehouseId,goodsId);
+        return baseMapper.sumStockBySku(warehouseId,goodsId,null);
     }
 
     @Override
@@ -96,10 +97,11 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     }
 
     @Override
-    public void deleteByAllocationGoods(PsiAllocationGoodsEntity item) {
+    public void deleteBySkuId(String orderId, String goodsId, String skuId) {
         baseMapper.delete(new LambdaQueryWrapper<PsiStockEntity>()
-                .eq(PsiStockEntity::getOrderId,item.getAllocationId())
-                .eq(PsiStockEntity::getGoodsId,item.getGoodsId())
-                .eq(PsiStockEntity::getSkuId,item.getSkuId()));
+                .eq(PsiStockEntity::getOrderId,orderId)
+                .eq(PsiStockEntity::getGoodsId,goodsId)
+                .eq(PsiStockEntity::getSkuId,skuId));
     }
+
 }

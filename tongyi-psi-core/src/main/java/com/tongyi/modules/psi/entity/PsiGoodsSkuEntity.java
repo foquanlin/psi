@@ -69,14 +69,10 @@ public class PsiGoodsSkuEntity implements Serializable {
     private String specValue;
 
     /**
-     * 商品信息
-     */
-    @TableField(exist = false)
-    private PsiGoodsEntity goods;
-
-    /**
      * 库存数据
      */
+    @TableField(exist = false)
+    private String warehouseName;
     @TableField(exist = false)
     private BigDecimal warehouseNum;
 
@@ -84,6 +80,10 @@ public class PsiGoodsSkuEntity implements Serializable {
     private String goodsName;
     @TableField(exist = false)
     private String unitName;
+    @TableField(exist = false)
+    private String catalogName;
+    @TableField(exist = false)
+    private String picUrls;
 
 
     public void reverseStatus(){

@@ -75,11 +75,15 @@ public class PsiCheckDetailEntity implements Serializable {
     private String memo;
 
     @TableField(exist = false)
-    private PsiGoodsSkuEntity sku;
+    private String specName;
     @TableField(exist = false)
-    private PsiGoodsEntity goods;
+    private String specValue;
     @TableField(exist = false)
-    private PsiWarehouseEntity warehouse;
+    private String warehouseName;
+    @TableField(exist = false)
+    private String goodsName;
+    @TableField(exist = false)
+    private String unitName;
 
     public BigDecimal getStockNum(){
         return beforeNum.subtract(afterNum).abs();
@@ -127,6 +131,7 @@ public class PsiCheckDetailEntity implements Serializable {
         entity.setBeforeNum(beforeNum);
         entity.setAfterNum(afterNum);
         entity.setMemo(memo);
+        entity.setCreateDate(LocalDateTime.now());
         return entity;
     }
 

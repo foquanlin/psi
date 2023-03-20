@@ -37,13 +37,8 @@
                 <el-option v-for="sku in skuList" :key="sku.id" :value="sku.id" :label="sku.specName"/>
               </el-select>
               <span  v-else="scope.row.specName">
-                <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
+                <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
               </span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="catalog" header-align="center" align="center" label="分类" width="80">
-            <template v-slot="scope">
-              <span>{{scope.row.catalogName}}</span>
             </template>
           </el-table-column>
           <el-table-column prop="unitId" header-align="center" align="center" label="单位" width="80">
@@ -250,10 +245,10 @@ export default {
       list.forEach(item => {
         datalist.push({
           goodsId: item.goodsId,
-          goodsName: item.goods.name,
+          goodsName: item.goodsName,
           specName: item.specName,
-          catalogName: item.goods.catalog.name,
-          unitName: item.goods.unit.name,
+          catalogName: item.catalogName,
+          unitName: item.unitName,
           skuId: item.id,
           warehouseId: '',
           num: 0,

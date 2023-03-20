@@ -195,11 +195,11 @@ export default {
               data.info.details.forEach(item => {
                 datalist.push({
                   goodsId: item.goodsId,
-                  goodsName: item.goods.name,
-                  specName: item.sku.specName,
-                  catalogName: item.goods.catalog.name,
-                  unitName: item.goods.unit.name,
-                  skuId: item.sku.id,
+                  goodsName: item.goodsName,
+                  specName: item.specName,
+                  catalogName: item.catalogName,
+                  unitName: item.unitName,
+                  skuId: item.skuId,
                   warehouseId: item.warehouseId,
                   num: item.num,
                   costPrice: item.price,
@@ -318,10 +318,10 @@ export default {
       list.forEach(item => {
         datalist.push({
           goodsId: item.goodsId,
-          goodsName: item.goods.name,
+          goodsName: item.goodsName,
           specName: item.specName,
-          catalogName: item.goods.catalog.name,
-          unitName: item.goods.unit.name,
+          catalogName: item.catalogName,
+          unitName: item.unitName,
           skuId: item.id,
           warehouseId: '',
           num: 0,

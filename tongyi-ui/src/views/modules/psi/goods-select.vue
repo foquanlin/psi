@@ -28,23 +28,23 @@
       <el-table-column type="selection" header-align="center" align="center" width="50" :reserve-selection="true"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称">
         <template v-slot="scope">
-          {{scope.row.goods.name}}
+          {{scope.row.goodsName}}
         </template>
       </el-table-column>
-      <el-table-column prop="name" header-align="center" align="center" label="规格" width="280">
+      <el-table-column prop="name" header-align="center" align="left" label="规格" width="280">
         <template v-slot="scope">
-          <el-tag type="info" v-if="scope.row.specName" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
+          <el-tag type="info" v-if="scope.row.specName" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="catalogId" header-align="center" align="left" label="分类">
         <template v-slot="scope">
-          <span>{{scope.row.goods.catalog.name}}</span>
+          <span>{{scope.row.catalogName}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="warehouseNum" header-align="center" align="right" label="库存"/>
       <el-table-column prop="unitId" header-align="center" align="left" label="单位">
         <template v-slot="scope">
-          <span>{{scope.row.goods.unit.name}}</span>
+          <span>{{scope.row.unitName}}</span>
         </template>
       </el-table-column>
     </el-table>

@@ -1,6 +1,9 @@
 <template>
   <div class="mod-stock">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
+<!--      <el-form-item>-->
+<!--        <el-date-picker v-model="searchForm.orderNo" placeholder="关联单号" clearable/>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-date-picker v-model="searchForm.createTimeStart" placeholder="开始时间" clearable type="date" value-format="yyyy-MM-dd" />
       </el-form-item>
@@ -60,14 +63,14 @@
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" style="width: 100%;">
-      <el-table-column prop="goodsId" header-align="center" align="left" fixed="fixed" label="商品">
+      <el-table-column prop="goodsName" header-align="center" align="left" fixed="fixed" label="商品">
         <template v-slot="scope">
-          <span @click="showDetails(scope.row)">{{scope.row.goods?scope.row.goods.name:''}}</span>
+          <span @click="showDetails(scope.row)">{{scope.row.goodsName}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="150">
+      <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="250">
         <template v-slot="scope">
-          <el-tag type="info" v-if="scope.row.sku" v-for="item in scope.row.sku.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
+          <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="catalog" header-align="center" align="left" label="出入库分类">
@@ -86,27 +89,15 @@
           <span v-else-if="scope.row.type === 'OUT'">出库</span>
         </template>
       </el-table-column>
-      <el-table-column prop="warehouseId" header-align="center" align="left" label="仓库">
-        <template v-slot="scope">
-          <span>{{scope.row.warehouse?scope.row.warehouse.name:'-'}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="supplierId" header-align="center" align="left" label="客户供应商">
-        <template v-slot="scope">
-          <span>{{scope.row.supplier?scope.row.supplier.name:'-'}}</span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="warehouseName" header-align="center" align="left" label="仓库"/>
+      <el-table-column prop="supplierName" header-align="center" align="left" label="客户供应商"/>
       <el-table-column prop="num" header-align="center" align="right" label="数量"/>
-      <el-table-column prop="createTime" header-align="center" align="left" label="时间" width="160"/>
+      <el-table-column prop="createTime" header-align="center" align="left" label="时间" width="100"/>
       <el-table-column prop="costPrice" header-align="center" align="right" label="平均进价"/>
       <el-table-column prop="salePrice" header-align="center" align="right" label="平均售价"/>
 <!--      <el-table-column prop="orderId" header-align="center" align="left" label="关联单号"/>-->
-      <el-table-column prop="createUserName" header-align="center" align="left" label="操作人">
-        <template v-slot="scope">
-          <span>{{scope.row.createUser?scope.row.createUser.realName:'-'}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+      <el-table-column prop="createName" header-align="center" align="left" label="操作人"/>
+      <el-table-column fixed="right" header-align="center" align="center" width="80" label="操作">
         <template v-slot="scope">
 <!--          <el-button v-if="isAuth('psi:stock:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>-->
 <!--          <el-button v-if="isAuth('psi:stock:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>-->
@@ -128,6 +119,7 @@
     data () {
       return {
         searchForm: {
+          orderNo: '',
           createTimeStart: '',
           createTimeEnd: '',
           catalog: '',
@@ -203,12 +195,12 @@
       showDetails (row) {
         this.detailVisible = true
         this.$nextTick(() => {
-          this.$refs.goodsDetail.init(row.goods.id)
+          this.$refs.goodsDetail.init(row.goodsId)
         })
       },
       // 删除
       deleteHandle (row) {
-        this.$confirm(`确定对[${row.goods.name}>>${row.sku.specName}]进行[删除]操作?`, '提示', {
+        this.$confirm(`确定对[${row.goodsName}>>${row.specName}]进行[删除]操作?`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

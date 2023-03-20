@@ -116,7 +116,7 @@ public class PsiAllocationGoodsController extends AbstractController {
 
         Arrays.stream(ids).forEach(id->{
             PsiAllocationGoodsEntity item = psiAllocationGoodsService.getById(id);
-            stockService.deleteByAllocationGoods(item);
+            stockService.deleteBySkuId(item.getAllocationId(),item.getGoodsId(),item.getSkuId());
             psiAllocationGoodsService.deleteEntity(item.getId());
         });
         return RestResponse.success();

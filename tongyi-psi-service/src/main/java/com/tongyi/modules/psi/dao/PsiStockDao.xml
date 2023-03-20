@@ -22,6 +22,7 @@
             t.sale_price,
             t.create_uid,
             t.memo,
+            su.real_name as create_name,
             pw.name as warehouse_name,
             ps.name as supplier_name,
             pg.name as goods_name,
@@ -32,6 +33,7 @@
         left join psi_supplier ps on ps.id = t.supplier_id
         left join psi_goods pg on pg.id = t.goods_id
         left join psi_goods_sku pgs on pgs.id = t.sku_id and pgs.goods_id = t.goods_id
+        left join sys_user su on su.user_id = t.create_uid
     </sql>
     <sql id="selectWhere">
         <where>
@@ -114,17 +116,26 @@
         <result column="spec_value" property="specValue"/>
         <result column="supplier_name" property="supplierName"/>
 
-        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
-        <association property="supplier" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="supplier_id"/>
-        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
-        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
-        <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
+<!--        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>-->
+<!--        <association property="supplier" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="supplier_id"/>-->
+<!--        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>-->
+<!--        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>-->
+<!--        <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>-->
     </resultMap>
 
-    <select id="sumStockByGoods" resultType="java.math.BigDecimal">
-        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.warehouse_id= #{warehouseId} and t.goods_id = #{goodsId}
-    </select>
     <select id="sumStockBySku" resultType="java.math.BigDecimal">
-        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num from psi_stock t where t.warehouse_id= #{warehouseId} and  t.goods_id = #{goodsId} and t.sku_id = #{skuId}
+        select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num
+        from psi_stock t
+        <where>
+            <if test="warehouseId != null and warehouseId!= ''">
+                and t.warehouse_id= #{warehouseId}
+            </if>
+            <if test="goodsId != null and goodsId!= ''">
+                and t.goods_id= #{goodsId}
+            </if>
+            <if test="skuId != null and skuId!= ''">
+                and t.sku_id = #{skuId}
+            </if>
+        </where>
     </select>
 </mapper>

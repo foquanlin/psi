@@ -16,6 +16,8 @@ import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
+import com.tongyi.modules.psi.service.PsiCheckDetailService;
+import com.tongyi.modules.psi.service.PsiStockService;
 import com.tongyi.modules.psi.service.execute.StockCheckExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
@@ -25,9 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 盘点Controller
@@ -41,7 +41,12 @@ public class PsiCheckController extends AbstractController {
     @Autowired
     private PsiCheckService psiCheckService;
     @Autowired
+    private PsiCheckDetailService checkDetailService;
+    @Autowired
     private StockCheckExecute stockCheckExecute;
+    @Autowired
+    private PsiStockService stockService;
+
     /**
      * 查看所有列表
      *
@@ -78,7 +83,10 @@ public class PsiCheckController extends AbstractController {
     @RequiresPermissions("psi:check:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiCheckEntity psiCheck = psiCheckService.getById(id);
-        return RestResponse.success("info", psiCheck);
+        Map<String,Object> params = new HashMap<>();
+        params.put("cid",id);
+        List<PsiCheckDetailEntity> list = checkDetailService.listAll(params);
+        return RestResponse.success("info", psiCheck).put("list",list);
     }
 
     /**
@@ -104,13 +112,13 @@ public class PsiCheckController extends AbstractController {
      * @param entity
      * @return RestResponse
      */
-    @SysLog("修改盘点")
-    @RequestMapping("/update")
-    @RequiresPermissions("psi:check:update")
-    public RestResponse update(@RequestBody PsiCheckEntity entity) {
-        psiCheckService.updateEntity(entity);
-        return RestResponse.success();
-    }
+//    @SysLog("修改盘点")
+//    @RequestMapping("/update")
+//    @RequiresPermissions("psi:check:update")
+//    public RestResponse update(@RequestBody PsiCheckEntity entity) {
+//        psiCheckService.updateEntity(entity);
+//        return RestResponse.success();
+//    }
 
     /**
      * 根据主键删除盘点
@@ -122,6 +130,9 @@ public class PsiCheckController extends AbstractController {
     @RequestMapping("/delete")
     @RequiresPermissions("psi:check:delete")
     public RestResponse delete(@RequestBody String[] ids) {
+        Arrays.stream(ids).forEach(id->{
+            stockService.deleteByOrderId(id);
+        });
         psiCheckService.deleteBatch(ids);
         return RestResponse.success();
     }

@@ -2,11 +2,11 @@
   <el-dialog :title="catalogName + typeName" :close-on-click-modal="false" width="70%" :visible.sync="visible" append-to-body>
     <el-row>
       <el-col :span="3">
-        <el-image fit="contain" style="width:100px" :src="sku.goods.picUrls"></el-image>
+        <el-image fit="contain" style="width:100px" :src="sku.picUrls"></el-image>
       </el-col>
       <el-col :span="21">
       <el-descriptions :column="1">
-        <el-descriptions-item label="商品名称">{{sku.goods?sku.goods.name:'-'}}</el-descriptions-item>
+        <el-descriptions-item label="商品名称">{{sku.goodsName}}</el-descriptions-item>
         <el-descriptions-item label="规格">{{sku.specName}}</el-descriptions-item>
         <el-descriptions-item label="进货价">{{sku.costPrice}}</el-descriptions-item>
         <el-descriptions-item label="销售价">{{sku.salePrice}}</el-descriptions-item>
@@ -36,7 +36,7 @@
       </el-table-column>
       <el-table-column prop="unitId" header-align="center" align="center" label="单位">
         <template v-slot="scope">
-          {{scope.row.goods.unit.name}}
+          {{scope.row.unitName}}
         </template>
       </el-table-column>
       <el-table-column prop="num" header-align="center" align="center" label="数量">
@@ -47,7 +47,7 @@
       </el-table-column>
       <el-table-column prop="createUid" header-align="center" align="center" label="操作人">
         <template v-slot="scope">
-          {{scope.row.createUserName}}
+          {{scope.row.createName}}
         </template>
       </el-table-column>
       <el-table-column prop="memo" header-align="center" align="center" label="备注">

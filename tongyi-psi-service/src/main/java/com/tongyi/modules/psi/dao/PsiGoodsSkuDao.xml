@@ -15,13 +15,22 @@
             t.status,
             t.spec_name,
             t.spec_value,
-            coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) as warehouse_num,
+        <if test="params.warehouseId != null and params.warehouseId != ''">
+            pw.name as warehouse_name,
+        </if>
             pg.name as goods_name,
-            pu.name as unit_name
+            pg.pic_urls as pic_urls,
+            pu.name as unit_name,
+            pc.name as catalog_name
         from psi_goods_sku t
         left join psi_goods pg on pg.id = t.goods_id
+        left join psi_catalog pc on pc.id = pg.catalog_id
         left join psi_unit pu on pu.id = pg.unit_id
-        left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id
+        <if test="params.warehouseId != null and params.warehouseId != ''">
+            left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id
+            left join psi_warehouse pw on pw.id = ps.warehouse_id
+        </if>
+
     </sql>
     <sql id="selectWhere">
         <where>
@@ -52,35 +61,53 @@
         </where>
         group by t.id, t.goods_id, t.no, t.barcode, t.cost_price, t.sale_price, t.status, t.spec_name, t.spec_value
     </sql>
-    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+    <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+    <select id="listAll" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="selectByGoodsId" resultType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+    <select id="selectByGoodsId" resultMap="resultMap">
         <include refid="selectSql"/>
         where t.goods_id = #{goodsId}
         group by t.id, t.goods_id, t.no, t.barcode, t.cost_price, t.sale_price, t.status, t.spec_name, t.spec_value
     </select>
     <select id="selectById" resultType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
-        <include refid="selectSql"/>
+        select
+        t.id,
+        t.goods_id,
+        t.no,
+        t.barcode,
+        t.cost_price,
+        t.sale_price,
+        t.status,
+        t.spec_name,
+        t.spec_value,
+        pg.name as goods_name,
+        pg.pic_urls as pic_urls,
+        pu.name as unit_name,
+        pc.name as catalog_name
+        from psi_goods_sku t
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_catalog pc on pc.id = pg.catalog_id
+        left join psi_unit pu on pu.id = pg.unit_id
         where t.id = #{id}
     </select>
 
-<!--    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">-->
-<!--        <id column="id" property="id"/>-->
-<!--        <result column="goods_id" property="goodsId"/>-->
-<!--        <result column="goods_name" property="goodsName"/>-->
-<!--        <result column="cost_price" property="costPrice"/>-->
-<!--        <result column="sale_price" property="salePrice"/>-->
-<!--        <result column="spec_name" property="specName"/>-->
-<!--        <result column="spec_value" property="specValue"/>-->
-<!--        <result column="unit_name" property="unitName"/>-->
-<!--        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.sumStockBySku" column="{goodsId=goods_id,skuId=id}"/>-->
-<!--    </resultMap>-->
+    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+        <id column="id" property="id"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="cost_price" property="costPrice"/>
+        <result column="sale_price" property="salePrice"/>
+        <result column="spec_name" property="specName"/>
+        <result column="spec_value" property="specValue"/>
+        <result column="unit_name" property="unitName"/>
+        <result column="catalog_name" property="catalogName"/>
+        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.sumStockBySku" column="{goodsId=goods_id,skuId=id}"/>
+    </resultMap>
 </mapper>

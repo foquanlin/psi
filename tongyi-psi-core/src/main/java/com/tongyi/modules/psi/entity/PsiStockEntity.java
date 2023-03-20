@@ -105,16 +105,7 @@ public class PsiStockEntity implements Serializable {
     private String memo;
 
     @TableField(exist = false)
-    private PsiGoodsSkuEntity sku;
-    @TableField(exist = false)
-    private PsiSupplierEntity supplier;
-    @TableField(exist = false)
-    private PsiGoodsEntity goods;
-    @TableField(exist = false)
-    private PsiWarehouseEntity warehouse;
-    @TableField(exist = false)
-    private SysUserEntity createUser;
-
+    private String createName;
     @TableField(exist = false)
     private String specName;
     @TableField(exist = false)
@@ -256,15 +247,15 @@ public class PsiStockEntity implements Serializable {
      * @param checkEntity
      * @return
      */
-    public List<PsiStockEntity> newForCheck(String userId,PsiCheckEntity checkEntity){
-        List<PsiCheckDetailEntity> details = checkEntity.getDetails();
-        List<PsiStockEntity> list = new ArrayList<>();
-        details.forEach(item->{
-            PsiStockEntity entity = item.newCheckStock(userId,checkEntity.getNo());
-            entity.setCreateUid(userId);
-            entity.setOrderId(checkEntity.getNo());
-            list.add(entity);
-        });
-        return list;
-    }
+//    public List<PsiStockEntity> newForCheck(String userId,PsiCheckEntity checkEntity){
+//        List<PsiCheckDetailEntity> details = checkEntity.getDetails();
+//        List<PsiStockEntity> list = new ArrayList<>();
+//        details.forEach(item->{
+//            PsiStockEntity entity = item.newCheckStock(userId,checkEntity.getNo());
+//            entity.setCreateUid(userId);
+//            entity.setOrderId(checkEntity.getNo());
+//            list.add(entity);
+//        });
+//        return list;
+//    }
 }

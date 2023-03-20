@@ -14,12 +14,14 @@
             t.price,
             t.in_stock_num,
             t.memo,
+            pu.name as unit_name,
             pg.name as goods_name,
             pgs.spec_name as spec_name,
             pgs.spec_value as spec_value
         from psi_order_detail t
         left join psi_goods pg on pg.id = t.goods_id
         left join psi_goods_sku pgs on pgs.id = t.sku_id
+        left join psi_unit pu on pu.id = pg.unit_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -40,12 +42,12 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultMap="resultMap">
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultMap="resultMap">
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>

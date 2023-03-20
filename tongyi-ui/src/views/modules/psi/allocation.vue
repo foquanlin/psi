@@ -32,7 +32,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="createDate" header-align="center" align="center" label="创建日期"/>
-      <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
+      <el-table-column prop="memo" header-align="center" align="left" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:allocation:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>

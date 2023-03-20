@@ -40,7 +40,6 @@
         </span>
         </template>
       </el-table-column>
-      <el-table-column prop="catalogName" header-align="center" align="center" label="分类" width="80px"/>
       <el-table-column prop="unitName" header-align="center" align="center" label="单位" width="80px"/>
       <el-table-column prop="costPrice" header-align="center" align="center" label="进价" width="80px"/>
       <el-table-column prop="num" header-align="center" align="center" label="订购数量" width="80px"/>
@@ -119,11 +118,11 @@ export default {
               data.info.details.forEach(item => {
                 datalist.push({
                   goodsId: item.goodsId,
-                  goodsName: item.goods.name,
-                  specName: item.sku.specName,
-                  catalogName: item.goods.catalog.name,
-                  unitName: item.goods.unit.name,
-                  skuId: item.sku.id,
+                  goodsName: item.goodsName,
+                  specName: item.specName,
+                  catalogName: item.catalogName,
+                  unitName: item.unitName,
+                  skuId: item.skuId,
                   warehouseId: item.warehouseId,
                   num: item.num,
                   costPrice: item.price,

@@ -79,7 +79,7 @@ public class StockCheckExecute  implements ModuleExecute<PsiCheckEntity, JsonObj
         details.forEach(item->{
             item.setCid(module.getId());
             checkDetailService.addEntity(item);
-            stockService.addEntity(item.newCheckStock(module.getCreateUid(),module.getNo()));
+            stockService.addEntity(item.newCheckStock(module.getCreateUid(),module.getId()));
         });
         return null;
     }

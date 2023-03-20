@@ -11,6 +11,7 @@ package com.tongyi.modules.psi.service;
 import com.tongyi.core.IService;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
 import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
+import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
 
 import java.math.BigDecimal;
@@ -47,6 +48,5 @@ public interface PsiStockService extends IService<PsiStockEntity>{
      */
     void deleteByOrderId(String orderId);
 
-    public void deleteByAllocationGoods(PsiAllocationGoodsEntity item);
-
+    public void deleteBySkuId(String orderId,String goodsId,String skuId);
 }
