@@ -15,20 +15,23 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Objects;
 
 /**
- * 修改采购单
+ * 创建采购单
  */
 @Slf4j
 @Service
-public class BuyOrderUpdateExecute implements ModuleExecute<PsiOrderEntity, JsonObject,Void> {
+public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObject,Void> {
     @Autowired
     private PsiOrderService orderService;
     @Autowired
     private PsiOrderDetailService orderDetailService;
+    @Autowired
+    private PsiStockService stockService;
+    @Autowired
+    private PsiWarehouseService warehouseService;
     @Autowired
     private PsiGoodsSkuService goodsSkuService;
     @Autowired
@@ -57,13 +60,14 @@ public class BuyOrderUpdateExecute implements ModuleExecute<PsiOrderEntity, Json
         String createUid = params.get("userId").getAsString();
         String memo = params.get("memo").getAsString();
         JsonArray list = params.getAsJsonArray("dataList");
+        JsonArray accountList = params.getAsJsonArray("accountList");
         Objects.requireNonNull(list,"请选择采购商品");
-        if (PsiOrderEntity.Catalog.BUY != PsiOrderEntity.Catalog.valueOf(module.getCatalog())){
-            throw new BusinessException("不是采购单");
-        }
-        if (PsiOrderEntity.Type.ORDER != PsiOrderEntity.Type.valueOf(module.getType())){
-            throw new BusinessException("不是采购单");
-        }
+//        if (PsiOrderEntity.Catalog.BUY != PsiOrderEntity.Catalog.valueOf(module.getCatalog())){
+//            throw new BusinessException("不是采购单");
+//        }
+//        if (PsiOrderEntity.Type.ORDER != PsiOrderEntity.Type.valueOf(module.getType())){
+//            throw new BusinessException("不是采购单");
+//        }
         String userId = params.get("userId").getAsString();
         if (StringUtils.isBlank(userId)){
             throw new BusinessException("制单人不能为空");
@@ -71,12 +75,19 @@ public class BuyOrderUpdateExecute implements ModuleExecute<PsiOrderEntity, Json
         Iterator<JsonElement> it = list.iterator(); // 检查选择的商品是否合法
         while (it.hasNext()){
             JsonObject item = it.next().getAsJsonObject();
-
+            String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
             BigDecimal inStockNum = item.get("inStockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
+            PsiWarehouseEntity warehouse = warehouseService.getById(warehouseId);
+            if (null == warehouse){
+                throw new BusinessException("请选择仓库");
+            }
+            if(PsiWarehouseEntity.Status.STOP == PsiWarehouseEntity.Status.valueOf(warehouse.getStatus())){
+                throw new BusinessException(String.format("仓库已停用:%s",warehouse.getName()));
+            }
             if(BigDecimal.ZERO.compareTo(num)>=0){
                 throw new BusinessException("采购数量必须大于1");
             }
@@ -92,8 +103,23 @@ public class BuyOrderUpdateExecute implements ModuleExecute<PsiOrderEntity, Json
                 throw new BusinessException("没有此商品规格");
             }
         }
-
-        module.setNo(StringUtils.generateOrderNumber("CG"));
+        Iterator<JsonElement> ait = accountList.iterator();
+        while(ait.hasNext()){
+            JsonObject json = ait.next().getAsJsonObject();
+            String bankId = json.get("bankId").getAsString();
+            BigDecimal amount = json.get("amount").getAsBigDecimal();
+            if (StringUtils.isBlank(bankId)){
+                throw new BusinessException("请选择付款账户");
+            }
+            PsiBankEntity bank = bankService.getById(bankId);
+            if (null == bank) {
+                throw new BusinessException("请选择付款账户");
+            }
+            if (BigDecimal.ZERO.compareTo(amount)>0){
+                throw new BusinessException("付款金额不能低于0");
+            }
+        }
+        module.setStockStatus(PsiOrderEntity.StockStatus.UNFINISH.getCode());
         module.setOrderAmount(orderAmount);
         module.setCreateDate(createDate);
         module.setExpressNo(expressNo);
@@ -116,11 +142,11 @@ public class BuyOrderUpdateExecute implements ModuleExecute<PsiOrderEntity, Json
         String createUid = params.get("userId").getAsString();
         JsonArray list = params.getAsJsonArray("dataList");
         Iterator<JsonElement> it = list.iterator();
-        orderService.updateEntity(module);
+        orderService.addEntity(module);
         BigDecimal total = BigDecimal.ZERO;
         while (it.hasNext()){
             JsonObject item = it.next().getAsJsonObject();
-            String id = item.get("id").getAsString();
+            String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
             BigDecimal inStockNum = item.get("inStockNum").getAsBigDecimal();
@@ -128,13 +154,29 @@ public class BuyOrderUpdateExecute implements ModuleExecute<PsiOrderEntity, Json
             String skuId = item.get("skuId").getAsString();
             total = total.add(costPrice.multiply(num));
             PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,costPrice,num,inStockNum);
-            detail.setId(id);
-            if (StringUtils.isBlank(id)) {
-                orderDetailService.addEntity(detail);
-            }else{
-                orderDetailService.updateEntity(detail);
-            }
+            orderDetailService.addEntity(detail);
+            PsiStockEntity stock = PsiStockEntity.newStock(module.getStockCatalog(), module.getStockType(), warehouseId, goodsId, skuId, inStockNum, module.getId());
+            stock.setCostPrice(costPrice);
+            stock.setCreateUid(createUid);
+            stockService.addEntity(stock);
         }
+        JsonArray accountList = params.getAsJsonArray("accountList");
+        Iterator<JsonElement> ait = accountList.iterator();
+        BigDecimal payAmount = BigDecimal.ZERO;
+        while(ait.hasNext()){//收款账户记录
+            JsonObject json = ait.next().getAsJsonObject();
+            String bankId = json.get("bankId").getAsString();
+            BigDecimal amount = json.get("amount").getAsBigDecimal();
+            PsiOrderAmountEntity amountEntity = new PsiOrderAmountEntity();
+            amountEntity.setOrderId(module.getId());
+            amountEntity.setBankId(bankId);
+            amountEntity.setAmount(amount);
+            amountEntity.setCreateDate(LocalDate.now());
+            amountEntity.setCreateUid(createUid);
+            amountEntity.setType(PsiOrderAmountEntity.Type.PAY.getCode());
+            payAmount = payAmount.add(amount);
+        }
+        module.setPayAmount(payAmount);
         module.setOrderAmount(total);
         orderService.updateEntity(module);
         return null;

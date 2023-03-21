@@ -6,8 +6,8 @@
       <el-form-item label="订单日期" prop="createDate">
         <el-date-picker v-model="dataForm.createDate" :disabled="disabled" placeholder="订单日期" type="date" value-format="yyyy-MM-dd" clearable/>
       </el-form-item>
-      <el-form-item label="供应商" prop="orderUid">
-        <el-select v-model="dataForm.orderUid" placeholder="供应商" clearable :disabled="disabled">
+      <el-form-item :label="catalog==='BUY'?'供应商':'客户'" prop="orderUid">
+        <el-select v-model="dataForm.orderUid" :placeholder="catalog==='BUY'?'供应商':'客户'" clearable :disabled="disabled">
           <el-option v-for="item in supplierList" :key="item.id" :value="item.id" :label="item.name"/>
         </el-select>
       </el-form-item>
@@ -130,8 +130,8 @@ export default {
       dataForm: {
         id: '',
         no: '',
-        catalog: 'BUY', // 采购单
-        type: 'ORDER', // 订单
+        catalog: this.catalog,
+        type: this.type,
         createDate: '',
         orderUid: '',
         expressNo: '',
@@ -162,6 +162,32 @@ export default {
       bankList: [],
       accountList: [{bankId: '', amount: 0}],
       url: this.$http.BASE_URL + `/sys/oss/upload?token=${this.$cookie.get('token')}`
+    }
+  },
+  props: {
+    catalog: {
+      type: String,
+      default: undefined
+    },
+    type: {
+      type: String,
+      default: undefined
+    }
+  },
+  watch: {
+    catalog: {
+      immediate: true,
+      handler (value) {
+        this.catalog = value
+        console.log('watch.catalog')
+      }
+    },
+    type: {
+      immediate: true,
+      handler (value) {
+        this.type = value
+        console.log('watch.type')
+      }
     }
   },
   components: {
@@ -220,7 +246,7 @@ export default {
         .validate((valid) => {
           if (valid) {
             this.$http({
-              url: `/psi/order/buyorder`,
+              url: `/psi/order/save`,
               method: 'post',
               data: {
                 ...this.dataForm,
@@ -243,7 +269,7 @@ export default {
         method: 'get',
         loading: false,
         params: {
-          type: 'SUPPLIER'
+          type: this.catalog === 'BUY' ? 'SUPPLIER' : 'CUSTOMER'
         }
       }).then(({data}) => {
         if (data && data.code === 0) {

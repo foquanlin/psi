@@ -45,8 +45,6 @@ public class PsiGoodsServiceImpl extends ServiceImpl<PsiGoodsDao, PsiGoodsEntity
     private PsiGoodsSkuDao goodsSkuDao;
     @Autowired
     private PsiGoodsSpecDao goodsSpecDao;
-    @Autowired
-    private PsiGoodsSpecDao goodsSkuSpecDao;
 
     @Autowired
     private PsiStockDao stockDao;

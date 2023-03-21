@@ -30,7 +30,7 @@
         <el-input v-model="searchForm.no" placeholder="订单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.orderUid" placeholder="客户" clearable>
+        <el-select v-model="searchForm.orderUid" :placeholder="catalog==='BUY'?'供应商':'客户'" clearable>
           <el-option v-for="item in supplierList" :key="item.id" :value="item.id" :label="item.name"/>
         </el-select>
       </el-form-item>
@@ -145,7 +145,7 @@
     <!-- 弹窗, 新增 / 修改 -->
     <brand-edit v-if="editVisible" ref="brandEdit"/>
     <user-edit v-if="userVisible" ref="userEdit"/>
-    <order-add v-if="orderAddVisible" ref="orderAdd" @refreshDataList="getDataList"/>
+    <order-add v-if="orderAddVisible" ref="orderAdd" :catalog="catalog" :type="type" @refreshDataList="getDataList"/>
     <order-edit v-if="orderEditVisible" ref="orderEdit" @refreshDataList="getDataList"/>
     <order-view v-if="orderViewVisible" ref="orderView"/>
 
@@ -327,7 +327,7 @@ export default {
         method: 'get',
         loading: false,
         params: {
-          type: 'CUSTOMER'
+          type: this.catalog === 'BUY' ? 'SUPPLIER' : 'CUSTOMER'
         }
       }).then(({data}) => {
         if (data && data.code === 0) {

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class BuyOrderDeleteExecute  implements ModuleExecute<PsiOrderEntity, JsonObject,Void> {
+public class OrderDeleteExecute implements ModuleExecute<PsiOrderEntity, JsonObject,Void> {
     @Autowired
     private PsiStockService stockService;
     @Autowired

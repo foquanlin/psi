@@ -11,11 +11,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
-import com.tongyi.modules.psi.entity.PsiOrderAmountEntity;
 import com.tongyi.modules.psi.entity.PsiOrderDetailEntity;
 import com.tongyi.modules.psi.service.*;
-import com.tongyi.modules.psi.service.execute.BuyOrderCreateExecute;
-import com.tongyi.modules.psi.service.execute.BuyOrderUpdateExecute;
+import com.tongyi.modules.psi.service.execute.OrderCreateExecute;
+import com.tongyi.modules.psi.service.execute.OrderUpdateExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiOrderEntity;
 import org.apache.shiro.authz.annotation.Logical;
@@ -42,9 +41,9 @@ public class PsiOrderController extends AbstractController {
     @Autowired
     private PsiOrderDetailService orderDetailService;
     @Autowired
-    private BuyOrderCreateExecute buyOrderCreateExecute;
+    private OrderCreateExecute buyOrderCreateExecute;
     @Autowired
-    private BuyOrderUpdateExecute buyOrderUpdateExecute;
+    private OrderUpdateExecute buyOrderUpdateExecute;
 
     @Autowired
     private PsiOrderAmountService orderAmountService;
@@ -102,28 +101,41 @@ public class PsiOrderController extends AbstractController {
     /**
      * 新增采购单
      *
-     * @param entity
+     * @param json
      * @return RestResponse
      */
     @SysLog("新增采购单")
     @RequestMapping("/save")
     @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save"},logical = Logical.OR)
-    public RestResponse save(@RequestBody PsiOrderEntity entity) {
-        psiOrderService.addEntity(entity);
+    public RestResponse save(@RequestBody String json) {
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        String createUid = getUserId();
+        jsonObject.addProperty("userId",createUid); //填写制单人
+        String catalog = jsonObject.get("catalog").getAsString();
+        String type = jsonObject.get("type").getAsString();
+
+        PsiOrderEntity entity = PsiOrderEntity.newOrder(PsiOrderEntity.Catalog.valueOf(catalog),PsiOrderEntity.Type.valueOf(type));
+        buyOrderCreateExecute.apply(entity,jsonObject);
         return RestResponse.success();
     }
 
     /**
      * 修改采购单
      *
-     * @param entity
+     * @param json
      * @return RestResponse
      */
     @SysLog("修改采购单")
     @RequestMapping("/update")
     @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
-    public RestResponse update(@RequestBody PsiOrderEntity entity) {
-        psiOrderService.updateEntity(entity);
+    public RestResponse update(@RequestBody String json) {
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        String createUid = getUserId();
+        jsonObject.addProperty("userId",createUid); //填写制单人
+
+        String orderId = jsonObject.get("id").getAsString();
+        PsiOrderEntity entity = psiOrderService.getById(orderId);
+        buyOrderUpdateExecute.apply(entity,jsonObject);
         return RestResponse.success();
     }
 
@@ -141,42 +153,6 @@ public class PsiOrderController extends AbstractController {
         return RestResponse.success();
     }
 
-
-    /**
-     * 新增采购单
-     *
-     * @return RestResponse
-     */
-    @SysLog("新增采购单")
-    @RequestMapping("/buyorder")
-    @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save"},logical = Logical.OR)
-    public RestResponse save(@RequestBody String json) {
-        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-        String createUid = getUserId();
-        jsonObject.addProperty("userId",createUid); //填写制单人
-        PsiOrderEntity entity = PsiOrderEntity.newBuyOrder(PsiOrderEntity.Type.ORDER);
-        buyOrderCreateExecute.apply(entity,jsonObject);
-        return RestResponse.success();
-    }
-
-    /**
-     * 修改采购单
-     * @param json
-     * @return
-     */
-    @SysLog("修改采购单")
-    @RequestMapping("/buyorderupdate")
-    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
-    public RestResponse updateBuyOrder(@RequestBody String json) {
-        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-        String createUid = getUserId();
-        jsonObject.addProperty("userId",createUid); //填写制单人
-
-        String orderId = jsonObject.get("id").getAsString();
-        PsiOrderEntity entity = psiOrderService.getById(orderId);
-        buyOrderUpdateExecute.apply(entity,jsonObject);
-        return RestResponse.success();
-    }
     @SysLog("修改发票状态")
     @RequestMapping("/invoiceStatus")
     @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)

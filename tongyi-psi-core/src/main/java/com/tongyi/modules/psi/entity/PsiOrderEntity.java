@@ -121,6 +121,19 @@ public class PsiOrderEntity implements Serializable {
     @TableField(exist = false)
     private List<PsiOrderDetailEntity> details;
 
+    public static PsiOrderEntity newOrder(Catalog catalog, Type type) {
+        PsiOrderEntity entity = new PsiOrderEntity();
+        entity.no = catalog.newNo();
+        entity.catalog = catalog.getCode();
+        entity.type = type.getCode();
+        entity.createDate = LocalDate.now();
+        entity.setStockStatus(StockStatus.UNFINISH.code);
+        entity.setInvoiceStatus(InvoiceStatus.UNFINISH.code);
+        entity.setPayStatus(PayStatus.PAYMENT.code);
+        entity.setStatus(StockStatus.UNFINISH.code);
+        return entity;
+    }
+
     public void setStatus(StockStatus stockStatus, InvoiceStatus invoiceStatus
             , PayStatus payStatus, OrderStatus status){
         this.stockStatus = stockStatus.getCode();
@@ -154,7 +167,7 @@ public class PsiOrderEntity implements Serializable {
     public static PsiOrderEntity newBuyOrder(Type type, LocalDate createDate,BigDecimal orderAmount,String expressNo,String ownerUid,String createUid){
         PsiOrderEntity entity = new PsiOrderEntity();
         entity.setCatalog(Catalog.BUY.getCode());
-        entity.setNo(StringUtils.generateOrderNumber("CG"));
+        entity.setNo(Catalog.BUY.newNo());
         entity.setType(type.getCode());
         entity.setOrderAmount(orderAmount);
         entity.setCreateDate(createDate);
@@ -170,7 +183,7 @@ public class PsiOrderEntity implements Serializable {
     public static PsiOrderEntity newBuyOrder(Type type){
         PsiOrderEntity entity = new PsiOrderEntity();
         entity.setCatalog(Catalog.BUY.getCode());
-        entity.setNo(StringUtils.generateOrderNumber("CG"));
+        entity.setNo(Catalog.BUY.newNo());
         entity.setType(type.getCode());
         entity.setStockStatus(StockStatus.UNFINISH.code);
         entity.setInvoiceStatus(InvoiceStatus.UNFINISH.code);
@@ -183,12 +196,20 @@ public class PsiOrderEntity implements Serializable {
     }
     public static PsiOrderEntity newSaleOrder(Type type, LocalDate createDate,BigDecimal orderAmount){
         PsiOrderEntity entity = new PsiOrderEntity();
-        entity.setNo(StringUtils.generateOrderNumber("XS"));
+        entity.setNo(Catalog.SALE.newNo());
         entity.setType(type.getCode());
         entity.setOrderAmount(orderAmount);
         entity.setCreateDate(createDate);
         return entity;
     }
+
+    public PsiStockEntity.Catalog getStockCatalog(){
+        return PsiOrderEntity.Catalog.valueOf(catalog).stockCatalog();
+    }
+    public PsiStockEntity.Type getStockType(){
+        return PsiOrderEntity.Catalog.valueOf(catalog).getStockType(PsiOrderEntity.Type.valueOf(type));
+    }
+
     /**
      * 订单分类
      */
@@ -226,6 +247,27 @@ public class PsiOrderEntity implements Serializable {
             }
             if (this == SALE){
                 return StringUtils.generateOrderNumber("XS");
+            }
+            return null;
+        }
+        public PsiStockEntity.Catalog stockCatalog(){
+            if (this == BUY) {
+                return PsiStockEntity.Catalog.CAIGOU;
+            }
+            if (this == SALE) {
+                return PsiStockEntity.Catalog.XIAOSHOU;
+            }
+            return null;
+        }
+        public PsiStockEntity.Type getStockType(PsiOrderEntity.Type type){
+            if (this == BUY && Type.ORDER == type) {
+                return PsiStockEntity.Type.IN;
+            }else if (this == BUY && Type.REFUND == type) {
+                return PsiStockEntity.Type.OUT;
+            }else if (this == SALE && Type.ORDER == type) {
+                return PsiStockEntity.Type.OUT;
+            }else if (this == SALE && Type.REFUND == type) {
+                return PsiStockEntity.Type.IN;
             }
             return null;
         }

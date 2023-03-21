@@ -120,7 +120,7 @@ public class PsiStockEntity implements Serializable {
 
 
 
-    public static PsiStockEntity newStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,Type type,String orderId) {
+    public static PsiStockEntity newStock(Catalog catalog,Type type, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
         PsiStockEntity entity = new PsiStockEntity();
         entity.setCatalog(catalog.getCode());
         entity.setCreateTime(LocalDate.now());
@@ -135,11 +135,11 @@ public class PsiStockEntity implements Serializable {
     }
 
     public static PsiStockEntity outStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
-        return newStock(catalog,warehouseId,goodsId,skuId,num,Type.OUT,orderId);
+        return newStock(catalog,Type.OUT,warehouseId,goodsId,skuId,num,orderId);
     }
 
     public static PsiStockEntity inStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
-        return newStock(catalog,warehouseId,goodsId,skuId,num,Type.IN,orderId);
+        return newStock(catalog,Type.IN,warehouseId,goodsId,skuId,num,orderId);
     }
 
 
