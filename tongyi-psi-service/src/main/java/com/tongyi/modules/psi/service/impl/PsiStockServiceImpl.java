@@ -78,7 +78,13 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
-        return super.removeByIds(Arrays.asList(ids));
+        Arrays.asList(ids).forEach(id->{
+            PsiStockEntity entity = this.getById(id);
+            if (PsiStockEntity.Catalog.TIAOZHENG != PsiStockEntity.Catalog.valueOf(entity.getCatalog())){
+                throw new BusinessException("库存调整数据才可以删除");
+            }
+        });
+        return true;
     }
 
     @Override

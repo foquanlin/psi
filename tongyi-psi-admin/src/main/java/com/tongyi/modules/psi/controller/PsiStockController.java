@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -117,8 +119,10 @@ public class PsiStockController extends AbstractController {
     @SysLog("删除库存")
     @RequestMapping("/delete")
     @RequiresPermissions("psi:stock:delete")
-    public RestResponse delete(@RequestBody String id) {
-        psiStockService.deleteEntity(id);
+    public RestResponse delete(@RequestBody String[] ids) {
+        Arrays.stream(ids).forEach(id->{
+            psiStockService.deleteEntity(id);
+        });
         return RestResponse.success();
     }
 
