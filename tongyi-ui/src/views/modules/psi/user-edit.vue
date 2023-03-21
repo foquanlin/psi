@@ -29,8 +29,8 @@
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-radio-group v-model="dataForm.status" :disabled="disabled">
-          <el-radio-button :label="'RUN'">启用</el-radio-button>
-          <el-radio-button :label="'STOP'">停用</el-radio-button>
+          <el-radio-button label="RUN">启用</el-radio-button>
+          <el-radio-button label="STOP">停用</el-radio-button>
         </el-radio-group>
       </el-form-item>
     </el-form>
@@ -58,7 +58,7 @@
           memo: '',
           weight: '',
           status: '',
-          type: 'SUPPLIER'
+          type: 'CUSTOMER'
         },
         dataRule: {
           name: [{required: true, message: '名称不能为空', trigger: 'blur'}],

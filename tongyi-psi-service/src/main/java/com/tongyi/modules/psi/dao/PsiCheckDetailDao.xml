@@ -89,4 +89,18 @@
         <include refid="selectSql"/>
         where t.cid = #{cid}
     </select>
+
+    <select id="sumBySku" resultType="java.math.BigDecimal">
+        select count(1) as num
+        from psi_check_detail t
+        <where>
+            <if test="goodsId != null and goodsId!= ''">
+                and t.goods_id= #{goodsId}
+            </if>
+            <if test="skuId != null and skuId!= ''">
+                and t.sku_id = #{skuId}
+            </if>
+        </where>
+    </select>
+
 </mapper>

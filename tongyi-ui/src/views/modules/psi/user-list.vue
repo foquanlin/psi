@@ -1,27 +1,36 @@
 <template>
-  <div class="mod-allocationgoods">
+  <div class="mod-customer">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="searchForm.name" placeholder="参数名" clearable/>
+        <el-input v-model="searchForm.name" placeholder="名称" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-button @click="pageIndex = 1
-        getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:allocationgoods:save')" type="primary" @click="editHandle()">新增</el-button>
-        <el-button v-if="isAuth('psi:allocationgoods:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
+        <el-button v-if="isAuth(rightSave)" type="primary" @click="editHandle()">新增</el-button>
+        <el-button v-if="isAuth(rightDelete)" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="allocationId" header-align="center" align="center" label="调拨单"/>
-      <el-table-column prop="goodsId" header-align="center" align="center" label="商品"/>
-      <el-table-column prop="num" header-align="center" align="center" label="数量"/>
+      <el-table-column prop="name" header-align="center" align="center" label="名称"/>
+      <el-table-column prop="companyName" header-align="center" align="center" label="公司名称"/>
+      <el-table-column prop="contacts" header-align="center" align="center" label="联系人"/>
+      <el-table-column prop="phone" header-align="center" align="center" label="电话"/>
+      <el-table-column prop="email" header-align="center" align="center" label="邮箱"/>
+      <el-table-column prop="address" header-align="center" align="center" label="地址"/>
       <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
+      <el-table-column prop="weight" header-align="center" align="center" label="权重"/>
+      <el-table-column prop="status" header-align="center" align="center" label="状态">
+        <template v-slot="scope">
+          <el-tag v-if="scope.row.status ==='RUN'">启用</el-tag>
+          <el-tag v-else>停用</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:allocationgoods:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
-          <el-button v-if="isAuth('psi:allocationgoods:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="isAuth('psi:allocationgoods:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="isAuth(rightInfo)" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
+          <el-button v-if="isAuth(rightUpdate)" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth(rightDelete)" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -29,13 +38,12 @@
       :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <allocationgoods-edit v-if="editVisible" ref="allocationgoodsEdit" @refreshDataList="getDataList"/>
+    <customer-edit v-if="editVisible" ref="customerEdit" @refreshDataList="getDataList"/>
   </div>
 </template>
 
 <script>
-  import allocationgoodsEdit from './allocationgoods-edit'
-  import Options from '../sys/options'
+  import CustomerEdit from './user-edit'
   export default {
     data () {
       return {
@@ -47,29 +55,45 @@
         pageSize: 10,
         totalPage: 0,
         dataListSelections: [],
-        editVisible: false
+        editVisible: false,
+        rightSave: 'psi:' + this.type.toLowerCase() + ':save',
+        rightUpdate: 'psi:' + this.type.toLowerCase() + ':update',
+        rightDelete: 'psi:' + this.type.toLowerCase() + ':delete',
+        rightInfo: 'psi:' + this.type.toLowerCase() + ':info'
+      }
+    },
+    props: {
+      type: {
+        type: String,
+        default: true
+      }
+    },
+    watch: {
+      type: {
+        immediate: true,
+        handler (value) {
+          this.type = value
+          console.log('watch.type')
+        }
       }
     },
     components: {
-      allocationgoodsEdit,
-      Options
+      CustomerEdit
     },
-    activated () {
+    mounted () {
       this.getDataList()
     },
     methods: {
-      formatBool: (row, column, cellValue, index) => Options.formatArray(Options.yesno, cellValue),
-      formatSex: (row, column, cellValue, index) => Options.formatArray(Options.genders, cellValue),
-      formatDate: (row, column, cellValue, index) => Options.formatDate(row, column, cellValue, index),
       // 获取数据列表
       getDataList () {
         this.$http({
-          url: '/psi/allocationgoods/list',
+          url: '/psi/supplier/list',
           method: 'get',
           params: {
             page: this.pageIndex,
             limit: this.pageSize,
-            name: this.searchForm.name
+            type: this.type,
+            ...this.searchForm
           }
         }).then(({data}) => {
           if (data && data.code === 0) {
@@ -100,14 +124,14 @@
       showDetails (id) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.allocationgoodsEdit.init(id, true)
+          this.$refs.customerEdit.init(id, true)
         })
       },
       // 新增 / 修改
       editHandle (id) {
         this.editVisible = true
         this.$nextTick(() => {
-          this.$refs.allocationgoodsEdit.init(id)
+          this.$refs.customerEdit.init(id)
         })
       },
       // 删除
@@ -121,7 +145,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: '/psi/allocationgoods/delete',
+            url: '/psi/supplier/delete',
             method: 'post',
             data: ids
           }).then(({data}) => {
@@ -130,7 +154,6 @@
               this.getDataList()
             }
           })
-        }).catch(() => {
         })
       }
     }

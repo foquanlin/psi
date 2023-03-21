@@ -75,16 +75,6 @@ public class PsiGoodsEntity implements Serializable {
     private String memo;
 
     /**
-     * 品牌
-     */
-    @TableField(exist = false)
-    private PsiBrandEntity brand;
-    /**
-     * 分类
-     */
-    @TableField(exist = false)
-    private PsiCatalogEntity catalog;
-    /**
      * 商品明细
      */
     @TableField(exist = false)
@@ -103,4 +93,12 @@ public class PsiGoodsEntity implements Serializable {
     private BigDecimal warehouseNum;
     @TableField(exist = false)
     private String unitName;
+    @TableField(exist = false)
+    private String catalogName;
+    @TableField(exist = false)
+    private String brandName;
+    @TableField(exist = false)
+    private BigDecimal costPrice;
+    @TableField(exist = false)
+    private BigDecimal salePrice;
 }

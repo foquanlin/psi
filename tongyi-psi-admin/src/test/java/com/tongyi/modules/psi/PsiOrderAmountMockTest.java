@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
@@ -56,7 +57,7 @@ public class PsiOrderAmountMockTest {
             PsiOrderAmountEntity item = new PsiOrderAmountEntity();
             item.setId(id);
             item.setOrderId (id);
-            item.setCreateDate (LocalDateTime.now());
+            item.setCreateDate (LocalDate.now());
             item.setType (id);
             item.setBankId (id);
             item.setAmount (new BigDecimal(idx));
@@ -74,7 +75,7 @@ public class PsiOrderAmountMockTest {
         PsiOrderAmountEntity item = new PsiOrderAmountEntity();
         item.setId(id);
         item.setOrderId (id);
-        item.setCreateDate (LocalDateTime.now());
+        item.setCreateDate (LocalDate.now());
         item.setType (id);
         item.setBankId (id);
         item.setAmount (new BigDecimal(idx));

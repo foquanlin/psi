@@ -72,7 +72,24 @@
     </select>
 
     <select id="selectByGoodsId" resultMap="resultMap">
-        <include refid="selectSql"/>
+        select
+        t.id,
+        t.goods_id,
+        t.no,
+        t.barcode,
+        t.cost_price,
+        t.sale_price,
+        t.status,
+        t.spec_name,
+        t.spec_value,
+        pg.name as goods_name,
+        pg.pic_urls as pic_urls,
+        pu.name as unit_name,
+        pc.name as catalog_name
+        from psi_goods_sku t
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_catalog pc on pc.id = pg.catalog_id
+        left join psi_unit pu on pu.id = pg.unit_id
         where t.goods_id = #{goodsId}
         group by t.id, t.goods_id, t.no, t.barcode, t.cost_price, t.sale_price, t.status, t.spec_name, t.spec_value
     </select>
@@ -98,6 +115,16 @@
         where t.id = #{id}
     </select>
 
+    <select id="avgCostPrice" resultType="java.math.BigDecimal">
+        select round(avg(t.cost_price),2) as total
+        from psi_goods_sku t
+        where t.goods_id = #{goodsId}
+    </select>
+    <select id="avgSalePrice" resultType="java.math.BigDecimal">
+        select round(avg(t.sale_price),2) as total
+        from psi_goods_sku t
+        where t.goods_id = #{goodsId}
+    </select>
     <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
         <id column="id" property="id"/>
         <result column="goods_id" property="goodsId"/>

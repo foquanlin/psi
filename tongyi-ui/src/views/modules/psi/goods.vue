@@ -29,7 +29,6 @@
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
         <el-button v-if="isAuth('psi:goods:save')" type="primary" @click="addHandle()">新增商品</el-button>
-<!--        <el-button v-if="isAuth('psi:goods:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>-->
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
@@ -45,19 +44,14 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="catalogId" header-align="center" align="left" label="分类">
-        <template v-slot="scope">
-          <span>{{scope.row.catalog.name}}</span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="catalogName" header-align="center" align="left" label="分类"/>
       <el-table-column prop="no" header-align="center" align="left" label="编码"/>
       <el-table-column prop="createDate" header-align="center" align="left" label="创建时间"/>
-      <el-table-column prop="unitId" header-align="center" align="left" label="单位">
-        <template v-slot="scope">
-          <span>{{scope.row.unit.name}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="memo" header-align="center" align="right" label="备注" show-overflow-tooltip/>
+      <el-table-column prop="unitName" header-align="center" align="left" label="单位"/>
+      <el-table-column prop="costPrice" header-align="center" align="right" label="参考进价"/>
+      <el-table-column prop="salePrice" header-align="center" align="right" label="参考售价"/>
+      <el-table-column prop="warehouseNum" header-align="center" align="right" label="库存"/>
+      <el-table-column prop="memo" header-align="center" align="left" label="备注" show-overflow-tooltip/>
       <el-table-column fixed="right" header-align="center" align="center" width="200" label="操作">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:goods:outstock')" type="text" size="small" @click="addSkuGoods(scope.row)">商品明细</el-button>

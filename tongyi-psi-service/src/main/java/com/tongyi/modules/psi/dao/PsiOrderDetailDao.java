@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.CacheNamespace;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -48,4 +49,6 @@ public interface PsiOrderDetailDao extends BaseMapper<PsiOrderDetailEntity> {
     public PsiOrderDetailEntity selectById(@Param("id")String id);
 
     public List<PsiOrderDetailEntity> selectByOrderId(@Param("orderId")String orderId);
+
+    public BigDecimal sumBySku(@Param("catalog")String catalog,@Param("type")String type,@Param("goodsId")String goodsId, @Param("skuId")String skuId);
 }

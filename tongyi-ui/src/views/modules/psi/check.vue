@@ -25,7 +25,7 @@
       <el-table-column prop="warehouseName" header-align="center" align="left" label="仓库"/>
       <el-table-column prop="createDate" header-align="center" align="left" label="盘点日期"/>
       <el-table-column prop="createName" header-align="center" align="left" label="操作人"/>
-      <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
+      <el-table-column prop="memo" header-align="center" align="left" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:check:info')" type="text" size="small" @click="showDetails(scope.row)">详情</el-button>

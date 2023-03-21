@@ -144,7 +144,7 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <brand-edit v-if="editVisible" ref="brandEdit"/>
-    <supplier-edit v-if="supplierVisible" ref="supplierEdit"/>
+    <user-edit v-if="userVisible" ref="userEdit"/>
     <order-add v-if="orderAddVisible" ref="orderAdd" @refreshDataList="getDataList"/>
     <order-edit v-if="orderEditVisible" ref="orderEdit" @refreshDataList="getDataList"/>
     <order-view v-if="orderViewVisible" ref="orderView"/>
@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import SupplierEdit from './supplier-edit'
+import UserEdit from './user-edit'
 import OrderAdd from './order-add'
 import OrderEdit from './order-edit'
 import OrderView from './order-view'
@@ -180,7 +180,7 @@ export default {
       totalPage: 0,
       dataListSelections: [],
       editVisible: false,
-      supplierVisible: false,
+      userVisible: false,
       orderAddVisible: false,
       orderEditVisible: false,
       orderViewVisible: false,
@@ -219,7 +219,7 @@ export default {
     }
   },
   components: {
-    SupplierEdit,
+    UserEdit,
     OrderAdd,
     OrderEdit,
     OrderView
@@ -367,9 +367,9 @@ export default {
       })
     },
     showSupplier (id) {
-      this.supplierVisible = true
+      this.userVisible = true
       this.$nextTick(() => {
-        this.$refs.supplierEdit.init(id, true)
+        this.$refs.userEdit.init(id, true)
       })
     }
   }

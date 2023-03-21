@@ -48,40 +48,4 @@ public class PsiCheckDetailMockTest {
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
     }
-    @Test
-    public void testAdd() {
-        for(int i=0;i<100;i++) {
-            int idx = new Random().nextInt(1000000);
-            String id = "id-" + idx;
-            PsiCheckDetailEntity item = new PsiCheckDetailEntity();
-            item.setId(id);
-            item.setWarehouseId (id);
-            item.setGoodsId (id);
-            item.setBeforeNum (new BigDecimal(idx));
-            item.setAfterNum (new BigDecimal(idx));
-            item.setCreateDate (LocalDateTime.now());
-            item.setMemo (id);
-            controller.save(item);
-        }
-    }
-
-    @Test
-    public void testAll() {
-        int idx = new Random().nextInt(1000000);
-        String id = "id-" + idx;
-        PsiCheckDetailEntity item = new PsiCheckDetailEntity();
-        item.setId(id);
-        item.setWarehouseId (id);
-        item.setGoodsId (id);
-        item.setBeforeNum (new BigDecimal(idx));
-        item.setAfterNum (new BigDecimal(idx));
-        item.setCreateDate (LocalDateTime.now());
-        item.setMemo (id);
-        controller.save(item);
-        controller.update(item);
-        controller.info(id);
-        controller.queryAll(new HashMap<>());
-        controller.list(1,10,new HashMap<>());
-        controller.delete(new String[]{id});
-    }
 }

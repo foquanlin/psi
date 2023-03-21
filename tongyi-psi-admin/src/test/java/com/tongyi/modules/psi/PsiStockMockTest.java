@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
@@ -64,7 +65,7 @@ public class PsiStockMockTest {
             item.setType (id);
             item.setNum (new BigDecimal(idx));
             item.setBatchNo (id);
-            item.setCreateTime (LocalDateTime.now());
+            item.setCreateTime (LocalDate.now());
             item.setStatus (id);
             item.setCostPrice (new BigDecimal(idx));
             item.setSalePrice (new BigDecimal(idx));

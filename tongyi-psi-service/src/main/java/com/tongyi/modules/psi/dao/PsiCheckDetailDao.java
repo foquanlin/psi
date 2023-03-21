@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.CacheNamespace;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -49,4 +50,7 @@ public interface PsiCheckDetailDao extends BaseMapper<PsiCheckDetailEntity> {
     public int deleteByCid(@Param("ids") Serializable[] ids);
 
     public List<PsiCheckDetailEntity> selectByCid(@Param("cid")String cid);
+
+    public BigDecimal sumBySku(@Param("goodsId")String goodsId, @Param("skuId")String skuId);
+
 }

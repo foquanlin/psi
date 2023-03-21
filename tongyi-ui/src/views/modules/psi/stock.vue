@@ -165,6 +165,7 @@
         this.$http({
           url: '/psi/stock/list',
           method: 'post',
+          loading: false,
           data: {
             page: this.pageIndex,
             limit: this.pageSize,

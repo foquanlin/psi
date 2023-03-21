@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.CacheNamespace;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -47,4 +48,7 @@ public interface PsiGoodsSkuDao extends BaseMapper<PsiGoodsSkuEntity> {
     List<PsiGoodsSkuEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
 
     List<PsiGoodsSkuEntity> selectByGoodsId(@Param("goodsId")String goodsId);
+
+    BigDecimal avgCostPrice(@Param("goodsId")String goodsId);
+    BigDecimal avgSalePrice(@Param("goodsId")String goodsId);
 }

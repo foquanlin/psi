@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item label="仓库" prop="warehouseId">
         <el-radio-group v-model="dataForm.warehouseId" :disabled="disabled" placeholder="仓库" clearable>
-          <el-radio-button v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
+          <el-radio-button v-for="item in warehouseList" :key="item.id" :label="item.id">{{item.name}}</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="数量" prop="num">

@@ -72,4 +72,24 @@
         <include refid="selectSql"/>
         where t.order_id = #{orderId}
     </select>
+
+    <select id="sumBySku" resultType="java.math.BigDecimal">
+        select count(1) as num
+        from psi_order_detail t
+        left join psi_order po on po.id = t.order_id
+        <where>
+            <if test="goodsId != null and goodsId!= ''">
+                and t.goods_id= #{goodsId}
+            </if>
+            <if test="skuId != null and skuId!= ''">
+                and t.sku_id = #{skuId}
+            </if>
+            <if test="catalog != null and catalog!= ''">
+                and po.catalog = #{catalog}
+            </if>
+            <if test="type != null and type!= ''">
+                and po.type = #{type}
+            </if>
+        </where>
+    </select>
 </mapper>
