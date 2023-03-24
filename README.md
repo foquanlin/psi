@@ -10,10 +10,11 @@
 
 #### 项目说明
 
+# 项目会持续不断完善更新,欢迎关注star,fork
+  gitee源码地址: https://gitee.com/foquanlin/psi
 ### 使用案例
 
 以下为部分案例：
-
 
 #### 优势
 - 严格遵循阿里编码规约开发，便于阅读及二次开发
@@ -34,22 +35,24 @@
 
 #### 技术选型：
 ```
-- Spring Boot 2.1.0.RELEASE
-- Apache Shiro 1.4.0
+- Spring Boot 2.7.0.RELEASE
+- Apache Shiro 1.9.1
 - Spring MVC 5.1.2
-- MyBatis 3.5.0、MyBatis-Plus 3.1.0
-- weixin-java-mp 3.4.0
-- weixin-java-miniapp 3.4.0
-- weixin-java-pay 3.4.0
-- weixin-java-open 3.4.0
-- alipay-sdk 3.7.110.ALL
+- MyBatis 3.5.0、MyBatis-Plus 3.5.2
+- weixin-java-mp 4.4.0
+- weixin-java-miniapp 4.4.0
+- weixin-java-pay 4.4.0
+- weixin-java-open 4.4.0
+- alipay-sdk 4.31.28.ALL
 - Quartz 2.3.0
-- Druid 1.1.10
-- lombok 1.18.4
-- swagger 2.9.2
+- Gson 2.9.0
+- jedis 3.8.0
+- lombok 1.18.24
+- swagger 3.0.0
 - jwt 0.9.1
-- easypoi 4.0.0
-- Activiti6.0.0
+- easypoi 4.4.0
+- Activiti 6.0.0
+- Mysql 5.7+
 ```
 
 #### 项目结构
@@ -188,7 +191,7 @@ psi
 #### 提交反馈
 1. 欢迎提交 issue，请写清楚遇到问题的原因，开发环境，复显步骤。
 
-2. 官方QQ群：425910002
+### 官方QQ群：425910002
 
 #### 常用API
 - [Mybatis-Plus](https://baomidou.gitee.io/mybatis-plus-doc/#/quick-start)
