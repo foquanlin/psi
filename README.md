@@ -173,6 +173,35 @@ psi
   - test/888888
 
 **效果图：**
+- 系统管理
+  !['商品单位管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品单位管理.png)
+  !['仓库管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/仓库管理.png)
+  !['品牌管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/品牌管理.png)
+  !['商品分类.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品分类.png)
+  !['菜单管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/菜单管理.png)
+- 库存管理
+  !['库存调拨.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/库存调拨.png)
+  !['新增调拨单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/新增调拨单.png)
+  !['盘点管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/盘点管理.png)
+  !['盘点详情.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/盘点详情.png)
+  !['商品入库.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品入库.png)
+  !['商品出库.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品出库.png)
+  !['商品库存.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品库存.png)
+  !['商品明细.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品明细.png)
+  !['商品详情.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品详情.png)
+  !['规格管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/规格管理.png)
+  !['库存明细.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/库存明细.png)
+- 采购管理
+  !['供应商管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/供应商管理.png)
+  !['采购订单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/采购订单.png)
+  !['采购退单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/采购退单.png)
+- 销售管理
+  !['客户管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/客户管理.png)
+  !['销售订单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/销售订单.png)
+  !['销售退单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/销售退单.png)
+- 财务管理
+  !['银行账户管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/银行账户管理.png)
+- 报表统计
 
 #### 后端部署
 - 通过git下载源码
