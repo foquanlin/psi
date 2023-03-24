@@ -54,16 +54,43 @@
 
 #### 项目结构
 ```
-platform-plus
-├─sql  项目SQL语句
-│
-├─platform-admin 管理后台(port:8888)
-│ 
-├─platform-api 接口服务(port:8889)
-│ 
-├─platform-biz 业务、数据处理
-│ 
-└─platform-common 公共类
+*** 项目结构分组件和模块,可灵活引用
+*** 例如:在二次开发中需要使用支付宝接口,在项目pom文件引用相关组件即可
+psi
+├─ sql  项目SQL语句
+├─ init-project 初始化项目脚本
+├─ tongyi-component-activemq 消息中间件
+├─ tongyi-component-alibaba 阿里云SDK组件
+├─ tongyi-component-alipay 支付宝SDK组件
+├─ tongyi-component-common 项目通用组件
+├─ tongyi-component-elasticsearch 搜索引擎组件
+├─ tongyi-component-elk 日志分析组件
+├─ tongyi-component-excel excel文件导入导出组件
+├─ tongyi-component-freemarker 模板组件(邮件模板,PDF模板,文本模板等等)
+├─ tongyi-component-kafka 消息中间件
+├─ tongyi-component-mssql mssql jdbc组件
+├─ tongyi-component-mybatis mybatis组件
+├─ tongyi-component-redis 缓存组件
+├─ tongyi-component-shiro 权限组件
+├─ tongyi-component-starter-admin 管理后台配置组件
+├─ tongyi-component-starter-api api配置组件
+├─ tongyi-component-swagger swagger文档组件2.0版本
+├─ tongyi-component-tencentcloud 腾讯云SDK组件
+├─ tongyi-component-tester 测试配置组件
+├─ tongyi-component-utils 工具包组件
+├─ tongyi-component-webconfig web服务配置组件
+├─ tongyi-core 系统框架核心
+├─ tongyi-module-act activiti模块
+├─ tongyi-module-gencode 代码生成模块
+├─ tongyi-module-job 任务调度模块
+├─ tongyi-module-mail 邮件模块
+├─ tongyi-module-sys 系统基础模块(系统用户,权限,部门,字典,日志,菜单等)
+├─ tongyi-module-thirdstorage 第三方存储模块(阿里云,腾讯云,本地)
+├─ tongyi-module-wechatmp 微信公众号模块
+├─ tongyi-psi-admin 进销存管理后台(port:8801)
+├─ tongyi-psi-api 进销存外部接口(port:8802)
+├─ tongyi-psi-core 进销存核心类
+├─ tongyi-psi-service 进销存业务逻辑模块
 
 ```
 
@@ -71,12 +98,50 @@ platform-plus
 ## 实现功能
 ```
 - 系统管理
-    - 菜单管理
-    - 组织机构
-    - 系统参数
-    - 字典管理
-    - 文件上传
-    - 系统日志
+  - 单位管理
+  - 仓库管理
+  - 邮件系统
+  - 菜单管理
+  - 组织机构
+  - 系统参数
+  - 字典管理
+  - 文件上传
+  - 系统日志
+- 库存管理
+  - 调拨单管理
+  - 批次管理
+  - 品牌管理
+  - 商品分类
+  - 盘点管理
+  - 库存明细
+  - 商品库存
+- 采购管理
+  - 供应商管理
+  - 采购订单
+  - 采购退单
+  - 供应商对账
+- 销售管理
+  - 客户管理
+  - 销售订单
+  - 销售退单
+  - 客户对账
+  - 客户订购统计
+- 财务管理
+  - 银行账户管理
+  - 运杂费管理
+  - 非销售收入
+  - 非采购支出
+- 报表统计
+  - 分类统计
+  - 采购销售统计
+  - 销售排行
+  - 序列号销售统计
+  - 客户销售统计
+  - 商品销售统计
+  - 商品分类统计
+  - 销售货款统计
+  - 采购货款统计
+  - 员工销售统计
 - 权限管理
     - 管理员列表
     - 角色管理
@@ -123,7 +188,7 @@ platform-plus
 #### 提交反馈
 1. 欢迎提交 issue，请写清楚遇到问题的原因，开发环境，复显步骤。
 
-2. 官方QQ群：
+2. 官方QQ群：425910002
 
 #### 常用API
 - [Mybatis-Plus](https://baomidou.gitee.io/mybatis-plus-doc/#/quick-start)
