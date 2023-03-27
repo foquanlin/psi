@@ -11,14 +11,10 @@
         <el-input v-model="searchForm.barcode" placeholder="条形码,支持扫码枪录入" clearable suffix-icon="el-icon-search"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.catalogId" placeholder="分类" clearable>
-          <el-option v-for="item in catalogList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-catalog :search-form="searchForm"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.warehouseId" multiple placeholder="仓库" clearable>
-          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-warehouse :search-form="searchForm" :multiple="false"/>
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchForm.status" placeholder="上/下架" clearable>
@@ -87,6 +83,8 @@
   import GoodsDetail from './goods-detail'
   import GoodsSku from './goods-sku'
   import GoodsSpec from './goodsspec'
+  import SelectWarehouse from './component/select-warehouse'
+  import SelectCatalog from './component/select-catalog'
   export default {
     data () {
       return {
@@ -99,8 +97,6 @@
           status: ''
         },
         dataList: [],
-        warehouseList: [],
-        catalogList: [],
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
@@ -123,31 +119,11 @@
       OutStock,
       GoodsDetail,
       GoodsSku,
-      GoodsSpec
+      GoodsSpec,
+      SelectWarehouse,
+      SelectCatalog
     },
     activated () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
-      this.$http({
-        url: '/psi/catalog/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.catalogList = data.list
-        } else {
-          this.catalogList = []
-        }
-      })
       this.getDataList()
     },
     methods: {

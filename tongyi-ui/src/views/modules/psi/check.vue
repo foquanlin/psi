@@ -5,9 +5,7 @@
         <el-input v-model="searchForm.no" placeholder="单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.warehouseId" placeholder="仓库" clearable>
-          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-warehouse :search-form="searchForm"/>
       </el-form-item>
       <el-form-item>
         <el-date-picker v-model="searchForm.createDateStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="开始日期" clearable/>
@@ -47,7 +45,7 @@
   import checkEdit from './check-edit'
   import Options from '../sys/options'
   import CheckDetail from './check-detail'
-
+  import SelectWarehouse from './component/select-warehouse'
   export default {
     data () {
       return {
@@ -72,20 +70,10 @@
     components: {
       checkEdit,
       Options,
-      CheckDetail
+      CheckDetail,
+      SelectWarehouse
     },
     activated () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
       this.getDataList()
     },
     methods: {
@@ -161,7 +149,6 @@
               this.getDataList()
             }
           })
-        }).catch(() => {
         })
       }
     }

@@ -56,6 +56,7 @@ export default {
       })
     },
     changeSupplier () {
+      this.searchForm.supplierId = ''
       this.supplierList = []
     }
   }
