@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="searchForm.warehouseIds" placeholder="仓库" clearable :multiple="multiple">
+  <el-select v-model="searchForm.warehouseIds" placeholder="仓库" clearable :multiple="multiple" @focus="loadWarehouse">
     <el-option v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
   </el-select>
 </template>
@@ -29,9 +29,6 @@ export default {
         console.log('watch.searchForm')
       }
     }
-  },
-  mounted () {
-    this.loadWarehouse()
   },
   methods: {
     loadWarehouse () {

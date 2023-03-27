@@ -30,9 +30,6 @@ export default {
       }
     }
   },
-  mounted () {
-    this.loadGoods()
-  },
   methods: {
     loadGoods () {
       if (this.goodsList.length > 0) {

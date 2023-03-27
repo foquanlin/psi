@@ -30,9 +30,7 @@
         <el-input v-model="searchForm.no" placeholder="订单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.orderUid" :placeholder="catalog==='BUY'?'供应商':'客户'" clearable>
-          <el-option v-for="item in supplierList" :key="item.id" :value="item.id" :label="item.name"/>
-        </el-select>
+        <select-supplier2 :search-form="searchForm" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'"></select-supplier2>
       </el-form-item>
       <el-form-item>
         <el-date-picker v-model="searchForm.createDateStart" placeholder="开始日期" clearable type="date" value-format="yyyy-MM-dd"/>
@@ -41,22 +39,16 @@
         <el-date-picker v-model="searchForm.createDateEnd" placeholder="结束日期" clearable type="date" value-format="yyyy-MM-dd"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.createUid" placeholder="制单人" clearable>
-          <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
-        </el-select>
+        <select-user :value="searchForm.createUid" placeholder="制单人"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.ownerUid" placeholder="负责人" clearable>
-          <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
-        </el-select>
+        <select-user :value="searchForm.ownerUid" placeholder="负责人"/>
       </el-form-item>
       <el-form-item>
         <el-input v-model="searchForm.memo" placeholder="订单备注" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.goodsId" placeholder="商品名称" clearable>
-          <el-option v-for="goods in goodsList" :key="goods.id" :value="goods.id" :label="goods.name"/>
-        </el-select>
+        <select-goods :search-form="searchForm"/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
@@ -157,6 +149,9 @@ import UserEdit from './user-edit'
 import OrderAdd from './order-add'
 import OrderEdit from './order-edit'
 import OrderView from './order-view'
+import SelectGoods from './component/select-goods'
+import SelectUser from './component/select-user'
+import SelectSupplier2 from './component/select-supplier2'
 export default {
   data () {
     return {
@@ -185,8 +180,6 @@ export default {
       orderEditVisible: false,
       orderViewVisible: false,
       supplierList: [],
-      userList: [],
-      goodsList: [],
       totalAmount: 0,
       payAmount: 0,
       nopayAmount: 0
@@ -222,12 +215,14 @@ export default {
     UserEdit,
     OrderAdd,
     OrderEdit,
-    OrderView
+    OrderView,
+    SelectGoods,
+    SelectUser,
+    SelectSupplier2
   },
   mounted () {
     this.loadSupplier()
     this.loadUser()
-    this.loadGoods()
     this.getDataList()
   },
   methods: {
@@ -334,35 +329,6 @@ export default {
           this.supplierList = data.list
         } else {
           this.supplierList = []
-        }
-      })
-    },
-    loadGoods () {
-      this.$http({
-        url: '/psi/goods/listAll',
-        method: 'get',
-        loading: false,
-        data: {
-        }
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.goodsList = data.list
-        } else {
-          this.goodsList = []
-        }
-      })
-    },
-    loadUser () {
-      this.$http({
-        url: '/sys/user/queryAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.userList = data.list
-        } else {
-          this.userList = []
         }
       })
     },
