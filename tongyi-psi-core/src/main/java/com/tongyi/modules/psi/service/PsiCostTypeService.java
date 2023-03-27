@@ -9,10 +9,7 @@
 package com.tongyi.modules.psi.service;
 
 import com.tongyi.core.IService;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.modules.psi.entity.PsiCostTypeEntity;
-
-import java.util.Map;
 
 /**
  * 收支类型Service接口
@@ -21,8 +18,4 @@ import java.util.Map;
  * @date 2023-03-28 00:14:03
  */
 public interface PsiCostTypeService extends IService<PsiCostTypeEntity>{
-
-    public void execute(String id,Map params, ModuleExecute<PsiCostTypeEntity, Map,Void> execute);
-    public void execute(PsiCostTypeEntity module,Map params, ModuleExecute<PsiCostTypeEntity, Map,Void> execute);
-    public void execute(PsiCostTypeEntity module,Map params, ModuleExecute<PsiCostTypeEntity, Map,Void>... funs);
 }

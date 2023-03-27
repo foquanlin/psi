@@ -73,31 +73,4 @@ public class PsiCostTypeServiceImpl extends ServiceImpl<PsiCostTypeDao, PsiCostT
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(ids));
     }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void execute(String id,Map params,ModuleExecute<PsiCostTypeEntity,Map,Void> fun){
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        PsiCostTypeEntity module = this.getById(id);
-        this.execute(module,params,fun);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void execute(PsiCostTypeEntity module,Map params, ModuleExecute<PsiCostTypeEntity,Map,Void> fun){
-        Objects.requireNonNull(module);
-        Objects.requireNonNull(fun);
-        fun.apply(module,params);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void execute(PsiCostTypeEntity module,Map params, ModuleExecute<PsiCostTypeEntity,Map,Void>... funs){
-        Objects.requireNonNull(module);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(module,params);
-        });
-    }
 }

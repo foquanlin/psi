@@ -11,50 +11,25 @@
         <el-date-picker v-model="searchForm.createTimeEnd" placeholder="结束时间" clearable type="date" value-format="yyyy-MM-dd"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.type" placeholder="出入库" clearable>
-          <el-option value="IN" label="入库"></el-option>
-          <el-option value="OUT" label="出库"></el-option>
-        </el-select>
+        <select-stock-type :search-form="searchForm"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.catalog" placeholder="出入类型" clearable>
-          <el-option value="TIAOZHENG" label="库存调整"></el-option>
-          <el-option value="DIAOBO" label="库存调拨"></el-option>
-          <el-option value="PANDIAN" label="库存盘点"></el-option>
-          <el-option value="CAIGOU" label="采购"></el-option>
-          <el-option value="DINGDAN" label="订单"></el-option>
-          <el-option value="XIAOSHOU" label="销售"></el-option>
-        </el-select>
+        <select-stock-catalog :search-form="searchForm"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.goodsId" placeholder="商品名称" clearable filterable loading-text="加载中..." @focus="loadGoods" @change="changeGoods">
-          <el-option v-for="item in goodsList" :key="item.id" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-goods :search-form="searchForm" :multiple="false" @change="changeGoods"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.skuId" :disabled="!searchForm.goodsId" placeholder="规格" clearable filterable loading-text="加载中..." @focus="loadSku">
-          <el-option v-for="item in skuList" :key="item.id" :label="item.specName" :value="item.id"/>
-        </el-select>
+        <select-sku :search-form="searchForm"></select-sku>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.warehouseIds" placeholder="仓库" clearable :multiple="true">
-          <el-option v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-warehouse :search-form="searchForm" :multiple="true"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.skuStatus" placeholder="上架/下架" clearable>
-          <el-option value="UP" label="上架"></el-option>
-          <el-option value="DOWN" label="下架"></el-option>
-        </el-select>
+        <select-sku-status :search-form="searchForm"/>
       </el-form-item>
       <el-form-item>
-        <el-radio-group v-model="searchForm.supplierType" @change="changeSupplier">
-          <el-radio-button label="CUSTOMER">客户</el-radio-button>
-          <el-radio-button label="SUPPLIER">供应商</el-radio-button>
-        </el-radio-group>
-        <el-select v-model="searchForm.supplierName" placeholder="客户供应商" clearable filterable loading-text="加载中..." @focus="loadSupplier">
-          <el-option v-for="item in supplierList" :key="item.id" :label="item.name" :value="item.name"/>
-        </el-select>
+        <select-supplier :search-form="searchForm"/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
@@ -70,7 +45,9 @@
       </el-table-column>
       <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="250">
         <template v-slot="scope">
-          <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
+          <span v-if="scope.row.specName">
+            <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="catalog" header-align="center" align="left" label="出入库分类">
@@ -115,6 +92,13 @@
 
 <script>
   import GoodsDetail from './goods-detail'
+  import SelectSupplier from './component/select-supplier'
+  import SelectWarehouse from './component/select-warehouse'
+  import SelectGoods from './component/select-goods'
+  import SelectSku from './component/select-sku'
+  import SelectStockType from './component/select-stock-type'
+  import SelectSkuStatus from './component/select-sku-status'
+  import SelectStockCatalog from './component/select-stock-catalog'
   export default {
     data () {
       return {
@@ -129,34 +113,26 @@
           warehouseIds: [],
           skuStatus: '',
           supplierType: '',
-          supplierName: ''
+          supplierId: ''
         },
         dataList: [],
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
-        detailVisible: false,
-        warehouseList: [],
-        goodsList: [],
-        skuList: [],
-        supplierList: []
+        detailVisible: false
       }
     },
     components: {
-      GoodsDetail
+      GoodsDetail,
+      SelectSupplier,
+      SelectWarehouse,
+      SelectGoods,
+      SelectSku,
+      SelectStockType,
+      SelectSkuStatus,
+      SelectStockCatalog
     },
     activated () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
       this.getDataList()
     },
     methods: {
@@ -165,7 +141,6 @@
         this.$http({
           url: '/psi/stock/list',
           method: 'post',
-          loading: false,
           data: {
             page: this.pageIndex,
             limit: this.pageSize,
@@ -218,67 +193,9 @@
           })
         })
       },
-      loadGoods () {
-        if (this.goodsList.length > 0) {
-          return
-        }
-        this.$http({
-          url: '/psi/goods/listAll',
-          method: 'get',
-          loading: false,
-          params: {}
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.goodsList = data.list
-          } else {
-            this.goodsList = []
-          }
-        })
-      },
-      loadSku () {
-        if (this.skuList.length > 0) {
-          return
-        }
-        this.$http({
-          url: '/psi/goodssku/listAll',
-          method: 'get',
-          loading: false,
-          params: {
-            goodsId: this.searchForm.goodsId
-          }
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.skuList = data.list
-          } else {
-            this.skuList = []
-          }
-        })
-      },
       changeGoods () {
         this.searchForm.skuId = undefined
         this.skuList = []
-      },
-      loadSupplier () {
-        if (this.supplierList.length > 0) {
-          return
-        }
-        this.$http({
-          url: '/psi/supplier/listAll',
-          method: 'get',
-          loading: false,
-          params: {
-            type: this.searchForm.supplierType
-          }
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.supplierList = data.list
-          } else {
-            this.supplierList = []
-          }
-        })
-      },
-      changeSupplier () {
-        this.supplierList = []
       }
     }
   }
