@@ -71,31 +71,4 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${clas
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(${pk.attrname}s));
     }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void execute(String id,ModuleExecute<${className}}Entity,Void> fun){
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        MallOrderEntity order = this.getById(id);
-        this.execute(order,params,fun);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void execute(${className}}Entity module, ModuleExecute<${className}}Entity,Void> fun){
-        Objects.requireNonNull(orderInfo);
-        Objects.requireNonNull(fun);
-        fun.apply(orderInfo,params);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void execute(${className}}Entity module, ModuleExecute<${className}}Entity,Void>... funs){
-        Objects.requireNonNull(orderInfo);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(orderInfo,params);
-        });
-    }
 }
