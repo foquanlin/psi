@@ -8,9 +8,7 @@
         <el-date-picker v-model="dataForm.createDate" placeholder="日期" clearable value-format="yyyy-MM-dd" type="date"/>
       </el-form-item>
       <el-form-item label="付款账户" prop="bankId">
-        <el-select v-model="dataForm.bankId" placeholder="付款账户" clearable>
-          <el-option v-for="item in bankList" :key="item.id" :value="item.id" :label="item.bankName"/>
-        </el-select>
+        <select-bank v-model="dataForm" field="bankId" placeholder="付款账户"/>
       </el-form-item>
       <el-form-item label="金额" prop="amount">
         <el-input-number v-model="dataForm.amount" placeholder="金额" clearable/>
@@ -24,6 +22,7 @@
 </template>
 
 <script>
+  import SelectBank from './component/select-bank'
   export default {
     data () {
       return {
@@ -40,12 +39,11 @@
           bankId: [{required: true, message: '付款账户不能为空', trigger: 'blur'}],
           amount: [{required: true, message: '金额不能为空', trigger: 'blur'}],
           other: []
-        },
-        bankList: []
+        }
       }
     },
-    created () {
-      this.loadBank()
+    components: {
+      SelectBank
     },
     methods: {
       init (orderId, id) {
@@ -88,20 +86,6 @@
               })
             }
           })
-      },
-      loadBank () {
-        this.$http({
-          url: '/psi/bank/listAll',
-          method: 'get',
-          loading: false,
-          params: {}
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.bankList = data.list
-          } else {
-            this.bankList = []
-          }
-        })
       }
     }
   }

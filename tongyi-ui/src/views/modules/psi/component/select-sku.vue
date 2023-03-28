@@ -46,19 +46,21 @@ export default {
       if (this.skuList.length > 0) {
         return
       }
-      this.$http({
-        url: '/psi/goodssku/listAll',
-        method: 'get',
-        loading: false,
-        params: {
-          goodsId: this.goodsId
-        }
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.skuList = data.list
-        } else {
-          this.skuList = []
-        }
+      this.$nextTick(() => {
+        this.$http({
+          url: '/psi/goodssku/listAll',
+          method: 'get',
+          loading: false,
+          params: {
+            goodsId: this.goodsId
+          }
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.skuList = data.list
+          } else {
+            this.skuList = []
+          }
+        })
       })
     }
   }

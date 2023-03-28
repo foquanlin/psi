@@ -10,9 +10,7 @@
       </el-table-column>
       <el-table-column prop="bankId" header-align="center" align="center" label="账户">
         <template v-slot="scope">
-          <el-select v-if="scope.row.edited" v-model="scope.row.bankId" placeholder="付款账户" clearable size="mini">
-            <el-option v-for="item in bankList" :key="item.id" :value="item.id" :label="item.bankName"/>
-          </el-select>
+          <select-bank v-if="scope.row.edited" v-model="scope.row" field="bankId" placeholder="付款账户"/>
           <span v-else>{{scope.row.bankName}}</span>
         </template>
       </el-table-column>
@@ -36,7 +34,7 @@
 </template>
 
 <script>
-
+import SelectBank from './component/select-bank'
 export default {
   data () {
     return {
@@ -69,24 +67,10 @@ export default {
       deep: true
     }
   },
-  created () {
-    this.loadBank()
+  components: {
+    SelectBank
   },
   methods: {
-    loadBank () {
-      this.$http({
-        url: '/psi/bank/listAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.bankList = data.list
-        } else {
-          this.bankList = []
-        }
-      })
-    },
     deleteHandle (row, index) {
       if (!row.id) {
         this.dataList.splice(index, 1)

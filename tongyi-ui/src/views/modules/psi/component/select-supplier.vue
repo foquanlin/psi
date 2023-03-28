@@ -4,7 +4,7 @@
       <el-radio-button label="CUSTOMER">客户</el-radio-button>
       <el-radio-button label="SUPPLIER">供应商</el-radio-button>
     </el-radio-group>
-    <el-select v-model="value[field]" placeholder="客户供应商" clearable filterable loading-text="加载中..." @focus="loadData">
+    <el-select v-model="value[field]" :placeholder="supplierType==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." @focus="loadData">
       <el-option v-for="item in supplierList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>

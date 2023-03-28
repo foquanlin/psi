@@ -89,16 +89,10 @@ export default {
         settlementAmount: '',
         orderAmount: ''
       },
-      supplierList: [],
-      userList: [],
-      goodsList: [],
       dataList: [],
       selectVisible: false,
-      bankList: [],
       accountList: [{bankId: '', amount: 0}]
     }
-  },
-  components: {
   },
   methods: {
     init (id) {

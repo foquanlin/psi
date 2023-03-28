@@ -4,17 +4,13 @@
   <el-table border :data="dataList">
     <el-table-column prop="name" header-align="center" align="center" label="商品">
       <template v-slot="scope">
-        <el-select v-if="scope.row.append && !scope.row.goodsId" v-model="scope.row.goodsId" @change="selectGoods">
-          <el-option v-for="goods in goodsList" :key="goods.id" :value="goods" :label="goods.name"/>
-        </el-select>
+        <select-goods v-if="scope.row.append && !scope.row.goodsId" v-model="scope.row" field="goodsId" @change="selectGoods"/>
         <span v-else>{{scope.row.goodsName}}</span>
       </template>
     </el-table-column>
     <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="280">
       <template v-slot="scope">
-        <el-select v-if="scope.row.append" v-model="scope.row.skuId" @change="selectSku" @visible-change="loadSku(scope.row)">
-          <el-option v-for="sku in skuList" :key="sku.id" :value="sku.id" :label="sku.specName"/>
-        </el-select>
+        <select-sku v-if="scope.row.append" v-model="scope.row" :goods-id="scope.row.goodsId" field="skuId"/>
         <span v-else-if="scope.row.specName">
           <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
         </span>
@@ -51,12 +47,12 @@
 
 <script>
 import OrderStockInout from './order-stock-inout'
+import SelectGoods from './component/select-goods'
+import SelectSku from './component/select-sku'
 export default {
   data () {
     return {
       disabled: true,
-      goodsList: [],
-      skuList: [],
       inStockVisible: false
     }
   },
@@ -86,28 +82,11 @@ export default {
     }
   },
   components: {
-    OrderStockInout
-  },
-  mounted () {
-    this.loadGoods()
+    OrderStockInout,
+    SelectGoods,
+    SelectSku
   },
   methods: {
-    loadGoods () {
-      this.$nextTick(() => {
-        this.$http({
-          url: '/psi/goods/listAll',
-          method: 'get',
-          loading: false,
-          params: {}
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.goodsList = data.list
-          } else {
-            this.goodsList = []
-          }
-        })
-      })
-    },
     getDataList () {
       this.$nextTick(() => {
         this.$http({
@@ -141,38 +120,13 @@ export default {
         })
       })
     },
-    selectGoods (goods) {
+    selectGoods (id, goods) {
       let item = this.dataList[this.dataList.length - 1]
       item.id = goods.id
       item.goodsId = goods.id
       item.goodsName = goods.name
-      item.catalogName = goods.catalog.name
-      item.unitName = goods.unit.name
-      this.loadSku(goods)
-    },
-    selectSku (sku) {
-      console.log(sku)
-    },
-    loadSku (row) {
-      this.skuList = []
-      this.$http({
-        url: '/psi/goodssku/listAll',
-        method: 'get',
-        loading: false,
-        params: {
-          goodsId: row.id
-        }
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          let list = []
-          data.list.forEach(item => {
-            list.push(item)
-          })
-          this.skuList = list
-        } else {
-          this.skuList = []
-        }
-      })
+      item.catalogName = goods.catalogName
+      item.unitName = goods.unitName
     },
     inStockHandle (row, index) {
       this.inStockVisible = true

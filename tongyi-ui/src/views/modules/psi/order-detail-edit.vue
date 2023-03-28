@@ -150,7 +150,7 @@ export default {
         .validate((valid) => {
           if (valid) {
             this.$http({
-              url: `/psi/order/buyorderupdate`,
+              url: `/psi/order/update`,
               method: 'post',
               data: {
                 ...this.dataForm,
