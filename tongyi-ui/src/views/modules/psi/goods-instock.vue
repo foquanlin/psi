@@ -10,9 +10,7 @@
         <el-date-picker v-model="dataForm.createTime" :disabled="disabled" placeholder="创建时间" type="date" value-format="yyyy-MM-dd" clearable/>
       </el-form-item>
       <el-form-item label="仓库" prop="warehouseId">
-        <el-radio-group v-model="dataForm.warehouseId" :disabled="disabled" placeholder="仓库" clearable>
-          <el-radio-button v-for="item in warehouseList" :key="item.id" :label="item.id">{{item.name}}</el-radio-button>
-        </el-radio-group>
+        <select-warehouse v-model="dataForm" field="warehouseId" :disabled="disabled"></select-warehouse>
       </el-form-item>
       <el-form-item label="数量" prop="num">
         <el-input-number v-model="dataForm.num" :disabled="disabled" placeholder="数量" clearable />
@@ -32,6 +30,7 @@
 </template>
 
 <script>
+  import SelectWarehouse from './component/select-warehouse'
   export default {
     data () {
       return {
@@ -52,22 +51,11 @@
           createTime: [{required: true, message: '创建时间不能为空', trigger: 'blur'}],
           other: []
         },
-        warehouseList: [],
         skuList: []
       }
     },
-    created () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
+    components: {
+      SelectWarehouse
     },
     methods: {
       init (id, disabled) {

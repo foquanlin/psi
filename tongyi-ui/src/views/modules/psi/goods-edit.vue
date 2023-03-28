@@ -10,14 +10,10 @@
     </el-row>
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="120px" style="margin-left: 10px;margin-right: 10px;margin-top: 20px">
       <el-form-item label="品牌" prop="brandId">
-        <el-select v-model="dataForm.brandId" placeholder="品牌" clearable>
-          <el-option v-for="item in brandList" :key="item.id" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-brand  v-model="dataForm" field="brandId" placeholder="品牌"/>
       </el-form-item>
       <el-form-item label="分类" prop="catalogId">
-        <el-select v-model="dataForm.catalogId" placeholder="分类" clearable>
-          <el-option v-for="item in catalogList" :key="item.id" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-catalog v-model="dataForm" field="catalogId" placeholder="分类"/>
       </el-form-item>
       <el-form-item label="商品编码" prop="no">
         <el-input v-model="dataForm.no" placeholder="商品编码" clearable/>
@@ -26,9 +22,7 @@
         <el-input v-model="dataForm.name" placeholder="名称" clearable/>
       </el-form-item>
       <el-form-item label="单位" prop="unitId">
-        <el-select v-model="dataForm.unitId" placeholder="单位" clearable>
-          <el-option v-for="item in unitList" :key="item.id" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-unit  v-model="dataForm" field="unitId" placeholder="单位"/>
       </el-form-item>
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" placeholder="备注" clearable/>
@@ -42,6 +36,10 @@
 </template>
 
 <script>
+  import SelectWarehouse from './component/select-warehouse'
+  import SelectBrand from './component/select-brand'
+  import SelectCatalog from './component/select-catalog'
+  import SelectUnit from './component/select-unit'
   export default {
     data () {
       return {
@@ -65,58 +63,14 @@
           createDate: [{required: true, message: '创建时间不能为空', trigger: 'blur'}],
           unitId: [{required: true, message: '单位不能为空', trigger: 'blur'}],
           other: []
-        },
-        warehouseList: [],
-        catalogList: [],
-        brandList: [],
-        unitList: []
+        }
       }
     },
-    created () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
-      this.$http({
-        url: '/psi/catalog/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.catalogList = data.list
-        } else {
-          this.catalogList = []
-        }
-      })
-      this.$http({
-        url: '/psi/brand/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.brandList = data.list
-        } else {
-          this.brandList = []
-        }
-      })
-      this.$http({
-        url: '/psi/unit/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.unitList = data.list
-        } else {
-          this.unitList = []
-        }
-      })
+    components: {
+      SelectWarehouse,
+      SelectBrand,
+      SelectCatalog,
+      SelectUnit
     },
     methods: {
       init (id) {

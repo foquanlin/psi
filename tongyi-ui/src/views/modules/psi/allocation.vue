@@ -5,14 +5,10 @@
         <el-input v-model="searchForm.no" placeholder="调拨单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.outWarehouseId" placeholder="调出仓库" clearable>
-          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-warehouse v-model="searchForm" field="outWarehouseId" placeholder="调出仓库"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.inWarehouseId" placeholder="调入仓库" clearable>
-          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-warehouse v-model="searchForm" field="inWarehouseId" placeholder="调入仓库"/>
       </el-form-item>
       <el-form-item>
         <el-date-picker v-model="searchForm.createDate" placeholder="调拨日期" clearable type="date" value-format="yyyy-MM-dd"/>
@@ -54,6 +50,7 @@
   import allocationEdit from './allocation-edit'
   import allocationView from './allocation-view'
   import Options from '../sys/options'
+  import SelectWarehouse from './component/select-warehouse'
   export default {
     data () {
       return {
@@ -66,27 +63,16 @@
         totalPage: 0,
         dataListSelections: [],
         editVisible: false,
-        viewVisible: false,
-        warehouseList: []
+        viewVisible: false
       }
     },
     components: {
       allocationEdit,
       allocationView,
-      Options
+      Options,
+      SelectWarehouse
     },
     activated () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
       this.getDataList()
     },
     methods: {

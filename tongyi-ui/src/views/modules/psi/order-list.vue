@@ -30,7 +30,7 @@
         <el-input v-model="searchForm.no" placeholder="订单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <select-supplier2 :search-form="searchForm" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'"></select-supplier2>
+        <select-supplier2 v-model="searchForm" field="orderUid" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'"/>
       </el-form-item>
       <el-form-item>
         <el-date-picker v-model="searchForm.createDateStart" placeholder="开始日期" clearable type="date" value-format="yyyy-MM-dd"/>
@@ -39,16 +39,16 @@
         <el-date-picker v-model="searchForm.createDateEnd" placeholder="结束日期" clearable type="date" value-format="yyyy-MM-dd"/>
       </el-form-item>
       <el-form-item>
-        <select-user :value="searchForm.createUid" placeholder="制单人"/>
+        <select-user v-model="searchForm" field="createUid" placeholder="制单人"/>
       </el-form-item>
       <el-form-item>
-        <select-user :value="searchForm.ownerUid" placeholder="负责人"/>
+        <select-user v-model="searchForm" field="ownerUid" placeholder="负责人"/>
+      </el-form-item>
+      <el-form-item>
+        <select-goods v-model="searchForm" field="goodsId"/>
       </el-form-item>
       <el-form-item>
         <el-input v-model="searchForm.memo" placeholder="订单备注" clearable/>
-      </el-form-item>
-      <el-form-item>
-        <select-goods :search-form="searchForm"/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
@@ -179,7 +179,6 @@ export default {
       orderAddVisible: false,
       orderEditVisible: false,
       orderViewVisible: false,
-      supplierList: [],
       totalAmount: 0,
       payAmount: 0,
       nopayAmount: 0
@@ -221,8 +220,6 @@ export default {
     SelectSupplier2
   },
   mounted () {
-    this.loadSupplier()
-    this.loadUser()
     this.getDataList()
   },
   methods: {
@@ -314,22 +311,6 @@ export default {
             this.getDataList()
           }
         })
-      })
-    },
-    loadSupplier () {
-      this.$http({
-        url: '/psi/supplier/listAll',
-        method: 'get',
-        loading: false,
-        params: {
-          type: this.catalog === 'BUY' ? 'SUPPLIER' : 'CUSTOMER'
-        }
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.supplierList = data.list
-        } else {
-          this.supplierList = []
-        }
       })
     },
     showSupplier (id) {

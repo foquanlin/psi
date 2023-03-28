@@ -14,7 +14,7 @@
       </el-col>
     </el-row>
     <el-table border :data="dataList">
-      <el-table-column prop="createTime" header-align="center" align="left" label="日期" width="250">
+      <el-table-column prop="createTime" header-align="center" align="left" label="日期" width="150">
         <template v-slot="scope">
           <el-date-picker v-if="scope.row.edited" v-model="scope.row.createTime" type="date" value-format="yyyy-MM-dd" size="mini"/>
           <span v-else>{{scope.row.createTime}}</span>
@@ -26,11 +26,9 @@
           <span v-else>出库</span>
         </template>
       </el-table-column>
-      <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库">
+      <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库" width="150">
         <template v-slot="scope">
-          <el-select v-if="scope.row.edited" v-model="scope.row.warehouseId" placeholder="仓库" clearable size="mini">
-            <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-          </el-select>
+          <select-warehouse v-if="scope.row.edited" v-model="scope.row" field="warehouseId"/>
           <span v-else>{{scope.row.warehouseName}}</span>
         </template>
       </el-table-column>
@@ -72,13 +70,13 @@
 </template>
 
 <script>
+import SelectWarehouse from './component/select-warehouse'
 export default {
   data () {
     return {
       visible: false,
       sku: {goods: {picUrl: ''}},
       dataList: [],
-      warehouseList: [],
       goodsId: '',
       skuId: '',
       title: '',
@@ -139,23 +137,8 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$nextTick(() => {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        loading: false,
-        params: {
-          status: 'RUN'
-        }
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
-    })
+  components: {
+    SelectWarehouse
   },
   methods: {
     show (goodsId, skuId) {

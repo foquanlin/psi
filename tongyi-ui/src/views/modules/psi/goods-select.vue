@@ -11,14 +11,10 @@
         <el-input v-model="searchForm.barcode" placeholder="条形码" clearable suffix-icon="el-icon-search"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.catalogId" placeholder="分类" clearable>
-          <el-option v-for="item in catalogList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-catalog v-model="searchForm" field="catalogId"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.warehouseId" placeholder="仓库" clearable v-if="selectWarehouseId">
-          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-warehouse v-model="searchForm" field="warehouseId" v-if="selectWarehouseId"></select-warehouse>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
@@ -65,6 +61,9 @@
 </template>
 
 <script>
+  import SelectWarehouse from './component/select-warehouse'
+  import SelectCatalog from './component/select-catalog'
+
   export default {
     data () {
       return {
@@ -78,8 +77,6 @@
         },
         selectWarehouseId: true,
         dataList: [],
-        warehouseList: [],
-        catalogList: [],
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
@@ -88,32 +85,8 @@
       }
     },
     components: {
-    },
-    mounted () {
-      this.$http({
-        url: '/psi/catalog/listAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.catalogList = data.list
-        } else {
-          this.catalogList = []
-        }
-      })
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
+      SelectWarehouse,
+      SelectCatalog
     },
     watch: {
       dataList: function () {

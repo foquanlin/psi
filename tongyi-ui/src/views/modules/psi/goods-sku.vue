@@ -30,6 +30,8 @@
 </template>
 
 <script>
+  import SelectWarehouse from './component/select-warehouse'
+
   export default {
     data () {
       return {
@@ -57,22 +59,11 @@
           // num: [{required: true, message: '数量不能为空', trigger: 'blur'}],
           other: []
         },
-        goods: {},
-        warehouseList: []
+        goods: {}
       }
     },
-    mounted () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
+    components: {
+      SelectWarehouse
     },
     methods: {
       init (id) {

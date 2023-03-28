@@ -93,7 +93,6 @@ export default {
       userList: [],
       goodsList: [],
       dataList: [],
-      warehouseList: [],
       selectVisible: false,
       bankList: [],
       accountList: [{bankId: '', amount: 0}]

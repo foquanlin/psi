@@ -11,25 +11,25 @@
         <el-date-picker v-model="searchForm.createTimeEnd" placeholder="结束时间" clearable type="date" value-format="yyyy-MM-dd"/>
       </el-form-item>
       <el-form-item>
-        <select-stock-type :search-form="searchForm"/>
+        <select-stock-type v-model="searchForm" field="type"/>
       </el-form-item>
       <el-form-item>
-        <select-stock-catalog :search-form="searchForm"/>
+        <select-stock-catalog v-model="searchForm" field="catalog"/>
       </el-form-item>
       <el-form-item>
-        <select-goods :search-form="searchForm" :multiple="false" @change="changeGoods"/>
+        <select-goods v-model="searchForm" field="goodsId" @change="changeGoods"/>
       </el-form-item>
       <el-form-item>
-        <select-sku :search-form="searchForm"></select-sku>
+        <select-sku v-model="searchForm" :goods-id="searchForm.goodsId" field="skuId"></select-sku>
       </el-form-item>
       <el-form-item>
-        <select-warehouse :search-form="searchForm" :multiple="true"/>
+        <select-warehouse v-model="searchForm" :multiple="true" field="warehouseIds"/>
       </el-form-item>
       <el-form-item>
-        <select-sku-status :search-form="searchForm"/>
+        <select-sku-status v-model="searchForm" field="skuStatus"/>
       </el-form-item>
       <el-form-item>
-        <select-supplier :search-form="searchForm"/>
+        <select-supplier v-model="searchForm"/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
@@ -193,9 +193,9 @@
           })
         })
       },
-      changeGoods () {
+      changeGoods (id, goods) {
+        this.searchForm.goodsId = id
         this.searchForm.skuId = undefined
-        this.skuList = []
       }
     }
   }

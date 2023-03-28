@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="searchForm.bankId" placeholder="账户" clearable filterable loading-text="加载中..." @focus="loadBank">
+    <el-select v-model="value[field]" placeholder="账户" clearable filterable loading-text="加载中..." @focus="loadData">
       <el-option v-for="item in bankList" :key="item.id" :label="item.bankName" :value="item.id"/>
     </el-select>
   </div>
@@ -14,22 +14,29 @@ export default {
     }
   },
   props: {
-    searchForm: {
+    value: {
       type: Object,
       default: {}
+    },
+    field: {
+      type: String,
+      default: 'bankId'
     }
   },
   watch: {
-    searchForm: {
+    value: {
       immediate: true,
       handler (value) {
-        this.searchForm = value
+        this.value = value
         console.log('watch.searchForm')
       }
     }
   },
+  mounted () {
+    this.loadData()
+  },
   methods: {
-    loadBank () {
+    loadData () {
       if (this.bankList.length > 0) {
         return
       }

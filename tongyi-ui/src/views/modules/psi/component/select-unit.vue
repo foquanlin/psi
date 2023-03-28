@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-select v-model="value[field]" placeholder="分类" clearable filterable loading-text="加载中..." @focus="loadData">
-      <el-option v-for="item in catalogList" :key="item.id" :label="item.name" :value="item.id"/>
+    <el-select v-model="value[field]" placeholder="单位" clearable filterable loading-text="加载中..." @focus="loadData">
+      <el-option v-for="item in unitList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>
 </template>
@@ -10,7 +10,7 @@
 export default {
   data () {
     return {
-      catalogList: []
+      unitList: []
     }
   },
   props: {
@@ -20,7 +20,7 @@ export default {
     },
     field: {
       type: String,
-      default: 'catalogId'
+      default: 'brandId'
     }
   },
   watch: {
@@ -37,18 +37,19 @@ export default {
   },
   methods: {
     loadData () {
-      if (this.catalogList.length > 0) {
+      if (this.unitList.length > 0) {
         return
       }
       this.$http({
-        url: '/psi/catalog/listAll',
+        url: '/psi/unit/listAll',
         method: 'get',
+        loading: false,
         params: {}
       }).then(({data}) => {
         if (data && data.code === 0) {
-          this.catalogList = data.list
+          this.unitList = data.list
         } else {
-          this.catalogList = []
+          this.unitList = []
         }
       })
     }

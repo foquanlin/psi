@@ -6,17 +6,13 @@
         <el-date-picker v-model="dataForm.createDate" placeholder="订单日期" type="date" value-format="yyyy-MM-dd" clearable/>
       </el-form-item>
       <el-form-item label="供应商" prop="orderUid">
-        <el-select v-model="dataForm.orderUid" placeholder="供应商" clearable>
-          <el-option v-for="item in supplierList" :key="item.id" :value="item.id" :label="item.name"/>
-        </el-select>
+        <select-supplier2 v-model="dataForm" field="orderUid" type="SUPPLIER" />
       </el-form-item>
       <el-form-item label="快递单号" prop="expressNo">
         <el-input v-model="dataForm.expressNo" placeholder="快递单号" clearable/>
       </el-form-item>
       <el-form-item label="责任人" prop="ownerUid">
-        <el-select v-model="dataForm.ownerUid" placeholder="责任人" clearable>
-          <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
-        </el-select>
+        <select-user v-model="dataForm" field="ownerUid" placeholder="负责人"/>
       </el-form-item>
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" placeholder="备注" clearable/>
@@ -25,17 +21,13 @@
         <el-table border :data="dataList" style="align-content: center;align-items: center;" >
           <el-table-column prop="name" header-align="center" align="center" label="商品" width="250">
             <template v-slot="scope">
-              <el-select v-if="scope.row.append && !scope.row.goodsId" v-model="scope.row.goodsId" @change="selectGoods">
-                <el-option v-for="goods in goodsList" :key="goods.id" :value="goods" :label="goods.name"/>
-              </el-select>
+              <select-goods v-if="scope.row.append && !scope.row.goodsId" v-model="scope.row" field="goodsId" @change="selectGoods"/>
               <span v-else>{{scope.row.goodsName}}</span>
             </template>
           </el-table-column>
           <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="250">
             <template v-slot="scope">
-              <el-select v-if="scope.row.append" v-model="scope.row.skuId" @change="selectSku">
-                <el-option v-for="sku in skuList" :key="sku.id" :value="sku.id" :label="sku.specName"/>
-              </el-select>
+              <select-sku v-if="scope.row.append" v-model="scope.row" :goods-id="scope.row.goodsId" field="skuId"/>
               <span  v-else="scope.row.specName">
                 <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
               </span>
@@ -79,6 +71,11 @@
 
 <script>
 import GoodsSelect from './goods-select'
+import SelectWarehouse from './component/select-warehouse'
+import SelectSupplier2 from './component/select-supplier2'
+import SelectUser from './component/select-user'
+import SelectGoods from './component/select-goods'
+import SelectSku from './component/select-sku'
 export default {
   data () {
     return {
@@ -110,16 +107,16 @@ export default {
         other: []
       },
       selectVisible: false,
-      supplierList: [],
-      warehouseList: [],
-      goodsList: [],
-      userList: [],
-      skuList: [],
       deleteList: []
     }
   },
   components: {
-    GoodsSelect
+    GoodsSelect,
+    SelectWarehouse,
+    SelectSupplier2,
+    SelectUser,
+    SelectGoods,
+    SelectSku
   },
   props: {
     order: {
@@ -146,12 +143,6 @@ export default {
       }
     }
   },
-  mounted () {
-    this.loadGoods()
-    this.loadUser()
-    this.loadSupplier()
-    this.loadWarehouse()
-  },
   methods: {
     // 表单提交
     dataFormSubmit () {
@@ -174,50 +165,6 @@ export default {
             })
           }
         })
-    },
-    loadSupplier () {
-      this.$http({
-        url: '/psi/supplier/listAll',
-        method: 'get',
-        loading: false,
-        params: {
-          type: 'SUPPLIER'
-        }
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.supplierList = data.list
-        } else {
-          this.supplierList = []
-        }
-      })
-    },
-    loadGoods () {
-      this.$http({
-        url: '/psi/goods/listAll',
-        method: 'get',
-        loading: false,
-        data: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.goodsList = data.list
-        } else {
-          this.goodsList = []
-        }
-      })
-    },
-    loadUser () {
-      this.$http({
-        url: '/sys/user/queryAll',
-        method: 'get',
-        loading: false,
-        data: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.userList = data.list
-        } else {
-          this.userList = []
-        }
-      })
     },
     appendGoods () {
       this.dataList.push(
@@ -260,51 +207,15 @@ export default {
       })
       this.dataList = datalist
     },
-    loadWarehouse () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
-    },
-    selectGoods (goods) {
+    selectGoods (id, goods) {
       let item = this.dataList[this.dataList.length - 1]
       item.goodsId = goods.id
       item.goodsName = goods.name
-      item.catalogName = goods.catalog.name
-      item.unitName = goods.unit.name
-      this.loadSku(goods)
+      item.catalogName = goods.catalogName
+      item.unitName = goods.unitName
     },
     selectSku (sku) {
       console.log(sku)
-    },
-    loadSku (row) {
-      this.skuList = []
-      this.$http({
-        url: '/psi/goodssku/listAll',
-        method: 'get',
-        loading: false,
-        params: {
-          goodsId: row.id
-        }
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          let list = []
-          data.list.forEach(item => {
-            list.push(item)
-          })
-          this.skuList = list
-        } else {
-          this.skuList = []
-        }
-      })
     },
     delRowHandle (index) { // 删除一行
       if (this.dataList[index].id) {

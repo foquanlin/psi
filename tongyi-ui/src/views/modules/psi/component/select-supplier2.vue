@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value" :placeholder="type==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." @focus="loadSupplier">
+    <el-select v-model="value[field]" :placeholder="type==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." @focus="loadData">
       <el-option v-for="item in supplierList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>
@@ -21,6 +21,10 @@ export default {
     value: {
       type: Object,
       default: {}
+    },
+    field: {
+      type: String,
+      default: 'supplierId'
     }
   },
   watch: {
@@ -39,8 +43,11 @@ export default {
       }
     }
   },
+  mounted () {
+    this.loadData()
+  },
   methods: {
-    loadSupplier () {
+    loadData () {
       if (this.supplierList.length > 0) {
         return
       }

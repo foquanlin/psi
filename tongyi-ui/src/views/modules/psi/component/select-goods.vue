@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="searchForm.goodsId" placeholder="商品名称" clearable filterable loading-text="加载中..." @focus="loadGoods" @change="changeGoods">
+  <el-select v-model="value[field]" placeholder="商品名称" clearable filterable loading-text="加载中..." @focus="loadData" @change="changeGoods">
     <el-option v-for="item in goodsList" :key="item.id" :label="item.name" :value="item.id"/>
   </el-select>
 </template>
@@ -12,9 +12,13 @@ export default {
     }
   },
   props: {
-    searchForm: {
+    value: {
       type: Object,
       default: {}
+    },
+    field: {
+      type: String,
+      default: 'goodsId'
     },
     multiple: {
       type: Boolean,
@@ -22,16 +26,19 @@ export default {
     }
   },
   watch: {
-    searchForm: {
+    value: {
       immediate: true,
       handler (value) {
-        this.searchForm = value
+        this.value = value
         console.log('watch.searchForm')
       }
     }
   },
+  mounted () {
+    this.loadData()
+  },
   methods: {
-    loadGoods () {
+    loadData () {
       if (this.goodsList.length > 0) {
         return
       }
@@ -48,10 +55,16 @@ export default {
         }
       })
     },
-    changeGoods () {
-      this.searchForm.skuId = undefined
+    changeGoods (value) {
+      let goods = {}
+      this.goodsList.forEach(item => {
+        if (item.id === value) {
+          goods = item
+        }
+      })
+      this.value[this.field] = value
       this.skuList = []
-      this.$emit('change')
+      this.$emit('change', value, goods)
     }
   }
 }

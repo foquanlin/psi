@@ -2,10 +2,10 @@
   <div class="mod-bankbill">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <select-bank :search-form="searchForm"/>
+        <select-bank v-model="searchForm" field="bankId"/>
       </el-form-item>
       <el-form-item>
-        <select-supplier :search-form="searchForm"/>
+        <select-supplier v-model="searchForm" field="supplierId"/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1;getDataList()">查询</el-button>

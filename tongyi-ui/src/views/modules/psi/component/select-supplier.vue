@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-radio-group v-model="searchForm.supplierType" @change="changeSupplier">
+    <el-radio-group v-model="supplierType" @change="changeSupplier">
       <el-radio-button label="CUSTOMER">客户</el-radio-button>
       <el-radio-button label="SUPPLIER">供应商</el-radio-button>
     </el-radio-group>
-    <el-select v-model="searchForm.supplierId" placeholder="客户供应商" clearable filterable loading-text="加载中..." @focus="loadSupplier">
+    <el-select v-model="value[field]" placeholder="客户供应商" clearable filterable loading-text="加载中..." @focus="loadData">
       <el-option v-for="item in supplierList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>
@@ -19,24 +19,29 @@ export default {
     }
   },
   props: {
-    searchForm: {
+    value: {
       type: Object,
       default: {}
+    },
+    field: {
+      type: String,
+      default: 'supplierId'
     }
   },
   watch: {
-    searchForm: {
+    value: {
       immediate: true,
       handler (value) {
-        this.searchForm = value
+        this.value = value
         console.log('watch.searchForm')
       }
     }
   },
-  components: {
+  mounted () {
+    this.loadData()
   },
   methods: {
-    loadSupplier () {
+    loadData () {
       if (this.supplierList.length > 0) {
         return
       }
@@ -45,7 +50,7 @@ export default {
         method: 'get',
         loading: false,
         params: {
-          type: this.searchForm.supplierType
+          type: this.supplierType
         }
       }).then(({data}) => {
         if (data && data.code === 0) {
@@ -56,7 +61,7 @@ export default {
       })
     },
     changeSupplier () {
-      this.searchForm.supplierId = ''
+      this.value[this.field] = ''
       this.supplierList = []
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="searchForm.skuId" :disabled="!searchForm.goodsId" placeholder="规格" clearable filterable loading-text="加载中..." @focus="loadSku">
+  <el-select v-model="value[field]" :disabled="!goodsId" placeholder="规格" clearable filterable loading-text="加载中..." @focus="loadData">
     <el-option v-for="item in skuList" :key="item.id" :label="item.specName" :value="item.id"/>
   </el-select>
 </template>
@@ -12,9 +12,17 @@ export default {
     }
   },
   props: {
-    searchForm: {
+    value: {
       type: Object,
       default: {}
+    },
+    field: {
+      type: String,
+      default: 'skuId'
+    },
+    goodsId: {
+      type: String,
+      default: ''
     },
     multiple: {
       type: Boolean,
@@ -22,20 +30,19 @@ export default {
     }
   },
   watch: {
-    'searchForm.goodsId': {
+    goodsId: {
       immediate: true,
       handler (value) {
         this.skuList = []
-        console.log('watch.searchForm.goodsId')
-        this.loadSku()
+        this.loadData()
       }
     }
   },
   mounted () {
-    this.loadSku()
+    this.loadData()
   },
   methods: {
-    loadSku () {
+    loadData () {
       if (this.skuList.length > 0) {
         return
       }
@@ -44,7 +51,7 @@ export default {
         method: 'get',
         loading: false,
         params: {
-          goodsId: this.searchForm.goodsId
+          goodsId: this.goodsId
         }
       }).then(({data}) => {
         if (data && data.code === 0) {

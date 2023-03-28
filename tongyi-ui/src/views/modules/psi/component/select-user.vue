@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value" :placeholder="placeholder" clearable @focus="loadUser">
+    <el-select v-model="value[field]" :placeholder="placeholder" clearable @focus="loadData">
       <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
     </el-select>
   </div>
@@ -15,12 +15,16 @@ export default {
   },
   props: {
     value: {
-      type: String,
-      default: ''
+      type: Object,
+      default: {}
     },
     placeholder: {
       type: String,
       default: ''
+    },
+    field: {
+      type: String,
+      default: 'warehouseId'
     }
   },
   watch: {
@@ -34,13 +38,19 @@ export default {
     placeholder: {
       immediate: true,
       handler (value) {
-        this.value = value
+        this.placeholder = value
         console.log('watch.searchForm')
       }
     }
   },
+  mounted () {
+    this.loadData()
+  },
   methods: {
-    loadUser () {
+    loadData () {
+      if (this.userList.length > 0) {
+        return
+      }
       this.$http({
         url: '/sys/user/queryAll',
         method: 'get',

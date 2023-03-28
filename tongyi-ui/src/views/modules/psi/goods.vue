@@ -11,10 +11,10 @@
         <el-input v-model="searchForm.barcode" placeholder="条形码,支持扫码枪录入" clearable suffix-icon="el-icon-search"/>
       </el-form-item>
       <el-form-item>
-        <select-catalog :search-form="searchForm"/>
+        <select-catalog v-model="searchForm" field="catalogId"/>
       </el-form-item>
       <el-form-item>
-        <select-warehouse :search-form="searchForm" :multiple="false"/>
+        <select-warehouse v-model="searchForm"/>
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchForm.status" placeholder="上/下架" clearable>

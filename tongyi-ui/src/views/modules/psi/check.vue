@@ -5,7 +5,7 @@
         <el-input v-model="searchForm.no" placeholder="单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <select-warehouse :search-form="searchForm"/>
+        <select-warehouse v-model="searchForm"/>
       </el-form-item>
       <el-form-item>
         <el-date-picker v-model="searchForm.createDateStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="开始日期" clearable/>
@@ -62,9 +62,7 @@
         dataListSelections: [],
         editVisible: false,
         selectVisible: false,
-        detailVisible: false,
-        warehouseList: []
-
+        detailVisible: false
       }
     },
     components: {

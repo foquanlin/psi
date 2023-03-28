@@ -7,14 +7,10 @@
         <el-date-picker v-model="dataForm.createDate" :disabled="disabled" placeholder="订单日期" type="date" value-format="yyyy-MM-dd" clearable/>
       </el-form-item>
       <el-form-item :label="catalog==='BUY'?'供应商':'客户'" prop="orderUid">
-        <el-select v-model="dataForm.orderUid" :placeholder="catalog==='BUY'?'供应商':'客户'" clearable :disabled="disabled">
-          <el-option v-for="item in supplierList" :key="item.id" :value="item.id" :label="item.name"/>
-        </el-select>
+        <select-supplier2 v-model="dataForm" field="orderUid" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'" />
       </el-form-item>
       <el-form-item label="责任人" prop="ownerUid">
-        <el-select v-model="dataForm.ownerUid" placeholder="责任人" clearable :disabled="disabled">
-          <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
-        </el-select>
+        <select-user v-model="dataForm" field="ownerUid" placeholder="责任人"/>
       </el-form-item>
       <el-form-item label="快递单号" prop="expressNo">
         <el-input v-model="dataForm.expressNo" :disabled="disabled" placeholder="快递单号" clearable/>
@@ -57,9 +53,7 @@
           </el-table-column>
           <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库" width="150px">
             <template v-slot="scope">
-              <el-select v-model="scope.row.warehouseId" placeholder="入库仓库" clearable style="width:100%" size="mini" :disabled="disabled">
-                <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-              </el-select>
+              <select-warehouse v-model="scope.row" field="warehouseId" placeholder="入库仓库" />
             </template>
           </el-table-column>
           <el-table-column prop="inStockNum" header-align="center" align="center" label="入库数量" width="150px">
@@ -83,9 +77,7 @@
       <el-table border :data="accountList" style="align-content: center;align-items: center;">
         <el-table-column header-align="center" align="center" label="账户">
           <template v-slot="scope">
-            <el-select v-model="scope.row.bankId" placeholder="付款账户" clearable :disabled="disabled" style="width:100%">
-              <el-option v-for="item in bankList" :key="item.id" :value="item.id" :label="item.bankName"/>
-            </el-select>
+            <select-bank v-model="scope.row" field="bankId" placeholder="付款账户" :disabled="disabled"/>
           </template>
         </el-table-column>
         <el-table-column header-align="center" align="center" label="金额">
@@ -122,6 +114,10 @@
 
 <script>
 import GoodsSelect from './goods-select'
+import SelectWarehouse from './component/select-warehouse'
+import SelectBank from './component/select-bank'
+import SelectUser from './component/select-user'
+import SelectSupplier2 from './component/select-supplier2'
 export default {
   data () {
     return {
@@ -152,15 +148,10 @@ export default {
         ownerUid: [{required: true, message: '负责人不能为空', trigger: 'blur'}],
         other: []
       },
-      supplierList: [],
-      userList: [],
-      goodsList: [],
       dataList: [],
-      warehouseList: [],
       fileList: [],
       selectVisible: false,
-      bankList: [],
-      accountList: [{bankId: '', amount: 0}],
+      accountList: [],
       url: this.$http.BASE_URL + `/sys/oss/upload?token=${this.$cookie.get('token')}`
     }
   },
@@ -191,16 +182,11 @@ export default {
     }
   },
   components: {
-    GoodsSelect
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.loadSupplier()
-      this.loadGoods()
-      this.loadUser()
-      this.loadWarehouse()
-      this.loadBank()
-    })
+    GoodsSelect,
+    SelectWarehouse,
+    SelectBank,
+    SelectUser,
+    SelectSupplier2
   },
   methods: {
     init (id, disabled) {
@@ -279,48 +265,6 @@ export default {
         }
       })
     },
-    loadGoods () {
-      this.$http({
-        url: '/psi/goods/listAll',
-        method: 'get',
-        loading: false,
-        data: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.goodsList = data.list
-        } else {
-          this.goodsList = []
-        }
-      })
-    },
-    loadUser () {
-      this.$http({
-        url: '/sys/user/queryAll',
-        method: 'get',
-        loading: false,
-        data: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.userList = data.list
-        } else {
-          this.userList = []
-        }
-      })
-    },
-    loadBank () {
-      this.$http({
-        url: '/psi/bank/listAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.bankList = data.list
-        } else {
-          this.bankList = []
-        }
-      })
-    },
     appendGoods () { // 选择商品
       this.selectVisible = true
       this.$nextTick(() => {
@@ -358,20 +302,6 @@ export default {
         })
       })
       this.dataList = datalist
-    },
-    loadWarehouse () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        loading: false,
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
     },
     // 上传成功
     successHandle (response, file, fileList) {
