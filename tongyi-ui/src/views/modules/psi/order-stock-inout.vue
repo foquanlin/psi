@@ -14,9 +14,9 @@
       </el-col>
     </el-row>
     <el-table border :data="dataList">
-      <el-table-column prop="createTime" header-align="center" align="left" label="日期" width="150">
+      <el-table-column prop="createTime" header-align="center" align="left" :label="descriptions.stockDate" width="150">
         <template v-slot="scope">
-          <el-date-picker v-if="scope.row.edited" v-model="scope.row.createTime" type="date" value-format="yyyy-MM-dd" size="mini" placeholder="日期" style="width: 100%"/>
+          <el-date-picker v-if="scope.row.edited" v-model="scope.row.createTime" type="date" value-format="yyyy-MM-dd" size="mini" :placeholder="descriptions.stockDate" style="width: 100%"/>
           <span v-else>{{scope.row.createTime}}</span>
         </template>
       </el-table-column>
@@ -43,7 +43,7 @@
           <span v-else>{{scope.row.num}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createUid" header-align="center" align="center" label="操作人">
+      <el-table-column prop="createUid" header-align="center" align="center" :label="descriptions.createUid">
         <template v-slot="scope">
           {{scope.row.createName}}
         </template>
@@ -54,11 +54,11 @@
           <span v-else>{{scope.row.memo}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" header-align="center" align="center" label="操作">
+      <el-table-column fixed="right" header-align="center" align="center" :label="descriptions.action">
         <template v-slot="scope">
           <el-button type="text" size="small" @click="editHandle(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">
             {{ descriptions.edit }}</el-button>
-          <el-button type="text" size="small" @click="saveHandle(scope.row, scope.$index)" v-if="scope.row.edited">保存</el-button>
+          <el-button type="text" size="small" @click="saveHandle(scope.row, scope.$index)" v-if="scope.row.edited">{{ descriptions.save }}</el-button>
           <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)">{{descriptions.delete}}</el-button>
         </template>
       </el-table-column>

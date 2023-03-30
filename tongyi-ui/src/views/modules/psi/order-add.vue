@@ -66,7 +66,7 @@
               {{scope.row.costPrice * scope.row.num}}
             </template>
           </el-table-column>
-          <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作" v-if="!disabled">
+          <el-table-column fixed="right" header-align="center" align="center" width="150" :label="descriptions.action" v-if="!disabled">
             <template v-slot="scope">
               <el-button type="text" size="small" @click="copyRowHandle(scope.$index)" :disabled="disabled">复制</el-button>
               <el-button type="text" size="small" @click="delRowHandle(scope.$index)" :disabled="disabled">删除</el-button>

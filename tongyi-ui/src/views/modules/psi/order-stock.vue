@@ -34,7 +34,7 @@
         {{scope.row.costPrice * scope.row.num}}
       </template>
     </el-table-column>
-    <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+    <el-table-column fixed="right" header-align="center" align="center" width="150" :label="descriptions.action">
       <template v-slot="scope">
         <el-button type="text" size="small" @click="inStockHandle(scope.row, scope.$index)">{{descriptions.stockName}}</el-button>
       </template>

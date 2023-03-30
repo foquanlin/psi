@@ -25,6 +25,8 @@ export default {
         delete: '删除',
         cancel: '取消',
         ok: '确定',
+        save: '保存',
+        action: '操作',
         expressNo: '快递单号',
         skuId: '规格',
         catalog: '分类',
@@ -40,10 +42,12 @@ export default {
         payAmount: '已付款',
         nopayAmount: '未付款',
         orderName: '采购订单',
-        pay: '收款',
-        payAccount: '收款账户',
+        pay: '付款',
+        payAccount: '付款账户',
+        payDate: '付款日期',
         warehouseId: '入库仓库',
-        stockName: '入库'
+        stockName: '入库',
+        stockDate: '入库日期'
       }
     }
   },

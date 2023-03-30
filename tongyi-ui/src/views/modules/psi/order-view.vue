@@ -60,7 +60,8 @@
       </el-table-column>
       <el-table-column prop="amount" header-align="center" align="center" :label="descriptions.amount"/>
     </el-table>
-    <div style="margin-top:20px;align-content: center;align-items: center;text-align: center;"><el-button @click="visible=false">取消</el-button></div>
+    <div style="margin-top:20px;align-content: center;align-items: center;text-align: center;"><el-button @click="visible=false">
+      {{ descriptions.cancel }}</el-button></div>
   </el-dialog>
 </template>
 

@@ -53,7 +53,7 @@
               {{scope.row.costPrice * scope.row.num}}
             </template>
           </el-table-column>
-          <el-table-column fixed="right" header-align="center" align="center" width="80" label="操作">
+          <el-table-column fixed="right" header-align="center" align="center" width="80" :label="descriptions.action">
             <template v-slot="scope">
               <el-button type="text" size="small" @click="delRowHandle(scope.$index)">{{ descriptions.delete }}</el-button>
             </template>

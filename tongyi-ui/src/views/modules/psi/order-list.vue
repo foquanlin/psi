@@ -106,7 +106,7 @@
           <el-tag v-else-if="scope.row.invoiceStatus === 'FINISH'">已开发票</el-tag>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+      <el-table-column fixed="right" header-align="center" align="center" width="150" :label="descriptions.action">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:buyorder:info')" type="text" size="small" @click="showDetails(scope.row.id)">{{ descriptions.view }}</el-button>
           <el-button v-if="isAuth('psi:buyorder:update')" type="text" size="small" @click="editHandle(scope.row.id)">

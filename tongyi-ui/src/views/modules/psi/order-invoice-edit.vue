@@ -8,9 +8,9 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" v-if="edited === false" @click="modifyHandle">修改</el-button>
-      <el-button type="primary" v-if="edited === true" @click="saveHandle()">保存</el-button>
-      <el-button v-if="edited === true" @click="cancelHandle">取消</el-button>
+      <el-button type="primary" v-if="edited === false" @click="modifyHandle">{{ descriptions.edit }}</el-button>
+      <el-button type="primary" v-if="edited === true" @click="saveHandle()">{{ descriptions.save }}</el-button>
+      <el-button v-if="edited === true" @click="cancelHandle">{{ descriptions.cancel }}</el-button>
     </el-form-item>
   </el-form>
 </template>

@@ -2,15 +2,15 @@
 <template>
   <div>
     <el-table border :data="dataList">
-      <el-table-column prop="createDate" header-align="center" align="center" label="日期">
+      <el-table-column prop="createDate" header-align="center" align="center" :label="descriptions.payDate">
         <template v-slot="scope">
-          <el-date-picker v-if="scope.row.edited" v-model="scope.row.createDate" placeholder="日期" clearable type="date" value-format="yyyy-MM-dd" size="mini"/>
+          <el-date-picker v-if="scope.row.edited" v-model="scope.row.createDate" :placeholder="descriptions.payDate" clearable type="date" value-format="yyyy-MM-dd" size="mini"/>
           <span v-else>{{scope.row.createDate}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="bankId" header-align="center" align="center" :label="descriptions.payAmount">
+      <el-table-column prop="bankId" header-align="center" align="center" :label="descriptions.payAccount">
         <template v-slot="scope">
-          <select-bank v-if="scope.row.edited" v-model="scope.row" field="bankId" :placeholder="descriptions.payAmount" size="mini"/>
+          <select-bank v-if="scope.row.edited" v-model="scope.row" field="bankId" :placeholder="descriptions.payAccount" size="mini"/>
           <span v-else>{{scope.row.bankName}}</span>
         </template>
       </el-table-column>
@@ -20,9 +20,9 @@
           <span v-else>{{scope.row.amount}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" header-align="center" align="center" label="操作" width="150">
+      <el-table-column fixed="right" header-align="center" align="center" :label="descriptions.action" width="150">
         <template v-slot="scope">
-          <el-button type="text" size="small" @click="savePay(scope.row, scope.$index)" v-if="scope.row.edited">保存</el-button>
+          <el-button type="text" size="small" @click="savePay(scope.row, scope.$index)" v-if="scope.row.edited">{{ descriptions.save }}</el-button>
           <el-button type="text" size="small" @click="cancelPay(scope.row, scope.$index)" v-if="scope.row.id && scope.row.edited">
             {{descriptions.cancel}}</el-button>
           <el-button type="text" size="small" @click="editPay(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">
