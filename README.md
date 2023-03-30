@@ -11,7 +11,8 @@
 #### 项目说明
 
 # 项目会持续不断完善更新,欢迎关注star,fork
-  gitee源码地址: https://gitee.com/foquanlin/psi
+  - gitee源码地址: https://gitee.com/foquanlin/psi
+  - github源码地址: https://github.com/foquanlin/psi
 ### 使用案例
 
 以下为部分案例：
