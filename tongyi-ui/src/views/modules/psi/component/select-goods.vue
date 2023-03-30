@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="value[field]" placeholder="商品名称" clearable filterable loading-text="加载中..." @focus="loadData" @change="changeGoods">
+  <el-select v-model="value[field]" placeholder="商品名称" clearable filterable loading-text="加载中..." :size="size" @focus="loadData" @change="changeGoods">
     <el-option v-for="item in goodsList" :key="item.id" :label="item.name" :value="item.id"/>
   </el-select>
 </template>
@@ -23,6 +23,10 @@ export default {
     multiple: {
       type: Boolean,
       default: false
+    },
+    size: {
+      type: String,
+      default: ''
     }
   },
   watch: {

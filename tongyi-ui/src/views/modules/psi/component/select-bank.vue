@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value[field]" :placeholder="placeholder" clearable filterable loading-text="加载中..." @focus="loadData">
+    <el-select v-model="value[field]" :placeholder="placeholder" clearable filterable loading-text="加载中..." :size="size" @focus="loadData">
       <el-option v-for="item in bankList" :key="item.id" :label="item.bankName" :value="item.id"/>
     </el-select>
   </div>
@@ -25,6 +25,10 @@ export default {
     placeholder: {
       type: String,
       default: '银行账户'
+    },
+    size: {
+      type: String,
+      default: ''
     }
   },
   watch: {

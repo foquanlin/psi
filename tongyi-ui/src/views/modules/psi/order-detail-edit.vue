@@ -2,67 +2,67 @@
 <template>
   <div>
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="100px" @keyup.enter.native="dataFormSubmit()">
-      <el-form-item label="订单日期" prop="createDate">
-        <el-date-picker v-model="dataForm.createDate" placeholder="订单日期" type="date" value-format="yyyy-MM-dd" clearable/>
+      <el-form-item :label="descriptions.createDate" prop="createDate">
+        <el-date-picker v-model="dataForm.createDate" :placeholder="descriptions.createDate" type="date" value-format="yyyy-MM-dd" clearable/>
       </el-form-item>
-      <el-form-item label="供应商" prop="orderUid">
-        <select-supplier2 v-model="dataForm" field="orderUid" type="SUPPLIER" />
+      <el-form-item :label="descriptions.orderUid" prop="orderUid">
+        <select-supplier2 v-model="dataForm" field="orderUid" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'" />
       </el-form-item>
-      <el-form-item label="快递单号" prop="expressNo">
-        <el-input v-model="dataForm.expressNo" placeholder="快递单号" clearable/>
+      <el-form-item :label="descriptions.expressNo" prop="expressNo">
+        <el-input v-model="dataForm.expressNo" :placeholder="descriptions.expressNo" clearable/>
       </el-form-item>
-      <el-form-item label="责任人" prop="ownerUid">
-        <select-user v-model="dataForm" field="ownerUid" placeholder="负责人"/>
+      <el-form-item :label="descriptions.ownerUid" prop="ownerUid">
+        <select-user v-model="dataForm" field="ownerUid" :placeholder="descriptions.ownerUid"/>
       </el-form-item>
-      <el-form-item label="备注" prop="memo">
-        <el-input v-model="dataForm.memo" placeholder="备注" clearable/>
+      <el-form-item :label="descriptions.memo" prop="memo">
+        <el-input v-model="dataForm.memo" :placeholder="descriptions.memo" clearable/>
       </el-form-item>
       <el-form>
         <el-table border :data="dataList" style="align-content: center;align-items: center;" >
-          <el-table-column prop="name" header-align="center" align="center" label="商品" width="250">
+          <el-table-column prop="name" header-align="center" align="center" :label="descriptions.goodsId" width="250">
             <template v-slot="scope">
-              <select-goods v-if="scope.row.append && !scope.row.goodsId" v-model="scope.row" field="goodsId" @change="selectGoods"/>
+              <select-goods v-if="scope.row.append && !scope.row.goodsId" v-model="scope.row" field="goodsId" size="mini" @change="selectGoods"/>
               <span v-else>{{scope.row.goodsName}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="250">
+          <el-table-column prop="skuId" header-align="center" align="left" :label="descriptions.skuId" width="250">
             <template v-slot="scope">
-              <select-sku v-if="scope.row.append" v-model="scope.row" :goods-id="scope.row.goodsId" field="skuId"/>
+              <select-sku v-if="scope.row.append" v-model="scope.row" :goods-id="scope.row.goodsId" field="skuId" size="mini"/>
               <span  v-else="scope.row.specName">
                 <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="unitId" header-align="center" align="center" label="单位" width="80">
+          <el-table-column prop="unitId" header-align="center" align="center" :label="descriptions.unitId" width="80">
             <template v-slot="scope">
               <span>{{scope.row.unitName}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="costPrice" header-align="center" align="center" label="进价" width="150px">
+          <el-table-column prop="costPrice" header-align="center" align="center" :label="priceName" width="150px">
             <template v-slot="scope">
-              <el-input-number v-model="scope.row.costPrice" placeholder="进价" size="mini" style="width:100%"/>
+              <el-input-number v-model="scope.row.costPrice" :placeholder="priceName" size="mini" style="width:100%"/>
             </template>
           </el-table-column>
-          <el-table-column prop="num" header-align="center" align="center" label="订购数量" width="150px">
+          <el-table-column prop="num" header-align="center" align="center" :label="numberName+descriptions.num" width="150px">
             <template v-slot="scope">
-              <el-input-number v-model="scope.row.num" placeholder="订购数量" size="mini" style="width:100%"/>
+              <el-input-number v-model="scope.row.num" :placeholder="numberName+descriptions.num" size="mini" style="width:100%"/>
             </template>
           </el-table-column>
-          <el-table-column prop="total" header-align="center" align="center" label="小计">
+          <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal">
             <template v-slot="scope">
               {{scope.row.costPrice * scope.row.num}}
             </template>
           </el-table-column>
           <el-table-column fixed="right" header-align="center" align="center" width="80" label="操作">
             <template v-slot="scope">
-              <el-button type="text" size="small" @click="delRowHandle(scope.$index)">删除</el-button>
+              <el-button type="text" size="small" @click="delRowHandle(scope.$index)">{{ descriptions.delete }}</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-button type="text" @click="appendGoods"><i class="el-icon-plus"></i>增加商品</el-button>
+        <el-button type="text" @click="appendGoods"><i class="el-icon-plus"></i>{{descriptions.add+descriptions.goodsId}}</el-button>
       </el-form>
       <el-form-item style="margin-top:20px;text-align: center">
-        <el-button type="primary" @click="dataFormSubmit()">修改</el-button>
+        <el-button type="primary" @click="dataFormSubmit()">{{ descriptions.edit }}</el-button>
       </el-form-item>
     </el-form>
     <goods-select v-if="selectVisible" ref="goodsSelect" @select="onSelect"/>
@@ -76,6 +76,7 @@ import SelectSupplier2 from './component/select-supplier2'
 import SelectUser from './component/select-user'
 import SelectGoods from './component/select-goods'
 import SelectSku from './component/select-sku'
+import Options from './options'
 export default {
   data () {
     return {
@@ -100,14 +101,16 @@ export default {
       },
       dataRule: {
         type: [{required: true, message: '订单类型不能为空', trigger: 'blur'}],
-        createDate: [{required: true, message: '采购日期不能为空', trigger: 'blur'}],
-        orderUid: [{required: true, message: '供应商不能为空', trigger: 'blur'}],
-        expressNo: [{required: true, message: '快递单号不能为空', trigger: 'blur'}],
-        ownerUid: [{required: true, message: '负责人不能为空', trigger: 'blur'}],
+        createDate: [{required: true, message: this.descriptions.createDate + '不能为空', trigger: 'blur'}],
+        orderUid: [{required: true, message: (this.descriptions.orderUid + '不能为空'), trigger: 'blur'}],
+        expressNo: [{required: true, message: this.descriptions.expressNo + '不能为空', trigger: 'blur'}],
+        ownerUid: [{required: true, message: this.descriptions.ownerUid + '不能为空', trigger: 'blur'}],
         other: []
       },
       selectVisible: false,
-      deleteList: []
+      deleteList: [],
+      numberName: '',
+      priceName: ''
     }
   },
   components: {
@@ -126,6 +129,18 @@ export default {
     dataList: {
       type: Array,
       default: true
+    },
+    catalog: {
+      type: String,
+      require: true
+    },
+    type: {
+      type: String,
+      require: true
+    },
+    descriptions: {
+      type: Object,
+      default: {}
     }
   },
   watch: {
@@ -141,7 +156,24 @@ export default {
       handler (value) {
         this.data = value
       }
+    },
+    catalog: {
+      immediate: true,
+      handler (value) {
+        this.numberName = Options.numberName(this.catalog, this.type)
+        this.priceName = Options.priceName(this.catalog, this.type)
+        console.log('watch.catalog', value)
+      }
+    },
+    type: {
+      immediate: true,
+      handler (value) {
+        this.type = value
+      }
     }
+  },
+  comments: {
+    Options
   },
   methods: {
     // 表单提交

@@ -2,13 +2,13 @@
 <template>
 <div>
   <el-table border :data="dataList">
-    <el-table-column prop="name" header-align="center" align="center" label="商品">
+    <el-table-column prop="name" header-align="center" align="center" :label="descriptions.goodsId">
       <template v-slot="scope">
         <select-goods v-if="scope.row.append && !scope.row.goodsId" v-model="scope.row" field="goodsId" @change="selectGoods"/>
         <span v-else>{{scope.row.goodsName}}</span>
       </template>
     </el-table-column>
-    <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="280">
+    <el-table-column prop="skuId" header-align="center" align="left" :label="descriptions.skuId" width="280">
       <template v-slot="scope">
         <select-sku v-if="scope.row.append" v-model="scope.row" :goods-id="scope.row.goodsId" field="skuId"/>
         <span v-else-if="scope.row.specName">
@@ -16,32 +16,32 @@
         </span>
       </template>
     </el-table-column>
-    <el-table-column prop="catalog" header-align="center" align="center" label="分类">
+    <el-table-column prop="catalog" header-align="center" align="center" :label="descriptions.catalog">
       <template v-slot="scope">
         <span>{{scope.row.catalogName}}</span>
       </template>
     </el-table-column>
-    <el-table-column prop="unitId" header-align="center" align="center" label="单位">
+    <el-table-column prop="unitId" header-align="center" align="center" :label="descriptions.unitId">
       <template v-slot="scope">
         <span>{{scope.row.unitName}}</span>
       </template>
     </el-table-column>
-    <el-table-column prop="costPrice" header-align="center" align="center" label="进价" width="150px"/>
-    <el-table-column prop="num" header-align="center" align="center" label="订购数量" width="150px"/>
-    <el-table-column prop="inStockNum" header-align="center" align="center" label="入库数量" width="150px"/>
-    <el-table-column prop="total" header-align="center" align="center" label="小计">
+    <el-table-column :prop="priceField" header-align="center" align="center" :label="priceName" width="150px"/>
+    <el-table-column prop="num" header-align="center" align="center" :label="numberName+descriptions.num" width="150px"/>
+    <el-table-column prop="inStockNum" header-align="center" align="center" :label="stockName+descriptions.num" width="150px"/>
+    <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal">
       <template v-slot="scope">
         {{scope.row.costPrice * scope.row.num}}
       </template>
     </el-table-column>
     <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
       <template v-slot="scope">
-        <el-button type="text" size="small" @click="inStockHandle(scope.row, scope.$index)">入库</el-button>
+        <el-button type="text" size="small" @click="inStockHandle(scope.row, scope.$index)">{{descriptions.stockName}}</el-button>
       </template>
     </el-table-column>
 
   </el-table>
-  <order-stock-inout v-if="inStockVisible" ref="orderStockInout" :order="order" catalog="CAIGOU" type="IN"/>
+  <order-stock-inout v-if="inStockVisible" ref="orderStockInout" :descriptions="descriptions" :order="order" :catalog="catalog" :type="type"/>
 </div>
 </template>
 
@@ -49,11 +49,16 @@
 import OrderStockInout from './order-stock-inout'
 import SelectGoods from './component/select-goods'
 import SelectSku from './component/select-sku'
+import Options from './options'
 export default {
   data () {
     return {
       disabled: true,
-      inStockVisible: false
+      inStockVisible: false,
+      priceName: '',
+      priceField: 'costPrice',
+      stockName: '',
+      numberName: ''
     }
   },
   props: {
@@ -65,6 +70,18 @@ export default {
     dataList: {
       type: Array,
       default: true
+    },
+    catalog: {
+      type: String,
+      require: true
+    },
+    type: {
+      type: String,
+      require: true
+    },
+    descriptions: {
+      type: Object,
+      default: {}
     }
   },
   watch: {
@@ -79,12 +96,22 @@ export default {
       handler (value) {
         this.dataList = value
       }
+    },
+    catalog: { // 订单id
+      immediate: true,
+      handler (value) {
+        this.priceName = Options.priceName(this.catalog, this.type)
+        this.numberName = Options.numberName(this.catalog, this.type)
+        this.stockName = Options.stockName(this.catalog, this.type)
+        this.priceField = Options.priceField(this.catalog, this.type)
+      }
     }
   },
   components: {
     OrderStockInout,
     SelectGoods,
-    SelectSku
+    SelectSku,
+    Options
   },
   methods: {
     getDataList () {

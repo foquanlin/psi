@@ -19,4 +19,5 @@ import com.tongyi.modules.psi.entity.PsiOrderEntity;
  */
 public interface PsiOrderService extends IService<PsiOrderEntity>{
 
+    void deleteStock(String[] ids);
 }

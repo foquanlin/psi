@@ -2,7 +2,7 @@
 <template>
   <el-form>
     <el-form-item>
-      <el-radio-group v-model="order.invoiceStatus" placeholder="发票状态" clearable :disabled="!edited">
+      <el-radio-group v-model="order.invoiceStatus" :placeholder="descriptions.invoiceStatus" clearable :disabled="!edited">
         <el-radio-button label="UNFINISH">未开发票</el-radio-button>
         <el-radio-button label="FINISH">已开发票</el-radio-button>
       </el-radio-group>
@@ -25,6 +25,10 @@ export default {
     order: {
       type: Object,
       default: true
+    },
+    descriptions: {
+      type: Object,
+      default: {}
     }
   },
   watch: {

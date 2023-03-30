@@ -70,6 +70,8 @@ public class PsiOrderDetailEntity implements Serializable {
     private String specValue;
     @TableField(exist = false)
     private String unitName;
+    @TableField(exist = false)
+    private String catalogName;
 
     public static PsiOrderDetailEntity newEntity(String orderId,String goodsId, String skuId, BigDecimal costPrice, BigDecimal num, BigDecimal inStockNum) {
         PsiOrderDetailEntity entity = new PsiOrderDetailEntity();

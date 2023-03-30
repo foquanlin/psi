@@ -2,53 +2,53 @@
   <div class="mod-order">
     <el-form :inline="true" :model="searchForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-select v-model="searchForm.status" placeholder="订单状态" clearable >
+        <el-select v-model="searchForm.status" :placeholder="descriptions.orderStatus" clearable >
           <el-option value="UNFINISH" label="未完成"></el-option>
           <el-option value="FINISH" label="已完成"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.payStatus" placeholder="收款状态" clearable >
+        <el-select v-model="searchForm.payStatus" :placeholder="descriptions.payStatus" clearable >
           <el-option value="DEBT" label="有欠款"></el-option>
           <el-option value="PAYMENT" label="待收款"></el-option>
           <el-option value="FINISH" label="已完成"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.stockStatus" placeholder="入库状态" clearable >
+        <el-select v-model="searchForm.stockStatus" :placeholder="descriptions.stockStatus" clearable >
           <el-option value="UNFINISH" label="未完成"></el-option>
           <el-option value="FINISH" label="已完成"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.invoiceStatus" placeholder="发票状态" clearable >
+        <el-select v-model="searchForm.invoiceStatus" :placeholder="descriptions.invoiceStatus" clearable >
           <el-option value="UNFINISH" label="未开发票"></el-option>
           <el-option value="FINISH" label="已开发票"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchForm.no" placeholder="订单号" clearable/>
+        <el-input v-model="searchForm.no" :placeholder="descriptions.no" clearable/>
       </el-form-item>
       <el-form-item>
         <select-supplier2 v-model="searchForm" field="orderUid" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'"/>
       </el-form-item>
       <el-form-item>
-        <el-date-picker v-model="searchForm.createDateStart" placeholder="开始日期" clearable type="date" value-format="yyyy-MM-dd"/>
+        <el-date-picker v-model="searchForm.createDateStart" :placeholder="descriptions.createDateStart" clearable type="date" value-format="yyyy-MM-dd"/>
       </el-form-item>
       <el-form-item>
-        <el-date-picker v-model="searchForm.createDateEnd" placeholder="结束日期" clearable type="date" value-format="yyyy-MM-dd"/>
+        <el-date-picker v-model="searchForm.createDateEnd" :placeholder="descriptions.createDateEnd" clearable type="date" value-format="yyyy-MM-dd"/>
       </el-form-item>
       <el-form-item>
-        <select-user v-model="searchForm" field="createUid" placeholder="制单人"/>
+        <select-user v-model="searchForm" field="createUid" :placeholder="descriptions.createUid"/>
       </el-form-item>
       <el-form-item>
-        <select-user v-model="searchForm" field="ownerUid" placeholder="负责人"/>
+        <select-user v-model="searchForm" field="ownerUid" :placeholder="descriptions.ownerUid"/>
       </el-form-item>
       <el-form-item>
         <select-goods v-model="searchForm" field="goodsId"/>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="searchForm.memo" placeholder="订单备注" clearable/>
+        <el-input v-model="searchForm.memo" :placeholder="descriptions.memo" clearable/>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
@@ -58,49 +58,49 @@
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;margin-bottom: 10px">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="no" header-align="center" align="center" label="订单编号">
+      <el-table-column prop="no" header-align="center" align="center" :label="descriptions.no">
         <template v-slot="scope">
           <el-button type="text" @click="showDetails(scope.row.id)">{{scope.row.no}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="supplierName" header-align="center" align="center" label="供应商">
+      <el-table-column prop="supplierName" header-align="center" align="center" :label="supplierName">
         <template v-slot="scope">
           <el-button type="text" @click="showSupplier(scope.row.orderUser.id)">{{scope.row.orderUser?scope.row.orderUser.name:'-'}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" header-align="center" align="center" label="采购时间"/>
-      <el-table-column prop="createUid" header-align="center" align="center" label="制单人">
+      <el-table-column prop="createDate" header-align="center" align="center" :label="descriptions.createDate"/>
+      <el-table-column prop="createUid" header-align="center" align="center" :label="descriptions.createUid">
         <template v-slot="scope">
           <span>{{scope.row.createUser?scope.row.createUser.realName:'-'}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="ownerUid" header-align="center" align="center" label="负责人">
+      <el-table-column prop="ownerUid" header-align="center" align="center" :label="descriptions.ownerUid">
         <template v-slot="scope">
           <span>{{scope.row.ownerUser?scope.row.ownerUser.realName:'-'}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="payAmount" header-align="center" align="right" label="已付款"/>
-      <el-table-column prop="orderAmount" header-align="center" align="right" label="订单总价"/>
-      <el-table-column prop="payStatus" header-align="center" align="center" label="付款状态">
+      <el-table-column prop="payAmount" header-align="center" align="right" :label="descriptions.payAmount"/>
+      <el-table-column prop="orderAmount" header-align="center" align="right" :label="descriptions.orderAmount"/>
+      <el-table-column prop="payStatus" header-align="center" align="center" :label="descriptions.payStatus">
         <template v-slot="scope">
           <el-tag v-if="scope.row.payStatus === 'DEBT'">有欠款</el-tag>
           <el-tag v-else-if="scope.row.payStatus === 'PAYMENT'">待收款</el-tag>
           <el-tag v-else-if="scope.row.payStatus === 'FINISH'">已完成</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="stockStatus" header-align="center" align="center" label="入库状态">
+      <el-table-column prop="stockStatus" header-align="center" align="center" :label="descriptions.stockStatus">
         <template v-slot="scope">
           <el-tag v-if="scope.row.stockStatus === 'UNFINISH'">未完成</el-tag>
           <el-tag v-else-if="scope.row.stockStatus === 'FINISH'">已完成</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="status" header-align="center" align="center" label="订单状态">
+      <el-table-column prop="status" header-align="center" align="center" :label="descriptions.orderStatus">
         <template v-slot="scope">
           <el-tag v-if="scope.row.status === 'UNFINISH'">未完成</el-tag>
           <el-tag v-else-if="scope.row.status === 'FINISH'">已完成</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="invoiceStatus" header-align="center" align="center" label="发票状态">
+      <el-table-column prop="invoiceStatus" header-align="center" align="center" :label="descriptions.invoiceStatus">
         <template v-slot="scope">
           <el-tag v-if="scope.row.invoiceStatus === 'UNFINISH'">未开发票</el-tag>
           <el-tag v-else-if="scope.row.invoiceStatus === 'FINISH'">已开发票</el-tag>
@@ -108,25 +108,27 @@
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:buyorder:info')" type="text" size="small" @click="showDetails(scope.row.id)">查看</el-button>
-          <el-button v-if="isAuth('psi:buyorder:update')" type="text" size="small" @click="editHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="isAuth('psi:buyorder:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="isAuth('psi:buyorder:info')" type="text" size="small" @click="showDetails(scope.row.id)">{{ descriptions.view }}</el-button>
+          <el-button v-if="isAuth('psi:buyorder:update')" type="text" size="small" @click="editHandle(scope.row.id)">
+            {{ descriptions.edit }}</el-button>
+          <el-button v-if="isAuth('psi:buyorder:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">
+            {{ descriptions.delete }}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-row :gutter="12">
       <el-col :span="4">
-        <el-statistic title="合计">
+        <el-statistic :title="descriptions.total">
           <template slot="formatter">{{totalAmount}}</template>
         </el-statistic>
       </el-col>
       <el-col :span="4">
-        <el-statistic title="已付款">
+        <el-statistic :title="descriptions.payAmount">
           <template slot="formatter">{{payAmount}}</template>
         </el-statistic>
       </el-col>
       <el-col :span="4">
-        <el-statistic title="未付款">
+        <el-statistic :title="descriptions.nopayAmount">
           <template slot="formatter">{{nopayAmount}}</template>
         </el-statistic>
       </el-col>
@@ -137,9 +139,9 @@
     <!-- 弹窗, 新增 / 修改 -->
     <brand-edit v-if="editVisible" ref="brandEdit"/>
     <user-edit v-if="userVisible" ref="userEdit"/>
-    <order-add v-if="orderAddVisible" ref="orderAdd" :catalog="catalog" :type="type" @refreshDataList="getDataList"/>
-    <order-edit v-if="orderEditVisible" ref="orderEdit" @refreshDataList="getDataList"/>
-    <order-view v-if="orderViewVisible" ref="orderView"/>
+    <order-add v-if="orderAddVisible" ref="orderAdd" :descriptions="descriptions" :catalog="catalog" :type="type" @refreshDataList="getDataList"/>
+    <order-edit v-if="orderEditVisible" ref="orderEdit" :descriptions="descriptions" :catalog="catalog" :type="type" @refreshDataList="getDataList"/>
+    <order-view v-if="orderViewVisible" ref="orderView" :descriptions="descriptions" :catalog="catalog" :type="type"/>
 
   </div>
 </template>
@@ -152,6 +154,7 @@ import OrderView from './order-view'
 import SelectGoods from './component/select-goods'
 import SelectUser from './component/select-user'
 import SelectSupplier2 from './component/select-supplier2'
+import Options from './options'
 export default {
   data () {
     return {
@@ -181,7 +184,10 @@ export default {
       orderViewVisible: false,
       totalAmount: 0,
       payAmount: 0,
-      nopayAmount: 0
+      nopayAmount: 0,
+      catalogName: '',
+      payName: '',
+      supplierName: ''
     }
   },
   props: {
@@ -192,6 +198,10 @@ export default {
     type: {
       type: String,
       default: undefined
+    },
+    descriptions: {
+      type: Object,
+      default: {}
     }
   },
   watch: {
@@ -199,6 +209,9 @@ export default {
       immediate: true,
       handler (value) {
         this.catalog = value
+        this.payName = Options.payName(this.catalog, this.type)
+        this.catalogName = Options.catalogName(this.catalog, this.type)
+        this.supplierName = Options.supperName(this.catalog, this.type)
         console.log('watch.catalog')
       }
     },
@@ -217,7 +230,8 @@ export default {
     OrderView,
     SelectGoods,
     SelectUser,
-    SelectSupplier2
+    SelectSupplier2,
+    Options
   },
   mounted () {
     this.getDataList()

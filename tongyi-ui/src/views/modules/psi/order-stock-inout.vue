@@ -1,13 +1,13 @@
 <template>
-  <el-dialog :title="catalogName + typeName" :close-on-click-modal="false" width="70%" :visible.sync="visible" append-to-body>
+  <el-dialog :title="descriptions.orderName+descriptions.stockName" :close-on-click-modal="false" width="70%" :visible.sync="visible" append-to-body>
     <el-row>
       <el-col :span="3">
         <el-image fit="contain" style="width:100px" :src="sku.picUrls"></el-image>
       </el-col>
       <el-col :span="21">
       <el-descriptions :column="1">
-        <el-descriptions-item label="商品名称">{{sku.goodsName}}</el-descriptions-item>
-        <el-descriptions-item label="规格">{{sku.specName}}</el-descriptions-item>
+        <el-descriptions-item :label="descriptions.goodsId+ '名称'">{{sku.goodsName}}</el-descriptions-item>
+        <el-descriptions-item :label="descriptions.skuId">{{sku.specName}}</el-descriptions-item>
         <el-descriptions-item label="进货价">{{sku.costPrice}}</el-descriptions-item>
         <el-descriptions-item label="销售价">{{sku.salePrice}}</el-descriptions-item>
       </el-descriptions>
@@ -16,7 +16,7 @@
     <el-table border :data="dataList">
       <el-table-column prop="createTime" header-align="center" align="left" label="日期" width="150">
         <template v-slot="scope">
-          <el-date-picker v-if="scope.row.edited" v-model="scope.row.createTime" type="date" value-format="yyyy-MM-dd" size="mini"/>
+          <el-date-picker v-if="scope.row.edited" v-model="scope.row.createTime" type="date" value-format="yyyy-MM-dd" size="mini" placeholder="日期" style="width: 100%"/>
           <span v-else>{{scope.row.createTime}}</span>
         </template>
       </el-table-column>
@@ -26,18 +26,18 @@
           <span v-else>出库</span>
         </template>
       </el-table-column>
-      <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库" width="150">
+      <el-table-column prop="warehouseId" header-align="center" align="center" :label="descriptions.warehouseId" width="150">
         <template v-slot="scope">
-          <select-warehouse v-if="scope.row.edited" v-model="scope.row" field="warehouseId"/>
+          <select-warehouse v-if="scope.row.edited" v-model="scope.row" field="warehouseId" size="mini" :placeholder="descriptions.warehouseId"/>
           <span v-else>{{scope.row.warehouseName}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="unitId" header-align="center" align="center" label="单位">
+      <el-table-column prop="unitId" header-align="center" align="center" :label="descriptions.unitId">
         <template v-slot="scope">
           {{scope.row.unitName}}
         </template>
       </el-table-column>
-      <el-table-column prop="num" header-align="center" align="center" label="数量">
+      <el-table-column prop="num" header-align="center" align="center" :label="descriptions.num">
         <template v-slot="scope">
           <el-input v-if="scope.row.edited" v-model="scope.row.num" size="mini"/>
           <span v-else>{{scope.row.num}}</span>
@@ -48,7 +48,7 @@
           {{scope.row.createName}}
         </template>
       </el-table-column>
-      <el-table-column prop="memo" header-align="center" align="center" label="备注">
+      <el-table-column prop="memo" header-align="center" align="center" :label="descriptions.memo">
         <template v-slot="scope">
           <el-input v-if="scope.row.edited" v-model="scope.row.memo" size="mini"/>
           <span v-else>{{scope.row.memo}}</span>
@@ -56,20 +56,22 @@
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" label="操作">
         <template v-slot="scope">
-          <el-button type="text" size="small" @click="editHandle(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">修改</el-button>
-          <el-button type="text" size="small" @click="saveHandle(scope.row)" v-if="scope.row.edited">保存</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)">删除</el-button>
+          <el-button type="text" size="small" @click="editHandle(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">
+            {{ descriptions.edit }}</el-button>
+          <el-button type="text" size="small" @click="saveHandle(scope.row, scope.$index)" v-if="scope.row.edited">保存</el-button>
+          <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)">{{descriptions.delete}}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="addRow">{{typeName}}</el-button>
+      <el-button @click="visible = false">{{descriptions.cancel}}</el-button>
+      <el-button type="primary" @click="addRow">{{descriptions.stockName}}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import Options from './options'
 import SelectWarehouse from './component/select-warehouse'
 export default {
   data () {
@@ -80,8 +82,8 @@ export default {
       goodsId: '',
       skuId: '',
       title: '',
-      typeName: '',
-      catalogName: ''
+      stockCatalog: '',
+      stockType: ''
     }
   },
   props: {
@@ -96,36 +98,27 @@ export default {
     type: {
       type: String,
       require: true
+    },
+    descriptions: {
+      type: Object,
+      default: {}
     }
   },
   watch: {
     catalog: { // 订单分类: 采购单,销售单
       immediate: true,
       handler (value) {
-        if (value === 'CAIGOU') {
-          this.catalogName = '采购单'
-        } else if (value === 'TIAOZHENG') {
-          this.catalogName = '库存调整'
-        } else if (value === 'DIAOBO') {
-          this.catalogName = '库存调拨'
-        } else if (value === 'PANDIAN') {
-          this.catalogName = '库存盘点'
-        } else if (value === 'CAIGOU') {
-          this.catalogName = '采购单'
-        } else if (value === 'XIAOSHOU') {
-          this.catalogName = '采购单'
-        }
+        this.catalog = value
+        this.title = Options.titleName(this.catalog, this.type)
+        this.stockCatalog = Options.stockCatalog(this.catalog, this.type)
+        this.stockType = Options.stockType(this.catalog, this.type)
+        console.log('watch.catalog', value)
         this.getDataList()
       }
     },
     type: { // 订单类型: 订单, 退单
       immediate: true,
       handler (value) {
-        if (value === 'IN') {
-          this.typeName = '入库'
-        } else {
-          this.typeName = '出库'
-        }
         this.getDataList()
       }
     },
@@ -138,7 +131,8 @@ export default {
     }
   },
   components: {
-    SelectWarehouse
+    SelectWarehouse,
+    Options
   },
   methods: {
     show (goodsId, skuId) {
@@ -172,7 +166,8 @@ export default {
             orderId: this.order.id,
             goodsId: this.goodsId,
             skuId: this.skuId,
-            type: 'IN'
+            catalog: this.stockCatalog,
+            type: this.stockType
           }
         }).then(({data}) => {
           if (data && data.code === 0) {
@@ -200,7 +195,9 @@ export default {
       }
       this.dataList.push({
         edited: true,
-        type: this.type,
+        supplierId: this.order.orderUid,
+        catalog: this.stockCatalog,
+        type: this.stockType,
         goods: this.sku.goods,
         createTime: ''
       })
@@ -220,7 +217,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: '/psi/stock/delete',
+          url: '/psi/order/deleteStock',
           method: 'post',
           data: [row.id]
         }).then(({data}) => {
@@ -231,13 +228,14 @@ export default {
         })
       })
     },
-    saveHandle (row) {
+    saveHandle (row, index) {
       this.$http({
         url: `/psi/stock/${!row.id ? 'save' : 'update'}`,
         method: 'post',
         data: {
-          catalog: this.catalog,
-          type: this.type,
+          supplierId: this.order.orderUid,
+          catalog: this.stockCatalog,
+          type: this.stockType,
           goodsId: this.goodsId,
           skuId: this.skuId,
           orderId: this.order.id,
@@ -246,7 +244,9 @@ export default {
       }).then(({data}) => {
         if (data && data.code === 0) {
           this.$message({ message: '操作成功', type: 'success', duration: 1500 })
-          row.edited = false
+          // this.dataList[index] = data.info
+          // this.dataList[index].edited = false
+          this.getDataList()
         }
       })
     }

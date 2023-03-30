@@ -1,18 +1,18 @@
 <!--订单修改-->
 <template>
-  <el-drawer :title="'修改采购单'" :close-on-click-modal="false" size="85%" :visible.sync="visible" :before-close="onClose">
+  <el-drawer :title="descriptions.edit+descriptions.orderName" :close-on-click-modal="false" size="85%" :visible.sync="visible" :before-close="onClose">
       <el-tabs style="margin-left: 10px;margin-right: 10px" v-model="defaultTab" :before-leave="onChangeTab">
-        <el-tab-pane label="订单详情" name="detail">
-          <order-detail-edit :order="order" :data-list="detailList" ref="orderDetailEdit" @refreshDataList="loadDetails"/>
+        <el-tab-pane :label="descriptions.orderName+ '详情'" name="detail">
+          <order-detail-edit :order="order" :data-list="detailList" :descriptions="descriptions" :catalog="catalog" :type="type" ref="orderDetailEdit" @refreshDataList="loadDetails"/>
         </el-tab-pane>
-        <el-tab-pane label="入库" name="stock">
-          <order-stock :order="order" :data-list="detailList" ref="orderStock" @refreshDataList="loadDetails"/>
+        <el-tab-pane :label="descriptions.stockName" name="stock">
+          <order-stock :order="order" :data-list="detailList" :descriptions="descriptions" :catalog="catalog" :type="type" ref="orderStock" @refreshDataList="loadDetails"/>
         </el-tab-pane>
-        <el-tab-pane label="付款" name="pay">
-          <order-pay-edit :order="order" :data-list="accountList" ref="orderPayEdit" @refreshDataList="loadAccountList"/>
+        <el-tab-pane :label="descriptions.pay" name="pay">
+          <order-pay-edit :order="order" :data-list="accountList" :descriptions="descriptions" :catalog="catalog" :type="type" ref="orderPayEdit" @refreshDataList="loadAccountList"/>
         </el-tab-pane>
         <el-tab-pane label="发票" name="invoice">
-          <order-invoice-edit :order="order" ref="orderInvoiceEdit" @refreshDataList="loadDetails"/>
+          <order-invoice-edit :order="order" :descriptions="descriptions" :catalog="catalog" :type="type" ref="orderInvoiceEdit" @refreshDataList="loadDetails"/>
         </el-tab-pane>
       </el-tabs>
   </el-drawer>
@@ -23,6 +23,7 @@ import OrderInvoiceEdit from './order-invoice-edit'
 import OrderPayEdit from './order-pay-edit'
 import OrderStock from './order-stock'
 import OrderDetailEdit from './order-detail-edit'
+import Options from './options'
 export default {
   data () {
     return {
@@ -38,7 +39,35 @@ export default {
       accountEdit: 0
     }
   },
+  props: {
+    catalog: {
+      type: String,
+      require: true
+    },
+    type: {
+      type: String,
+      require: true
+    },
+    descriptions: {
+      type: Object,
+      default: {}
+    }
+  },
   watch: {
+    catalog: {
+      immediate: true,
+      handler (value) {
+        this.catalog = value
+        console.log('watch.catalog')
+      }
+    },
+    type: {
+      immediate: true,
+      handler (value) {
+        this.type = value
+        console.log('watch.type')
+      }
+    },
     order: {
       deep: true,
       immediate: true,
@@ -68,7 +97,8 @@ export default {
     OrderInvoiceEdit,
     OrderPayEdit,
     OrderStock,
-    OrderDetailEdit
+    OrderDetailEdit,
+    Options
   },
   methods: {
     init (id) {
@@ -76,6 +106,9 @@ export default {
       this.accountList = []
       this.detailList = []
       this.visible = true
+      this.orderEdit = 0
+      this.detailEdit = 0
+      this.accountEdit = 0
       this.defaultTab = 'detail'
       this.loadDetails()
       this.loadAccountList()

@@ -13,8 +13,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiOrderDao;
+import com.tongyi.modules.psi.dao.PsiStockDao;
 import com.tongyi.modules.psi.entity.PsiOrderEntity;
 import com.tongyi.modules.psi.service.PsiOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +34,8 @@ import java.util.Objects;
  */
 @Service("psiOrderService")
 public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity> implements PsiOrderService{
-
+    @Autowired
+    private PsiStockDao stockDao;
     @Override
     public PsiOrderEntity getById(Serializable id){
         return super.getById(id);
@@ -72,5 +75,12 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(ids));
+    }
+
+    @Override
+    public void deleteStock(String[] ids) {
+        Arrays.asList(ids).forEach(id-> {
+            stockDao.deleteById(id);
+        });
     }
 }

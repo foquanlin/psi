@@ -3,7 +3,7 @@
     <el-radio-group  v-if="radio" v-model="value[field]" :placeholder="placeholder?placeholder:'仓库'" clearable :disabled="disabled" @focus="loadData">
       <el-radio-button v-for="item in warehouseList" :key="item.value" :label="item.id">{{item.name}}</el-radio-button>
     </el-radio-group>
-    <el-select v-else v-model="value[field]" :placeholder="placeholder?placeholder:'仓库'" clearable :disabled="disabled" :multiple="multiple" @focus="loadData">
+    <el-select v-else v-model="value[field]" :placeholder="placeholder?placeholder:'仓库'" clearable :disabled="disabled" :multiple="multiple" :size="size" @focus="loadData">
       <el-option v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>
@@ -40,6 +40,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    size: {
+      type: String,
+      default: ''
     }
   },
   mounted () {

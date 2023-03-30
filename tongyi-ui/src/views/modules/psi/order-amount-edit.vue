@@ -7,7 +7,7 @@
       <el-form-item label="日期" prop="createDate">
         <el-date-picker v-model="dataForm.createDate" placeholder="日期" clearable value-format="yyyy-MM-dd" type="date"/>
       </el-form-item>
-      <el-form-item label="付款账户" prop="bankId">
+      <el-form-item :label="付款账户" prop="bankId">
         <select-bank v-model="dataForm" field="bankId" placeholder="付款账户"/>
       </el-form-item>
       <el-form-item label="金额" prop="amount">

@@ -8,39 +8,43 @@
           <span v-else>{{scope.row.createDate}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="bankId" header-align="center" align="center" label="账户">
+      <el-table-column prop="bankId" header-align="center" align="center" :label="descriptions.payAmount">
         <template v-slot="scope">
-          <select-bank v-if="scope.row.edited" v-model="scope.row" field="bankId" placeholder="付款账户"/>
+          <select-bank v-if="scope.row.edited" v-model="scope.row" field="bankId" :placeholder="descriptions.payAmount" size="mini"/>
           <span v-else>{{scope.row.bankName}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="amount" header-align="center" align="center" label="金额">
+      <el-table-column prop="amount" header-align="center" align="center" :label="descriptions.amount">
         <template v-slot="scope">
-          <el-input-number v-if="scope.row.edited" v-model="scope.row.amount" placeholder="金额" size="mini"/>
+          <el-input-number v-if="scope.row.edited" v-model="scope.row.amount" :placeholder="descriptions.amount" size="mini"/>
           <span v-else>{{scope.row.amount}}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" label="操作" width="150">
         <template v-slot="scope">
           <el-button type="text" size="small" @click="savePay(scope.row, scope.$index)" v-if="scope.row.edited">保存</el-button>
-          <el-button type="text" size="small" @click="cancelPay(scope.row, scope.$index)" v-if="scope.row.id && scope.row.edited">取消</el-button>
-          <el-button type="text" size="small" @click="editPay(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">修改</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)">删除</el-button>
+          <el-button type="text" size="small" @click="cancelPay(scope.row, scope.$index)" v-if="scope.row.id && scope.row.edited">
+            {{descriptions.cancel}}</el-button>
+          <el-button type="text" size="small" @click="editPay(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">
+            {{ descriptions.edit }}</el-button>
+          <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)">{{ descriptions.delete }}</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="text" @click="addRow()" size="mini" icon="el-icon-plus">增加付款</el-button>
+    <el-button type="text" @click="addRow()" size="mini" icon="el-icon-plus">{{ descriptions.add }}{{payName}}</el-button>
   </div>
 </template>
 
 <script>
 import SelectBank from './component/select-bank'
+import Options from './options'
 export default {
   data () {
     return {
       edited: false,
       amountEditVisible: false,
-      bankList: []
+      bankList: [],
+      payName: ''
     }
   },
   props: {
@@ -49,6 +53,18 @@ export default {
     },
     dataList: {
       type: Array
+    },
+    catalog: {
+      type: String,
+      require: true
+    },
+    type: {
+      type: String,
+      require: true
+    },
+    descriptions: {
+      type: Object,
+      default: {}
     }
   },
   watch: {
@@ -65,10 +81,23 @@ export default {
         console.log('watch.dataList')
       },
       deep: true
+    },
+    catalog: {
+      immediate: true,
+      handler (value) {
+        this.payName = Options.payName(this.catalog, this.type)
+      }
+    },
+    type: {
+      immediate: true,
+      handler (value) {
+        this.type = value
+      }
     }
   },
   components: {
-    SelectBank
+    SelectBank,
+    Options
   },
   methods: {
     deleteHandle (row, index) {

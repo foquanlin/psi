@@ -27,11 +27,13 @@
             ps.name as supplier_name,
             pg.name as goods_name,
             pgs.spec_name as spec_name,
-            pgs.spec_value as spec_value
+            pgs.spec_value as spec_value,
+            pu.name as unit_name
         from psi_stock t
         left join psi_warehouse pw on pw.id = t.warehouse_id
         left join psi_supplier ps on ps.id = t.supplier_id
         left join psi_goods pg on pg.id = t.goods_id
+        left join psi_unit pu on pu.id = pg.unit_id
         left join psi_goods_sku pgs on pgs.id = t.sku_id and pgs.goods_id = t.goods_id
         left join sys_user su on su.user_id = t.create_uid
     </sql>
@@ -103,7 +105,10 @@
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
-
+    <select id="selectById" resultMap="resultMap">
+        <include refid="selectSql"></include>
+        where t.id = #{id}
+    </select>
     <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiStockEntity">
         <result column="warehouse_id" property="warehouseId"/>
         <result column="supplier_id" property="supplierId"/>
@@ -115,7 +120,7 @@
         <result column="spec_name" property="specName"/>
         <result column="spec_value" property="specValue"/>
         <result column="supplier_name" property="supplierName"/>
-
+        <result column="unit_name" property="unitName"/>
 <!--        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>-->
 <!--        <association property="supplier" javaType="com.tongyi.modules.psi.entity.PsiSupplierEntity" select="com.tongyi.modules.psi.dao.PsiSupplierDao.selectById" column="supplier_id"/>-->
 <!--        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>-->

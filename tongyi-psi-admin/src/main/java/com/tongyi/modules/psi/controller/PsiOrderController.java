@@ -153,6 +153,14 @@ public class PsiOrderController extends AbstractController {
         return RestResponse.success();
     }
 
+    @SysLog("删除订单库存")
+    @RequestMapping("/deleteStock")
+    @RequiresPermissions(value={"psi:order:deleteStock","psi:buyorder:deleteStock","psi:saleorder:deleteStock"},logical = Logical.OR)
+    public RestResponse deleteStock(@RequestBody String[] ids) {
+        psiOrderService.deleteStock(ids);
+        return RestResponse.success();
+    }
+
     @SysLog("修改发票状态")
     @RequestMapping("/invoiceStatus")
     @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)

@@ -1,19 +1,19 @@
 <template>
   <el-dialog
     :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'"
-    :close-on-click-modal="false" width="71%" :visible.sync="visible">
+    :close-on-click-modal="false" width="50%" :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item label="名称" prop="name">
         <el-input v-model="dataForm.name" :disabled="disabled" placeholder="名称" clearable/>
-      </el-form-item>
-      <el-form-item label="图片" prop="picUrls">
-        <el-img v-model="dataForm.picUrls" :disabled="disabled" placeholder="图片" clearable/>
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-radio-group v-model="dataForm.status" :disabled="disabled">
           <el-radio-button label="RUN">启用</el-radio-button>
           <el-radio-button label="STOP">停用</el-radio-button>
         </el-radio-group>
+      </el-form-item>
+      <el-form-item label="图片" prop="picUrls">
+        <el-img v-model="dataForm.picUrls" :disabled="disabled" placeholder="图片" clearable/>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">

@@ -92,8 +92,10 @@ public class PsiStockController extends AbstractController {
     @RequiresPermissions("psi:stock:save")
     public RestResponse save(@RequestBody PsiStockEntity entity) {
         entity.setCreateUid(getUserId());
+        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
         psiStockService.addEntity(entity);
-        return RestResponse.success();
+        PsiStockEntity info = psiStockService.getById(entity.getId());
+        return RestResponse.success().put("info",info);
     }
 
     /**
@@ -107,7 +109,8 @@ public class PsiStockController extends AbstractController {
     @RequiresPermissions("psi:stock:update")
     public RestResponse update(@RequestBody PsiStockEntity entity) {
         psiStockService.updateEntity(entity);
-        return RestResponse.success();
+        PsiStockEntity info = psiStockService.getById(entity.getId());
+        return RestResponse.success().put("info",info);
     }
 
     /**

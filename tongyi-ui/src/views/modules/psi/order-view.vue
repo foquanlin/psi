@@ -1,64 +1,64 @@
 <template>
-  <el-dialog title="采购单详情" :close-on-click-modal="false" width="70%" :visible.sync="visible">
-    <el-descriptions title="采购单" :column="4">
-      <el-descriptions-item label="采购单号">{{info.no}}<span style="color: #66b1ff" v-clipboard:copy="info.no" v-clipboard:success="onCopySuccess">(点击复制)</span></el-descriptions-item>
-      <el-descriptions-item label="供应商">{{info.orderUser?info.orderUser.name:'-'}}</el-descriptions-item>
-      <el-descriptions-item label="订单日期">{{info.createDate}}</el-descriptions-item>
-      <el-descriptions-item label="快递单号">{{info.expressNo}}</el-descriptions-item>
-      <el-descriptions-item label="责任人">{{info.ownerUser?info.ownerUser.realName:'-'}}</el-descriptions-item>
-      <el-descriptions-item label="制单人">{{info.createUser?info.createUser.realName:'-'}}</el-descriptions-item>
-      <el-descriptions-item label="备注" :span="3">{{info.memo}}</el-descriptions-item>
+  <el-dialog :title="descriptions.orderName+'详情'" :close-on-click-modal="false" width="70%" :visible.sync="visible">
+    <el-descriptions :title="descriptions.orderName" :column="4">
+      <el-descriptions-item :label="descriptions.no">{{info.no}}<span style="color: #66b1ff" v-clipboard:copy="info.no" v-clipboard:success="onCopySuccess">(点击复制)</span></el-descriptions-item>
+      <el-descriptions-item :label="descriptions.orderUid">{{info.orderUser?info.orderUser.name:'-'}}</el-descriptions-item>
+      <el-descriptions-item :label="descriptions.createDate">{{info.createDate}}</el-descriptions-item>
+      <el-descriptions-item :label="descriptions.expressNo">{{info.expressNo}}</el-descriptions-item>
+      <el-descriptions-item :label="descriptions.ownerUid">{{info.ownerUser?info.ownerUser.realName:'-'}}</el-descriptions-item>
+      <el-descriptions-item :label="descriptions.createUid">{{info.createUser?info.createUser.realName:'-'}}</el-descriptions-item>
+      <el-descriptions-item :label="descriptions.memo" :span="3">{{info.memo}}</el-descriptions-item>
     </el-descriptions>
-    <el-descriptions title="订单状态" :column="4">
-      <el-descriptions-item label="发票状态">
+    <el-descriptions :title="descriptions.orderStatus" :column="4">
+      <el-descriptions-item :label="descriptions.invoiceStatus">
         <el-tag v-if="info.invoiceStatus === 'UNFINISH'" size="small">未开发票</el-tag>
         <el-tag v-else-if="info.invoiceStatus === 'FINISH'" size="small">已开发票</el-tag>
       </el-descriptions-item>
-      <el-descriptions-item label="库存状态">
+      <el-descriptions-item :label="descriptions.stockStatus">
         <el-tag v-if="info.stockStatus === 'UNFINISH'" size="small">未完成</el-tag>
         <el-tag v-if="info.stockStatus === 'PARTS'" size="small">部分完成</el-tag>
         <el-tag v-if="info.stockStatus === 'FINISH'" size="small">已完成</el-tag>
       </el-descriptions-item>
-      <el-descriptions-item label="付款状态">
+      <el-descriptions-item :label="descriptions.payStatus">
         <el-tag v-if="info.payStatus === 'DEBT'" size="small">有欠款</el-tag>
         <el-tag v-if="info.payStatus === 'PAYMENT'" size="small">待收款</el-tag>
         <el-tag v-if="info.payStatus === 'FINISH'" size="small">已完成</el-tag>
       </el-descriptions-item>
-      <el-descriptions-item label="订单状态">
+      <el-descriptions-item :label="descriptions.orderStatus">
         <el-tag v-if="info.status === 'UNFINISH'" size="small">未完成</el-tag>
         <el-tag v-if="info.status === 'FINISH'" size="small">已完成</el-tag>
       </el-descriptions-item>
     </el-descriptions>
-    <el-descriptions title="商品明细">
+    <el-descriptions :title="descriptions.goodsId+ '明细'">
     </el-descriptions>
     <el-table border :data="dataList" style="align-content: center;align-items: center; margin-bottom: 20px" empty-text="暂无内容">
-      <el-table-column prop="goodsName" header-align="center" align="center" label="商品" width="180px"/>
-      <el-table-column prop="skuid" header-align="center" align="left" label="规格">
+      <el-table-column prop="goodsName" header-align="center" align="center" :label="descriptions.goodsId" width="180px"/>
+      <el-table-column prop="skuid" header-align="center" align="left" :label="descriptions.skuId">
         <template v-slot="scope">
         <span  v-if="scope.row.specName">
           <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
         </span>
         </template>
       </el-table-column>
-      <el-table-column prop="unitName" header-align="center" align="center" label="单位" width="80px"/>
+      <el-table-column prop="unitName" header-align="center" align="center" :label="descriptions.unitId" width="80px"/>
       <el-table-column prop="costPrice" header-align="center" align="center" label="进价" width="80px"/>
-      <el-table-column prop="num" header-align="center" align="center" label="订购数量" width="80px"/>
+      <el-table-column prop="num" header-align="center" align="center" :label="descriptions.num" width="80px"/>
       <el-table-column prop="inStockNum" header-align="center" align="center" label="入库数量" width="80px"/>
-      <el-table-column prop="total" header-align="center" align="center" label="小计" fixed="right" width="100px">
+      <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal" fixed="right" width="100px">
         <template v-slot="scope">
           {{scope.row.costPrice * scope.row.num}}
         </template>
       </el-table-column>
     </el-table>
-    <el-descriptions title="付款详情">
+    <el-descriptions :title="descriptions.pay+'详情'">
     </el-descriptions>
     <el-table border :data="accountList" style="align-content: center;align-items: center;" empty-text="暂无内容">
-      <el-table-column prop="bankId" header-align="center" align="center" label="账户">
+      <el-table-column prop="bankId" header-align="center" align="center" :label="descriptions.payAccount">
         <template v-slot="scope">
           <span>{{scope.row.bank.bankName}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="amount" header-align="center" align="center" label="金额"/>
+      <el-table-column prop="amount" header-align="center" align="center" :label="descriptions.amount"/>
     </el-table>
     <div style="margin-top:20px;align-content: center;align-items: center;text-align: center;"><el-button @click="visible=false">取消</el-button></div>
   </el-dialog>
@@ -91,7 +91,21 @@ export default {
       },
       dataList: [],
       selectVisible: false,
-      accountList: [{bankId: '', amount: 0}]
+      accountList: []
+    }
+  },
+  props: {
+    catalog: {
+      type: String,
+      require: true
+    },
+    type: {
+      type: String,
+      require: true
+    },
+    descriptions: {
+      type: Object,
+      default: {}
     }
   },
   methods: {

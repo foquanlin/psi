@@ -1,42 +1,42 @@
 <template>
   <el-drawer
-    :title="!dataForm.id ? '新增采购单' : !disabled ? '修改采购单' : '查看采购单'"
+    :title="!dataForm.id ? (descriptions.add+descriptions.orderName) : !disabled ? (descriptions.edit+descriptions.orderName) : (descriptions.view+descriptions.orderName)"
     :close-on-click-modal="false" size="85%" :visible.sync="visible">
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="100px" @keyup.enter.native="dataFormSubmit()" style="margin-left: 10px;margin-right: 10px;">
-      <el-form-item label="订单日期" prop="createDate">
-        <el-date-picker v-model="dataForm.createDate" :disabled="disabled" placeholder="订单日期" type="date" value-format="yyyy-MM-dd" clearable/>
+      <el-form-item :label="descriptions.createDate" prop="createDate">
+        <el-date-picker v-model="dataForm.createDate" :disabled="disabled" :placeholder="descriptions.createDate" type="date" value-format="yyyy-MM-dd" clearable/>
       </el-form-item>
-      <el-form-item :label="catalog==='BUY'?'供应商':'客户'" prop="orderUid">
+      <el-form-item :label="descriptions.orderUid" prop="orderUid">
         <select-supplier2 v-model="dataForm" field="orderUid" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'" />
       </el-form-item>
-      <el-form-item label="责任人" prop="ownerUid">
-        <select-user v-model="dataForm" field="ownerUid" placeholder="责任人"/>
+      <el-form-item :label="descriptions.ownerUid" prop="ownerUid">
+        <select-user v-model="dataForm" field="ownerUid" :placeholder="descriptions.ownerUid"/>
       </el-form-item>
-      <el-form-item label="快递单号" prop="expressNo">
-        <el-input v-model="dataForm.expressNo" :disabled="disabled" placeholder="快递单号" clearable/>
+      <el-form-item :label="descriptions.expressNo" prop="expressNo">
+        <el-input v-model="dataForm.expressNo" :disabled="disabled" :placeholder="descriptions.expressNo" clearable/>
       </el-form-item>
-      <el-form-item label="备注" prop="memo">
-        <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>
+      <el-form-item :label="descriptions.memo" prop="memo">
+        <el-input v-model="dataForm.memo" :disabled="disabled" :placeholder="descriptions.memo" clearable/>
       </el-form-item>
       <el-table border :data="dataList">
-          <el-table-column prop="name" header-align="center" align="center" label="商品">
+          <el-table-column prop="name" header-align="center" align="center" :label="descriptions.goodsId">
             <template v-slot="scope">
               <span>{{scope.row.goodsName}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="250">
+          <el-table-column prop="skuId" header-align="center" align="left" :label="descriptions.skuId" width="250">
             <template v-slot="scope">
             <span  v-if="scope.row.specName">
               <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
             </span>
             </template>
           </el-table-column>
-          <el-table-column prop="catalog" header-align="center" align="center" label="分类">
+          <el-table-column prop="catalog" header-align="center" align="center" :label="descriptions.catalog">
             <template v-slot="scope">
               <span>{{scope.row.catalogName}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="unitId" header-align="center" align="center" label="单位">
+          <el-table-column prop="unitId" header-align="center" align="center" :label="descriptions.unitId">
             <template v-slot="scope">
               <span>{{scope.row.unitName}}</span>
             </template>
@@ -46,14 +46,14 @@
               <el-input-number v-model="scope.row.costPrice" placeholder="进价" size="mini" style="width:100%" :disabled="disabled"/>
             </template>
           </el-table-column>
-          <el-table-column prop="num" header-align="center" align="center" label="订购数量" width="150px">
+          <el-table-column prop="num" header-align="center" align="center" :label="descriptions.num" width="150px">
             <template v-slot="scope">
-              <el-input-number v-model="scope.row.num" placeholder="订购数量" size="mini" style="width:100%" :disabled="disabled"/>
+              <el-input-number v-model="scope.row.num" :placeholder="descriptions.num" size="mini" style="width:100%" :disabled="disabled"/>
             </template>
           </el-table-column>
-          <el-table-column prop="warehouseId" header-align="center" align="center" label="仓库" width="150px">
+          <el-table-column prop="warehouseId" header-align="center" align="center" :label="descriptions.warehouseId" width="150px">
             <template v-slot="scope">
-              <select-warehouse v-model="scope.row" field="warehouseId" placeholder="入库仓库" />
+              <select-warehouse v-model="scope.row" field="warehouseId" :placeholder="descriptions.warehouseId" />
             </template>
           </el-table-column>
           <el-table-column prop="inStockNum" header-align="center" align="center" label="入库数量" width="150px">
@@ -75,27 +75,27 @@
         </el-table>
       <el-button type="text" size="small" class="el-icon-plus" @click="appendGoods"  style="margin-bottom: 20px">增加商品</el-button>
       <el-table border :data="accountList" style="align-content: center;align-items: center;">
-        <el-table-column header-align="center" align="center" label="账户">
+        <el-table-column header-align="center" align="center" :label="descriptions.payAccount">
           <template v-slot="scope">
-            <select-bank v-model="scope.row" field="bankId" placeholder="付款账户" :disabled="disabled"/>
+            <select-bank v-model="scope.row" field="bankId" :placeholder="descriptions.payAccount" :disabled="disabled"/>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" align="center" label="金额">
+        <el-table-column header-align="center" align="center" :label="descriptions.amount">
           <template v-slot="scope">
             <el-input-number v-model="scope.row.amount" :disabled="disabled" style="width:100%"/>
           </template>
         </el-table-column>
         <el-table-column fixed="right" header-align="center" align="center" width="150" v-if="!disabled">
           <template v-slot="scope">
-            <el-button type="text" size="small" @click="delAccountHandle(scope.$index)" :disabled="disabled">删除</el-button>
+            <el-button type="text" size="small" @click="delAccountHandle(scope.$index)" :disabled="disabled">{{descriptions.delete}}</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-button type="text" size="small" class="el-icon-plus" @click="addAccountHandler">添加付款</el-button>
     </el-form>
     <el-form :inline="false" style="margin-left: 10px;">
-      <el-form-item label="发票状态" prop="invoiceStatus">
-        <el-radio-group v-model="dataForm.invoiceStatus" placeholder="发票状态" clearable  :disabled="disabled">
+      <el-form-item :label="descriptions.invoiceStatus" prop="invoiceStatus">
+        <el-radio-group v-model="dataForm.invoiceStatus" :placeholder="descriptions.invoiceStatus" clearable  :disabled="disabled">
           <el-radio-button value="UNFINISH" label="未开发票"/>
           <el-radio-button value="FINISH" label="已开发票"/>
         </el-radio-group>
@@ -104,8 +104,8 @@
         <el-upload :disabled="disabled" :action="url" :on-success="successHandle" :file-list="dataForm.attachmentUrls" :show-file-list="false" list-type="picture-card"><i class="el-icon-plus"></i></el-upload>
       </el-form-item>
       <el-form-item style="text-align: center">
-        <el-button @click="visible = false">取消</el-button>
-        <el-button v-if="!disabled" type="primary" @click="dataFormSubmit()">确定</el-button>
+        <el-button @click="visible = false">{{descriptions.cancel}}</el-button>
+        <el-button v-if="!disabled" type="primary" @click="dataFormSubmit()">{{descriptions.ok}}</el-button>
       </el-form-item>
     </el-form>
     <goods-select v-if="selectVisible" ref="goodsSelect" @select="onSelect"/>
@@ -163,6 +163,10 @@ export default {
     type: {
       type: String,
       default: undefined
+    },
+    descriptions: {
+      type: Object,
+      default: {}
     }
   },
   watch: {

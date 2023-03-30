@@ -17,9 +17,11 @@
             pu.name as unit_name,
             pg.name as goods_name,
             pgs.spec_name as spec_name,
-            pgs.spec_value as spec_value
+            pgs.spec_value as spec_value,
+            pc.name as catalog_name
         from psi_order_detail t
         left join psi_goods pg on pg.id = t.goods_id
+        left join psi_catalog pc on pc.id = pg.catalog_id
         left join psi_goods_sku pgs on pgs.id = t.sku_id
         left join psi_unit pu on pu.id = pg.unit_id
     </sql>
@@ -59,6 +61,7 @@
         <result column="goods_name" property="goodsName"/>
         <result column="spec_name" property="specName"/>
         <result column="spec_value" property="specName"/>
+        <result column="catalog_name" property="catalogName"/>
         <association property="order" javaType="com.tongyi.modules.psi.entity.PsiOrderEntity" select="com.tongyi.modules.psi.dao.PsiOrderDao.selectById" column="order_id"/>
         <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
         <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
