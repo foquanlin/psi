@@ -38,10 +38,19 @@
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" style="width: 100%;">
-      <el-table-column prop="goodsName" header-align="center" align="left" fixed="fixed" label="商品">
+      <el-table-column prop="goodsName" header-align="center" align="left" fixed="fixed" label="商品" width="250">
         <template v-slot="scope">
-          <span @click="showDetails(scope.row)">{{scope.row.goodsName}}</span>
+          <div style="display: flex">
+            <el-popover placement="right-start" trigger="hover" v-if="scope.row.goodsPicUrls">
+              <el-image fit="contain" style="width:400px" @click="openImg(scope.row.goodsPicUrls)" :src="scope.row.goodsPicUrls"/>
+              <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.goodsPicUrls"/>
+            </el-popover>
+            <div style="flex: 9;text-align: left;margin-left: 5px" >{{scope.row.goodsName}}</div>
+          </div>
         </template>
+<!--        <template v-slot="scope">-->
+<!--          <span @click="showDetails(scope.row)">{{scope.row.goodsName}}</span>-->
+<!--        </template>-->
       </el-table-column>
       <el-table-column prop="skuId" header-align="center" align="left" label="规格" width="250">
         <template v-slot="scope">
@@ -50,7 +59,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="catalog" header-align="center" align="left" label="出入库分类">
+      <el-table-column prop="catalog" header-align="center" align="left" label="订单分类">
         <template v-slot="scope">
           <span v-if="scope.row.catalog === 'TIAOZHENG'">库存调整</span>
           <span v-else-if="scope.row.catalog === 'PANDIAN'">库存盘点</span>
@@ -60,14 +69,15 @@
           <span v-else-if="scope.row.catalog === 'DINGDAN'">订单</span>
         </template>
       </el-table-column>
-      <el-table-column prop="type" header-align="center" align="left" label="出入库类型">
+      <el-table-column prop="type" header-align="center" align="left" label="出入库">
         <template v-slot="scope">
           <span v-if="scope.row.type === 'IN'">入库</span>
           <span v-else-if="scope.row.type === 'OUT'">出库</span>
         </template>
       </el-table-column>
       <el-table-column prop="warehouseName" header-align="center" align="left" label="仓库"/>
-      <el-table-column prop="supplierName" header-align="center" align="left" label="客户供应商"/>
+      <el-table-column prop="supplierName" header-align="center" align="left" label="客户供应商">
+      </el-table-column>
       <el-table-column prop="num" header-align="center" align="right" label="数量"/>
       <el-table-column prop="createTime" header-align="center" align="left" label="时间" width="100"/>
       <el-table-column prop="costPrice" header-align="center" align="right" label="平均进价"/>

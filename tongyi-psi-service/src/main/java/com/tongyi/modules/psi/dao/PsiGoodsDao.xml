@@ -17,11 +17,13 @@
             t.memo,
             pb.name as brand_name,
             pc.name as catalog_name,
-            pu.name as unit_name
+            pu.name as unit_name,
+            coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) as warehouse_num
         from psi_goods t
         left join psi_unit pu on pu.id = t.unit_id
         left join psi_catalog pc on pc.id = t.catalog_id
         left join psi_brand pb on pb.id = t.brand_id
+        left join psi_stock ps on ps.goods_id = t.id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -55,7 +57,11 @@
             <if test="params.barcode != null and params.barcode != ''">
                 and t.barcode = #{params.barcode}
             </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and ps.warehouse_id = #{params.warehouseId}
+            </if>
         </where>
+        group by t.id, t.brand_id, t.catalog_id, t.unit_id, t.no, t.name, t.create_date, t.pic_urls, t.memo, pb.name, pc.name, pu.name
     </sql>
     <select id="listPage" resultMap="resultList">
         <include refid="selectSql"/>
@@ -77,7 +83,6 @@
         <result column="unit_id" property="unitId"/>
         <result column="unit_name" property="unitName"/>
 
-        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.sumStockBySku" column="{goodsId=id}"/>
         <association property="costPrice" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.avgCostPrice" column="{goodsId=id}"/>
         <association property="salePrice" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.avgSalePrice" column="{goodsId=id}"/>
     </resultMap>

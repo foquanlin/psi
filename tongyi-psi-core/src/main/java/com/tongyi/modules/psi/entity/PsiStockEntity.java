@@ -115,6 +115,8 @@ public class PsiStockEntity implements Serializable {
     @TableField(exist = false)
     private String goodsName;
     @TableField(exist = false)
+    private String goodsPicUrls;
+    @TableField(exist = false)
     private String supplierName;
     @TableField(exist = false)
     private String unitName;

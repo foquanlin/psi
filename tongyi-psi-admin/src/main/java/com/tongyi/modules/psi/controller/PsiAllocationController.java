@@ -129,9 +129,6 @@ public class PsiAllocationController extends AbstractController {
     @RequestMapping("/delete")
     @RequiresPermissions("psi:allocation:delete")
     public RestResponse delete(@RequestBody String[] ids) {
-        Arrays.stream(ids).forEach(id->{
-            stockService.deleteByOrderId(id);
-        });
         psiAllocationService.deleteBatch(ids);
         return RestResponse.success();
     }

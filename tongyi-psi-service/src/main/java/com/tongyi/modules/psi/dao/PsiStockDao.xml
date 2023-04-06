@@ -26,6 +26,7 @@
             pw.name as warehouse_name,
             ps.name as supplier_name,
             pg.name as goods_name,
+            pg.pic_urls as goods_pic_urls,
             pgs.spec_name as spec_name,
             pgs.spec_value as spec_value,
             pu.name as unit_name
@@ -117,6 +118,7 @@
 
         <result column="warehouse_name" property="warehouseName"/>
         <result column="goods_name" property="goodsName"/>
+        <result column="goods_pic_urls" property="goodsPicUrls"/>
         <result column="spec_name" property="specName"/>
         <result column="spec_value" property="specValue"/>
         <result column="supplier_name" property="supplierName"/>

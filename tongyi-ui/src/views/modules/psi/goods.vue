@@ -29,10 +29,10 @@
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
-      <el-table-column prop="name" header-align="center" align="center" label="名称">
+      <el-table-column prop="name" header-align="center" align="center" label="名称" width="250">
         <template v-slot="scope">
           <div style="display: flex">
-            <el-popover placement="right-start" trigger="hover">
+            <el-popover placement="right-start" trigger="hover" v-if="scope.row.picUrls">
               <el-image fit="contain" style="width:400px" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
               <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.picUrls"/>
             </el-popover>

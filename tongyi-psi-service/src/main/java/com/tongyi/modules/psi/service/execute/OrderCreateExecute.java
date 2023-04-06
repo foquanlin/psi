@@ -156,6 +156,7 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,costPrice,num,inStockNum);
             orderDetailService.addEntity(detail);
             PsiStockEntity stock = PsiStockEntity.newStock(module.getStockCatalog(), module.getStockType(), warehouseId, goodsId, skuId, inStockNum, module.getId());
+            stock.setSupplierId(module.getOrderUid());
             stock.setCostPrice(costPrice);
             stock.setCreateUid(createUid);
             stockService.addEntity(stock);
