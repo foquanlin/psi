@@ -18,12 +18,11 @@
             pb.name as brand_name,
             pc.name as catalog_name,
             pu.name as unit_name,
-            coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) as warehouse_num
+            (select coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) from psi_stock ps where ps.goods_id = t.id <if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if>) as warehouse_num
         from psi_goods t
         left join psi_unit pu on pu.id = t.unit_id
         left join psi_catalog pc on pc.id = t.catalog_id
         left join psi_brand pb on pb.id = t.brand_id
-        left join psi_stock ps on ps.goods_id = t.id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -37,7 +36,7 @@
                 and t.catalog_id = #{params.catalogId}
             </if>
             <if test="params.no != null and params.no != ''">
-                and t.no = #{params.no}
+                and t.no like concat('%',#{params.no},'%')
             </if>
             <if test="params.name != null and params.name != ''">
                 and t.name = #{params.name}
@@ -48,20 +47,13 @@
             <if test="params.unitId != null and params.unitId != ''">
                 and t.unit_id = #{params.unitId}
             </if>
-            <if test="params.picUrls != null and params.picUrls != ''">
-                and t.pic_urls = #{params.picUrls}
-            </if>
             <if test="params.memo != null and params.memo != ''">
-                and t.memo = #{params.memo}
+                and t.memo like concat('%',#{params.memo},'%')
             </if>
             <if test="params.barcode != null and params.barcode != ''">
-                and t.barcode = #{params.barcode}
-            </if>
-            <if test="params.warehouseId != null and params.warehouseId != ''">
-                and ps.warehouse_id = #{params.warehouseId}
+                and t.barcode like concat('%',#{params.barcode},'%')
             </if>
         </where>
-        group by t.id, t.brand_id, t.catalog_id, t.unit_id, t.no, t.name, t.create_date, t.pic_urls, t.memo, pb.name, pc.name, pu.name
     </sql>
     <select id="listPage" resultMap="resultList">
         <include refid="selectSql"/>

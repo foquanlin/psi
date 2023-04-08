@@ -38,7 +38,7 @@ export default {
         payStatus: '退款状态',
         stockStatus: '入库状态',
         orderUid: '客户',
-        createDate: '销售日期',
+        createDate: '退单日期',
         payAmount: '已退款',
         nopayAmount: '未退款',
         orderName: '销售退单',
