@@ -104,6 +104,11 @@ public class PsiStockEntity implements Serializable {
      */
     private String memo;
 
+    /**
+     * 订单明细id;
+     */
+    private String detailId;
+
     @TableField(exist = false)
     private String createName;
     @TableField(exist = false)

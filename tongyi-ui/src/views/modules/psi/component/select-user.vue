@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value[field]" :placeholder="placeholder" clearable @focus="loadData">
+    <el-select v-model="value[field]" :placeholder="placeholder" clearable :loading="loading" @focus="loadData">
       <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
     </el-select>
   </div>
@@ -10,6 +10,7 @@
 export default {
   data () {
     return {
+      loading: false,
       userList: []
     }
   },
@@ -51,6 +52,7 @@ export default {
       if (this.userList.length > 0) {
         return
       }
+      this.loading = true
       this.$http({
         url: '/sys/user/queryAll',
         method: 'get',
@@ -62,6 +64,7 @@ export default {
         } else {
           this.userList = []
         }
+        this.loading = false
       })
     }
   }

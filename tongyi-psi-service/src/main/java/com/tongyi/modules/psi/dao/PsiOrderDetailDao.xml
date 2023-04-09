@@ -53,23 +53,6 @@
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
-    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
-        <id column="id" property="id"/>
-        <result column="order_id" property="orderId"/>
-        <result column="goods_id" property="goodsId"/>
-        <result column="sku_id" property="skuId"/>
-        <result column="goods_name" property="goodsName"/>
-        <result column="spec_name" property="specName"/>
-        <result column="spec_value" property="specName"/>
-        <result column="catalog_name" property="catalogName"/>
-        <association property="order" javaType="com.tongyi.modules.psi.entity.PsiOrderEntity" select="com.tongyi.modules.psi.dao.PsiOrderDao.selectById" column="order_id"/>
-        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
-        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
-    </resultMap>
-    <select id="selectById" resultMap="resultMap">
-        <include refid="selectSql"/>
-        where t.id = #{id}
-    </select>
 
     <select id="selectByOrderId" resultType="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
         <include refid="selectSql"/>

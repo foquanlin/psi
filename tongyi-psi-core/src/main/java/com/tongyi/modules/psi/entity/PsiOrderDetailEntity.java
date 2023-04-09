@@ -83,4 +83,9 @@ public class PsiOrderDetailEntity implements Serializable {
         entity.setInStockNum(inStockNum);
         return entity;
     }
+
+    public PsiStockEntity newStockRecord(PsiStockEntity.Catalog catalog,PsiStockEntity.Type type,String warehouseId) {
+        PsiStockEntity stock = PsiStockEntity.newStock(catalog,type,warehouseId,this.goodsId,this.skuId,num,orderId);
+        return stock;
+    }
 }

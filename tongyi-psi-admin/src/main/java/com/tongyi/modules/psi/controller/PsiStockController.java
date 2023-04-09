@@ -55,7 +55,7 @@ public class PsiStockController extends AbstractController {
      */
     @PostMapping("/list")
     @RequiresPermissions("psi:stock:list")
-    public RestResponse list(@RequestBody Map<String, Object> params, Model model) {
+    public RestResponse list(@RequestBody Map<String, Object> params) {
         Integer current = (Integer)params.get("page");
         Integer size = (Integer)params.get("limit");
         if (current == null){
@@ -92,7 +92,6 @@ public class PsiStockController extends AbstractController {
     @RequiresPermissions("psi:stock:save")
     public RestResponse save(@RequestBody PsiStockEntity entity) {
         entity.setCreateUid(getUserId());
-        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
         psiStockService.addEntity(entity);
         PsiStockEntity info = psiStockService.getById(entity.getId());
         return RestResponse.success().put("info",info);
@@ -116,16 +115,14 @@ public class PsiStockController extends AbstractController {
     /**
      * 根据主键删除库存
      *
-     * @param id
+     * @param ids
      * @return RestResponse
      */
     @SysLog("删除库存")
     @RequestMapping("/delete")
     @RequiresPermissions("psi:stock:delete")
     public RestResponse delete(@RequestBody String[] ids) {
-        Arrays.stream(ids).forEach(id->{
-            psiStockService.deleteEntity(id);
-        });
+        psiStockService.deleteEntity(ids);
         return RestResponse.success();
     }
 
@@ -136,7 +133,6 @@ public class PsiStockController extends AbstractController {
         entity.setCreateUid(this.getUserId());
         entity.setType(PsiStockEntity.Type.IN.getCode());
         entity.setCatalog(PsiStockEntity.Catalog.TIAOZHENG.getCode());
-        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
         psiStockService.addEntity(entity);
         return RestResponse.success();
     }
@@ -147,7 +143,6 @@ public class PsiStockController extends AbstractController {
         entity.setCreateUid(this.getUserId());
         entity.setType(PsiStockEntity.Type.OUT.getCode());
         entity.setCatalog(PsiStockEntity.Catalog.TIAOZHENG.getCode());
-        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
         psiStockService.addEntity(entity);
         return RestResponse.success();
     }

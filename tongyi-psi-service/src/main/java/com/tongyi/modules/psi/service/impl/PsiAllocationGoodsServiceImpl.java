@@ -7,14 +7,18 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiAllocationGoodsDao;
+import com.tongyi.modules.psi.dao.PsiStockDao;
 import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
+import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiAllocationGoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +36,11 @@ import java.util.Objects;
  */
 @Service("psiAllocationGoodsService")
 public class PsiAllocationGoodsServiceImpl extends ServiceImpl<PsiAllocationGoodsDao, PsiAllocationGoodsEntity> implements PsiAllocationGoodsService{
+
+    @Autowired
+    private PsiAllocationGoodsDao allocationGoodsDao;
+    @Autowired
+    private PsiStockDao stockDao;
 
     @Override
     public PsiAllocationGoodsEntity getById(Serializable id){
@@ -65,12 +74,27 @@ public class PsiAllocationGoodsServiceImpl extends ServiceImpl<PsiAllocationGood
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
+        PsiAllocationGoodsEntity item = allocationGoodsDao.selectById(id);
+        stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>()
+                .eq(PsiStockEntity::getOrderId,item.getAllocationId())
+                .eq(PsiStockEntity::getGoodsId,item.getGoodsId())
+                .eq(PsiStockEntity::getSkuId,item.getSkuId())
+        );
         return super.removeById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
+        Arrays.stream(ids).forEach(id->{
+            PsiAllocationGoodsEntity item = allocationGoodsDao.selectById(id);
+            stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>()
+                    .eq(PsiStockEntity::getOrderId,item.getAllocationId())
+                    .eq(PsiStockEntity::getGoodsId,item.getGoodsId())
+                    .eq(PsiStockEntity::getSkuId,item.getSkuId())
+            );
+
+        });
         return super.removeByIds(Arrays.asList(ids));
     }
 }

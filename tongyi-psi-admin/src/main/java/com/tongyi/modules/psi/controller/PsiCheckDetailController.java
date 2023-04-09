@@ -114,11 +114,7 @@ public class PsiCheckDetailController extends AbstractController {
     @RequestMapping("/delete")
     @RequiresPermissions("psi:checkdetail:delete")
     public RestResponse delete(@RequestBody String[] ids) {
-        Arrays.stream(ids).forEach(id->{
-            PsiCheckDetailEntity item = psiCheckDetailService.getById(id);
-            stockService.deleteBySkuId(item.getCid(),item.getGoodsId(),item.getSkuId());
-            psiCheckDetailService.deleteEntity(item.getId());
-        });
+        psiCheckDetailService.deleteEntity(ids);
         return RestResponse.success();
     }
 }

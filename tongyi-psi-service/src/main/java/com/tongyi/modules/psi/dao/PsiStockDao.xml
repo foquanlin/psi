@@ -22,6 +22,7 @@
             t.sale_price,
             t.create_uid,
             t.memo,
+            t.detail_id,
             su.real_name as create_name,
             pw.name as warehouse_name,
             ps.name as supplier_name,
@@ -115,6 +116,7 @@
         <result column="supplier_id" property="supplierId"/>
         <result column="goods_id" property="goodsId"/>
         <result column="sku_id" property="skuId"/>
+        <result column="detail_id" property="detailId"/>
 
         <result column="warehouse_name" property="warehouseName"/>
         <result column="goods_name" property="goodsName"/>
@@ -134,6 +136,9 @@
         select coalesce(sum(case t.type when 'IN' then t.num when 'OUT' then -t.num else 0 end),0) as num
         from psi_stock t
         <where>
+            <if test="orderId != null and orderId!= ''">
+                and t.order_id= #{orderId}
+            </if>
             <if test="warehouseId != null and warehouseId!= ''">
                 and t.warehouse_id= #{warehouseId}
             </if>

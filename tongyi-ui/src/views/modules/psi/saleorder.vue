@@ -47,7 +47,8 @@ export default {
         payDate: '收款日期',
         warehouseId: '出库仓库',
         stockName: '出库',
-        stockDate: '出库日期'
+        stockDate: '出库日期',
+        price: '售价'
       }
     }
   },

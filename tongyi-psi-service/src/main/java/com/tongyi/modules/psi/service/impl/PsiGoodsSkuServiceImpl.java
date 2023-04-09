@@ -91,7 +91,7 @@ public class PsiGoodsSkuServiceImpl extends ServiceImpl<PsiGoodsSkuDao, PsiGoods
     public boolean deleteBatch(Serializable[] ids) {
         Arrays.stream(ids).forEach(id->{
             PsiGoodsSkuEntity sku = baseMapper.selectById(id);
-            BigDecimal sum = stockDao.sumStockBySku(null,sku.getGoodsId(),sku.getId());
+            BigDecimal sum = stockDao.sumStockBySku(null,null,sku.getGoodsId(),sku.getId());
             if (null!=sum && sum.compareTo(BigDecimal.ZERO)>0){
                 throw new BusinessException("商品有库存,不能删除!");
             }

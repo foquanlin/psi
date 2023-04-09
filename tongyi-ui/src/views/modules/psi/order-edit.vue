@@ -134,7 +134,7 @@ export default {
                   skuId: item.skuId,
                   warehouseId: item.warehouseId,
                   num: item.num,
-                  costPrice: item.price,
+                  price: item.price,
                   warehouseNum: 0,
                   inStockNum: item.inStockNum,
                   memo: ''

@@ -7,14 +7,15 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
-import com.tongyi.modules.psi.dao.PsiOrderDao;
-import com.tongyi.modules.psi.dao.PsiStockDao;
-import com.tongyi.modules.psi.entity.PsiOrderEntity;
+import com.tongyi.modules.psi.dao.*;
+import com.tongyi.modules.psi.entity.*;
+import com.tongyi.modules.psi.service.PsiOrderAmountService;
 import com.tongyi.modules.psi.service.PsiOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,16 @@ import java.util.Objects;
  */
 @Service("psiOrderService")
 public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity> implements PsiOrderService{
+    @Autowired
+    private PsiOrderDetailDao orderDetailDao;
+    @Autowired
+    private PsiOrderAmountDao orderAmountDao;
+    @Autowired
+    private PsiOrderExpressDao orderExpressDao;
+    @Autowired
+    private PsiOrderOperationDao orderOperationDao;
+    @Autowired
+    private PsiOrderInvoiceDao orderInvoiceDao;
     @Autowired
     private PsiStockDao stockDao;
     @Override
@@ -68,12 +79,26 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
+        orderDetailDao.delete(new LambdaQueryWrapper<PsiOrderDetailEntity>().eq(PsiOrderDetailEntity::getOrderId,id));
+        orderAmountDao.delete(new LambdaQueryWrapper<PsiOrderAmountEntity>().eq(PsiOrderAmountEntity::getOrderId,id));
+        orderExpressDao.delete(new LambdaQueryWrapper<PsiOrderExpressEntity>().eq(PsiOrderExpressEntity::getOrderId,id));
+        orderOperationDao.delete(new LambdaQueryWrapper<PsiOrderOperationEntity>().eq(PsiOrderOperationEntity::getOrderId,id));
+        orderInvoiceDao.delete(new LambdaQueryWrapper<PsiOrderInvoiceEntity>().eq(PsiOrderInvoiceEntity::getOrderId,id));
+        stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>().eq(PsiStockEntity::getOrderId,id));
         return super.removeById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
+        Arrays.stream(ids).forEach(id->{
+            orderDetailDao.delete(new LambdaQueryWrapper<PsiOrderDetailEntity>().eq(PsiOrderDetailEntity::getOrderId,id));
+            orderAmountDao.delete(new LambdaQueryWrapper<PsiOrderAmountEntity>().eq(PsiOrderAmountEntity::getOrderId,id));
+            orderExpressDao.delete(new LambdaQueryWrapper<PsiOrderExpressEntity>().eq(PsiOrderExpressEntity::getOrderId,id));
+            orderOperationDao.delete(new LambdaQueryWrapper<PsiOrderOperationEntity>().eq(PsiOrderOperationEntity::getOrderId,id));
+            orderInvoiceDao.delete(new LambdaQueryWrapper<PsiOrderInvoiceEntity>().eq(PsiOrderInvoiceEntity::getOrderId,id));
+            stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>().eq(PsiStockEntity::getOrderId,id));
+        });
         return super.removeByIds(Arrays.asList(ids));
     }
 

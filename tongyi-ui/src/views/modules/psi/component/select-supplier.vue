@@ -4,7 +4,7 @@
       <el-radio-button label="CUSTOMER">客户</el-radio-button>
       <el-radio-button label="SUPPLIER">供应商</el-radio-button>
     </el-radio-group>
-    <el-select v-model="value[field]" :placeholder="supplierType==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." @focus="loadData">
+    <el-select v-model="value[field]" :placeholder="supplierType==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." :loading="loading" @focus="loadData">
       <el-option v-for="item in supplierList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>
@@ -14,6 +14,7 @@
 export default {
   data () {
     return {
+      loading: false,
       supplierType: '',
       supplierList: []
     }
@@ -45,6 +46,7 @@ export default {
       if (this.supplierList.length > 0) {
         return
       }
+      this.loading = true
       this.$http({
         url: '/psi/supplier/listAll',
         method: 'get',
@@ -58,6 +60,7 @@ export default {
         } else {
           this.supplierList = []
         }
+        this.loading = false
       })
     },
     changeSupplier () {

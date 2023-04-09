@@ -7,22 +7,26 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiCheckDao;
+import com.tongyi.modules.psi.dao.PsiCheckDetailDao;
+import com.tongyi.modules.psi.dao.PsiStockDao;
+import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
-import com.tongyi.modules.psi.service.PsiCheckDetailService;
+import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * 盘点Service实现类
@@ -34,7 +38,9 @@ import java.util.Objects;
 public class PsiCheckServiceImpl extends ServiceImpl<PsiCheckDao, PsiCheckEntity> implements PsiCheckService{
 
     @Autowired
-    private PsiCheckDetailService checkDetailService;
+    private PsiCheckDetailDao checkDetailDao;
+    @Autowired
+    private PsiStockDao stockDao;
 
     @Override
     public PsiCheckEntity getById(Serializable id){
@@ -68,13 +74,18 @@ public class PsiCheckServiceImpl extends ServiceImpl<PsiCheckDao, PsiCheckEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
-        checkDetailService.deleteByCid(new Serializable[]{id});
+        checkDetailDao.delete(new LambdaQueryWrapper<PsiCheckDetailEntity>().eq(PsiCheckDetailEntity::getCid,id));
+        stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>().eq(PsiStockEntity::getOrderId,id));
         return super.removeById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
+        Arrays.stream(ids).forEach(id->{
+            checkDetailDao.delete(new LambdaQueryWrapper<PsiCheckDetailEntity>().eq(PsiCheckDetailEntity::getCid,id));
+            stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>().eq(PsiStockEntity::getOrderId,id));
+        });
         return super.baseMapper.deleteById(ids) >0;
     }
 

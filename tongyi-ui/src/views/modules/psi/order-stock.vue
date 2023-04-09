@@ -16,17 +16,9 @@
         </span>
       </template>
     </el-table-column>
-    <el-table-column prop="catalog" header-align="center" align="center" :label="descriptions.catalog">
-      <template v-slot="scope">
-        <span>{{scope.row.catalogName}}</span>
-      </template>
-    </el-table-column>
-    <el-table-column prop="unitId" header-align="center" align="center" :label="descriptions.unitId">
-      <template v-slot="scope">
-        <span>{{scope.row.unitName}}</span>
-      </template>
-    </el-table-column>
-    <el-table-column :prop="priceField" header-align="center" align="center" :label="priceName" width="150px"/>
+    <el-table-column prop="catalogName" header-align="center" align="center" :label="descriptions.catalog"/>
+    <el-table-column prop="unitName" header-align="center" align="center" :label="descriptions.unitId"/>
+    <el-table-column prop="price" header-align="center" align="center" :label="priceName" width="150px"/>
     <el-table-column prop="num" header-align="center" align="center" :label="numberName+descriptions.num" width="150px"/>
     <el-table-column prop="inStockNum" header-align="center" align="center" :label="stockName+descriptions.num" width="150px"/>
     <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal">
@@ -56,7 +48,6 @@ export default {
       disabled: true,
       inStockVisible: false,
       priceName: '',
-      priceField: 'costPrice',
       stockName: '',
       numberName: ''
     }
@@ -103,7 +94,6 @@ export default {
         this.priceName = Options.priceName(this.catalog, this.type)
         this.numberName = Options.numberName(this.catalog, this.type)
         this.stockName = Options.stockName(this.catalog, this.type)
-        this.priceField = Options.priceField(this.catalog, this.type)
       }
     }
   },
@@ -136,7 +126,7 @@ export default {
                 skuId: item.skuId,
                 warehouseId: item.warehouseId,
                 num: item.num,
-                costPrice: item.price,
+                price: item.price,
                 warehouseNum: 0,
                 inStockNum: item.inStockNum,
                 memo: ''
@@ -158,7 +148,7 @@ export default {
     inStockHandle (row, index) {
       this.inStockVisible = true
       this.$nextTick(() => {
-        this.$refs.orderStockInout.show(row.goodsId, row.skuId)
+        this.$refs.orderStockInout.show(row)
       })
     }
   }

@@ -79,11 +79,12 @@ export default {
       visible: false,
       sku: {goods: {picUrl: ''}},
       dataList: [],
+      detailId: '',
       goodsId: '',
       skuId: '',
       title: '',
-      stockCatalog: '',
-      stockType: ''
+      stockCatalog: '', // 订单分类
+      stockType: '' // 出库OUT或入库IN
     }
   },
   props: {
@@ -135,9 +136,10 @@ export default {
     Options
   },
   methods: {
-    show (goodsId, skuId) {
-      this.goodsId = goodsId
-      this.skuId = skuId
+    show (detail) {
+      this.detailId = detail.id
+      this.goodsId = detail.goodsId
+      this.skuId = detail.skuId
       this.visible = true
       this.dataList = []
       this.loadGoods()
@@ -239,6 +241,7 @@ export default {
           goodsId: this.goodsId,
           skuId: this.skuId,
           orderId: this.order.id,
+          detailId: this.detailId,
           ...row
         }
       }).then(({data}) => {

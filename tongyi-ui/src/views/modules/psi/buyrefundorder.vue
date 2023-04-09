@@ -34,7 +34,7 @@ export default {
         amount: '金额',
         num: '数量',
 
-        orderStatus: '订单状态',
+        orderStatus: '退单状态',
         payStatus: '退款状态',
         stockStatus: '出库状态',
         orderUid: '供应商',
@@ -47,7 +47,8 @@ export default {
         payDate: '退款日期',
         warehouseId: '出库仓库',
         stockName: '出库',
-        stockDate: '出库日期'
+        stockDate: '出库日期',
+        price: '进价'
       }
     }
   },

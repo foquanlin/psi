@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="value[field]" placeholder="商品名称" clearable filterable loading-text="加载中..." :size="size" @focus="loadData" @change="changeGoods">
+  <el-select v-model="value[field]" placeholder="商品名称" clearable filterable :loading="loading" loading-text="加载中..." :size="size" @focus="loadData" @change="changeGoods">
     <el-option v-for="item in goodsList" :key="item.id" :label="item.name" :value="item.id"/>
   </el-select>
 </template>
@@ -8,6 +8,7 @@
 export default {
   data () {
     return {
+      loading: false,
       goodsList: []
     }
   },
@@ -38,14 +39,12 @@ export default {
       }
     }
   },
-  mounted () {
-    this.loadData()
-  },
   methods: {
     loadData () {
       if (this.goodsList.length > 0) {
         return
       }
+      this.loading = true
       this.$http({
         url: '/psi/goods/listAll',
         method: 'get',
@@ -57,6 +56,7 @@ export default {
         } else {
           this.goodsList = []
         }
+        this.loading = false
       })
     },
     changeGoods (value) {

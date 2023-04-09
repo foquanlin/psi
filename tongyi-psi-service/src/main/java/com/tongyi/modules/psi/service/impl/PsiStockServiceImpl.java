@@ -56,6 +56,7 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiStockEntity entity) {
+        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
         return super.save(entity);
     }
 
@@ -89,12 +90,12 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
 
     @Override
     public BigDecimal stockNum(String warehouseId, String goodsId) {
-        return baseMapper.sumStockBySku(warehouseId,goodsId,null);
+        return baseMapper.sumStockBySku(null,warehouseId,goodsId,null);
     }
 
     @Override
     public BigDecimal stockNum(String warehouseId, String goodsId, String skuId) {
-        return baseMapper.sumStockBySku(warehouseId,goodsId,skuId);
+        return baseMapper.sumStockBySku(null,warehouseId,goodsId,skuId);
     }
 
     @Override

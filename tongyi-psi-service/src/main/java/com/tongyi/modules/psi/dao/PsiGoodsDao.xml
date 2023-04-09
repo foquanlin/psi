@@ -18,7 +18,7 @@
             pb.name as brand_name,
             pc.name as catalog_name,
             pu.name as unit_name,
-            (select coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) from psi_stock ps where ps.goods_id = t.id <if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if>) as warehouse_num
+            (select coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) from psi_stock ps where ps.goods_id = t.id <if test="params!=null and params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if>) as warehouse_num
         from psi_goods t
         left join psi_unit pu on pu.id = t.unit_id
         left join psi_catalog pc on pc.id = t.catalog_id
@@ -63,10 +63,6 @@
     <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiGoodsEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
-    </select>
-    <select id="selectById" resultMap="resultMap">
-        <include refid="selectSql"/>
-        where t.id = #{id}
     </select>
     <resultMap id="resultList" type="com.tongyi.modules.psi.entity.PsiGoodsEntity">
         <id column="id" property="id"/>

@@ -77,6 +77,8 @@ public class PsiAllocationServiceImpl extends ServiceImpl<PsiAllocationDao, PsiA
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
+        stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>().eq(PsiStockEntity::getOrderId,id));
+        allocationGoodsDao.delete(new LambdaQueryWrapper<PsiAllocationGoodsEntity>().eq(PsiAllocationGoodsEntity::getAllocationId,id));
         return super.removeById(id);
     }
 

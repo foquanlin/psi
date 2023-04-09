@@ -52,5 +52,5 @@ public interface PsiStockDao extends BaseMapper<PsiStockEntity> {
      * @param goodsId
      * @return
      */
-    public BigDecimal sumStockBySku(@Param("warehouseId")String warehouseId,@Param("goodsId")String goodsId,@Param("skuId")String skuId);
+    public BigDecimal sumStockBySku(@Param("orderId")String orderId,@Param("warehouseId")String warehouseId,@Param("goodsId")String goodsId,@Param("skuId")String skuId);
 }

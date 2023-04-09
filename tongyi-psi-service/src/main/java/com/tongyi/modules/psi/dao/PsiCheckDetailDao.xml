@@ -78,13 +78,6 @@
 <!--        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>-->
 <!--    </resultMap>-->
 
-    <delete id="deleteByCid">
-        delete from psi_check_detail where cid in
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
-
     <select id="selectByCid" resultType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
         <include refid="selectSql"/>
         where t.cid = #{cid}

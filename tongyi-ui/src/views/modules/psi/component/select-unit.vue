@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value[field]" placeholder="单位" clearable filterable loading-text="加载中..." @focus="loadData">
+    <el-select v-model="value[field]" placeholder="单位" clearable filterable loading-text="加载中..." :loading="loading" @focus="loadData">
       <el-option v-for="item in unitList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>
@@ -10,6 +10,7 @@
 export default {
   data () {
     return {
+      loading: false,
       unitList: []
     }
   },
@@ -40,6 +41,7 @@ export default {
       if (this.unitList.length > 0) {
         return
       }
+      this.loading = true
       this.$http({
         url: '/psi/unit/listAll',
         method: 'get',
@@ -51,6 +53,7 @@ export default {
         } else {
           this.unitList = []
         }
+        this.loading = false
       })
     }
   }

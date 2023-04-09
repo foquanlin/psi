@@ -20,6 +20,4 @@ import java.io.Serializable;
  * @date 2022-10-12 01:48:53
  */
 public interface PsiCheckDetailService extends IService<PsiCheckDetailEntity>{
-
-    public int deleteByCid(Serializable[] ids);
 }

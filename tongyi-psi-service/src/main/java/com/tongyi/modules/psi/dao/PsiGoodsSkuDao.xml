@@ -17,6 +17,7 @@
             t.spec_value,
         <if test="params.warehouseId != null and params.warehouseId != ''">
             pw.name as warehouse_name,
+            (select coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) from psi_stock ps where ps.goods_id = t.goods_id and ps.sku_id = t.id <if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if> ) as warehouse_num,
         </if>
             pg.name as goods_name,
             pg.pic_urls as pic_urls,
@@ -26,11 +27,8 @@
         left join psi_goods pg on pg.id = t.goods_id
         left join psi_catalog pc on pc.id = pg.catalog_id
         left join psi_unit pu on pu.id = pg.unit_id
-        <if test="params.warehouseId != null and params.warehouseId != ''">
-            left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id
-            left join psi_warehouse pw on pw.id = ps.warehouse_id
-        </if>
-
+        left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id<if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if>
+        left join psi_warehouse pw on pw.id = ps.warehouse_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -55,11 +53,7 @@
             <if test="params.specValue != null and params.specValue != ''">
                 and t.spec_value = #{params.specValue}
             </if>
-            <if test="params.warehouseId != null and params.warehouseId != ''">
-                and ps.warehouse_id = #{params.warehouseId}
-            </if>
         </where>
-        group by t.id, t.goods_id, t.no, t.barcode, t.cost_price, t.sale_price, t.status, t.spec_name, t.spec_value
     </sql>
     <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>

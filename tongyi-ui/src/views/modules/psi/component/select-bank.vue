@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value[field]" :placeholder="placeholder" clearable filterable loading-text="加载中..." :size="size" @focus="loadData">
+    <el-select v-model="value[field]" :placeholder="placeholder" clearable filterable loading-text="加载中..." :size="size" :loading="loading" @focus="loadData">
       <el-option v-for="item in bankList" :key="item.id" :label="item.bankName" :value="item.id"/>
     </el-select>
   </div>
@@ -10,6 +10,7 @@
 export default {
   data () {
     return {
+      loading: false,
       bankList: []
     }
   },
@@ -48,6 +49,7 @@ export default {
       if (this.bankList.length > 0) {
         return
       }
+      this.loading = true
       this.$http({
         url: '/psi/bank/listAll',
         method: 'get',
@@ -60,6 +62,7 @@ export default {
         } else {
           this.bankList = []
         }
+        this.loading = false
       })
     }
   }

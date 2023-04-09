@@ -38,9 +38,9 @@
               <span>{{scope.row.unitName}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="costPrice" header-align="center" align="center" :label="priceName" width="150px">
+          <el-table-column prop="price" header-align="center" align="center" :label="priceName" width="150px">
             <template v-slot="scope">
-              <el-input-number v-model="scope.row.costPrice" :placeholder="priceName" size="mini" style="width:100%"/>
+              <el-input-number v-model="scope.row.price" :placeholder="priceName" size="mini" style="width:100%"/>
             </template>
           </el-table-column>
           <el-table-column prop="num" header-align="center" align="center" :label="numberName+descriptions.num" width="150px">
@@ -50,7 +50,7 @@
           </el-table-column>
           <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal">
             <template v-slot="scope">
-              {{scope.row.costPrice * scope.row.num}}
+              {{scope.row.price * scope.row.num}}
             </template>
           </el-table-column>
           <el-table-column fixed="right" header-align="center" align="center" width="80" :label="descriptions.action">
@@ -211,7 +211,7 @@ export default {
           skuId: '',
           warehouseId: '',
           num: 0,
-          costPrice: 0,
+          price: 0,
           warehouseNum: 0,
           inStockNum: 0,
           memo: ''
@@ -231,7 +231,7 @@ export default {
           skuId: item.id,
           warehouseId: '',
           num: 0,
-          costPrice: 0,
+          price: 0,
           warehouseNum: 0,
           inStockNum: 0,
           memo: ''

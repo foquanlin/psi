@@ -113,12 +113,7 @@ public class PsiAllocationGoodsController extends AbstractController {
     @RequestMapping("/delete")
     @RequiresPermissions("psi:allocationgoods:delete")
     public RestResponse delete(@RequestBody String[] ids) {
-
-        Arrays.stream(ids).forEach(id->{
-            PsiAllocationGoodsEntity item = psiAllocationGoodsService.getById(id);
-            stockService.deleteBySkuId(item.getAllocationId(),item.getGoodsId(),item.getSkuId());
-            psiAllocationGoodsService.deleteEntity(item.getId());
-        });
+        psiAllocationGoodsService.deleteEntity(ids);
         return RestResponse.success();
     }
 }

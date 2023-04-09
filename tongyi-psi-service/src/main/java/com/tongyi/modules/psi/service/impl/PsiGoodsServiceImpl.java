@@ -131,7 +131,7 @@ public class PsiGoodsServiceImpl extends ServiceImpl<PsiGoodsDao, PsiGoodsEntity
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
         Arrays.stream(ids).forEach(id->{
-            BigDecimal sum = stockDao.sumStockBySku(null,(String)id,null);
+            BigDecimal sum = stockDao.sumStockBySku(null,null,(String)id,null);
             if (null!=sum && sum.compareTo(BigDecimal.ZERO)>0){
                 throw new BusinessException("商品有库存,不能删除!");
             }
