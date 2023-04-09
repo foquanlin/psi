@@ -10,6 +10,7 @@ package com.tongyi.modules.psi.service;
 
 import com.tongyi.core.IService;
 import com.tongyi.modules.psi.entity.PsiOrderEntity;
+import com.tongyi.modules.psi.entity.PsiStockEntity;
 
 /**
  * 采购单Service接口
@@ -19,5 +20,19 @@ import com.tongyi.modules.psi.entity.PsiOrderEntity;
  */
 public interface PsiOrderService extends IService<PsiOrderEntity>{
 
+    /**
+     * 增加订单库存
+     */
+    public void addStock(PsiStockEntity stock);
+
+    /**
+     * 修改订单库存
+     * @param stock
+     */
+    public void updateStock(PsiStockEntity stock);
+    /**
+     * 删除订单库存
+     * @param ids
+     */
     void deleteStock(String[] ids);
 }

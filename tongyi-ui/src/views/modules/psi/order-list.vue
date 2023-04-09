@@ -52,8 +52,8 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
-        <el-button v-if="isAuth('psi:buyorder:save')" type="primary" @click="addHandle()">新增</el-button>
-        <el-button v-if="isAuth('psi:buyorder:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('psi:buyorder:save') || isAuth('psi:buyrefundorder:save') || isAuth('psi:saleorder:save') || isAuth('psi:salerefundorder:save')"  type="primary" @click="addHandle()">新增</el-button>
+        <el-button v-if="isAuth('psi:buyorder:delete') || isAuth('psi:buyrefundorder:delete') || isAuth('psi:saleorder:delete') || isAuth('psi:salerefundorder:delete')"  type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;margin-bottom: 10px">
@@ -108,10 +108,10 @@
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" :label="descriptions.action">
         <template v-slot="scope">
-          <el-button v-if="isAuth('psi:buyorder:info')" type="text" size="small" @click="showDetails(scope.row.id)">{{ descriptions.view }}</el-button>
-          <el-button v-if="isAuth('psi:buyorder:update')" type="text" size="small" @click="editHandle(scope.row.id)">
+          <el-button v-if="isAuth('psi:buyorder:info') || isAuth('psi:buyrefundorder:info') || isAuth('psi:saleorder:info') || isAuth('psi:salerefundorder:info')" type="text" size="small" @click="showDetails(scope.row.id)">{{ descriptions.view }}</el-button>
+          <el-button v-if="isAuth('psi:buyorder:update') || isAuth('psi:buyrefundorder:update') || isAuth('psi:saleorder:update') || isAuth('psi:salerefundorder:update')" type="text" size="small" @click="editHandle(scope.row.id)">
             {{ descriptions.edit }}</el-button>
-          <el-button v-if="isAuth('psi:buyorder:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">
+          <el-button v-if="isAuth('psi:buyorder:delete') || isAuth('psi:buyrefundorder:delete') || isAuth('psi:saleorder:delete') || isAuth('psi:salerefundorder:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">
             {{ descriptions.delete }}</el-button>
         </template>
       </el-table-column>

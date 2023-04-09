@@ -139,6 +139,9 @@
             <if test="orderId != null and orderId!= ''">
                 and t.order_id= #{orderId}
             </if>
+            <if test="detailId != null and detailId!= ''">
+                and t.detail_id= #{detailId}
+            </if>
             <if test="warehouseId != null and warehouseId!= ''">
                 and t.warehouse_id= #{warehouseId}
             </if>

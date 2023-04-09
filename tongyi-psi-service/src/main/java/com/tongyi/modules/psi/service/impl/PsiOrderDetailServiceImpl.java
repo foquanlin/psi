@@ -77,7 +77,7 @@ public class PsiOrderDetailServiceImpl extends ServiceImpl<PsiOrderDetailDao, Ps
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateEntity(PsiOrderDetailEntity entity) {
-        BigDecimal num = stockDao.sumStockBySku(entity.getOrderId(),null,entity.getGoodsId(),entity.getSkuId());
+        BigDecimal num = stockDao.sumStockBySku(null,entity.getId(),null,null,null);
         num = num.abs();
         if (num.compareTo(entity.getNum()) >0){
             throw new BusinessException("请先修改或删除该商品的出入库记录。您输入的订单商品订购数量不能小于该商品已经出入库的数量");
@@ -88,11 +88,8 @@ public class PsiOrderDetailServiceImpl extends ServiceImpl<PsiOrderDetailDao, Ps
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
-        PsiOrderDetailEntity item = baseMapper.selectById(id);
         stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>()
-            .eq(PsiStockEntity::getOrderId,id)
-            .eq(PsiStockEntity::getGoodsId,item.getGoodsId())
-            .eq(PsiStockEntity::getSkuId,item.getSkuId())
+            .eq(PsiStockEntity::getDetailId,id)
         );
         return super.removeById(id);
     }
@@ -101,11 +98,8 @@ public class PsiOrderDetailServiceImpl extends ServiceImpl<PsiOrderDetailDao, Ps
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
         Arrays.stream(ids).forEach(id->{
-            PsiOrderDetailEntity item = baseMapper.selectById(id);
             stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>()
-                .eq(PsiStockEntity::getOrderId,id)
-                .eq(PsiStockEntity::getGoodsId,item.getGoodsId())
-                .eq(PsiStockEntity::getSkuId,item.getSkuId())
+                .eq(PsiStockEntity::getDetailId,id)
             );
         });
         return super.removeByIds(Arrays.asList(ids));

@@ -8,6 +8,7 @@
  */
 package com.tongyi.modules.psi.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -100,6 +102,32 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
             stockDao.delete(new LambdaQueryWrapper<PsiStockEntity>().eq(PsiStockEntity::getOrderId,id));
         });
         return super.removeByIds(Arrays.asList(ids));
+    }
+
+    /**
+     * 增加订单库存
+     * @param stock
+     */
+    @Override
+    public void addStock(PsiStockEntity stock) {
+        PsiOrderDetailEntity detail = orderDetailDao.selectById(stock.getDetailId());
+        BigDecimal num = stockDao.sumStockBySku(null,detail.getId(),null,null,null);
+        num = num.abs().add(stock.getNum());
+        if (num.compareTo(detail.getNum()) >0){
+            throw new BusinessException("请先修改或删除该商品的出入库记录。您输入的订单商品订购数量不能小于该商品已经出入库的数量");
+        }
+        stockDao.insert(stock);
+    }
+
+    @Override
+    public void updateStock(PsiStockEntity stock) {
+        PsiOrderDetailEntity detail = orderDetailDao.selectById(stock.getDetailId());
+        BigDecimal num = stockDao.sumStockBySku(null,detail.getId(),null,null,null);
+        num = num.abs().add(stock.getNum());
+        if (num.compareTo(detail.getNum()) >0){
+            throw new BusinessException("请先修改或删除该商品的出入库记录。您输入的订单商品订购数量不能小于该商品已经出入库的数量");
+        }
+        stockDao.updateById(stock);
     }
 
     @Override

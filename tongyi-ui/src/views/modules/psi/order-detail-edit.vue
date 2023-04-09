@@ -62,7 +62,7 @@
         <el-button type="text" @click="appendGoods"><i class="el-icon-plus"></i>{{descriptions.add+descriptions.goodsId}}</el-button>
       </el-form>
       <el-form-item style="margin-top:20px;text-align: center">
-        <el-button type="primary" @click="dataFormSubmit()">{{ descriptions.edit }}</el-button>
+        <el-button type="primary" v-if="isAuth('psi:buyorder:update') || isAuth('psi:buyrefundorder:update') || isAuth('psi:saleorder:update') || isAuth('psi:salerefundorder:update')"  @click="dataFormSubmit()">{{ descriptions.edit }}</el-button>
       </el-form-item>
     </el-form>
     <goods-select v-if="selectVisible" ref="goodsSelect" @select="onSelect"/>

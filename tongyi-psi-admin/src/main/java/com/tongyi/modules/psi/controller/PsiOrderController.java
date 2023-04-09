@@ -12,6 +12,7 @@ import com.google.gson.JsonParser;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.psi.entity.PsiOrderDetailEntity;
+import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.*;
 import com.tongyi.modules.psi.service.execute.OrderCreateExecute;
 import com.tongyi.modules.psi.service.execute.OrderUpdateExecute;
@@ -45,16 +46,6 @@ public class PsiOrderController extends AbstractController {
     @Autowired
     private OrderUpdateExecute buyOrderUpdateExecute;
 
-    @Autowired
-    private PsiOrderAmountService orderAmountService;
-    @Autowired
-    private PsiOrderInvoiceService orderInvoiceService;
-
-    @Autowired
-    private PsiOrderExpressService orderExpressService;
-    @Autowired
-    private PsiOrderOperationService orderOperationService;
-
     /**
      * 查看所有列表
      *
@@ -62,7 +53,7 @@ public class PsiOrderController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/listAll")
-    @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list","psi:buyrefundorder:list","psi:salerefundorder:list"},logical = Logical.OR)
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderEntity> list = psiOrderService.listAll(params);
         return RestResponse.success("list", list);
@@ -75,7 +66,7 @@ public class PsiOrderController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/list")
-    @RequiresPermissions(value = {"psi:order:list","psi:buyorder:list","psi:saleorder:list"},logical = Logical.OR)
+    @RequiresPermissions(value = {"psi:order:list","psi:buyorder:list","psi:saleorder:list","psi:buyrefundorder:list","psi:salerefundorder:list"},logical = Logical.OR)
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         PageInfo page = psiOrderService.listPage(current,size,params);
         return RestResponse.success("page", page);
@@ -88,7 +79,7 @@ public class PsiOrderController extends AbstractController {
      * @return RestResponse
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions(value={"psi:order:info","psi:buyorder:info","psi:saleorder:info"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:info","psi:buyorder:info","psi:saleorder:info","psi:buyrefundorder:info","psi:salerefundorder:info"},logical = Logical.OR)
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderEntity psiOrder = psiOrderService.getById(id);
         Map<String,Object> params = new HashMap<>();
@@ -106,7 +97,7 @@ public class PsiOrderController extends AbstractController {
      */
     @SysLog("新增采购单")
     @RequestMapping("/save")
-    @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save","psi:buyrefundorder:save","psi:salerefundorder:save"},logical = Logical.OR)
     public RestResponse save(@RequestBody String json) {
         JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
         String createUid = getUserId();
@@ -127,7 +118,7 @@ public class PsiOrderController extends AbstractController {
      */
     @SysLog("修改采购单")
     @RequestMapping("/update")
-    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update","psi:buyrefundorder:update","psi:salerefundorder:update"},logical = Logical.OR)
     public RestResponse update(@RequestBody String json) {
         JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
         String createUid = getUserId();
@@ -147,15 +138,30 @@ public class PsiOrderController extends AbstractController {
      */
     @SysLog("删除采购单")
     @RequestMapping("/delete")
-    @RequiresPermissions(value={"psi:order:delete","psi:buyorder:delete","psi:saleorder:delete"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:delete","psi:buyorder:delete","psi:saleorder:delete","psi:buyrefundorder:delete","psi:salerefundorder:delete"},logical = Logical.OR)
     public RestResponse delete(@RequestBody String[] ids) {
         psiOrderService.deleteBatch(ids);
         return RestResponse.success();
     }
 
+    @SysLog("增加订单库存")
+    @RequestMapping("/addStock")
+    @RequiresPermissions(value={"psi:order:addStock","psi:buyorder:addStock","psi:saleorder:addStock","psi:buyrefundorder:addStock","psi:salerefundorder:addStock"},logical = Logical.OR)
+    public RestResponse addStock(@RequestBody PsiStockEntity entity) {
+         psiOrderService.addStock(entity);
+        return RestResponse.success();
+    }
+    @SysLog("修改订单库存")
+    @RequestMapping("/updateStock")
+    @RequiresPermissions(value={"psi:order:updateStock","psi:buyorder:updateStock","psi:saleorder:updateStock","psi:buyrefundorder:updateStock","psi:salerefundorder:updateStock"},logical = Logical.OR)
+    public RestResponse updateStock(@RequestBody PsiStockEntity entity) {
+         psiOrderService.updateStock(entity);
+        return RestResponse.success();
+    }
+
     @SysLog("删除订单库存")
     @RequestMapping("/deleteStock")
-    @RequiresPermissions(value={"psi:order:deleteStock","psi:buyorder:deleteStock","psi:saleorder:deleteStock"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:deleteStock","psi:buyorder:deleteStock","psi:saleorder:deleteStock","psi:buyrefundorder:deleteStock","psi:salerefundorder:deleteStock"},logical = Logical.OR)
     public RestResponse deleteStock(@RequestBody String[] ids) {
         psiOrderService.deleteStock(ids);
         return RestResponse.success();
@@ -163,7 +169,7 @@ public class PsiOrderController extends AbstractController {
 
     @SysLog("修改发票状态")
     @RequestMapping("/invoiceStatus")
-    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update","psi:buyrefundorder:update","psi:salerefundorder:update"},logical = Logical.OR)
     public RestResponse invoiceStatus(@RequestParam("id") String orderId,@RequestParam("invoiceStatus")String invoiceStatus) {
         PsiOrderEntity order = psiOrderService.getById(orderId);
         order.setInvoiceStatus(invoiceStatus);

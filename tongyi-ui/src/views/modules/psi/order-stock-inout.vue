@@ -56,16 +56,16 @@
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" :label="descriptions.action">
         <template v-slot="scope">
-          <el-button type="text" size="small" @click="editHandle(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">
+          <el-button type="text" size="small" v-if="scope.row.id && !scope.row.edited && (isAuth('psi:buyorder:updateStock') || isAuth('psi:buyrefundorder:updateStock') || isAuth('psi:saleorder:updateStock') || isAuth('psi:salerefundorder:updateStock'))" @click="editHandle(scope.row, scope.$index)">
             {{ descriptions.edit }}</el-button>
           <el-button type="text" size="small" @click="saveHandle(scope.row, scope.$index)" v-if="scope.row.edited">{{ descriptions.save }}</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)">{{descriptions.delete}}</el-button>
+          <el-button type="text" size="small" v-if="isAuth('psi:buyorder:deleteStock') || isAuth('psi:buyrefundorder:deleteStock') || isAuth('psi:saleorder:deleteStock') || isAuth('psi:salerefundorder:deleteStock')" @click="deleteHandle(scope.row, scope.$index)">{{descriptions.delete}}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">{{descriptions.cancel}}</el-button>
-      <el-button type="primary" @click="addRow">{{descriptions.stockName}}</el-button>
+      <el-button type="primary" v-if="isAuth('psi:buyorder:addStock') || isAuth('psi:buyrefundorder:addStock') || isAuth('psi:saleorder:addStock') || isAuth('psi:salerefundorder:addStock')" @click="addRow">{{descriptions.stockName}}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -196,17 +196,18 @@ export default {
         return
       }
       this.dataList.push({
+        append: true,
         edited: true,
         supplierId: this.order.orderUid,
         catalog: this.stockCatalog,
         type: this.stockType,
         goods: this.sku.goods,
+        num: 0,
         createTime: ''
       })
     },
     editHandle (row, index) {
       this.dataList[index].edited = true
-      this.$forceUpdate()
     },
     deleteHandle (row, index) {
       if (!row.id) {
@@ -231,8 +232,21 @@ export default {
       })
     },
     saveHandle (row, index) {
+      if (!row.createTime) {
+        this.$message({ message: '请选择日期', type: 'error', duration: 1500 })
+        return
+      }
+      if (!row.warehouseId) {
+        this.$message({ message: '请选择仓库', type: 'error', duration: 1500 })
+        return
+      }
+      if (!row.num || row.num <= 0) {
+        this.$message({ message: '请输入数量', type: 'error', duration: 1500 })
+        return
+      }
+
       this.$http({
-        url: `/psi/stock/${!row.id ? 'save' : 'update'}`,
+        url: `/psi/order/${!row.id ? 'addStock' : 'updateStock'}`,
         method: 'post',
         data: {
           supplierId: this.order.orderUid,
