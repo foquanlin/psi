@@ -38,7 +38,7 @@ export default {
         payStatus: '付款状态',
         stockStatus: '入库状态',
         orderUid: '供应商',
-        createDate: '销售日期',
+        createDate: '采购日期',
         payAmount: '已付款',
         nopayAmount: '未付款',
         orderName: '采购订单',
@@ -47,6 +47,7 @@ export default {
         payDate: '付款日期',
         warehouseId: '入库仓库',
         stockName: '入库',
+        stockNum: '入库数量',
         stockDate: '入库日期',
         price: '进价'
       }

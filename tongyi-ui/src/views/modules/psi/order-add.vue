@@ -56,7 +56,7 @@
               <select-warehouse v-model="scope.row" field="warehouseId" :placeholder="descriptions.warehouseId" />
             </template>
           </el-table-column>
-          <el-table-column prop="inStockNum" header-align="center" align="center" label="入库数量" width="150px">
+          <el-table-column prop="inStockNum" header-align="center" align="center" :label="descriptions.stockNum" width="150px">
             <template v-slot="scope">
               <el-input-number v-model="scope.row.inStockNum" placeholder="入库数量" size="mini" style="width:100%" :max="scope.row.num" :disabled="disabled"/>
             </template>
