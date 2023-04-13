@@ -12,7 +12,7 @@
             t.num,
             t.sku_id,
             t.price,
-            t.in_stock_num,
+            t.stock_num,
             t.memo,
             pu.name as unit_name,
             pg.name as goods_name,

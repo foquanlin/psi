@@ -43,7 +43,7 @@
       <el-table-column prop="unitName" header-align="center" align="center" :label="descriptions.unitId" width="80px"/>
       <el-table-column prop="price" header-align="center" align="center" :label="descriptions.price" width="80px"/>
       <el-table-column prop="num" header-align="center" align="center" :label="descriptions.num" width="80px"/>
-<!--      <el-table-column prop="inStockNum" header-align="center" align="center" label="入库数量" width="80px"/>-->
+<!--      <el-table-column prop="stockNum" header-align="center" align="center" label="入库数量" width="80px"/>-->
       <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal" fixed="right" width="100px">
         <template v-slot="scope">
           {{scope.row.costPrice * scope.row.num}}
@@ -135,7 +135,7 @@ export default {
                   num: item.num,
                   price: item.price,
                   warehouseNum: 0,
-                  inStockNum: item.inStockNum,
+                  stockNum: item.stockNum,
                   memo: ''
                 })
               })

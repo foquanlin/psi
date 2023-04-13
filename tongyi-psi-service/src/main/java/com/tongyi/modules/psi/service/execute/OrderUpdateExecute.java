@@ -73,13 +73,13 @@ public class OrderUpdateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
 
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal price = item.get("price").getAsBigDecimal();
-            BigDecimal inStockNum = item.get("inStockNum").getAsBigDecimal();
+            BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
             if(BigDecimal.ZERO.compareTo(num)>=0){
                 throw new BusinessException("采购数量必须大于1");
             }
-            if (inStockNum.compareTo(num)>0){
+            if (stockNum.compareTo(num)>0){
                 throw new BusinessException("入库数量不能大于采购数量");
             }
             PsiGoodsEntity goods = goodsService.getById(goodsId);
@@ -120,11 +120,11 @@ public class OrderUpdateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             String id = item.get("id").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal price = item.get("price").getAsBigDecimal();
-            BigDecimal inStockNum = item.get("inStockNum").getAsBigDecimal();
+            BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
             total = total.add(price.multiply(num));
-            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,price,num,inStockNum);
+            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,price,num,stockNum);
             detail.setId(id);
             if (StringUtils.isBlank(id)) {
                 orderDetailService.addEntity(detail);

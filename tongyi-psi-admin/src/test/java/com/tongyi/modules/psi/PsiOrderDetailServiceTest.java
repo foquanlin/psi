@@ -51,7 +51,7 @@ public class PsiOrderDetailServiceTest {
             item.setNum (new BigDecimal(idx));
             item.setSkuId (id);
             item.setPrice (new BigDecimal(idx));
-            item.setInStockNum (new BigDecimal(idx));
+            item.setStockNum (new BigDecimal(idx));
             item.setMemo (id);
             service.addEntity(item);
         }
@@ -68,7 +68,7 @@ public class PsiOrderDetailServiceTest {
         item.setNum (new BigDecimal(idx));
         item.setSkuId (id);
         item.setPrice (new BigDecimal(idx));
-        item.setInStockNum (new BigDecimal(idx));
+        item.setStockNum (new BigDecimal(idx));
         item.setMemo (id);
         service.addEntity(item);
         service.updateEntity(item);

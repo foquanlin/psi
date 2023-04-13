@@ -78,7 +78,7 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
-            BigDecimal inStockNum = item.get("inStockNum").getAsBigDecimal();
+            BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
             PsiWarehouseEntity warehouse = warehouseService.getById(warehouseId);
@@ -91,7 +91,7 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             if(BigDecimal.ZERO.compareTo(num)>=0){
                 throw new BusinessException("采购数量必须大于1");
             }
-            if (inStockNum.compareTo(num)>0){
+            if (stockNum.compareTo(num)>0){
                 throw new BusinessException("入库数量不能大于采购数量");
             }
             PsiGoodsEntity goods = goodsService.getById(goodsId);
@@ -149,13 +149,13 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
-            BigDecimal inStockNum = item.get("inStockNum").getAsBigDecimal();
+            BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
             total = total.add(costPrice.multiply(num));
-            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,costPrice,num,inStockNum);
+            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,costPrice,num,stockNum);
             orderDetailService.addEntity(detail);
-            PsiStockEntity stock = PsiStockEntity.newStock(module.getStockCatalog(), module.getStockType(), warehouseId, goodsId, skuId, inStockNum, module.getId());
+            PsiStockEntity stock = PsiStockEntity.newStock(module.getStockCatalog(), module.getStockType(), warehouseId, goodsId, skuId, stockNum, module.getId());
             stock.setSupplierId(module.getOrderUid());
             stock.setCostPrice(costPrice);
             stock.setCreateUid(createUid);

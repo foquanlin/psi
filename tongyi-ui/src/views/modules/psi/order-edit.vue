@@ -136,7 +136,7 @@ export default {
                   num: item.num,
                   price: item.price,
                   warehouseNum: 0,
-                  inStockNum: item.inStockNum,
+                  stockNum: item.stockNum,
                   memo: ''
                 })
               })

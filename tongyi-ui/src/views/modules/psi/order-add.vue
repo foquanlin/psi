@@ -56,9 +56,9 @@
               <select-warehouse v-model="scope.row" field="warehouseId" :placeholder="descriptions.warehouseId" />
             </template>
           </el-table-column>
-          <el-table-column prop="inStockNum" header-align="center" align="center" :label="descriptions.stockNum" width="150px">
+          <el-table-column prop="stockNum" header-align="center" align="center" :label="descriptions.stockNum" width="150px">
             <template v-slot="scope">
-              <el-input-number v-model="scope.row.inStockNum" placeholder="入库数量" size="mini" style="width:100%" :max="scope.row.num" :disabled="disabled"/>
+              <el-input-number v-model="scope.row.stockNum" placeholder="入库数量" size="mini" style="width:100%" :max="scope.row.num" :disabled="disabled"/>
             </template>
           </el-table-column>
           <el-table-column prop="total" header-align="center" align="center" label="小计">
@@ -220,7 +220,7 @@ export default {
                   num: item.num,
                   costPrice: item.price,
                   warehouseNum: 0,
-                  inStockNum: item.inStockNum,
+                  stockNum: item.stockNum,
                   memo: ''
                 })
               })
@@ -301,7 +301,7 @@ export default {
           num: 0,
           costPrice: 0,
           warehouseNum: 0,
-          inStockNum: 0,
+          stockNum: 0,
           memo: ''
         })
       })
