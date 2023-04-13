@@ -52,7 +52,7 @@ public class PsiOrderController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list","psi:buyrefundorder:list","psi:salerefundorder:list"},logical = Logical.OR)
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderEntity> list = psiOrderService.listAll(params);
@@ -78,7 +78,7 @@ public class PsiOrderController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions(value={"psi:order:info","psi:buyorder:info","psi:saleorder:info","psi:buyrefundorder:info","psi:salerefundorder:info"},logical = Logical.OR)
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderEntity psiOrder = psiOrderService.getById(id);
@@ -96,7 +96,7 @@ public class PsiOrderController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增采购单")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save","psi:buyrefundorder:save","psi:salerefundorder:save"},logical = Logical.OR)
     public RestResponse save(@RequestBody String json) {
         JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
@@ -117,7 +117,7 @@ public class PsiOrderController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改采购单")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update","psi:buyrefundorder:update","psi:salerefundorder:update"},logical = Logical.OR)
     public RestResponse update(@RequestBody String json) {
         JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
@@ -137,7 +137,7 @@ public class PsiOrderController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除采购单")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions(value={"psi:order:delete","psi:buyorder:delete","psi:saleorder:delete","psi:buyrefundorder:delete","psi:salerefundorder:delete"},logical = Logical.OR)
     public RestResponse delete(@RequestBody String[] ids) {
         psiOrderService.deleteBatch(ids);
@@ -145,14 +145,14 @@ public class PsiOrderController extends AbstractController {
     }
 
     @SysLog("增加订单库存")
-    @RequestMapping("/addStock")
+    @PostMapping("/addStock")
     @RequiresPermissions(value={"psi:order:addStock","psi:buyorder:addStock","psi:saleorder:addStock","psi:buyrefundorder:addStock","psi:salerefundorder:addStock"},logical = Logical.OR)
     public RestResponse addStock(@RequestBody PsiStockEntity entity) {
          psiOrderService.addStock(entity);
         return RestResponse.success();
     }
     @SysLog("修改订单库存")
-    @RequestMapping("/updateStock")
+    @PostMapping("/updateStock")
     @RequiresPermissions(value={"psi:order:updateStock","psi:buyorder:updateStock","psi:saleorder:updateStock","psi:buyrefundorder:updateStock","psi:salerefundorder:updateStock"},logical = Logical.OR)
     public RestResponse updateStock(@RequestBody PsiStockEntity entity) {
          psiOrderService.updateStock(entity);
@@ -160,7 +160,7 @@ public class PsiOrderController extends AbstractController {
     }
 
     @SysLog("删除订单库存")
-    @RequestMapping("/deleteStock")
+    @PostMapping("/deleteStock")
     @RequiresPermissions(value={"psi:order:deleteStock","psi:buyorder:deleteStock","psi:saleorder:deleteStock","psi:buyrefundorder:deleteStock","psi:salerefundorder:deleteStock"},logical = Logical.OR)
     public RestResponse deleteStock(@RequestBody String[] ids) {
         psiOrderService.deleteStock(ids);
@@ -168,7 +168,7 @@ public class PsiOrderController extends AbstractController {
     }
 
     @SysLog("修改发票状态")
-    @RequestMapping("/invoiceStatus")
+    @GetMapping("/invoiceStatus")
     @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update","psi:buyrefundorder:update","psi:salerefundorder:update"},logical = Logical.OR)
     public RestResponse invoiceStatus(@RequestParam("id") String orderId,@RequestParam("invoiceStatus")String invoiceStatus) {
         PsiOrderEntity order = psiOrderService.getById(orderId);

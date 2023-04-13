@@ -53,7 +53,7 @@ public class SysUserTokenController {
      * @return RestResponse
      */
     @SysLog("批量下线用户")
-    @RequestMapping("/offline")
+    @PostMapping("/offline")
     @RequiresPermissions("sys:usertoken:offline")
     public RestResponse offline(@RequestBody String[] userIds) {
         sysUserTokenService.offlineBatch(userIds);

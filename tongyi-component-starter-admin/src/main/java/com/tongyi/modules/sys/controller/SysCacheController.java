@@ -17,10 +17,7 @@ import com.tongyi.modules.sys.entity.SysCacheEntity;
 import com.tongyi.modules.sys.service.SysCacheService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -63,7 +60,7 @@ public class SysCacheController {
      * @return
      */
     @RequiresPermissions("sys:cache:queryAll")
-    @RequestMapping("/queryAll")
+    @GetMapping("/queryAll")
     public RestResponse queryAll(@RequestParam Map<String, String> params) {
         String type = params.get("type");
         if (STR_ONE.equals(type)) {
@@ -92,7 +89,7 @@ public class SysCacheController {
      */
     @SysLog("删除redis缓存")
     @RequiresPermissions("sys:cache:deleteCache")
-    @RequestMapping("/deleteCache")
+    @PostMapping("/deleteCache")
     public RestResponse deleteBatch(@RequestBody String[] keys) {
         sysCacheService.deleteBatch(keys);
 

@@ -37,7 +37,7 @@ public class PsiBankbillController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:bankbill:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiBankbillEntity> list = psiBankbillService.listAll(params);
@@ -63,7 +63,7 @@ public class PsiBankbillController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:bankbill:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiBankbillEntity psiBankbill = psiBankbillService.getById(id);
@@ -77,7 +77,7 @@ public class PsiBankbillController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增银行账单")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:bankbill:save")
     public RestResponse save(@RequestBody PsiBankbillEntity entity) {
         psiBankbillService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiBankbillController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改银行账单")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:bankbill:update")
     public RestResponse update(@RequestBody PsiBankbillEntity entity) {
         psiBankbillService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiBankbillController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除银行账单")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:bankbill:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiBankbillService.deleteBatch(ids);

@@ -41,7 +41,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
 //    @RequiresPermissions("psi:goodssku:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiGoodsSkuEntity> list = psiGoodsSkuService.listAll(params);
@@ -67,7 +67,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:goods:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiGoodsSkuEntity psiGoodsSku = psiGoodsSkuService.getById(id);
@@ -81,7 +81,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增商品sku")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:goods:save")
     public RestResponse save(@RequestBody PsiGoodsSkuEntity entity) {
         Map<String,Object> params = new HashMap<>();
@@ -103,7 +103,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改商品sku")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:goods:update")
     public RestResponse update(@RequestBody PsiGoodsSkuEntity entity) {
         psiGoodsSkuService.updateEntity(entity);
@@ -117,7 +117,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除商品sku")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:goods:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiGoodsSkuService.deleteBatch(ids);
@@ -125,7 +125,7 @@ public class PsiGoodsSkuController extends AbstractController {
     }
 
     @SysLog("商品sku上下线")
-    @RequestMapping("/updown")
+    @GetMapping("/updown")
     @RequiresPermissions("psi:goods:updown")
     public RestResponse updown(@RequestParam("id")String id) {
         PsiGoodsSkuEntity sku = psiGoodsSkuService.getById(id);

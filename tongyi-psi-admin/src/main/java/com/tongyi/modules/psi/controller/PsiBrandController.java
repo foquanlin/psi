@@ -37,7 +37,7 @@ public class PsiBrandController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:brand:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiBrandEntity> list = psiBrandService.listAll(params);
@@ -63,7 +63,7 @@ public class PsiBrandController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:brand:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiBrandEntity psiBrand = psiBrandService.getById(id);
@@ -77,7 +77,7 @@ public class PsiBrandController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增品牌")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:brand:save")
     public RestResponse save(@RequestBody PsiBrandEntity entity) {
         psiBrandService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiBrandController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改品牌")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:brand:update")
     public RestResponse update(@RequestBody PsiBrandEntity entity) {
         psiBrandService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiBrandController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除品牌")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:brand:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiBrandService.deleteBatch(ids);

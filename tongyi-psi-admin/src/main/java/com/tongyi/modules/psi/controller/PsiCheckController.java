@@ -53,7 +53,7 @@ public class PsiCheckController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:check:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiCheckEntity> list = psiCheckService.listAll(params);
@@ -79,7 +79,7 @@ public class PsiCheckController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:check:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiCheckEntity psiCheck = psiCheckService.getById(id);
@@ -94,7 +94,7 @@ public class PsiCheckController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增盘点")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:check:save")
     public RestResponse save(@RequestBody String json) {
         JsonObject params = JsonParser.parseString(json).getAsJsonObject();
@@ -113,7 +113,7 @@ public class PsiCheckController extends AbstractController {
      * @return RestResponse
      */
 //    @SysLog("修改盘点")
-//    @RequestMapping("/update")
+//    @PostMapping("/update")
 //    @RequiresPermissions("psi:check:update")
 //    public RestResponse update(@RequestBody PsiCheckEntity entity) {
 //        psiCheckService.updateEntity(entity);
@@ -127,7 +127,7 @@ public class PsiCheckController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除盘点")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:check:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiCheckService.deleteBatch(ids);

@@ -38,7 +38,7 @@ public class PsiOrderAmountController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list"},logical = Logical.OR)
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderAmountEntity> list = psiOrderAmountService.listAll(params);
@@ -64,7 +64,7 @@ public class PsiOrderAmountController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions(value={"psi:order:info","psi:buyorder:info","psi:saleorder:info"},logical = Logical.OR)
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderAmountEntity psiOrderAmount = psiOrderAmountService.getById(id);
@@ -78,7 +78,7 @@ public class PsiOrderAmountController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增订单账目")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save"},logical = Logical.OR)
     public RestResponse save(@RequestBody PsiOrderAmountEntity entity) {
         entity.setCreateUid(getUserId());
@@ -93,7 +93,7 @@ public class PsiOrderAmountController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改订单账目")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
     public RestResponse update(@RequestBody PsiOrderAmountEntity entity) {
         psiOrderAmountService.updateEntity(entity);
@@ -107,7 +107,7 @@ public class PsiOrderAmountController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除订单账目")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions(value={"psi:order:delete","psi:buyorder:delete","psi:saleorder:delete"},logical = Logical.OR)
     public RestResponse delete(@RequestBody String[] ids) {
         psiOrderAmountService.deleteBatch(ids);
