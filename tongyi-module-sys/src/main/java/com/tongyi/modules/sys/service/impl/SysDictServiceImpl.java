@@ -14,7 +14,6 @@ package com.tongyi.modules.sys.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysDictDao;
 import com.tongyi.modules.sys.entity.SysDictEntity;
@@ -26,7 +25,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 数据字典Service实现类
@@ -58,30 +56,6 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictDao, SysDictEntity> i
         Page<SysDictEntity> page = new Query<SysDictEntity>(current,size,params).getPage();
         List<SysDictEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysDictEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
-    }
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysDictEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysDictEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysDictEntity entity, Map<String, Object> params, ModuleExecute<SysDictEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysDictEntity entity, Map<String, Object> params, ModuleExecute<SysDictEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
     }
 
     @Override

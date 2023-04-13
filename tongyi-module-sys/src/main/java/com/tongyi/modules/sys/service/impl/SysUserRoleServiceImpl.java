@@ -14,7 +14,6 @@ package com.tongyi.modules.sys.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysUserRoleDao;
 import com.tongyi.modules.sys.entity.SysUserRoleEntity;
@@ -74,30 +73,6 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserR
         Page<SysUserRoleEntity> page = new Query<SysUserRoleEntity>(current,size,params).getPage();
         List<SysUserRoleEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysUserRoleEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
-    }
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysUserRoleEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysUserRoleEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysUserRoleEntity entity, Map<String, Object> params, ModuleExecute<SysUserRoleEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysUserRoleEntity entity, Map<String, Object> params, ModuleExecute<SysUserRoleEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
     }
 
     @Override

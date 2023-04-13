@@ -16,7 +16,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Query;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysUserDao;
 import com.tongyi.modules.sys.entity.SysUserEntity;
@@ -146,30 +145,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         Page<SysUserEntity> page = new Query<SysUserEntity>(current,size,params).getPage();
         List<SysUserEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysUserEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
-    }
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysUserEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysUserEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysUserEntity entity, Map<String, Object> params, ModuleExecute<SysUserEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysUserEntity entity, Map<String, Object> params, ModuleExecute<SysUserEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
     }
 
     @Override

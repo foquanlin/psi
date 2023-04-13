@@ -13,13 +13,10 @@ package com.tongyi.modules.job.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.job.dao.ScheduleJobDao;
 import com.tongyi.modules.job.entity.ScheduleJobEntity;
-import com.tongyi.modules.job.entity.ScheduleJobLogEntity;
 import com.tongyi.modules.job.service.ScheduleJobService;
 import com.tongyi.modules.job.service.ScheduleStatus;
 import com.tongyi.modules.job.utils.ScheduleUtils;
@@ -110,30 +107,6 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
         Page<ScheduleJobEntity> page = new Query<ScheduleJobEntity>(current,size,params).getPage();
         List<ScheduleJobEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<ScheduleJobEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
-    }
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<ScheduleJobEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        ScheduleJobEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(ScheduleJobEntity entity, Map<String, Object> params, ModuleExecute<ScheduleJobEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(ScheduleJobEntity entity, Map<String, Object> params, ModuleExecute<ScheduleJobEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
     }
 
     @Override

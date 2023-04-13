@@ -17,7 +17,6 @@ import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.TokenGenerator;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysUserTokenDao;
 import com.tongyi.modules.sys.entity.SysUserTokenEntity;
@@ -110,30 +109,6 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
         Page<SysUserTokenEntity> page = new Query<SysUserTokenEntity>(current,size,params).getPage();
         List<SysUserTokenEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysUserTokenEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
-    }
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysUserTokenEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysUserTokenEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysUserTokenEntity entity, Map<String, Object> params, ModuleExecute<SysUserTokenEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysUserTokenEntity entity, Map<String, Object> params, ModuleExecute<SysUserTokenEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
     }
 
     @Override

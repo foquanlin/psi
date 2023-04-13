@@ -3,7 +3,6 @@ package com.tongyi.modules.gen.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.gen.dao.SysGeneratorDao;
 import com.tongyi.modules.gen.entity.ColumnEntity;
@@ -108,30 +107,6 @@ public class SysGeneratorServiceImpl extends ServiceImpl<SysGeneratorDao, Result
         Page<ResultMapEntity> page = new Query<ResultMapEntity>(current,size,params).getPage();
         List<ResultMapEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<ResultMapEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
-    }
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<ResultMapEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        ResultMapEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(ResultMapEntity entity, Map<String, Object> params, ModuleExecute<ResultMapEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(ResultMapEntity entity, Map<String, Object> params, ModuleExecute<ResultMapEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
     }
 
     @Override

@@ -11,12 +11,10 @@
  */
 package com.tongyi.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.*;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysSmsLogDao;
 import com.tongyi.modules.sys.entity.SmsConfig;
@@ -115,30 +113,6 @@ public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogDao, SysSmsLogEnt
         Page<SysSmsLogEntity> page = new Query<SysSmsLogEntity>(current,size,params).getPage();
         List<SysSmsLogEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysSmsLogEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
-    }
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<SysSmsLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        SysSmsLogEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(SysSmsLogEntity entity, Map<String, Object> params, ModuleExecute<SysSmsLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(SysSmsLogEntity entity, Map<String, Object> params, ModuleExecute<SysSmsLogEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
     }
 
     @Override
