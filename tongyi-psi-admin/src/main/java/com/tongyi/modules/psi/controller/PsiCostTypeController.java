@@ -37,7 +37,7 @@ public class PsiCostTypeController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:costtype:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiCostTypeEntity> list = psiCostTypeService.listAll(params);
@@ -63,7 +63,7 @@ public class PsiCostTypeController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:costtype:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiCostTypeEntity psiCostType = psiCostTypeService.getById(id);
@@ -77,7 +77,7 @@ public class PsiCostTypeController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增收支类型")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:costtype:save")
     public RestResponse save(@RequestBody PsiCostTypeEntity entity) {
         psiCostTypeService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiCostTypeController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改收支类型")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:costtype:update")
     public RestResponse update(@RequestBody PsiCostTypeEntity entity) {
         psiCostTypeService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiCostTypeController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除收支类型")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:costtype:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiCostTypeService.deleteBatch(ids);

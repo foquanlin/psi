@@ -142,7 +142,7 @@ public class ActReProcdefController{
      * @return
      */
     @SysLog("激活 / 挂起")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("act:reprocdef:update")
     public RestResponse update(int state, String id) {
 
@@ -158,7 +158,7 @@ public class ActReProcdefController{
      * @return RestResponse
      */
     @SysLog("删除")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("act:reprocdef:delete")
     public RestResponse delete(@RequestBody String[] deploymentId) {
         actReProcdefService.deleteBatch(deploymentId);

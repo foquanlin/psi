@@ -67,7 +67,7 @@ public class ActReModelController {
      * @return RestResponse
      */
     @SysLog("新增")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("act:remodel:save")
     public RestResponse save(@RequestBody ActReModelEntity actReModel) {
         String modelId = "";
@@ -125,7 +125,7 @@ public class ActReModelController {
      * @return RestResponse
      */
     @SysLog("删除")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("act:remodel:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         actReModelService.deleteBatch(ids);

@@ -42,8 +42,6 @@ public class PsiAllocationController extends AbstractController {
     private PsiAllocationGoodsService allocationGoodsService;
     @Autowired
     private StockAllocationExecute allocationExecute;
-    @Autowired
-    private PsiStockService stockService;
 
     /**
      * 查看所有列表
@@ -51,7 +49,7 @@ public class PsiAllocationController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:allocation:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiAllocationEntity> list = psiAllocationService.listAll(params);
@@ -77,7 +75,7 @@ public class PsiAllocationController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:allocation:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiAllocationEntity psiAllocation = psiAllocationService.getById(id);
@@ -93,7 +91,7 @@ public class PsiAllocationController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增调拨单")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:allocation:save")
     public RestResponse save(@RequestBody String body) {
         JsonObject map = JsonParser.parseString(body).getAsJsonObject();
@@ -112,7 +110,7 @@ public class PsiAllocationController extends AbstractController {
      * @return RestResponse
      */
 //    @SysLog("修改调拨单")
-//    @RequestMapping("/update")
+//    @PostMapping("/update")
 //    @RequiresPermissions("psi:allocation:update")
 //    public RestResponse update(@RequestBody PsiAllocationEntity entity) {
 //        psiAllocationService.updateEntity(entity);
@@ -126,7 +124,7 @@ public class PsiAllocationController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除调拨单")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:allocation:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiAllocationService.deleteBatch(ids);

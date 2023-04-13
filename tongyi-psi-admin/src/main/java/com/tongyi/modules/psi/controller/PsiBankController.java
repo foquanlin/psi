@@ -37,7 +37,7 @@ public class PsiBankController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:bank:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiBankEntity> list = psiBankService.listAll(params);
@@ -63,7 +63,7 @@ public class PsiBankController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:bank:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiBankEntity psiBank = psiBankService.getById(id);
@@ -77,7 +77,7 @@ public class PsiBankController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增银行账户")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:bank:save")
     public RestResponse save(@RequestBody PsiBankEntity entity) {
         psiBankService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiBankController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改银行账户")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:bank:update")
     public RestResponse update(@RequestBody PsiBankEntity entity) {
         psiBankService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiBankController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除银行账户")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:bank:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiBankService.deleteBatch(ids);
@@ -113,7 +113,7 @@ public class PsiBankController extends AbstractController {
     }
 
     @SysLog("设置默认银行账户")
-    @RequestMapping("/default")
+    @GetMapping("/default")
     @RequiresPermissions("psi:bank:default")
     public RestResponse defaultBank(@RequestParam("id") String id) {
         psiBankService.defaultBank(id);

@@ -37,7 +37,7 @@ public class PsiWarehouseController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:warehouse:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiWarehouseEntity> list = psiWarehouseService.listAll(params);
@@ -63,7 +63,7 @@ public class PsiWarehouseController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:warehouse:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiWarehouseEntity psiWarehouse = psiWarehouseService.getById(id);
@@ -77,7 +77,7 @@ public class PsiWarehouseController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增仓库")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:warehouse:save")
     public RestResponse save(@RequestBody PsiWarehouseEntity entity) {
         psiWarehouseService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiWarehouseController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改仓库")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:warehouse:update")
     public RestResponse update(@RequestBody PsiWarehouseEntity entity) {
         psiWarehouseService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiWarehouseController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除仓库")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:warehouse:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiWarehouseService.deleteBatch(ids);
@@ -113,14 +113,14 @@ public class PsiWarehouseController extends AbstractController {
     }
 
     @SysLog("设置默认仓库")
-    @RequestMapping("/default")
+    @GetMapping("/default")
     @RequiresPermissions("psi:warehouse:default")
     public RestResponse defaultWarehouse(@RequestParam("id") String id) {
         psiWarehouseService.defaultWarehouse(id);
         return RestResponse.success();
     }
     @SysLog("设置仓库状态")
-    @RequestMapping("/status")
+    @GetMapping("/status")
     @RequiresPermissions("psi:warehouse:status")
     public RestResponse statusWarehouse(@RequestParam("id") String id,@RequestParam("status")String status) {
         psiWarehouseService.warehouseStatus(id,status);

@@ -40,7 +40,7 @@ public class SysOrgController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/queryAll")
+    @GetMapping("/queryAll")
     @RequiresPermissions("sys:org:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<SysOrgEntity> list = sysOrgService.listAll(params);
@@ -54,7 +54,7 @@ public class SysOrgController extends AbstractController {
      * @param orgNo 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{orgNo}")
+    @GetMapping("/info/{orgNo}")
     @RequiresPermissions("sys:org:info")
     public RestResponse info(@PathVariable("orgNo") String orgNo) {
         SysOrgEntity sysOrg = sysOrgService.getById(orgNo);
@@ -69,7 +69,7 @@ public class SysOrgController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("保存机构")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("sys:org:save")
     public RestResponse save(@RequestBody SysOrgEntity sysOrg) {
         SysUserEntity user = getUser();
@@ -85,7 +85,7 @@ public class SysOrgController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改机构")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("sys:org:update")
     public RestResponse update(@RequestBody SysOrgEntity sysOrg) {
         sysOrgService.updateEntity(sysOrg);
@@ -99,7 +99,7 @@ public class SysOrgController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除机构")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("sys:org:delete")
     public RestResponse delete(@RequestBody String orgNo) {
         orgNo = orgNo.replaceAll("\"", "");

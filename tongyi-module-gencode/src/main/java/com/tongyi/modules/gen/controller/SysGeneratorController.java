@@ -10,9 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +37,7 @@ public class SysGeneratorController {
      * @return RestResponse
      */
     @ResponseBody
-    @RequestMapping("/list")
+    @GetMapping("/list")
     @RequiresPermissions("sys:generator:list")
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         //查询列表数据
@@ -54,7 +52,7 @@ public class SysGeneratorController {
      * @param response response
      */
     @SysLog("生成代码")
-    @RequestMapping("/code")
+    @RequestMapping(value = "/code",method = {RequestMethod.GET,RequestMethod.POST})
     @RequiresPermissions("sys:generator:code")
     public void code(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取表名，不进行xss过滤

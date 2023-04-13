@@ -37,7 +37,7 @@ public class PsiOrderInvoiceController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:orderinvoice:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderInvoiceEntity> list = psiOrderInvoiceService.listAll(params);
@@ -63,7 +63,7 @@ public class PsiOrderInvoiceController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:orderinvoice:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderInvoiceEntity psiOrderInvoice = psiOrderInvoiceService.getById(id);
@@ -77,7 +77,7 @@ public class PsiOrderInvoiceController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增订单发票")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:orderinvoice:save")
     public RestResponse save(@RequestBody PsiOrderInvoiceEntity entity) {
         psiOrderInvoiceService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiOrderInvoiceController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改订单发票")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:orderinvoice:update")
     public RestResponse update(@RequestBody PsiOrderInvoiceEntity entity) {
         psiOrderInvoiceService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiOrderInvoiceController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除订单发票")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:orderinvoice:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiOrderInvoiceService.deleteBatch(ids);

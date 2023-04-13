@@ -40,7 +40,7 @@ public class PsiStockController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:stock:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiStockEntity> list = psiStockService.listAll(params);
@@ -74,7 +74,7 @@ public class PsiStockController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:stock:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiStockEntity psiStock = psiStockService.getById(id);
@@ -88,7 +88,7 @@ public class PsiStockController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增库存")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:stock:save")
     public RestResponse save(@RequestBody PsiStockEntity entity) {
         entity.setCreateUid(getUserId());
@@ -104,7 +104,7 @@ public class PsiStockController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改库存")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:stock:update")
     public RestResponse update(@RequestBody PsiStockEntity entity) {
         psiStockService.updateEntity(entity);
@@ -119,7 +119,7 @@ public class PsiStockController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除库存")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:stock:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiStockService.deleteEntity(ids);
@@ -127,7 +127,7 @@ public class PsiStockController extends AbstractController {
     }
 
     @SysLog("入库-库存调整")
-    @RequestMapping("/in")
+    @PostMapping("/in")
     @RequiresPermissions("psi:stock:in")
     public RestResponse instock(@RequestBody PsiStockEntity entity) {
         entity.setCreateUid(this.getUserId());
@@ -137,7 +137,7 @@ public class PsiStockController extends AbstractController {
         return RestResponse.success();
     }
     @SysLog("出库-库存调整")
-    @RequestMapping("/out")
+    @PostMapping("/out")
     @RequiresPermissions("psi:stock:out")
     public RestResponse outstock(@RequestBody PsiStockEntity entity) {
         entity.setCreateUid(this.getUserId());

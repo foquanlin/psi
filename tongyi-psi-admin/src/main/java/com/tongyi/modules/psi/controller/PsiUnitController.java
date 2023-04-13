@@ -37,7 +37,7 @@ public class PsiUnitController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:unit:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiUnitEntity> list = psiUnitService.listAll(params);
@@ -63,7 +63,7 @@ public class PsiUnitController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:unit:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiUnitEntity psiUnit = psiUnitService.getById(id);
@@ -77,7 +77,7 @@ public class PsiUnitController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增单位")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:unit:save")
     public RestResponse save(@RequestBody PsiUnitEntity entity) {
         psiUnitService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiUnitController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改单位")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:unit:update")
     public RestResponse update(@RequestBody PsiUnitEntity entity) {
         psiUnitService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiUnitController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除单位")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:unit:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiUnitService.deleteBatch(ids);

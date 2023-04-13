@@ -41,7 +41,7 @@ public class PsiGoodsSpecController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:goods:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<PsiGoodsSpecEntity> list = psiGoodsSpecService.listAll(params);
@@ -67,7 +67,7 @@ public class PsiGoodsSpecController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:goods:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiGoodsSpecEntity psiGoodsSpec = psiGoodsSpecService.getById(id);
@@ -81,7 +81,7 @@ public class PsiGoodsSpecController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:goods:save")
     public RestResponse save(@RequestBody PsiGoodsSpecEntity entity) {
         psiGoodsSpecService.addEntity(entity);
@@ -95,7 +95,7 @@ public class PsiGoodsSpecController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:goods:update")
     public RestResponse update(@RequestBody PsiGoodsSpecEntity entity) {
         psiGoodsSpecService.updateEntity(entity);
@@ -109,7 +109,7 @@ public class PsiGoodsSpecController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:goods:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiGoodsSpecService.deleteBatch(ids);
