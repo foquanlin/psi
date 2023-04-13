@@ -37,7 +37,7 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<${className}Entity> list = ${classname}Service.listAll(params);
@@ -77,7 +77,7 @@ public class ${className}Controller extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增${comments}")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("${pre}:${pathName}:save")
     public RestResponse save(@RequestBody ${className}Entity entity) {
         ${classname}Service.addEntity(entity);
@@ -91,7 +91,7 @@ public class ${className}Controller extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改${comments}")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("${pre}:${pathName}:update")
     public RestResponse update(@RequestBody ${className}Entity entity) {
         ${classname}Service.updateEntity(entity);
@@ -105,7 +105,7 @@ public class ${className}Controller extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除${comments}")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("${pre}:${pathName}:delete")
     public RestResponse delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s) {
         ${classname}Service.deleteBatch(${pk.attrname}s);

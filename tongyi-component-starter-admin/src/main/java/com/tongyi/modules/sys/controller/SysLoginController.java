@@ -109,7 +109,7 @@ public class SysLoginController extends AbstractController {
      *
      * @return RestResponse
      */
-    @PostMapping("/sys/logout")
+    @GetMapping("/sys/logout")
     public RestResponse logout() {
         sysUserTokenService.logout(getUserId());
         return RestResponse.success();

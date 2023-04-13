@@ -67,7 +67,7 @@ public class ActReModelController {
      * @return RestResponse
      */
     @SysLog("新增")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("act:remodel:save")
     public RestResponse save(@RequestBody ActReModelEntity actReModel) {
         String modelId = "";
@@ -87,7 +87,7 @@ public class ActReModelController {
      * @return RestResponse
      */
     @SysLog("部署流程文件")
-    @RequestMapping("/deploy")
+    @PostMapping("/deploy")
     @RequiresPermissions("act:remodel:deploy")
     public RestResponse deploy(String id) {
         String msg = actReModelService.deploy(id);
@@ -100,7 +100,7 @@ public class ActReModelController {
      * @param id       model标识
      * @param response 响应
      */
-    @RequestMapping(value = "export")
+    @PostMapping(value = "export")
     public void export(String id, HttpServletResponse response) {
         try {
             response.setContentType("text/xml; charset=utf-8");
@@ -125,7 +125,7 @@ public class ActReModelController {
      * @return RestResponse
      */
     @SysLog("删除")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("act:remodel:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         actReModelService.deleteBatch(ids);

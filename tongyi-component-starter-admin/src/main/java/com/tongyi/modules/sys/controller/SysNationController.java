@@ -38,7 +38,7 @@ public class SysNationController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/queryAll")
+    @GetMapping("/queryAll")
     @RequiresPermissions("sys:nation:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<SysNationEntity> list = sysNationService.listAll(params);
@@ -66,7 +66,7 @@ public class SysNationController extends AbstractController {
      * @param code 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{code}")
+    @GetMapping("/info/{code}")
     @RequiresPermissions("sys:nation:info")
     public RestResponse info(@PathVariable("code") String code) {
         SysNationEntity sysNation = sysNationService.getById(code);
@@ -81,7 +81,7 @@ public class SysNationController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增民族")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("sys:nation:save")
     public RestResponse save(@RequestBody SysNationEntity sysNation) {
 
@@ -97,7 +97,7 @@ public class SysNationController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改民族")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("sys:nation:update")
     public RestResponse update(@RequestBody SysNationEntity sysNation) {
 
@@ -113,7 +113,7 @@ public class SysNationController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除民族")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("sys:nation:delete")
     public RestResponse delete(@RequestBody String[] codes) {
         sysNationService.deleteBatch(codes);

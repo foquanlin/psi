@@ -61,7 +61,7 @@ public class SysMailLogController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("sys:maillog:info")
     public RestResponse info(@PathVariable("id") String id) {
         SysMailLogEntity sysMailLog = sysMailLogService.getById(id);
@@ -76,7 +76,7 @@ public class SysMailLogController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除邮件发送日志")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("sys:maillog:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         sysMailLogService.deleteBatch(ids);
@@ -91,7 +91,7 @@ public class SysMailLogController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改邮箱配置")
-    @RequestMapping("/config")
+    @PostMapping("/config")
     @RequiresPermissions("sys:maillog:config")
     public RestResponse config(@RequestBody SysUserEntity user) {
 

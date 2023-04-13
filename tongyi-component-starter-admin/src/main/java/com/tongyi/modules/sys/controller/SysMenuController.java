@@ -166,7 +166,7 @@ public class SysMenuController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除菜单")
-    @PostMapping("/delete/{menuId}")
+    @GetMapping("/delete/{menuId}")
     @RequiresPermissions("sys:menu:delete")
     public RestResponse delete(@PathVariable("menuId") String menuId) {
 

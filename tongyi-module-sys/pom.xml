@@ -54,11 +54,6 @@
             <artifactId>tongyi-component-webconfig</artifactId>
             <version>${component.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
         <!-- 验证码 -->
         <dependency>
             <groupId>com.github.axet</groupId>

@@ -43,7 +43,7 @@ public class SysDictGroupController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/queryAll")
+    @GetMapping("/queryAll")
     @RequiresPermissions("sys:dictgroup:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<SysDictGroupEntity> list = sysDictGroupService.listAll(params);
@@ -71,7 +71,7 @@ public class SysDictGroupController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("sys:dictgroup:info")
     public RestResponse info(@PathVariable("id") String id) {
         SysDictGroupEntity sysDictGroup = sysDictGroupService.getById(id);
@@ -86,7 +86,7 @@ public class SysDictGroupController {
      * @return RestResponse
      */
     @SysLog("保存数据字典分组")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("sys:dictgroup:save")
     public RestResponse save(@RequestBody SysDictGroupEntity sysDictGroup) {
         ValidatorUtils.validateEntity(sysDictGroup, AddGroup.class);
@@ -102,7 +102,7 @@ public class SysDictGroupController {
      * @return RestResponse
      */
     @SysLog("修改数据字典分组")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("sys:dictgroup:update")
     public RestResponse update(@RequestBody SysDictGroupEntity sysDictGroup) {
         ValidatorUtils.validateEntity(sysDictGroup, UpdateGroup.class);
@@ -118,7 +118,7 @@ public class SysDictGroupController {
      * @return RestResponse
      */
     @SysLog("删除数据字典分组")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("sys:dictgroup:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         sysDictGroupService.deleteBatch(ids);
