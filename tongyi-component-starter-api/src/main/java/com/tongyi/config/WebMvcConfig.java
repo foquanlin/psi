@@ -43,7 +43,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration inter = registry.addInterceptor(authorizationInterceptor);
-        inter.excludePathPatterns(new String[]{"/swagger-resources/**","/swagger-resources"});
+        inter.excludePathPatterns(new String[]{"/swagger-resources/**","/swagger-resources","/v3/api-docs"});
         if (null != includes ) {
             inter.addPathPatterns(includes);
         }
