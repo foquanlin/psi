@@ -42,7 +42,7 @@ public interface WxMaConfigDao extends BaseMapper<WxMaConfigEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<WxMaConfigEntity> queryAll(@Param("params") Map<String, Object> params);
+    List<WxMaConfigEntity> listAll(@Param("params") Map<String, Object> params);
 
     /**
      * 自定义分页查询

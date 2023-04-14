@@ -21,7 +21,7 @@
         <include refid="selectSql"/>
     </select>
 
-    <select id="queryAll" resultType="com.tongyi.modules.wx.entity.WxMaSessionEntity">
+    <select id="listAll" resultType="com.tongyi.modules.wx.entity.WxMaSessionEntity">
         <include refid="selectSql"/>
     </select>
 </mapper>

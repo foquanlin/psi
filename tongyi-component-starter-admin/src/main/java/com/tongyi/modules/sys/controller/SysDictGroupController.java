@@ -43,9 +43,9 @@ public class SysDictGroupController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @GetMapping("/queryAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("sys:dictgroup:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysDictGroupEntity> list = sysDictGroupService.listAll(params);
 
         return RestResponse.success().put("list", list);

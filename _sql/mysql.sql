@@ -489,7 +489,7 @@ insert into `sys_menu` values ('140205', '1402', '删除', null, 'act:remodel:de
 insert into `sys_menu` values ('15', '0', '开发工具', null, null, 0, 'dev', 5,1);
 insert into `sys_menu` values ('1501', '15', '在线用户管理', 'sys/usertoken', 'sys:usertoken:list', 1, 'zaixian', 1,1);
 insert into `sys_menu` values ('150101', '1501', '强制下线', null, 'sys:usertoken:offline', 2, null, 0,1);
-insert into `sys_menu` values ('1502', '15', '缓存信息', 'sys/redis', 'sys:cache:queryall', 1, 'redis', 2,1);
+insert into `sys_menu` values ('1502', '15', '缓存信息', 'sys/redis', 'sys:cache:list', 1, 'redis', 2,1);
 insert into `sys_menu` values ('150201', '1502', '删除', null, 'sys:cache:deletecache', 2, null, 0,1);
 
 -- insert into `sys_menu` values ('1503', '15', 'sql监控', 'http://localhost:8888/platform-admin/druid/sql.html', null, 1, 'sql', 3,0);

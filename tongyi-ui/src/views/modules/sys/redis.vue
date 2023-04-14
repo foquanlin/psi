@@ -49,7 +49,7 @@
       },
       getDataList () {
         this.$http({
-          url: `/sys/cache/queryAll`,
+          url: `/sys/cache/listAll`,
           method: 'get',
           params: {
             type: this.searchForm.type

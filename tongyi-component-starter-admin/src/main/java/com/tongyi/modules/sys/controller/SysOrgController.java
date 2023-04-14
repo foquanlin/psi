@@ -40,9 +40,9 @@ public class SysOrgController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @GetMapping("/queryAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("sys:org:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysOrgEntity> list = sysOrgService.listAll(params);
 
         return RestResponse.success().put("list", list);
@@ -54,7 +54,7 @@ public class SysOrgController extends AbstractController {
      * @param orgNo 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{orgNo}")
+    @GetMapping("/info/{orgNo}")
     @RequiresPermissions("sys:org:info")
     public RestResponse info(@PathVariable("orgNo") String orgNo) {
         SysOrgEntity sysOrg = sysOrgService.getById(orgNo);

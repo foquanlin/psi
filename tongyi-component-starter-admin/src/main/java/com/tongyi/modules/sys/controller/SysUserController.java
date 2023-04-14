@@ -52,9 +52,9 @@ public class SysUserController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @GetMapping("/queryAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("sys:dict:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysUserEntity> list = sysUserService.listAll(params);
         list.forEach(item->{
             item.cleanInfo();

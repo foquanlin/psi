@@ -43,8 +43,8 @@ import java.util.Map;
 public class WxMaSessionServiceImpl extends ServiceImpl<WxMaSessionDao, WxMaSessionEntity> implements WxMaSessionService {
 
     @Override
-    public List<WxMaSessionEntity> queryAll(Map<String, Object> params) {
-        return baseMapper.queryAll(params);
+    public List<WxMaSessionEntity> listAll(Map<String, Object> params) {
+        return baseMapper.listAll(params);
     }
 
     @Override
