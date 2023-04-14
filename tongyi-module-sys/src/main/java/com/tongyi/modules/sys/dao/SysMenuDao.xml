@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="queryList" resultType="com.tongyi.modules.sys.entity.SysMenuEntity">
-		select a.*,b.name parent_name from sys_menu a left join sys_menu b on a.parent_id = b.menu_id where a.shows = 1 order by a.menu_id,a.order_num
+		select a.*,b.name parent_name from sys_menu a left join sys_menu b on a.parent_id = b.menu_id where a.shows = 1 and b.shows = 1 order by a.menu_id,a.order_num
 	</select>
     <select id="queryMaxIdByParentId" resultType="string">
 		select max(menu_id) from sys_menu where shows = 1 and parent_id = #{parentId}
