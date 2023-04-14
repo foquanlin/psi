@@ -54,7 +54,7 @@ export default {
       }
       this.loading = true
       this.$http({
-        url: '/sys/user/queryAll',
+        url: '/sys/user/listAll',
         method: 'get',
         loading: false,
         params: {}

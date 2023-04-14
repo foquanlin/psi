@@ -67,7 +67,7 @@
       // 获取数据列表
       getDataList () {
         this.$http({
-          url: '/sys/org/queryAll',
+          url: '/sys/org/listAll',
           method: 'get',
           params: {
             'orgName': this.searchForm.orgName,

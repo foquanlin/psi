@@ -59,8 +59,8 @@ public class SysCacheController {
      * @param params 查询参数
      * @return
      */
-    @RequiresPermissions("sys:cache:queryAll")
-    @GetMapping("/queryAll")
+    @RequiresPermissions("sys:cache:list")
+    @GetMapping("/listAll")
     public RestResponse queryAll(@RequestParam Map<String, String> params) {
         String type = params.get("type");
         if (STR_ONE.equals(type)) {

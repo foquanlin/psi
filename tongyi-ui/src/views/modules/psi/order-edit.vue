@@ -153,7 +153,7 @@ export default {
       this.$nextTick(() => {
         this.$http({
           url: `/psi/orderamount/listAll`,
-          method: 'post',
+          method: 'get',
           params: {
             orderId: this.order.id
           }

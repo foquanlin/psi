@@ -46,7 +46,7 @@ public class SysSmsLogController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @GetMapping("/queryAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("sys:smslog:list")
     public RestResponse queryAll(@RequestParam Map<String, Object> params) {
         List<SysSmsLogEntity> list = sysSmsLogService.listAll(params);
