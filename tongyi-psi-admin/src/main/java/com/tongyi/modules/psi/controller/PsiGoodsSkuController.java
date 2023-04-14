@@ -43,7 +43,7 @@ public class PsiGoodsSkuController extends AbstractController {
      */
     @GetMapping("/listAll")
 //    @RequiresPermissions("psi:goodssku:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiGoodsSkuEntity> list = psiGoodsSkuService.listAll(params);
         return RestResponse.success("list", list);
     }

@@ -39,7 +39,7 @@ public class PsiUnitController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:unit:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiUnitEntity> list = psiUnitService.listAll(params);
         return RestResponse.success("list", list);
     }

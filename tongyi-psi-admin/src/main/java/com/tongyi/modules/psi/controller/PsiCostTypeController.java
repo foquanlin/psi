@@ -39,7 +39,7 @@ public class PsiCostTypeController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:costtype:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiCostTypeEntity> list = psiCostTypeService.listAll(params);
         return RestResponse.success("list", list);
     }

@@ -39,7 +39,7 @@ public class PsiBatchController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:batch:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiBatchEntity> list = psiBatchService.listAll(params);
         return RestResponse.success("list", list);
     }

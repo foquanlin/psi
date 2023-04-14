@@ -39,7 +39,7 @@ public class PsiBankbillController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:bankbill:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiBankbillEntity> list = psiBankbillService.listAll(params);
         return RestResponse.success("list", list);
     }

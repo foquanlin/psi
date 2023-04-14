@@ -39,7 +39,7 @@ public class PsiOrderExpressController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:orderexpress:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderExpressEntity> list = psiOrderExpressService.listAll(params);
         return RestResponse.success("list", list);
     }

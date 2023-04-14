@@ -61,7 +61,7 @@ public class SysCacheController {
      */
     @RequiresPermissions("sys:cache:list")
     @GetMapping("/listAll")
-    public RestResponse queryAll(@RequestParam Map<String, String> params) {
+    public RestResponse listAll(@RequestParam Map<String, String> params) {
         String type = params.get("type");
         if (STR_ONE.equals(type)) {
             //查询所有缓存

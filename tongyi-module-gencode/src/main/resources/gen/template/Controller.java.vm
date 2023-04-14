@@ -37,9 +37,9 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping(value="/listAll",method = RequestMethod.GET)
+    @GetMapping(value="/listAll",method = RequestMethod.GET)
     @RequiresPermissions("${pre}:${pathName}:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<${className}Entity> list = ${classname}Service.listAll(params);
         return RestResponse.success("list", list);
     }
@@ -63,7 +63,7 @@ public class ${className}Controller extends AbstractController {
      * @param ${pk.attrname} 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{${pk.attrname}}")
+    @GetMapping("/info/{${pk.attrname}}")
     @RequiresPermissions("${pre}:${pathName}:info")
     public RestResponse info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
         ${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});

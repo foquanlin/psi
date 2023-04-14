@@ -51,7 +51,7 @@ public class PsiAllocationController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:allocation:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiAllocationEntity> list = psiAllocationService.listAll(params);
         return RestResponse.success("list", list);
     }

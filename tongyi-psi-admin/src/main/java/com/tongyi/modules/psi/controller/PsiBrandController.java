@@ -39,7 +39,7 @@ public class PsiBrandController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:brand:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiBrandEntity> list = psiBrandService.listAll(params);
         return RestResponse.success("list", list);
     }

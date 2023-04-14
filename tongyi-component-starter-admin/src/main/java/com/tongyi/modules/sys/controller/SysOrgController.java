@@ -42,7 +42,7 @@ public class SysOrgController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("sys:org:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysOrgEntity> list = sysOrgService.listAll(params);
 
         return RestResponse.success().put("list", list);

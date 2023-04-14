@@ -55,7 +55,7 @@ public class SysUserController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions(value = {"sys:dict:list","sys:user:list"},logical = Logical.OR)
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysUserEntity> list = sysUserService.listAll(params);
         list.forEach(item->{
             item.cleanInfo();

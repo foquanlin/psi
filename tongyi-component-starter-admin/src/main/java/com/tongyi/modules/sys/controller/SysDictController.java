@@ -49,7 +49,7 @@ public class SysDictController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("sys:dict:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysDictEntity> list = sysDictService.listAll(params);
 
         return RestResponse.success().put("list", list);

@@ -45,7 +45,7 @@ public class SysDictGroupController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("sys:dictgroup:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysDictGroupEntity> list = sysDictGroupService.listAll(params);
 
         return RestResponse.success().put("list", list);

@@ -55,7 +55,7 @@ public class PsiCheckController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:check:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiCheckEntity> list = psiCheckService.listAll(params);
         return RestResponse.success("list", list);
     }

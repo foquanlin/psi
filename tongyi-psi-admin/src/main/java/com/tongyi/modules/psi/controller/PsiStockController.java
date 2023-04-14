@@ -42,7 +42,7 @@ public class PsiStockController extends AbstractController {
      */
     @GetMapping("/listAll")
     @RequiresPermissions("psi:stock:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiStockEntity> list = psiStockService.listAll(params);
         return RestResponse.success("list", list);
     }
