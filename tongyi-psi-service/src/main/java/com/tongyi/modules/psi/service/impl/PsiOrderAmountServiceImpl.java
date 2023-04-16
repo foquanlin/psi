@@ -66,7 +66,10 @@ public class PsiOrderAmountServiceImpl extends ServiceImpl<PsiOrderAmountDao, Ps
         if (total.compareTo(order.getOrderAmount())>0){
             throw new BusinessException("已支付金额不能大于订单金额");
         }
-        return super.save(entity);
+        boolean added = super.save(entity);
+        order.setPayStatus(total);
+        orderDao.updateById(order);
+        return added;
     }
 
     @Override
@@ -79,18 +82,28 @@ public class PsiOrderAmountServiceImpl extends ServiceImpl<PsiOrderAmountDao, Ps
         if (total.compareTo(order.getOrderAmount())>0){
             throw new BusinessException("已支付金额不能大于订单金额");
         }
-        return super.updateById(entity);
+        boolean updated = super.updateById(entity);
+        order.setPayStatus(total);
+        orderDao.updateById(order);
+        return updated;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
-        return super.removeById(id);
+        PsiOrderAmountEntity entity = baseMapper.selectById(id);
+        boolean delted = super.removeById(id);
+        PsiOrderEntity order = orderDao.selectById(entity.getOrderId());
+        BigDecimal payedAmount = baseMapper.sumByOrderId(order.getId());
+        order.setPayStatus(payedAmount);
+        orderDao.updateById(order);
+        return delted;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
-        return super.removeByIds(Arrays.asList(ids));
+        throw new UnsupportedOperationException();
+//        return super.removeByIds(Arrays.asList(ids));
     }
 }

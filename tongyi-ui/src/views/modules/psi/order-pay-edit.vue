@@ -111,9 +111,8 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: '/psi/orderamount/delete',
-          method: 'post',
-          data: [row.id]
+          url: `psi/orderamount/delete/${row.id}`,
+          method: 'get'
         }).then(({data}) => {
           if (data && data.code === 0) {
             this.$message({ message: '操作成功', type: 'success', duration: 1500 })

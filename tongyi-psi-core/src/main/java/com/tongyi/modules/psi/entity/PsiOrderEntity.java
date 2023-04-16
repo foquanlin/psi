@@ -219,6 +219,19 @@ public class PsiOrderEntity implements Serializable {
     public PsiStockEntity.Type getStockType(){
         return PsiOrderEntity.Catalog.valueOf(catalog).getStockType(PsiOrderEntity.Type.valueOf(type));
     }
+    public void setPayStatus(String status) {
+        this.payStatus = status;
+    }
+
+    public void setPayStatus(BigDecimal total) {
+        if (BigDecimal.ZERO.compareTo(total) == 0){
+            this.payStatus = PayStatus.PAYMENT.getCode();
+        }else if (orderAmount.compareTo(total) > 0){
+            this.payStatus = PayStatus.DEBT.getCode();
+        }else {
+            this.payStatus = PayStatus.FINISH.getCode();
+        }
+    }
 
     /**
      * 订单分类
@@ -384,8 +397,8 @@ public class PsiOrderEntity implements Serializable {
      * 收款状态
      */
     public enum PayStatus {
-        DEBT("DEBT","有欠款"),
         PAYMENT("PAYMENT","待收款"),
+        DEBT("DEBT","有欠款"),
         FINISH("FINISH","已完成");
 
         private String code;

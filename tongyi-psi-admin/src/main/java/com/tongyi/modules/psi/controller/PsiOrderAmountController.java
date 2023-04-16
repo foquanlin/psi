@@ -103,14 +103,14 @@ public class PsiOrderAmountController extends AbstractController {
     /**
      * 根据主键删除订单账目
      *
-     * @param ids
+     * @param id
      * @return RestResponse
      */
     @SysLog("删除订单账目")
-    @PostMapping("/delete")
+    @GetMapping("/delete/{id}")
     @RequiresPermissions(value={"psi:order:delete","psi:buyorder:delete","psi:saleorder:delete"},logical = Logical.OR)
-    public RestResponse delete(@RequestBody String[] ids) {
-        psiOrderAmountService.deleteBatch(ids);
+    public RestResponse delete(@PathVariable("id") String id) {
+        psiOrderAmountService.deleteEntity(id);
         return RestResponse.success();
     }
 }
