@@ -1,8 +1,8 @@
 <template>
   <el-dialog :title="descriptions.orderName+'详情'" :close-on-click-modal="false" width="70%" :visible.sync="visible">
     <el-descriptions :title="descriptions.orderName" :column="4">
-      <el-descriptions-item :label="descriptions.no">{{info.no}}<span style="color: #66b1ff" v-clipboard:copy="info.no" v-clipboard:success="onCopySuccess">(点击复制)</span></el-descriptions-item>
-      <el-descriptions-item :label="descriptions.orderUid">{{info.orderUser?info.orderUser.realName:'-'}}</el-descriptions-item>
+      <el-descriptions-item :label="descriptions.no" :span="4">{{info.no}}<span style="color: #66b1ff" v-clipboard:copy="info.no" v-clipboard:success="onCopySuccess">(点击复制)</span></el-descriptions-item>
+      <el-descriptions-item :label="descriptions.orderUid">{{info.orderUser?info.orderUser.name:'-'}}</el-descriptions-item>
       <el-descriptions-item :label="descriptions.createDate">{{info.createDate}}</el-descriptions-item>
       <el-descriptions-item :label="descriptions.expressNo">{{info.expressNo}}</el-descriptions-item>
       <el-descriptions-item :label="descriptions.ownerUid">{{info.ownerUser?info.ownerUser.realName:'-'}}</el-descriptions-item>
@@ -44,7 +44,7 @@
       <el-table-column prop="unitName" header-align="center" align="center" :label="descriptions.unitId" width="80px"/>
       <el-table-column prop="price" header-align="center" align="center" :label="descriptions.price" width="80px"/>
       <el-table-column prop="num" header-align="center" align="center" :label="descriptions.num" width="80px"/>
-<!--      <el-table-column prop="stockNum" header-align="center" align="center" label="入库数量" width="80px"/>-->
+      <el-table-column prop="stockNum" header-align="center" align="center" :label="descriptions.stockNum" width="80px"/>
       <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal" fixed="right" width="100px">
         <template v-slot="scope">
           {{scope.row.price * scope.row.num}}
@@ -98,14 +98,6 @@ export default {
     }
   },
   props: {
-    catalog: {
-      type: String,
-      require: true
-    },
-    type: {
-      type: String,
-      require: true
-    },
     descriptions: {
       type: Object,
       default: {}

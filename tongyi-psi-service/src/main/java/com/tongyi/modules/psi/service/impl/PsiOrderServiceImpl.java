@@ -108,6 +108,7 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
      * 增加订单库存
      * @param stock
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void addStock(PsiStockEntity stock) {
         PsiOrderDetailEntity detail = orderDetailDao.selectById(stock.getDetailId());
@@ -117,8 +118,10 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
             throw new BusinessException("请检查订单商品数量,你输入的出入库数量不能大于订单商品数量");
         }
         stockDao.insert(stock);
+        this.updateStockStatus(detail);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateStock(PsiStockEntity stock) {
         PsiOrderDetailEntity detail = orderDetailDao.selectById(stock.getDetailId());
@@ -129,12 +132,22 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
             throw new BusinessException("请检查订单商品数量,你输入的出入库数量不能大于订单商品数量");
         }
         stockDao.updateById(stock);
+        this.updateStockStatus(detail);
     }
 
+    private void updateStockStatus(PsiOrderDetailEntity detail){
+        BigDecimal orderNum = orderDetailDao.sumBySku(detail.getOrderId(),null,null,null,null);
+        BigDecimal orderStockNum = stockDao.sumStockBySku(detail.getOrderId(),null,null,null,null);
+        PsiOrderEntity order = baseMapper.selectById(detail.getOrderId());
+        order.setStockStatus(orderStockNum,orderNum);
+        baseMapper.updateById(order);
+    }
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteStock(String[] ids) {
-        Arrays.asList(ids).forEach(id-> {
-            stockDao.deleteById(id);
-        });
+    public void deleteStock(String id) {
+        PsiStockEntity stock = stockDao.selectById(id);
+        stockDao.deleteById(id);
+        PsiOrderDetailEntity detail = orderDetailDao.selectById(stock.getDetailId());
+        this.updateStockStatus(detail);
     }
 }

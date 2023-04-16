@@ -83,7 +83,7 @@
         where t.cid = #{cid}
     </select>
 
-    <select id="sumBySku" resultType="java.math.BigDecimal">
+    <select id="countBySku" resultType="java.math.BigDecimal">
         select count(1) as num
         from psi_check_detail t
         <where>

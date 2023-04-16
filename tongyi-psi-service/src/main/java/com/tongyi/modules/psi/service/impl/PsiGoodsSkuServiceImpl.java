@@ -99,23 +99,23 @@ public class PsiGoodsSkuServiceImpl extends ServiceImpl<PsiGoodsSkuDao, PsiGoods
             if (null!=sum && sum.compareTo(BigDecimal.ZERO)>0){
                 throw new BusinessException("存在调拨单商品,不能删除!");
             }
-            sum = checkDetailDao.sumBySku(sku.getGoodsId(),sku.getId());
+            sum = checkDetailDao.countBySku(null,sku.getGoodsId(),sku.getId());
             if (null!=sum && sum.compareTo(BigDecimal.ZERO)>0){
                 throw new BusinessException("存在盘点单商品,不能删除!");
             }
-            sum = orderDetailDao.sumBySku(PsiOrderEntity.Catalog.BUY.getCode(),PsiOrderEntity.Type.ORDER.getCode(),sku.getGoodsId(),sku.getId());
+            sum = orderDetailDao.countBySku(null,PsiOrderEntity.Catalog.BUY.getCode(),PsiOrderEntity.Type.ORDER.getCode(),sku.getGoodsId(),sku.getId());
             if (null!=sum && sum.compareTo(BigDecimal.ZERO)>0){
                 throw new BusinessException("存在采购订单商品,不能删除!");
             }
-            sum = orderDetailDao.sumBySku(PsiOrderEntity.Catalog.BUY.getCode(),PsiOrderEntity.Type.REFUND.getCode(),sku.getGoodsId(),sku.getId());
+            sum = orderDetailDao.countBySku(null,PsiOrderEntity.Catalog.BUY.getCode(),PsiOrderEntity.Type.REFUND.getCode(),sku.getGoodsId(),sku.getId());
             if (null!=sum && sum.compareTo(BigDecimal.ZERO)>0){
                 throw new BusinessException("存在采购退单商品,不能删除!");
             }
-            sum = orderDetailDao.sumBySku(PsiOrderEntity.Catalog.SALE.getCode(),PsiOrderEntity.Type.ORDER.getCode(),sku.getGoodsId(),sku.getId());
+            sum = orderDetailDao.countBySku(null,PsiOrderEntity.Catalog.SALE.getCode(),PsiOrderEntity.Type.ORDER.getCode(),sku.getGoodsId(),sku.getId());
             if (null!=sum && sum.compareTo(BigDecimal.ZERO)>0){
                 throw new BusinessException("存在销售订单商品,不能删除!");
             }
-            sum = orderDetailDao.sumBySku(PsiOrderEntity.Catalog.SALE.getCode(),PsiOrderEntity.Type.REFUND.getCode(),sku.getGoodsId(),sku.getId());
+            sum = orderDetailDao.countBySku(null,PsiOrderEntity.Catalog.SALE.getCode(),PsiOrderEntity.Type.REFUND.getCode(),sku.getGoodsId(),sku.getId());
             if (null!=sum && sum.compareTo(BigDecimal.ZERO)>0){
                 throw new BusinessException("存在销售退单商品,不能删除!");
             }

@@ -122,6 +122,15 @@ public class PsiOrderEntity implements Serializable {
     @TableField(exist = false)
     private List<PsiOrderDetailEntity> details;
 
+    public void setStockStatus(BigDecimal orderStockNum,BigDecimal orderNum) {
+        if (orderStockNum.compareTo(BigDecimal.ZERO)==0){
+            this.setStockStatus(PsiOrderEntity.StockStatus.UNFINISH.getCode());
+        }else if (orderNum.compareTo(orderStockNum)>0){
+            this.setStockStatus(PsiOrderEntity.StockStatus.PARTS.getCode());
+        }else{
+            this.setStockStatus(PsiOrderEntity.StockStatus.FINISH.getCode());
+        }
+    }
     public static PsiOrderEntity newOrder(Catalog catalog, Type type) {
         PsiOrderEntity entity = new PsiOrderEntity();
         entity.no = catalog.newNo();

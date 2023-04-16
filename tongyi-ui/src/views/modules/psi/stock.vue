@@ -38,7 +38,7 @@
       </el-form-item>
     </el-form>
     <el-table border :data="dataList" style="width: 100%;">
-      <el-table-column prop="goodsName" header-align="center" align="left" fixed="fixed" label="商品" width="250">
+      <el-table-column prop="goodsName" header-align="center" align="left" fixed="left" label="商品" width="250">
         <template v-slot="scope">
           <div style="display: flex">
             <el-popover placement="right-start" trigger="hover" v-if="scope.row.goodsPicUrls">
@@ -79,7 +79,7 @@
       <el-table-column prop="supplierName" header-align="center" align="left" label="客户/供应商"/>
       <el-table-column prop="orderNo" header-align="center" align="left" label="关联单号" width="140">
         <template v-slot="scope">
-          <el-button v-if="scope.row.catalog!=='TIAOZHENG'" type="text" size="small" @click="viewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
+          <el-button v-if="scope.row.catalog ==='CAIGOU' || scope.row.catalog ==='XIAOSHOU' || scope.row.catalog ==='DINGDAN'" type="text" size="small" @click="viewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="num" header-align="center" align="right" label="数量"/>

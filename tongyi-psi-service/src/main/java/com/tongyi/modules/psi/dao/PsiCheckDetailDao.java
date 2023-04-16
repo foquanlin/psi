@@ -49,6 +49,5 @@ public interface PsiCheckDetailDao extends BaseMapper<PsiCheckDetailEntity> {
 
     public List<PsiCheckDetailEntity> selectByCid(@Param("cid")String cid);
 
-    public BigDecimal sumBySku(@Param("goodsId")String goodsId, @Param("skuId")String skuId);
-
+    public BigDecimal countBySku(@Param("cid")String cid,@Param("goodsId")String goodsId, @Param("skuId")String skuId);
 }

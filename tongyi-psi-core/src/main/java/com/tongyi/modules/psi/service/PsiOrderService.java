@@ -32,7 +32,7 @@ public interface PsiOrderService extends IService<PsiOrderEntity>{
     public void updateStock(PsiStockEntity stock);
     /**
      * 删除订单库存
-     * @param ids
+     * @param id
      */
-    void deleteStock(String[] ids);
+    void deleteStock(String id);
 }

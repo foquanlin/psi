@@ -91,6 +91,7 @@
       <el-table-column prop="stockStatus" header-align="center" align="center" :label="descriptions.stockStatus">
         <template v-slot="scope">
           <el-tag v-if="scope.row.stockStatus === 'UNFINISH'">未完成</el-tag>
+          <el-tag v-else-if="scope.row.stockStatus === 'PARTS'">部分完成</el-tag>
           <el-tag v-else-if="scope.row.stockStatus === 'FINISH'">已完成</el-tag>
         </template>
       </el-table-column>
@@ -141,7 +142,7 @@
     <user-edit v-if="userVisible" ref="userEdit"/>
     <order-add v-if="orderAddVisible" ref="orderAdd" :descriptions="descriptions" :catalog="catalog" :type="type" @refreshDataList="getDataList"/>
     <order-edit v-if="orderEditVisible" ref="orderEdit" :descriptions="descriptions" :catalog="catalog" :type="type" @refreshDataList="getDataList"/>
-    <order-view v-if="orderViewVisible" ref="orderView" :descriptions="descriptions" :catalog="catalog" :type="type"/>
+    <order-view v-if="orderViewVisible" ref="orderView" :descriptions="descriptions"/>
 
   </div>
 </template>
