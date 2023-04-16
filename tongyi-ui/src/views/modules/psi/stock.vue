@@ -76,7 +76,11 @@
         </template>
       </el-table-column>
       <el-table-column prop="warehouseName" header-align="center" align="left" label="仓库"/>
-      <el-table-column prop="supplierName" header-align="center" align="left" label="客户供应商">
+      <el-table-column prop="supplierName" header-align="center" align="left" label="客户/供应商"/>
+      <el-table-column prop="orderNo" header-align="center" align="left" label="关联单号" width="140">
+        <template v-slot="scope">
+          <el-button v-if="scope.row.catalog!=='TIAOZHENG'" type="text" size="small" @click="viewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
+        </template>
       </el-table-column>
       <el-table-column prop="num" header-align="center" align="right" label="数量"/>
       <el-table-column prop="createTime" header-align="center" align="left" label="时间" width="100"/>
@@ -97,6 +101,7 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <goods-detail v-if="detailVisible" ref="goodsDetail"/>
+    <order-view v-if="orderViewVisible" ref="orderView"/>
   </div>
 </template>
 
@@ -109,6 +114,7 @@
   import SelectStockType from './component/select-stock-type'
   import SelectSkuStatus from './component/select-sku-status'
   import SelectStockCatalog from './component/select-stock-catalog'
+  import OrderView from './order-view'
   export default {
     data () {
       return {
@@ -129,7 +135,8 @@
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
-        detailVisible: false
+        detailVisible: false,
+        orderViewVisible: false
       }
     },
     components: {
@@ -140,7 +147,8 @@
       SelectSku,
       SelectStockType,
       SelectSkuStatus,
-      SelectStockCatalog
+      SelectStockCatalog,
+      OrderView
     },
     activated () {
       this.getDataList()
@@ -206,6 +214,12 @@
       changeGoods (id, goods) {
         this.searchForm.goodsId = id
         this.searchForm.skuId = undefined
+      },
+      viewHandle (row) {
+        this.orderViewVisible = true
+        this.$nextTick(() => {
+          this.$refs.orderView.init(row.orderId)
+        })
       }
     }
   }

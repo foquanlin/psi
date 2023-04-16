@@ -23,6 +23,7 @@
             t.create_uid,
             t.memo,
             t.detail_id,
+            po.no as order_no,
             su.real_name as create_name,
             pw.name as warehouse_name,
             ps.name as supplier_name,
@@ -37,6 +38,7 @@
         left join psi_goods pg on pg.id = t.goods_id
         left join psi_unit pu on pu.id = pg.unit_id
         left join psi_goods_sku pgs on pgs.id = t.sku_id and pgs.goods_id = t.goods_id
+        left join psi_order po on po.id = t.order_id
         left join sys_user su on su.user_id = t.create_uid
     </sql>
     <sql id="selectWhere">

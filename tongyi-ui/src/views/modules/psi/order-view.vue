@@ -2,11 +2,12 @@
   <el-dialog :title="descriptions.orderName+'详情'" :close-on-click-modal="false" width="70%" :visible.sync="visible">
     <el-descriptions :title="descriptions.orderName" :column="4">
       <el-descriptions-item :label="descriptions.no">{{info.no}}<span style="color: #66b1ff" v-clipboard:copy="info.no" v-clipboard:success="onCopySuccess">(点击复制)</span></el-descriptions-item>
-      <el-descriptions-item :label="descriptions.orderUid">{{info.orderUser?info.orderUser.name:'-'}}</el-descriptions-item>
+      <el-descriptions-item :label="descriptions.orderUid">{{info.orderUser?info.orderUser.realName:'-'}}</el-descriptions-item>
       <el-descriptions-item :label="descriptions.createDate">{{info.createDate}}</el-descriptions-item>
       <el-descriptions-item :label="descriptions.expressNo">{{info.expressNo}}</el-descriptions-item>
       <el-descriptions-item :label="descriptions.ownerUid">{{info.ownerUser?info.ownerUser.realName:'-'}}</el-descriptions-item>
       <el-descriptions-item :label="descriptions.createUid">{{info.createUser?info.createUser.realName:'-'}}</el-descriptions-item>
+      <el-descriptions-item :label="descriptions.orderAmount">{{info.orderAmount}}</el-descriptions-item>
       <el-descriptions-item :label="descriptions.memo" :span="3">{{info.memo}}</el-descriptions-item>
     </el-descriptions>
     <el-descriptions :title="descriptions.orderStatus" :column="4">
@@ -53,12 +54,12 @@
     <el-descriptions :title="descriptions.pay+'详情'">
     </el-descriptions>
     <el-table border :data="accountList" style="align-content: center;align-items: center;" empty-text="暂无内容">
+      <el-table-column prop="createDate" header-align="center" align="center" :label="descriptions.payDate"/>
       <el-table-column prop="bankId" header-align="center" align="center" :label="descriptions.payAccount">
         <template v-slot="scope">
           <span>{{scope.row.bank.bankName}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createDate" header-align="center" align="center" :label="descriptions.payDate"/>
       <el-table-column prop="amount" header-align="center" align="center" :label="descriptions.amount"/>
     </el-table>
     <div style="margin-top:20px;align-content: center;align-items: center;text-align: center;"><el-button @click="visible=false">

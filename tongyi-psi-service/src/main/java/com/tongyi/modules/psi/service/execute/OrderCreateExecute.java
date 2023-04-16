@@ -29,6 +29,8 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
     @Autowired
     private PsiOrderDetailService orderDetailService;
     @Autowired
+    private PsiOrderAmountService orderAmountService;
+    @Autowired
     private PsiStockService stockService;
     @Autowired
     private PsiWarehouseService warehouseService;
@@ -148,17 +150,17 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             JsonObject item = it.next().getAsJsonObject();
             String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
-            BigDecimal costPrice = item.get("price").getAsBigDecimal();
+            BigDecimal price = item.get("price").getAsBigDecimal();
             BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
-            total = total.add(costPrice.multiply(num));
-            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,costPrice,num,stockNum);
+            total = total.add(price.multiply(num));
+            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,price,num,stockNum);
             orderDetailService.addEntity(detail);
             PsiStockEntity stock = PsiStockEntity.newStock(module.getStockCatalog(), module.getStockType(), warehouseId, goodsId, skuId, stockNum, module.getId());
             stock.setDetailId(detail.getId());
             stock.setSupplierId(module.getOrderUid());
-            stock.setCostPrice(costPrice);
+            stock.setCostPrice(price);
             stock.setCreateUid(createUid);
             stockService.addEntity(stock);
         }
@@ -176,7 +178,7 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             amountEntity.setCreateDate(LocalDate.now());
             amountEntity.setCreateUid(createUid);
             amountEntity.setType(PsiOrderAmountEntity.Type.PAY.getCode());
-            // payAmount = payAmount.add(amount);
+            orderAmountService.addEntity(amountEntity);
         }
         // module.setPayAmount(payAmount);
         module.setOrderAmount(total);

@@ -125,6 +125,8 @@ public class PsiStockEntity implements Serializable {
     private String supplierName;
     @TableField(exist = false)
     private String unitName;
+    @TableField(exist = false)
+    private String orderNo;
 
     public static PsiStockEntity newStock(Catalog catalog,Type type, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
         PsiStockEntity entity = new PsiStockEntity();

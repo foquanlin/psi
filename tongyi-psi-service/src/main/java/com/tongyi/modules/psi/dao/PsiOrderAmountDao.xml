@@ -63,4 +63,10 @@
         <result column="bank_name" property="bankName"/>
         <association property="bank" javaType="com.tongyi.modules.psi.entity.PsiBankEntity" select="com.tongyi.modules.psi.dao.PsiBankDao.selectById" column="bank_id"/>
     </resultMap>
+
+    <select id="sumByOrderId" resultType="java.math.BigDecimal">
+        select coalesce(sum(t.amount),0) as amount
+        from psi_order_amount t
+        where t.order_id = #{id}
+    </select>
 </mapper>

@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.CacheNamespace;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -44,4 +45,11 @@ public interface PsiOrderAmountDao extends BaseMapper<PsiOrderAmountEntity> {
      * @return List
      */
     List<PsiOrderAmountEntity> listPage(IPage page, @Param("params") Map<String, Object> params);
+
+    /**
+     * 订单首付款金额
+     * @param id
+     * @return
+     */
+    public BigDecimal sumByOrderId(@Param("id")String id);
 }
