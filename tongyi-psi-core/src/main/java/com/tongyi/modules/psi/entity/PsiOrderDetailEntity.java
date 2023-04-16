@@ -56,6 +56,7 @@ public class PsiOrderDetailEntity implements Serializable {
     /**
      * 入库数量
      */
+    @TableField(exist = false)
     private BigDecimal stockNum;
     /**
      * 备注

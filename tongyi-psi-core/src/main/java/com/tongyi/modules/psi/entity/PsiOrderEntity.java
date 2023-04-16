@@ -109,6 +109,7 @@ public class PsiOrderEntity implements Serializable {
     /**
      * 已付款金额
      */
+    @TableField(exist = false)
     private BigDecimal payAmount;
 
     @TableField(exist = false)

@@ -23,7 +23,7 @@
             t.settlement_amount,
             t.order_amount,
             t.owner_uid,
-            t.pay_amount
+            (select coalesce(sum(case poa.type when 'PAY' then poa.amount when 'RECEIPTS' then -poa.amount else 0 end),0) from psi_order_amount poa where poa.order_id = t.id) as pay_amount
         from psi_order t
     </sql>
     <sql id="selectWhere">

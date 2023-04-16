@@ -77,7 +77,7 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             JsonObject item = it.next().getAsJsonObject();
             String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
-            BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
+            BigDecimal costPrice = item.get("price").getAsBigDecimal();
             BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
@@ -148,7 +148,7 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             JsonObject item = it.next().getAsJsonObject();
             String warehouseId = item.get("warehouseId").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
-            BigDecimal costPrice = item.get("costPrice").getAsBigDecimal();
+            BigDecimal costPrice = item.get("price").getAsBigDecimal();
             BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
@@ -156,6 +156,7 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,costPrice,num,stockNum);
             orderDetailService.addEntity(detail);
             PsiStockEntity stock = PsiStockEntity.newStock(module.getStockCatalog(), module.getStockType(), warehouseId, goodsId, skuId, stockNum, module.getId());
+            stock.setDetailId(detail.getId());
             stock.setSupplierId(module.getOrderUid());
             stock.setCostPrice(costPrice);
             stock.setCreateUid(createUid);
@@ -163,7 +164,7 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
         }
         JsonArray accountList = params.getAsJsonArray("accountList");
         Iterator<JsonElement> ait = accountList.iterator();
-        BigDecimal payAmount = BigDecimal.ZERO;
+        // BigDecimal payAmount = BigDecimal.ZERO;
         while(ait.hasNext()){//收款账户记录
             JsonObject json = ait.next().getAsJsonObject();
             String bankId = json.get("bankId").getAsString();
@@ -175,9 +176,9 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             amountEntity.setCreateDate(LocalDate.now());
             amountEntity.setCreateUid(createUid);
             amountEntity.setType(PsiOrderAmountEntity.Type.PAY.getCode());
-            payAmount = payAmount.add(amount);
+            // payAmount = payAmount.add(amount);
         }
-        module.setPayAmount(payAmount);
+        // module.setPayAmount(payAmount);
         module.setOrderAmount(total);
         orderService.updateEntity(module);
         return null;

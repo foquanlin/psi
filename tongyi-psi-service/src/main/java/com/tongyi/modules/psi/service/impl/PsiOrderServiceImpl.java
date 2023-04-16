@@ -114,7 +114,7 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
         BigDecimal num = stockDao.sumStockBySku(null,detail.getId(),null,null,null);
         num = num.abs().add(stock.getNum());
         if (num.compareTo(detail.getNum()) >0){
-            throw new BusinessException("请先修改或删除该商品的出入库记录。您输入的订单商品订购数量不能小于该商品已经出入库的数量");
+            throw new BusinessException("请检查订单商品数量,你输入的出入库数量不能大于订单商品数量");
         }
         stockDao.insert(stock);
     }
@@ -122,10 +122,11 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
     @Override
     public void updateStock(PsiStockEntity stock) {
         PsiOrderDetailEntity detail = orderDetailDao.selectById(stock.getDetailId());
-        BigDecimal num = stockDao.sumStockBySku(null,detail.getId(),null,null,null);
-        num = num.abs().add(stock.getNum());
-        if (num.compareTo(detail.getNum()) >0){
-            throw new BusinessException("请先修改或删除该商品的出入库记录。您输入的订单商品订购数量不能小于该商品已经出入库的数量");
+        PsiStockEntity oldStock = stockDao.selectById(stock.getId());
+        BigDecimal num = stockDao.sumStockBySku(null,detail.getId(),null,null,null);// 现有库存
+        BigDecimal stockNum = num.abs().subtract(oldStock.getNum()).add(stock.getNum());// 减去旧库存记录 + 新库存记录
+        if (stockNum.compareTo(detail.getNum()) >0){
+            throw new BusinessException("请检查订单商品数量,你输入的出入库数量不能大于订单商品数量");
         }
         stockDao.updateById(stock);
     }

@@ -20,10 +20,10 @@
     <el-table-column prop="unitName" header-align="center" align="center" :label="descriptions.unitId"/>
     <el-table-column prop="price" header-align="center" align="center" :label="priceName" width="150px"/>
     <el-table-column prop="num" header-align="center" align="center" :label="numberName+descriptions.num" width="150px"/>
-    <el-table-column prop="stockNum" header-align="center" align="center" :label="stockName+descriptions.num" width="150px"/>
+    <el-table-column prop="stockNum" header-align="center" align="center" :label="descriptions.stockName+descriptions.num" width="150px"/>
     <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal">
       <template v-slot="scope">
-        {{scope.row.costPrice * scope.row.num}}
+        {{scope.row.price * scope.row.num}}
       </template>
     </el-table-column>
     <el-table-column fixed="right" header-align="center" align="center" width="150" :label="descriptions.action">
@@ -48,7 +48,6 @@ export default {
       disabled: true,
       inStockVisible: false,
       priceName: '',
-      stockName: '',
       numberName: ''
     }
   },
@@ -93,7 +92,6 @@ export default {
       handler (value) {
         this.priceName = Options.priceName(this.catalog, this.type)
         this.numberName = Options.numberName(this.catalog, this.type)
-        this.stockName = Options.stockName(this.catalog, this.type)
       }
     }
   },

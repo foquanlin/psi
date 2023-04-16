@@ -66,11 +66,7 @@ public class PsiOrderDetailServiceImpl extends ServiceImpl<PsiOrderDetailDao, Ps
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiOrderDetailEntity entity) {
-        PsiOrderEntity order = orderDao.selectById(entity.getOrderId());
-        PsiStockEntity record = entity.newStockRecord(order.getStockCatalog(),order.getStockType(),null);
         boolean added = super.save(entity);
-        record.setDetailId(entity.getId());
-        stockDao.insert(record);
         return added;
     }
 

@@ -45,7 +45,7 @@ export default {
     saveHandle () {
       this.$http({
         url: `/psi/order/invoiceStatus`,
-        method: 'post',
+        method: 'get',
         params: {
           id: this.order.id,
           invoiceStatus: this.order.invoiceStatus

@@ -79,7 +79,7 @@ public class PsiOrderAmountEntity implements Serializable {
     private PsiBankEntity bank;
     public enum Type {
         PAY("PAY","付款"),
-        REWARD("REWARD","收款");
+        RECEIPTS("RECEIPTS","收款");
 
         private String code;
         private String name;

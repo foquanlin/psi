@@ -213,7 +213,7 @@ export default {
           num: 0,
           price: 0,
           warehouseNum: 0,
-          inStockNum: 0,
+          stockNum: 0,
           memo: ''
         }
       )
@@ -233,7 +233,7 @@ export default {
           num: 0,
           price: 0,
           warehouseNum: 0,
-          inStockNum: 0,
+          stockNum: 0,
           memo: ''
         })
       })

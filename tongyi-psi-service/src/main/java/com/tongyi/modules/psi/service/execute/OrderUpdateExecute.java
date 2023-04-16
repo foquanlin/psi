@@ -35,6 +35,8 @@ public class OrderUpdateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
 
     @Autowired
     private PsiBankService bankService;
+    @Autowired
+    private PsiWarehouseService warehouseService;
     /**
      * 检查采购单数据,如果数据不合规则抛出异常
      * 1.自动生成采购单号
@@ -57,12 +59,6 @@ public class OrderUpdateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
         String memo = params.get("memo").getAsString();
         JsonArray list = params.getAsJsonArray("dataList");
         Objects.requireNonNull(list,"请选择采购商品");
-//        if (PsiOrderEntity.Catalog.BUY != PsiOrderEntity.Catalog.valueOf(module.getCatalog())){
-//            throw new BusinessException("不是采购单");
-//        }
-//        if (PsiOrderEntity.Type.ORDER != PsiOrderEntity.Type.valueOf(module.getType())){
-//            throw new BusinessException("不是采购单");
-//        }
         String userId = params.get("userId").getAsString();
         if (StringUtils.isBlank(userId)){
             throw new BusinessException("制单人不能为空");
@@ -70,17 +66,14 @@ public class OrderUpdateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
         Iterator<JsonElement> it = list.iterator(); // 检查选择的商品是否合法
         while (it.hasNext()){
             JsonObject item = it.next().getAsJsonObject();
-
+            String id = item.get("id").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal price = item.get("price").getAsBigDecimal();
-            BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
+
             if(BigDecimal.ZERO.compareTo(num)>=0){
                 throw new BusinessException("采购数量必须大于1");
-            }
-            if (stockNum.compareTo(num)>0){
-                throw new BusinessException("入库数量不能大于采购数量");
             }
             PsiGoodsEntity goods = goodsService.getById(goodsId);
             if (null == goods){
@@ -120,11 +113,10 @@ public class OrderUpdateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             String id = item.get("id").getAsString();
             BigDecimal num = item.get("num").getAsBigDecimal();
             BigDecimal price = item.get("price").getAsBigDecimal();
-            BigDecimal stockNum = item.get("stockNum").getAsBigDecimal();
             String goodsId = item.get("goodsId").getAsString();
             String skuId = item.get("skuId").getAsString();
             total = total.add(price.multiply(num));
-            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,price,num,stockNum);
+            PsiOrderDetailEntity detail = PsiOrderDetailEntity.newEntity(module.getId(),goodsId,skuId,price,num,BigDecimal.ZERO);
             detail.setId(id);
             if (StringUtils.isBlank(id)) {
                 orderDetailService.addEntity(detail);

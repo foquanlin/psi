@@ -46,7 +46,7 @@
 <!--      <el-table-column prop="stockNum" header-align="center" align="center" label="入库数量" width="80px"/>-->
       <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal" fixed="right" width="100px">
         <template v-slot="scope">
-          {{scope.row.costPrice * scope.row.num}}
+          {{scope.row.price * scope.row.num}}
         </template>
       </el-table-column>
     </el-table>
@@ -58,6 +58,7 @@
           <span>{{scope.row.bank.bankName}}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="createDate" header-align="center" align="center" :label="descriptions.payDate"/>
       <el-table-column prop="amount" header-align="center" align="center" :label="descriptions.amount"/>
     </el-table>
     <div style="margin-top:20px;align-content: center;align-items: center;text-align: center;"><el-button @click="visible=false">

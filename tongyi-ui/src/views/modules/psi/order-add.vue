@@ -41,9 +41,9 @@
               <span>{{scope.row.unitName}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="costPrice" header-align="center" align="center" label="进价" width="150px">
+          <el-table-column prop="price" header-align="center" align="center" label="进价" width="150px">
             <template v-slot="scope">
-              <el-input-number v-model="scope.row.costPrice" placeholder="进价" size="mini" style="width:100%" :disabled="disabled"/>
+              <el-input-number v-model="scope.row.price" placeholder="进价" size="mini" style="width:100%" :disabled="disabled"/>
             </template>
           </el-table-column>
           <el-table-column prop="num" header-align="center" align="center" :label="descriptions.num" width="150px">
@@ -63,7 +63,7 @@
           </el-table-column>
           <el-table-column prop="total" header-align="center" align="center" label="小计">
             <template v-slot="scope">
-              {{scope.row.costPrice * scope.row.num}}
+              {{scope.row.price * scope.row.num}}
             </template>
           </el-table-column>
           <el-table-column fixed="right" header-align="center" align="center" width="150" :label="descriptions.action" v-if="!disabled">
@@ -218,7 +218,7 @@ export default {
                   skuId: item.skuId,
                   warehouseId: item.warehouseId,
                   num: item.num,
-                  costPrice: item.price,
+                  price: item.price,
                   warehouseNum: 0,
                   stockNum: item.stockNum,
                   memo: ''
@@ -299,7 +299,7 @@ export default {
           skuId: item.id,
           warehouseId: '',
           num: 0,
-          costPrice: 0,
+          price: 0,
           warehouseNum: 0,
           stockNum: 0,
           memo: ''
