@@ -61,7 +61,7 @@ public class ActReProcdefController{
      * @param response 响应
      * @throws Exception 读写流异常
      */
-    @RequestMapping("/read")
+    @GetMapping("/read")
     public void resourceRead(String id, String proInsId, String resType, HttpServletResponse response) throws Exception {
         InputStream resourceAsStream = actReProcdefService.resourceRead(id, proInsId, resType);
         response.setContentType("text/xml; charset=utf-8");
@@ -80,7 +80,7 @@ public class ActReProcdefController{
      * @return RestResponse
      */
     @SysLog("部署流程文件")
-    @RequestMapping("/deploy")
+    @PostMapping("/deploy")
     @RequiresPermissions("act:reprocdef:deploy")
     public RestResponse deploy(MultipartFile file) {
         String exportDir = this.getClass().getResource("/").getPath();
@@ -105,7 +105,7 @@ public class ActReProcdefController{
      * @return RestResponse
      */
     @SysLog("转为模型")
-    @RequestMapping("/convertToModel")
+    @PostMapping("/convertToModel")
     @RequiresPermissions("act:reprocdef:convertToModel")
     public RestResponse convertToModel(String id) {
         try {
@@ -123,7 +123,7 @@ public class ActReProcdefController{
      * @return RestResponse
      */
     @SysLog("启动流程实例")
-    @RequestMapping("/startProcessInstanceById")
+    @GetMapping("/startProcessInstanceById")
     @RequiresPermissions("act:reprocdef:startProcessInstanceById")
     public RestResponse startProcessInstanceById(String processDefinitionId) {
         try {
@@ -142,7 +142,7 @@ public class ActReProcdefController{
      * @return
      */
     @SysLog("激活 / 挂起")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("act:reprocdef:update")
     public RestResponse update(int state, String id) {
 
@@ -158,7 +158,7 @@ public class ActReProcdefController{
      * @return RestResponse
      */
     @SysLog("删除")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("act:reprocdef:delete")
     public RestResponse delete(@RequestBody String[] deploymentId) {
         actReProcdefService.deleteBatch(deploymentId);

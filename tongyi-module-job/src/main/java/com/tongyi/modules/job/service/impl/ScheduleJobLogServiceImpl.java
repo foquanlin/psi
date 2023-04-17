@@ -14,7 +14,6 @@ package com.tongyi.modules.job.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.job.dao.ScheduleJobLogDao;
 import com.tongyi.modules.job.entity.ScheduleJobLogEntity;
@@ -26,7 +25,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author 林佛权
@@ -48,30 +46,6 @@ public class ScheduleJobLogServiceImpl extends ServiceImpl<ScheduleJobLogDao, Sc
         Page<ScheduleJobLogEntity> page = new Query<ScheduleJobLogEntity>(current,size,params).getPage();
         List<ScheduleJobLogEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<ScheduleJobLogEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
-    }
-
-    @Override
-    public void execute(Serializable id, Map<String, Object> params, ModuleExecute<ScheduleJobLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(fun);
-        ScheduleJobLogEntity entity = this.getById(id);
-        this.execute(entity,params,fun);
-    }
-
-    @Override
-    public void execute(ScheduleJobLogEntity entity, Map<String, Object> params, ModuleExecute<ScheduleJobLogEntity, Map<String, Object>, Void> fun) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(fun);
-        fun.apply(entity,params);
-    }
-
-    @Override
-    public void execute(ScheduleJobLogEntity entity, Map<String, Object> params, ModuleExecute<ScheduleJobLogEntity, Map<String, Object>, Void>... funs) {
-        Objects.requireNonNull(entity);
-        Objects.requireNonNull(funs);
-        Arrays.stream(funs).forEach(fun->{
-            fun.apply(entity,params);
-        });
     }
 
     @Override

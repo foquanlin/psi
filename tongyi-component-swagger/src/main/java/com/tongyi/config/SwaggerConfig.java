@@ -11,25 +11,22 @@
  */
 package com.tongyi.config;
 
-import com.tongyi.modules.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,12 +61,10 @@ import java.util.List;
  * @author 林佛权
  */
 @Configuration
-@EnableSwagger2
-@EnableSwaggerBootstrapUI
-@ComponentScan(basePackages = {"com.tongyi.modules.swaggerbootstrapui.web"})
 @Slf4j
 @ConditionalOnClass()
 @EnableConfigurationProperties({SwaggerProperties.class, SwaggerContactProperties.class})
+@EnableOpenApi
 public class SwaggerConfig {
     @Autowired
     private SwaggerProperties swaggerProperties;
@@ -77,14 +72,13 @@ public class SwaggerConfig {
     private SwaggerContactProperties concatProperties;
     @Bean
     public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30).pathMapping("/")
                 .apiInfo(apiInfo())
+                .enable(swaggerProperties.isEnable())
                 .select()
-                //加了ApiOperation注解的类，才生成接口文档
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .build()
-                .securitySchemes(security());
+                .build();
     }
 
     private ApiInfo apiInfo() {

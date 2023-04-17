@@ -29,7 +29,7 @@ public interface SysCacheService {
      * @param params 查询参数
      * @return List
      */
-    List<SysCacheEntity> queryAll(Map<String, String> params);
+    List<SysCacheEntity> listAll(Map<String, String> params);
 
     /**
      * 删除缓存

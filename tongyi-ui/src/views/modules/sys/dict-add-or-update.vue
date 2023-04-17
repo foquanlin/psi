@@ -78,7 +78,7 @@
         this.dataForm.groupId = groupId
 
         this.$http({
-          url: '/sys/dictgroup/queryAll',
+          url: '/sys/dictgroup/listAll',
           method: 'get',
           loading: false
         }).then(({ data }) => {

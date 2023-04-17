@@ -22,10 +22,7 @@ import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,7 +47,7 @@ public class ActServiceController {
      *
      * @return stencilset.json
      */
-    @RequestMapping("/editor/stencilset/{modelId}")
+    @GetMapping("/editor/stencilset/{modelId}")
     public String getStencilset(@PathVariable("modelId")String modelId) {
         InputStream stencilsetStream = this.getClass().getResourceAsStream("/static/stencilset.json");
         try {
@@ -66,7 +63,7 @@ public class ActServiceController {
      * @param modelId
      * @return
      */
-    @RequestMapping("/model/{modelId}/json")
+    @GetMapping("/model/{modelId}/json")
     public ObjectNode getEditorJson(@PathVariable String modelId) {
         ObjectNode modelNode = null;
 
@@ -101,7 +98,7 @@ public class ActServiceController {
      * @param svgXml
      * @param description
      */
-    @RequestMapping("/model/{modelId}/save")
+    @PostMapping("/model/{modelId}/save")
     public void saveModel(@PathVariable String modelId, @RequestParam("name") String name,
                           @RequestParam("json_xml") String jsonXml, @RequestParam("svg_xml") String svgXml,
                           @RequestParam("description") String description) {

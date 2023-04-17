@@ -17,7 +17,6 @@ import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.Constant;
 import com.tongyi.common.utils.Query;
 import com.tongyi.common.utils.TokenGenerator;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysUserTokenDao;
 import com.tongyi.modules.sys.entity.SysUserTokenEntity;

@@ -67,7 +67,7 @@
       init (orgNo) {
         this.dataForm.orgNo = orgNo || 0
         this.$http({
-          url: '/sys/org/queryAll',
+          url: '/sys/org/listAll',
           method: 'get'
         }).then(({data}) => {
           data.list.push({

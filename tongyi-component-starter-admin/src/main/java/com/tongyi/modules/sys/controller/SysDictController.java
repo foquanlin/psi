@@ -47,9 +47,9 @@ public class SysDictController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/queryAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("sys:dict:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysDictEntity> list = sysDictService.listAll(params);
 
         return RestResponse.success().put("list", list);
@@ -75,7 +75,7 @@ public class SysDictController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("sys:dict:info")
     public RestResponse info(@PathVariable("id") String id) {
         SysDictEntity sysDict = sysDictService.getById(id);
@@ -89,7 +89,7 @@ public class SysDictController {
      * @return RestResponse
      */
     @SysLog("保存数据字典")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("sys:dict:save")
     public RestResponse save(@RequestBody SysDictEntity sysDict) {
         ValidatorUtils.validateEntity(sysDict, AddGroup.class);
@@ -104,7 +104,7 @@ public class SysDictController {
      * @return RestResponse
      */
     @SysLog("修改数据字典")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("sys:dict:update")
     public RestResponse update(@RequestBody SysDictEntity sysDict) {
         ValidatorUtils.validateEntity(sysDict, UpdateGroup.class);
@@ -120,7 +120,7 @@ public class SysDictController {
      * @return RestResponse
      */
     @SysLog("删除数据字典")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("sys:dict:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         sysDictService.deleteBatch(ids);
@@ -134,7 +134,7 @@ public class SysDictController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/queryByCode")
+    @GetMapping("/queryByCode")
     public RestResponse queryByCode(@RequestParam Map<String, Object> params) {
         String code = (String) params.get("code");
         SysDictGroupEntity sysDictGroupEntity = sysDictGroupService.getByCode(code);
