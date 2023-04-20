@@ -37,9 +37,9 @@
           {{scope.row.unitName}}
         </template>
       </el-table-column>
-      <el-table-column prop="num" header-align="center" align="center" :label="descriptions.num">
+      <el-table-column prop="num" header-align="center" align="center" :label="descriptions.num" width="150">
         <template v-slot="scope">
-          <el-input v-if="scope.row.edited" v-model="scope.row.num" size="mini"/>
+          <el-input-number v-if="scope.row.edited" v-model="scope.row.num" size="mini"/>
           <span v-else>{{scope.row.num}}</span>
         </template>
       </el-table-column>
