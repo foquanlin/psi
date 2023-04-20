@@ -168,7 +168,7 @@ psi
 ```
 
 **项目演示**
-- 演示地址：http://psi.wxngrok.com/#/login
+- 演示地址：http://admin.psi.wxngrok.com/#/login
 - 账号密码：
   - admin/admin 
   - test/888888
