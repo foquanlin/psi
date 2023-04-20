@@ -54,13 +54,11 @@ public class PsiGoodsSkuMockTest {
             String id = "id-" + idx;
             PsiGoodsSkuEntity item = new PsiGoodsSkuEntity();
             item.setId(id);
-            item.setWarehouseId (id);
             item.setGoodsId (id);
             item.setNo (id);
             item.setBarcode (id);
             item.setCostPrice (new BigDecimal(idx));
             item.setSalePrice (new BigDecimal(idx));
-            item.setNum (new BigDecimal(idx));
             item.setStatus (id);
             item.setSpecName (id);
             item.setSpecValue (id);
@@ -74,20 +72,18 @@ public class PsiGoodsSkuMockTest {
         String id = "id-" + idx;
         PsiGoodsSkuEntity item = new PsiGoodsSkuEntity();
         item.setId(id);
-        item.setWarehouseId (id);
         item.setGoodsId (id);
         item.setNo (id);
         item.setBarcode (id);
         item.setCostPrice (new BigDecimal(idx));
         item.setSalePrice (new BigDecimal(idx));
-        item.setNum (new BigDecimal(idx));
         item.setStatus (id);
         item.setSpecName (id);
         item.setSpecValue (id);
         controller.save(item);
         controller.update(item);
         controller.info(id);
-        controller.queryAll(new HashMap<>());
+        controller .listAll(new HashMap<>());
         controller.list(1,10,new HashMap<>());
         controller.delete(new String[]{id});
     }

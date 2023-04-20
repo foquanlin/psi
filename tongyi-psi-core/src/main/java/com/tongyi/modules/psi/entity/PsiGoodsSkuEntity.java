@@ -69,16 +69,34 @@ public class PsiGoodsSkuEntity implements Serializable {
     private String specValue;
 
     /**
-     * 商品信息
-     */
-    @TableField(exist = false)
-    private PsiGoodsEntity goods;
-
-    /**
      * 库存数据
      */
     @TableField(exist = false)
+    private String warehouseName;
+    @TableField(exist = false)
     private BigDecimal warehouseNum;
+
+    @TableField(exist = false)
+    private String goodsName;
+    @TableField(exist = false)
+    private String unitName;
+    @TableField(exist = false)
+    private String catalogName;
+    @TableField(exist = false)
+    private String picUrls;
+
+
+    public void reverseStatus(){
+        this.status  = Status.valueOf(status)==Status.UP?Status.DOWN.getCode():Status.UP.getCode();
+    }
+
+    public static PsiGoodsSkuEntity newEntity(PsiGoodsSpecEntity spec) {
+        PsiGoodsSkuEntity entity = new PsiGoodsSkuEntity();
+        entity.setStatus(Status.UP.code);
+        entity.setGoodsId(spec.getGoodsId());
+        entity.setSpecName(spec.getSpecValue());
+        return entity;
+    }
 
     public enum Status {
         UP("UP","上架"),

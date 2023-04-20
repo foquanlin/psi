@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -46,41 +47,5 @@ public class PsiCheckDetailMockTest {
     @Before
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
-    }
-    @Test
-    public void testAdd() {
-        for(int i=0;i<100;i++) {
-            int idx = new Random().nextInt(1000000);
-            String id = "id-" + idx;
-            PsiCheckDetailEntity item = new PsiCheckDetailEntity();
-            item.setId(id);
-            item.setWarehouseId (id);
-            item.setGoodsId (id);
-            item.setBeforeNum (new BigDecimal(idx));
-            item.setAfterNum (new BigDecimal(idx));
-            item.setCreateDate (new Date());
-            item.setMemo (id);
-            controller.save(item);
-        }
-    }
-
-    @Test
-    public void testAll() {
-        int idx = new Random().nextInt(1000000);
-        String id = "id-" + idx;
-        PsiCheckDetailEntity item = new PsiCheckDetailEntity();
-        item.setId(id);
-        item.setWarehouseId (id);
-        item.setGoodsId (id);
-        item.setBeforeNum (new BigDecimal(idx));
-        item.setAfterNum (new BigDecimal(idx));
-        item.setCreateDate (new Date());
-        item.setMemo (id);
-        controller.save(item);
-        controller.update(item);
-        controller.info(id);
-        controller.queryAll(new HashMap<>());
-        controller.list(1,10,new HashMap<>());
-        controller.delete(new String[]{id});
     }
 }

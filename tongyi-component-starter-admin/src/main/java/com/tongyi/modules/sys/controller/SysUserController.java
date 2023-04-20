@@ -24,6 +24,7 @@ import com.tongyi.modules.sys.form.PasswordForm;
 import com.tongyi.modules.sys.service.SysUserRoleService;
 import com.tongyi.modules.sys.service.SysUserService;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class SysUserController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/listAll")
-    @RequiresPermissions("sys:dict:list")
+    @RequiresPermissions(value = {"sys:dict:list","sys:user:list"},logical = Logical.OR)
     public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<SysUserEntity> list = sysUserService.listAll(params);
         list.forEach(item->{

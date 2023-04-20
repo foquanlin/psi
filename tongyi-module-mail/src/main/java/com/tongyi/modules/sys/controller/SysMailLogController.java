@@ -91,7 +91,7 @@ public class SysMailLogController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改邮箱配置")
-    @PostMapping("/config")
+    @RequestMapping("/config")
     @RequiresPermissions("sys:maillog:config")
     public RestResponse config(@RequestBody SysUserEntity user) {
 

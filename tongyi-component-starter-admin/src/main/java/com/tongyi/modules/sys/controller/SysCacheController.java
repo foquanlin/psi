@@ -59,8 +59,8 @@ public class SysCacheController {
      * @param params 查询参数
      * @return
      */
-    @GetMapping("/listAll")
     @RequiresPermissions("sys:cache:list")
+    @GetMapping("/listAll")
     public RestResponse listAll(@RequestParam Map<String, String> params) {
         String type = params.get("type");
         if (STR_ONE.equals(type)) {
@@ -76,7 +76,7 @@ public class SysCacheController {
             //查询业务缓存
             params.put("pattern", MTM_CACHE + "*");
         }
-        List<SysCacheEntity> list = sysCacheService.listAll(params);
+        List<SysCacheEntity> list = sysCacheService .listAll(params);
 
         return RestResponse.success().put("list", list);
     }

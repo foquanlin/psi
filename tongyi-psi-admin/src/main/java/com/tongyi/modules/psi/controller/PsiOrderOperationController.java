@@ -37,9 +37,9 @@ public class PsiOrderOperationController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:orderoperation:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderOperationEntity> list = psiOrderOperationService.listAll(params);
         return RestResponse.success("list", list);
     }
@@ -63,7 +63,7 @@ public class PsiOrderOperationController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:orderoperation:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderOperationEntity psiOrderOperation = psiOrderOperationService.getById(id);
@@ -77,7 +77,7 @@ public class PsiOrderOperationController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增订单操作日志")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:orderoperation:save")
     public RestResponse save(@RequestBody PsiOrderOperationEntity entity) {
         psiOrderOperationService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiOrderOperationController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改订单操作日志")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:orderoperation:update")
     public RestResponse update(@RequestBody PsiOrderOperationEntity entity) {
         psiOrderOperationService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiOrderOperationController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除订单操作日志")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:orderoperation:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiOrderOperationService.deleteBatch(ids);

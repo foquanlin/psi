@@ -12,9 +12,18 @@
             t.num,
             t.sku_id,
             t.price,
-            t.in_stock_num,
-            t.memo
+            t.memo,
+            (select coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) from psi_stock ps where ps.detail_id = t.id) as stock_num,
+            pu.name as unit_name,
+            pg.name as goods_name,
+            pgs.spec_name as spec_name,
+            pgs.spec_value as spec_value,
+            pc.name as catalog_name
         from psi_order_detail t
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_catalog pc on pc.id = pg.catalog_id
+        left join psi_goods_sku pgs on pgs.id = t.sku_id
+        left join psi_unit pu on pu.id = pg.unit_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -35,26 +44,63 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultMap="resultMap">
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultMap="resultMap">
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
-    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
-        <id column="id" property="id"/>
-        <result column="cid" property="cid"/>
-        <result column="goods_id" property="goodsId"/>
-        <result column="sku_id" property="skuId"/>
-        <association property="order" javaType="com.tongyi.modules.psi.entity.PsiOrderEntity" select="com.tongyi.modules.psi.dao.PsiOrderDao.selectById" column="order_id"/>
-        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
-        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
-    </resultMap>
-    <select id="selectById" resultMap="resultMap">
+
+    <select id="selectByOrderId" resultType="com.tongyi.modules.psi.entity.PsiOrderDetailEntity">
         <include refid="selectSql"/>
-        where t.id = #{id}
+        where t.order_id = #{orderId}
+    </select>
+
+    <select id="countBySku" resultType="java.math.BigDecimal">
+        select count(1) as num
+        from psi_order_detail t
+        left join psi_order po on po.id = t.order_id
+        <where>
+            <if test="orderId != null and orderId!= ''">
+                and t.order_id= #{orderId}
+            </if>
+            <if test="goodsId != null and goodsId!= ''">
+                and t.goods_id= #{goodsId}
+            </if>
+            <if test="skuId != null and skuId!= ''">
+                and t.sku_id = #{skuId}
+            </if>
+            <if test="catalog != null and catalog!= ''">
+                and po.catalog = #{catalog}
+            </if>
+            <if test="type != null and type!= ''">
+                and po.type = #{type}
+            </if>
+        </where>
+    </select>
+    <select id="sumBySku" resultType="java.math.BigDecimal">
+        select sum(t.num) as num
+        from psi_order_detail t
+        left join psi_order po on po.id = t.order_id
+        <where>
+            <if test="orderId != null and orderId!= ''">
+                and t.order_id= #{orderId}
+            </if>
+            <if test="goodsId != null and goodsId!= ''">
+                and t.goods_id= #{goodsId}
+            </if>
+            <if test="skuId != null and skuId!= ''">
+                and t.sku_id = #{skuId}
+            </if>
+            <if test="catalog != null and catalog!= ''">
+                and po.catalog = #{catalog}
+            </if>
+            <if test="type != null and type!= ''">
+                and po.type = #{type}
+            </if>
+        </where>
     </select>
 </mapper>

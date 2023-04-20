@@ -22,7 +22,7 @@
         <include refid="selectSql"/>
     </select>
 
-    <select id="listAll" resultType="com.tongyi.modules.wx.entity.WxMpConfigEntity">
+    <select  id="listAll" resultType="com.tongyi.modules.wx.entity.WxMpConfigEntity">
         <include refid="selectSql"/>
     </select>
 </mapper>

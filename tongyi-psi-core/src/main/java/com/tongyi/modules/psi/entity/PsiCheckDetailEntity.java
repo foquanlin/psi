@@ -18,6 +18,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.sql.Time;
@@ -74,11 +75,15 @@ public class PsiCheckDetailEntity implements Serializable {
     private String memo;
 
     @TableField(exist = false)
-    private PsiGoodsSkuEntity sku;
+    private String specName;
     @TableField(exist = false)
-    private PsiGoodsEntity goods;
+    private String specValue;
     @TableField(exist = false)
-    private PsiWarehouseEntity warehouse;
+    private String warehouseName;
+    @TableField(exist = false)
+    private String goodsName;
+    @TableField(exist = false)
+    private String unitName;
 
     public BigDecimal getStockNum(){
         return beforeNum.subtract(afterNum).abs();
@@ -126,6 +131,7 @@ public class PsiCheckDetailEntity implements Serializable {
         entity.setBeforeNum(beforeNum);
         entity.setAfterNum(afterNum);
         entity.setMemo(memo);
+        entity.setCreateDate(LocalDateTime.now());
         return entity;
     }
 
@@ -140,7 +146,7 @@ public class PsiCheckDetailEntity implements Serializable {
         entity.setGoodsId(this.getGoodsId());
         entity.setSkuId(this.getSkuId());
         entity.setNum(this.getStockNum());
-        entity.setCreateTime(LocalDateTime.now());
+        entity.setCreateTime(LocalDate.now());
         entity.setCreateUid(userId);
         entity.setOrderId(orderId);
         return entity;

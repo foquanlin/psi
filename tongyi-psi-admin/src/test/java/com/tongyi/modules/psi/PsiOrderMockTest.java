@@ -9,6 +9,7 @@
 package com.tongyi.modules.psi;
 import com.tongyi.modules.psi.controller.PsiOrderController;
 import com.tongyi.modules.psi.entity.PsiOrderEntity;
+import com.tongyi.modules.psi.service.PsiOrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -43,62 +46,18 @@ public class PsiOrderMockTest {
     @Autowired
     protected PsiOrderController controller; // 把要测试的controller注入进来
 
+    @Autowired
+    private PsiOrderService orderService;
+
     @Before
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
     }
-    @Test
-    public void testAdd() {
-        for(int i=0;i<100;i++) {
-            int idx = new Random().nextInt(1000000);
-            String id = "id-" + idx;
-            PsiOrderEntity item = new PsiOrderEntity();
-            item.setId(id);
-            item.setNo (id);
-            item.setCatalog (id);
-            item.setType (id);
-            item.setCreateDate (new Date());
-            item.setSupplierId (id);
-            item.setExpressNo (id);
-            item.setCreateUid (id);
-            item.setStockStatus (id);
-            item.setInvoiceStatus (id);
-            item.setPayStatus (id);
-            item.setStatus (id);
-            item.setMemo (id);
-            item.setAttachmentUrls (id);
-            item.setSettlementAmount (new BigDecimal(idx));
-            item.setOrderAmount (new BigDecimal(idx));
-            controller.save(item);
-        }
-    }
+
 
     @Test
-    public void testAll() {
-        int idx = new Random().nextInt(1000000);
-        String id = "id-" + idx;
-        PsiOrderEntity item = new PsiOrderEntity();
-        item.setId(id);
-        item.setNo (id);
-        item.setCatalog (id);
-        item.setType (id);
-        item.setCreateDate (new Date());
-        item.setSupplierId (id);
-        item.setExpressNo (id);
-        item.setCreateUid (id);
-        item.setStockStatus (id);
-        item.setInvoiceStatus (id);
-        item.setPayStatus (id);
-        item.setStatus (id);
-        item.setMemo (id);
-        item.setAttachmentUrls (id);
-        item.setSettlementAmount (new BigDecimal(idx));
-        item.setOrderAmount (new BigDecimal(idx));
-        controller.save(item);
-        controller.update(item);
-        controller.info(id);
-        controller.queryAll(new HashMap<>());
-        controller.list(1,10,new HashMap<>());
-        controller.delete(new String[]{id});
+    public void orderInfo(){
+        PsiOrderEntity order = orderService.getById("5154d038f1d64921f2b527bc04468e86");//selectByOrderId;
+        System.out.print(order);
     }
 }

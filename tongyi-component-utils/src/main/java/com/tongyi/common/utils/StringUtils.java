@@ -12,6 +12,8 @@
 package com.tongyi.common.utils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -128,9 +130,11 @@ public class StringUtils {
      * 生成订单的编号order_sn
      */
     public static String generateOrderNumber() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        String timeStr = DateUtils.format(cal.getTime(), DateUtils.DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS_SSS);
+//        LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(new Date());
+        // String timeStr = DateUtils.format(cal.getTime(), DateUtils.DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS_SSS);
+        String timeStr = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
         return timeStr + CharUtil.getRandomNum(6);
     }
     public static String generateOrderNumber(String prefix) {

@@ -5,8 +5,7 @@
         <el-input v-model="searchForm.name" placeholder="名称" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-button @click="pageIndex = 1
-        getDataList()">查询</el-button>
+        <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
         <el-button v-if="isAuth('psi:warehouse:save')" type="primary" @click="editHandle()">新增</el-button>
         <el-button v-if="isAuth('psi:warehouse:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
@@ -62,7 +61,6 @@
 
 <script>
   import warehouseEdit from './warehouse-edit'
-  import Options from '../sys/options'
   export default {
     data () {
       return {
@@ -78,16 +76,12 @@
       }
     },
     components: {
-      warehouseEdit,
-      Options
+      warehouseEdit
     },
     activated () {
       this.getDataList()
     },
     methods: {
-      formatBool: (row, column, cellValue, index) => Options.formatArray(Options.yesno, cellValue),
-      formatSex: (row, column, cellValue, index) => Options.formatArray(Options.genders, cellValue),
-      formatDate: (row, column, cellValue, index) => Options.formatDate(row, column, cellValue, index),
       // 获取数据列表
       getDataList () {
         this.$http({

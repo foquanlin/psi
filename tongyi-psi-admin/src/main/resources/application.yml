@@ -74,6 +74,12 @@ spring:
       max-lifetime: 28700000 #1800000
       connection-timeout: 30000
       connection-test-query: SELECT 1
+  swagger:
+    enable: true
+    title: 酷天进销存系统
+    version: 1.0
+    desc: 酷天进销存系统,13794384396
+    host: http://localhost:8801/swagger-ui/index.html
 #mybatis
 mybatis-plus:
   mapper-locations: classpath*:com/tongyi/**/*.xml

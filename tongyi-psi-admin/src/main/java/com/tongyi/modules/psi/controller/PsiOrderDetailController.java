@@ -12,6 +12,7 @@ import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiOrderDetailEntity;
 import com.tongyi.modules.psi.service.PsiOrderDetailService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +38,9 @@ public class PsiOrderDetailController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
-    @RequiresPermissions("psi:orderdetail:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    @GetMapping("/listAll")
+    @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list"},logical = Logical.OR)
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderDetailEntity> list = psiOrderDetailService.listAll(params);
         return RestResponse.success("list", list);
     }
@@ -51,7 +52,7 @@ public class PsiOrderDetailController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/list")
-    @RequiresPermissions("psi:orderdetail:list")
+    @RequiresPermissions(value = {"psi:order:list","psi:buyorder:list","psi:saleorder:list"},logical = Logical.OR)
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         PageInfo page = psiOrderDetailService.listPage(current,size,params);
         return RestResponse.success("page", page);
@@ -63,8 +64,8 @@ public class PsiOrderDetailController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
-    @RequiresPermissions("psi:orderdetail:info")
+    @GetMapping("/info/{id}")
+    @RequiresPermissions(value={"psi:order:info","psi:buyorder:info","psi:saleorder:info"},logical = Logical.OR)
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderDetailEntity psiOrderDetail = psiOrderDetailService.getById(id);
         return RestResponse.success("info", psiOrderDetail);
@@ -77,8 +78,8 @@ public class PsiOrderDetailController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增订单明细")
-    @RequestMapping("/save")
-    @RequiresPermissions("psi:orderdetail:save")
+    @PostMapping("/save")
+    @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save"},logical = Logical.OR)
     public RestResponse save(@RequestBody PsiOrderDetailEntity entity) {
         psiOrderDetailService.addEntity(entity);
         return RestResponse.success();
@@ -91,8 +92,8 @@ public class PsiOrderDetailController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改订单明细")
-    @RequestMapping("/update")
-    @RequiresPermissions("psi:orderdetail:update")
+    @PostMapping("/update")
+    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
     public RestResponse update(@RequestBody PsiOrderDetailEntity entity) {
         psiOrderDetailService.updateEntity(entity);
         return RestResponse.success();
@@ -105,8 +106,8 @@ public class PsiOrderDetailController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除订单明细")
-    @RequestMapping("/delete")
-    @RequiresPermissions("psi:orderdetail:delete")
+    @PostMapping("/delete")
+    @RequiresPermissions(value={"psi:order:delete","psi:buyorder:delete","psi:saleorder:delete"},logical = Logical.OR)
     public RestResponse delete(@RequestBody String[] ids) {
         psiOrderDetailService.deleteBatch(ids);
         return RestResponse.success();

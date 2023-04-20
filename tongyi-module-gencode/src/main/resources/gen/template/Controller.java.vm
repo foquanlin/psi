@@ -37,7 +37,7 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @GetMapping("/listAll")
+    @GetMapping(value="/listAll",method = RequestMethod.GET)
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<${className}Entity> list = ${classname}Service.listAll(params);
@@ -50,7 +50,7 @@ public class ${className}Controller extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @GetMapping("/list")
+    @GetMapping("/list",method = RequestMethod.GET)
     @RequiresPermissions("${pre}:${pathName}:list")
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         PageInfo page = ${classname}Service.listPage(current,size,params);

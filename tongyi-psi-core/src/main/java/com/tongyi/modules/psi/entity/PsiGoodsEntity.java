@@ -19,6 +19,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Time;
 import java.util.List;
@@ -74,35 +75,30 @@ public class PsiGoodsEntity implements Serializable {
     private String memo;
 
     /**
-     * 品牌
-     */
-    @TableField(exist = false)
-    private PsiBrandEntity brand;
-    /**
-     * 分类
-     */
-    @TableField(exist = false)
-    private PsiCatalogEntity catalog;
-    /**
-     * 单位
-     */
-    @TableField(exist = false)
-    private PsiUnitEntity unit;
-    /**
      * 商品明细
      */
     @TableField(exist = false)
-    private List<PsiGoodsSkuEntity> skuList;
+    private List<PsiGoodsSkuEntity> skuList = new ArrayList<>();
 
     /**
      * 商品规格
      */
     @TableField(exist = false)
-    private List<PsiGoodsSpecEntity> specList;
+    private List<PsiGoodsSpecEntity> specList = new ArrayList<>();
 
     /**
      * 库存数量
      */
     @TableField(exist = false)
     private BigDecimal warehouseNum;
+    @TableField(exist = false)
+    private String unitName;
+    @TableField(exist = false)
+    private String catalogName;
+    @TableField(exist = false)
+    private String brandName;
+    @TableField(exist = false)
+    private BigDecimal costPrice;
+    @TableField(exist = false)
+    private BigDecimal salePrice;
 }

@@ -3,7 +3,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://127.0.0.1:3306/db?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnect=true&serverTimezone=Asia/Shanghai
     username: root
-    password: sendmiss
+    password: 12345678
     hikari:
       minimum-idle: 10
       maximum-pool-size: 25

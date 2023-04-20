@@ -59,7 +59,7 @@ public class PsiOrderDetailMockTest {
             item.setNum (new BigDecimal(idx));
             item.setSkuId (id);
             item.setPrice (new BigDecimal(idx));
-            item.setInStockNum (new BigDecimal(idx));
+            item.setStockNum (new BigDecimal(idx));
             item.setMemo (id);
             controller.save(item);
         }
@@ -76,12 +76,12 @@ public class PsiOrderDetailMockTest {
         item.setNum (new BigDecimal(idx));
         item.setSkuId (id);
         item.setPrice (new BigDecimal(idx));
-        item.setInStockNum (new BigDecimal(idx));
+        item.setStockNum (new BigDecimal(idx));
         item.setMemo (id);
         controller.save(item);
         controller.update(item);
         controller.info(id);
-        controller.queryAll(new HashMap<>());
+        controller .listAll(new HashMap<>());
         controller.list(1,10,new HashMap<>());
         controller.delete(new String[]{id});
     }

@@ -5,9 +5,7 @@
         <el-input v-model="searchForm.no" placeholder="单号" clearable/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.warehouseId" placeholder="仓库" clearable>
-          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-warehouse v-model="searchForm"/>
       </el-form-item>
       <el-form-item>
         <el-date-picker v-model="searchForm.createDateStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="开始日期" clearable/>
@@ -22,18 +20,10 @@
     <el-table border :data="dataList" @selection-change="selectionChangeHandle" style="width: 100%;">
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="no" header-align="center" align="left" label="单号"/>
-      <el-table-column prop="warehouseId" header-align="center" align="left" label="仓库">
-        <template v-slot="scope">
-          <span>{{scope.row.warehouse?scope.row.warehouse.name:''}}</span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="warehouseName" header-align="center" align="left" label="仓库"/>
       <el-table-column prop="createDate" header-align="center" align="left" label="盘点日期"/>
-      <el-table-column prop="createDate" header-align="center" align="left" label="操作人">
-        <template v-slot="scope">
-          <span>{{scope.row.createUser?scope.row.createUser.realName:''}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="memo" header-align="center" align="center" label="备注"/>
+      <el-table-column prop="createName" header-align="center" align="left" label="操作人"/>
+      <el-table-column prop="memo" header-align="center" align="left" label="备注"/>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template v-slot="scope">
           <el-button v-if="isAuth('psi:check:info')" type="text" size="small" @click="showDetails(scope.row)">详情</el-button>
@@ -55,7 +45,7 @@
   import checkEdit from './check-edit'
   import Options from '../sys/options'
   import CheckDetail from './check-detail'
-
+  import SelectWarehouse from './component/select-warehouse'
   export default {
     data () {
       return {
@@ -72,28 +62,16 @@
         dataListSelections: [],
         editVisible: false,
         selectVisible: false,
-        detailVisible: false,
-        warehouseList: []
-
+        detailVisible: false
       }
     },
     components: {
       checkEdit,
       Options,
-      CheckDetail
+      CheckDetail,
+      SelectWarehouse
     },
     activated () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
       this.getDataList()
     },
     methods: {
@@ -169,7 +147,6 @@
               this.getDataList()
             }
           })
-        }).catch(() => {
         })
       }
     }

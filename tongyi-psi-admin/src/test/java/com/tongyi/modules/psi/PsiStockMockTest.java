@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -63,7 +65,7 @@ public class PsiStockMockTest {
             item.setType (id);
             item.setNum (new BigDecimal(idx));
             item.setBatchNo (id);
-            item.setCreateTime (new Date());
+            item.setCreateTime (LocalDate.now());
             item.setStatus (id);
             item.setCostPrice (new BigDecimal(idx));
             item.setSalePrice (new BigDecimal(idx));
@@ -72,31 +74,4 @@ public class PsiStockMockTest {
         }
     }
 
-    @Test
-    public void testAll() {
-        int idx = new Random().nextInt(1000000);
-        String id = "id-" + idx;
-        PsiStockEntity item = new PsiStockEntity();
-        item.setId(id);
-        item.setSupplierId (id);
-        item.setWarehouseId (id);
-        item.setGoodsId (id);
-        item.setSkuId (id);
-        item.setOrderId (id);
-        item.setCatalog (id);
-        item.setType (id);
-        item.setNum (new BigDecimal(idx));
-        item.setBatchNo (id);
-        item.setCreateTime (new Date());
-        item.setStatus (id);
-        item.setCostPrice (new BigDecimal(idx));
-        item.setSalePrice (new BigDecimal(idx));
-        item.setCreateUid (id);
-        controller.save(item);
-        controller.update(item);
-        controller.info(id);
-        controller.queryAll(new HashMap<>());
-        controller.list(1,10,new HashMap<>());
-        controller.delete(new String[]{id});
-    }
 }

@@ -37,9 +37,9 @@ public class PsiOrderExpressController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:orderexpress:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderExpressEntity> list = psiOrderExpressService.listAll(params);
         return RestResponse.success("list", list);
     }
@@ -63,7 +63,7 @@ public class PsiOrderExpressController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:orderexpress:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderExpressEntity psiOrderExpress = psiOrderExpressService.getById(id);
@@ -77,7 +77,7 @@ public class PsiOrderExpressController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增运杂费")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:orderexpress:save")
     public RestResponse save(@RequestBody PsiOrderExpressEntity entity) {
         psiOrderExpressService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiOrderExpressController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改运杂费")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:orderexpress:update")
     public RestResponse update(@RequestBody PsiOrderExpressEntity entity) {
         psiOrderExpressService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiOrderExpressController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除运杂费")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:orderexpress:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiOrderExpressService.deleteBatch(ids);

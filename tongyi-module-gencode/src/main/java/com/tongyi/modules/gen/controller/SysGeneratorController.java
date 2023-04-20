@@ -52,7 +52,7 @@ public class SysGeneratorController {
      * @param response response
      */
     @SysLog("生成代码")
-    @PostMapping("/code")
+    @RequestMapping(value = "/code",method = {RequestMethod.GET,RequestMethod.POST})
     @RequiresPermissions("sys:generator:code")
     public void code(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取表名，不进行xss过滤

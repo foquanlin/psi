@@ -8,6 +8,7 @@
  */
 package com.tongyi.modules.psi.controller;
 import com.tongyi.common.annotation.SysLog;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
@@ -16,8 +17,11 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 商品skuController
@@ -37,9 +41,9 @@ public class PsiGoodsSkuController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
 //    @RequiresPermissions("psi:goodssku:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiGoodsSkuEntity> list = psiGoodsSkuService.listAll(params);
         return RestResponse.success("list", list);
     }
@@ -63,7 +67,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:goods:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiGoodsSkuEntity psiGoodsSku = psiGoodsSkuService.getById(id);
@@ -77,9 +81,17 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增商品sku")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:goods:save")
     public RestResponse save(@RequestBody PsiGoodsSkuEntity entity) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("goodsId",entity.getGoodsId());
+        params.put("specName",entity.getSpecName());
+        List<PsiGoodsSkuEntity> skuList = psiGoodsSkuService.listAll(params);
+        if (null != skuList && !skuList.isEmpty()){
+            throw new BusinessException("此商品明细已存在");
+        }
+        entity.setStatus(PsiGoodsSkuEntity.Status.UP.getCode());
         psiGoodsSkuService.addEntity(entity);
         return RestResponse.success();
     }
@@ -91,7 +103,7 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改商品sku")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:goods:update")
     public RestResponse update(@RequestBody PsiGoodsSkuEntity entity) {
         psiGoodsSkuService.updateEntity(entity);
@@ -105,10 +117,20 @@ public class PsiGoodsSkuController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除商品sku")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:goods:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiGoodsSkuService.deleteBatch(ids);
+        return RestResponse.success();
+    }
+
+    @SysLog("商品sku上下线")
+    @GetMapping("/updown")
+    @RequiresPermissions("psi:goods:updown")
+    public RestResponse updown(@RequestParam("id")String id) {
+        PsiGoodsSkuEntity sku = psiGoodsSkuService.getById(id);
+        sku.reverseStatus();
+        psiGoodsSkuService.updateEntity(sku);
         return RestResponse.success();
     }
 }

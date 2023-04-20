@@ -9,13 +9,16 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tongyi.common.utils.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.sql.Time;
@@ -43,8 +46,8 @@ public class PsiOrderAmountEntity implements Serializable {
     /**
      * 日期
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate createDate;
     /**
      * 类型
      */
@@ -69,4 +72,37 @@ public class PsiOrderAmountEntity implements Serializable {
      * 附件
      */
     private String attachmentUrls;
+    @TableField(exist = false)
+    private String bankName;
+
+    @TableField(exist = false)
+    private PsiBankEntity bank;
+    public enum Type {
+        PAY("PAY","付款"),
+        RECEIPTS("RECEIPTS","收款");
+
+        private String code;
+        private String name;
+
+        Type(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }

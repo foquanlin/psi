@@ -9,32 +9,28 @@
       <el-descriptions-item label="库存">{{goods.warehouseNum}}</el-descriptions-item>
       <el-descriptions-item label="备注" :span="2">{{goods.memo}}</el-descriptions-item>
     </el-descriptions>
-    <table style="width:100%">
-      <tr>
-        <th style="background-color: #bfcbd9;width:25%">规格名称</th>
-        <th style="background-color: #bfcbd9;width:55%">规格值</th>
-        <th style="background-color: #bfcbd9;width:20%">操作</th>
-        <th></th>
-      </tr>
-      <tr v-for="(spec,idx) in dataList">
-        <th>
-          <el-select v-model="spec.specName" :disabled="!spec.edited" placeholder="选择规格或输入自定义规格按回车" style="width:100%" clearable allow-create filterable default-first-option/>
-        </th>
-        <th>
-          <el-select v-model="spec.specValues" :disabled="!spec.edited" placeholder="输入完成按回车或点击保存可新增多个规格值" style="width:100%" multiple allow-create filterable default-first-option>
-            <el-option v-for="(item,idx) in spec.specValues" :key="item" :value="item" :label="item"/>
+    <el-table border :data="dataList">
+      <el-table-column prop="catalogId" header-align="center" align="left" label="规格名称">
+        <template v-slot="scope">
+          <el-select v-model="scope.row.specName" :disabled="!scope.row.edited" placeholder="选择规格或输入自定义规格按回车" style="width:100%" clearable allow-create filterable default-first-option/>
+        </template>
+      </el-table-column>
+      <el-table-column prop="catalogId" header-align="center" align="left" label="规格值">
+        <template v-slot="scope">
+          <el-select v-model="scope.row.specValues" :disabled="!scope.row.edited" placeholder="输入完成按回车或点击保存可新增多个规格值" style="width:100%" multiple allow-create filterable default-first-option>
+            <el-option v-for="(item,idx) in scope.row.specValues" :key="item" :value="item" :label="item"/>
           </el-select>
-        </th>
-        <th>
-          <el-button @click="saveHandle(spec,idx)" v-if="spec.edited">保存</el-button>
-          <el-button @click="editHandle(spec,idx)" v-if="!spec.edited">修改</el-button>
-          <el-button @click="delSpec(spec,idx)" v-if="!spec.edited">删除</el-button>
-        </th>
-      </tr>
-      <tr>
-        <td><el-button icon="el-icon-plus" @click="addSpec" >添加规格</el-button></td>
-      </tr>
-    </table>
+        </template>
+      </el-table-column>
+      <el-table-column prop="catalogId" header-align="center" align="left" label="操作" width="150">
+        <template v-slot="scope">
+          <el-button size="mini" @click="saveHandle(scope.row,scope.$index)" v-if="scope.row.edited">保存</el-button>
+          <el-button size="mini" @click="cancelHandle(scope.row,scope.$index)" v-if="scope.row.edited">取消</el-button>
+          <el-button size="mini" @click="delSpec(scope.row,scope.$index)" v-if="!scope.row.edited">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-button  style="margin-top: 10px;" size="mini" icon="el-icon-plus" @click="addSpec" >添加规格</el-button>
 <!--      <el-table border :data="dataList" style="width: 100%;">-->
 <!--        <el-table-column prop="specName" header-align="center" align="center" label="规格名称">-->
 <!--          <template v-slot="scope">-->
@@ -160,6 +156,10 @@
       editHandle (spec, index) {
         spec.edited = true
         this.$forceUpdate()
+      },
+      cancelHandle (spec, index) {
+        spec.edited = false
+        this.dataList.splice(index, 1)
       }
     }
   }

@@ -7,17 +7,22 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiOrderAmountDao;
+import com.tongyi.modules.psi.dao.PsiOrderDao;
 import com.tongyi.modules.psi.entity.PsiOrderAmountEntity;
+import com.tongyi.modules.psi.entity.PsiOrderEntity;
 import com.tongyi.modules.psi.service.PsiOrderAmountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +38,8 @@ import java.util.Objects;
 @Service("psiOrderAmountService")
 public class PsiOrderAmountServiceImpl extends ServiceImpl<PsiOrderAmountDao, PsiOrderAmountEntity> implements PsiOrderAmountService{
 
+    @Autowired
+    private PsiOrderDao orderDao;
     @Override
     public PsiOrderAmountEntity getById(Serializable id){
         return super.getById(id);
@@ -53,24 +60,50 @@ public class PsiOrderAmountServiceImpl extends ServiceImpl<PsiOrderAmountDao, Ps
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiOrderAmountEntity entity) {
-        return super.save(entity);
+        PsiOrderEntity order = orderDao.selectById(entity.getOrderId());
+        BigDecimal payedAmount = baseMapper.sumByOrderId(order.getId());
+        BigDecimal total = payedAmount.add(entity.getAmount());
+        if (total.compareTo(order.getOrderAmount())>0){
+            throw new BusinessException("已支付金额不能大于订单金额");
+        }
+        boolean added = super.save(entity);
+        order.setPayStatus(total);
+        orderDao.updateById(order);
+        return added;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateEntity(PsiOrderAmountEntity entity) {
-        return super.updateById(entity);
+        PsiOrderEntity order = orderDao.selectById(entity.getOrderId());
+        PsiOrderAmountEntity oldAmount = baseMapper.selectById(entity.getId());
+        BigDecimal payedAmount = baseMapper.sumByOrderId(order.getId());
+        BigDecimal total = payedAmount.subtract(oldAmount.getAmount()).add(entity.getAmount());
+        if (total.compareTo(order.getOrderAmount())>0){
+            throw new BusinessException("已支付金额不能大于订单金额");
+        }
+        boolean updated = super.updateById(entity);
+        order.setPayStatus(total);
+        orderDao.updateById(order);
+        return updated;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
-        return super.removeById(id);
+        PsiOrderAmountEntity entity = baseMapper.selectById(id);
+        boolean delted = super.removeById(id);
+        PsiOrderEntity order = orderDao.selectById(entity.getOrderId());
+        BigDecimal payedAmount = baseMapper.sumByOrderId(order.getId());
+        order.setPayStatus(payedAmount);
+        orderDao.updateById(order);
+        return delted;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
-        return super.removeByIds(Arrays.asList(ids));
+        throw new UnsupportedOperationException();
+//        return super.removeByIds(Arrays.asList(ids));
     }
 }

@@ -14,6 +14,7 @@ package com.tongyi.modules.job.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
+import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.tongyi.modules.job.dao.ScheduleJobLogDao;
 import com.tongyi.modules.job.entity.ScheduleJobLogEntity;
@@ -25,6 +26,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author 林佛权

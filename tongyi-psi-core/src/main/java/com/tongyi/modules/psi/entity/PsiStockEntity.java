@@ -19,6 +19,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,8 +80,8 @@ public class PsiStockEntity implements Serializable {
     /**
      * 时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate createTime;
     /**
      * 状态
      */
@@ -98,21 +99,39 @@ public class PsiStockEntity implements Serializable {
      */
     private String createUid;
 
-    @TableField(exist = false)
-    private PsiGoodsSkuEntity sku;
-    @TableField(exist = false)
-    private PsiSupplierEntity supplier;
-    @TableField(exist = false)
-    private PsiGoodsEntity goods;
-    @TableField(exist = false)
-    private PsiWarehouseEntity warehouse;
-    @TableField(exist = false)
-    private SysUserEntity createUser;
+    /**
+     * 备注
+     */
+    private String memo;
 
-    public static PsiStockEntity newStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,Type type,String orderId) {
+    /**
+     * 订单明细id;
+     */
+    private String detailId;
+
+    @TableField(exist = false)
+    private String createName;
+    @TableField(exist = false)
+    private String specName;
+    @TableField(exist = false)
+    private String specValue;
+    @TableField(exist = false)
+    private String warehouseName;
+    @TableField(exist = false)
+    private String goodsName;
+    @TableField(exist = false)
+    private String goodsPicUrls;
+    @TableField(exist = false)
+    private String supplierName;
+    @TableField(exist = false)
+    private String unitName;
+    @TableField(exist = false)
+    private String orderNo;
+
+    public static PsiStockEntity newStock(Catalog catalog,Type type, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
         PsiStockEntity entity = new PsiStockEntity();
         entity.setCatalog(catalog.getCode());
-        entity.setCreateTime(LocalDateTime.now());
+        entity.setCreateTime(LocalDate.now());
         entity.setNum(num);
         entity.setSkuId(skuId);
         entity.setGoodsId(goodsId);
@@ -124,11 +143,11 @@ public class PsiStockEntity implements Serializable {
     }
 
     public static PsiStockEntity outStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
-        return newStock(catalog,warehouseId,goodsId,skuId,num,Type.OUT,orderId);
+        return newStock(catalog,Type.OUT,warehouseId,goodsId,skuId,num,orderId);
     }
 
     public static PsiStockEntity inStock(Catalog catalog, String warehouseId, String goodsId, String skuId, BigDecimal num,String orderId) {
-        return newStock(catalog,warehouseId,goodsId,skuId,num,Type.IN,orderId);
+        return newStock(catalog,Type.IN,warehouseId,goodsId,skuId,num,orderId);
     }
 
 
@@ -172,6 +191,7 @@ public class PsiStockEntity implements Serializable {
         TIAOZHENG("TIAOZHENG","库存调整"),
         DIAOBO("DIAOBO","库存调拨"),
         PANDIAN("PANDIAN","库存盘点"),
+        CAIGOU("CAIGOU","采购"),
         DINGDAN("DINGDAN","订单"),
         XIAOSHOU("XIAOSHOU","销售");
 
@@ -235,15 +255,15 @@ public class PsiStockEntity implements Serializable {
      * @param checkEntity
      * @return
      */
-    public List<PsiStockEntity> newForCheck(String userId,PsiCheckEntity checkEntity){
-        List<PsiCheckDetailEntity> details = checkEntity.getDetails();
-        List<PsiStockEntity> list = new ArrayList<>();
-        details.forEach(item->{
-            PsiStockEntity entity = item.newCheckStock(userId,checkEntity.getNo());
-            entity.setCreateUid(userId);
-            entity.setOrderId(checkEntity.getNo());
-            list.add(entity);
-        });
-        return list;
-    }
+//    public List<PsiStockEntity> newForCheck(String userId,PsiCheckEntity checkEntity){
+//        List<PsiCheckDetailEntity> details = checkEntity.getDetails();
+//        List<PsiStockEntity> list = new ArrayList<>();
+//        details.forEach(item->{
+//            PsiStockEntity entity = item.newCheckStock(userId,checkEntity.getNo());
+//            entity.setCreateUid(userId);
+//            entity.setOrderId(checkEntity.getNo());
+//            list.add(entity);
+//        });
+//        return list;
+//    }
 }

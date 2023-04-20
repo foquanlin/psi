@@ -64,15 +64,15 @@ public class PsiCheckEntity implements Serializable {
     private String createUid;
 
     @TableField(exist = false)
-    private PsiWarehouseEntity warehouse;
+    private String warehouseName;
     @TableField(exist = false)
-    private SysUserEntity createUser;
+    private String createName;
 
     /**
      * 盘点明细
      */
-    @TableField(exist = false)
-    private List<PsiCheckDetailEntity> details;
+//    @TableField(exist = false)
+//    private List<PsiCheckDetailEntity> details;
 
     public static PsiCheckEntity newEntity(String userId,String warehouseId, String memo) {
         PsiCheckEntity item = new PsiCheckEntity();

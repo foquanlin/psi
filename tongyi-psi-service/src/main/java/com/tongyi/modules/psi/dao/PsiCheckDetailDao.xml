@@ -14,8 +14,17 @@
             t.before_num,
             t.after_num,
             t.create_date,
-            t.memo
+            t.memo,
+            pu.name as unit_name,
+            pg.name as goods_name,
+            pgs.spec_name as spec_name,
+            pgs.spec_value as spec_value,
+            pw.name as warehouse_name
         from psi_check_detail t
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_unit pu on pu.id = pg.unit_id
+        left join psi_goods_sku pgs on pgs.id = t.sku_id
+        left join psi_warehouse pw on pw.id = t.warehouse_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -43,41 +52,48 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultMap="resultMap">
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultMap="resultMap">
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
-        <id column="id" property="id"/>
-        <result column="cid" property="cid"/>
-        <result column="warehouse_id" property="warehouseId"/>
-        <result column="goods_id" property="goodsId"/>
-        <result column="sku_id" property="skuId"/>
-        <result column="before_num" property="beforeNum"/>
-        <result column="after_num" property="afterNum"/>
-        <result column="create_date" property="createDate"/>
-        <result column="memo" property="memo"/>
+<!--    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="cid" property="cid"/>-->
+<!--        <result column="warehouse_id" property="warehouseId"/>-->
+<!--        <result column="goods_id" property="goodsId"/>-->
+<!--        <result column="sku_id" property="skuId"/>-->
+<!--        <result column="before_num" property="beforeNum"/>-->
+<!--        <result column="after_num" property="afterNum"/>-->
+<!--        <result column="create_date" property="createDate"/>-->
+<!--        <result column="memo" property="memo"/>-->
 
-        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
-        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>
-        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>
-    </resultMap>
+<!--        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>-->
+<!--        <association property="goods" javaType="com.tongyi.modules.psi.entity.PsiGoodsEntity" select="com.tongyi.modules.psi.dao.PsiGoodsDao.selectById" column="goods_id"/>-->
+<!--        <association property="sku" javaType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectById" column="sku_id"/>-->
+<!--    </resultMap>-->
 
-    <delete id="deleteByCid">
-        delete from psi_check_detail where cid in
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
-
-    <select id="selectByCid" resultMap="resultMap">
+    <select id="selectByCid" resultType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity">
         <include refid="selectSql"/>
         where t.cid = #{cid}
     </select>
+
+    <select id="countBySku" resultType="java.math.BigDecimal">
+        select count(1) as num
+        from psi_check_detail t
+        <where>
+            <if test="goodsId != null and goodsId!= ''">
+                and t.goods_id= #{goodsId}
+            </if>
+            <if test="skuId != null and skuId!= ''">
+                and t.sku_id = #{skuId}
+            </if>
+        </where>
+    </select>
+
 </mapper>

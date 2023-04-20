@@ -99,7 +99,7 @@ public class ${className}MockTest {
         controller.save(item);
         controller.update(item);
         controller.info(id);
-        controller.listAll(new HashMap<>());
+        controller .listAll(new HashMap<>());
         controller.list(1,10,new HashMap<>());
         controller.delete(new String[]{id});
     }

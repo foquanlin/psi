@@ -2,9 +2,7 @@
   <el-drawer :title="!dataForm.id ? '新增盘点' : !disabled ? '修改盘点' : '查看'" :close-on-click-modal="false" size="85%" :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="80px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item label="仓库" prop="warehouseId">
-        <el-select v-model="dataForm.warehouseId" placeholder="仓库" clearable>
-          <el-option v-for="item in warehouseList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-warehouse v-model="dataForm" field="warehouseId"></select-warehouse>
       </el-form-item>
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable style="width: 400px;"/>
@@ -61,6 +59,7 @@
 
 <script>
   import GoodsSelect from './goods-select'
+  import SelectWarehouse from './component/select-warehouse'
   export default {
     data () {
       return {
@@ -78,25 +77,12 @@
           other: []
         },
         selectVisible: false,
-        warehouseList: [],
         dataList: []
       }
     },
     components: {
-      GoodsSelect
-    },
-    mounted () {
-      this.$http({
-        url: '/psi/warehouse/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.warehouseList = data.list
-        } else {
-          this.warehouseList = []
-        }
-      })
+      GoodsSelect,
+      SelectWarehouse
     },
     methods: {
       init (id, disabled) {
@@ -157,14 +143,13 @@
       },
       onSelect (list) {
         let datalist = []
-        console.log(list)
         list.forEach(item => {
           datalist.push({
             goodsId: item.goodsId,
-            goodsName: item.goods.name,
+            goodsName: item.goodsName,
             specName: item.specName,
-            catalogName: item.goods.catalog.name,
-            unitName: item.goods.unit.name,
+            catalogName: item.catalogName,
+            unitName: item.unitName,
             skuId: item.id,
             beforeNum: item.warehouseNum,
             afterNum: 0,

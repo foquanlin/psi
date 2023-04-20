@@ -2,23 +2,19 @@
   <el-dialog :title="!dataForm.id ? '新增' : !disabled ? '修改' : '查看'" :close-on-click-modal="false" size="90%" :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px" style="margin-top: 20px">
       <el-form-item label="规格" prop="skuId">
-        <el-select v-model="dataForm.skuId" :disabled="disabled" placeholder="规格" clearable>
-          <el-option v-for="item in skuList" :key="item.id" :label="item.specName" :value="item.id"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="仓库" prop="warehouseId">
-        <el-select v-model="dataForm.warehouseId" :disabled="disabled" placeholder="仓库" clearable>
-          <el-option v-for="item in warehouseList" :key="item.id" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-sku v-model="dataForm" :goods-id="dataForm.goodsId" field="skuId"></select-sku>
       </el-form-item>
       <el-form-item label="日期" prop="createTime">
-        <el-date-picker v-model="dataForm.createTime" :disabled="disabled" placeholder="创建时间" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" clearable/>
+        <el-date-picker v-model="dataForm.createTime" :disabled="disabled" placeholder="创建时间" type="date" value-format="yyyy-MM-dd" clearable/>
+      </el-form-item>
+      <el-form-item label="仓库" prop="warehouseId">
+        <select-warehouse v-model="dataForm" field="warehouseId" :disabled="disabled"></select-warehouse>
       </el-form-item>
       <el-form-item label="数量" prop="num">
         <el-input-number v-model="dataForm.num" :disabled="disabled" placeholder="数量" clearable/>
       </el-form-item>
       <el-form-item label="单价" prop="costPrice">
-        <el-input-number v-model="dataForm.costPrice" precision="2" :disabled="disabled" placeholder="单价" clearable/>
+        <el-input-number v-model="dataForm.costPrice" :disabled="disabled" placeholder="单价" clearable/>
       </el-form-item>
       <el-form-item label="备注" prop="memo">
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>
@@ -32,6 +28,9 @@
 </template>
 
 <script>
+import SelectWarehouse from './component/select-warehouse'
+import SelectSku from './component/select-sku'
+
 export default {
   data () {
     return {
@@ -51,48 +50,20 @@ export default {
         warehouseId: [{required: true, message: '仓库不能为空', trigger: 'blur'}],
         createTime: [{required: true, message: '创建时间不能为空', trigger: 'blur'}],
         other: []
-      },
-      warehouseList: [],
-      skuList: []
+      }
     }
   },
-  created () {
-    this.$http({
-      url: '/psi/warehouse/listAll',
-      method: 'get',
-      params: {}
-    }).then(({data}) => {
-      if (data && data.code === 0) {
-        this.warehouseList = data.list
-      } else {
-        this.warehouseList = []
-      }
-    })
+  components: {
+    SelectWarehouse,
+    SelectSku
   },
   methods: {
     init (id, disabled) {
       this.disabled = disabled
       this.dataForm.goodsId = id || ''
-      this.specList = []
-      this.skuList = []
       this.visible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
-        if (this.dataForm.goodsId) {
-          this.$http({
-            url: '/psi/goodssku/listAll',
-            method: 'get',
-            params: {
-              goodsId: this.dataForm.goodsId
-            }
-          }).then(({data}) => {
-            if (data && data.code === 0) {
-              this.skuList = data.list
-            } else {
-              this.skuList = []
-            }
-          })
-        }
       })
     },
     // 表单提交

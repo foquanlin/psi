@@ -37,9 +37,9 @@ public class PsiBatchController extends AbstractController {
      * @param params 查询参数
      * @return RestResponse
      */
-    @RequestMapping("/listAll")
+    @GetMapping("/listAll")
     @RequiresPermissions("psi:batch:list")
-    public RestResponse queryAll(@RequestParam Map<String, Object> params) {
+    public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiBatchEntity> list = psiBatchService.listAll(params);
         return RestResponse.success("list", list);
     }
@@ -63,7 +63,7 @@ public class PsiBatchController extends AbstractController {
      * @param id 主键
      * @return RestResponse
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
     @RequiresPermissions("psi:batch:info")
     public RestResponse info(@PathVariable("id") String id) {
         PsiBatchEntity psiBatch = psiBatchService.getById(id);
@@ -77,7 +77,7 @@ public class PsiBatchController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("新增批次")
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @RequiresPermissions("psi:batch:save")
     public RestResponse save(@RequestBody PsiBatchEntity entity) {
         psiBatchService.addEntity(entity);
@@ -91,7 +91,7 @@ public class PsiBatchController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("修改批次")
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @RequiresPermissions("psi:batch:update")
     public RestResponse update(@RequestBody PsiBatchEntity entity) {
         psiBatchService.updateEntity(entity);
@@ -105,7 +105,7 @@ public class PsiBatchController extends AbstractController {
      * @return RestResponse
      */
     @SysLog("删除批次")
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @RequiresPermissions("psi:batch:delete")
     public RestResponse delete(@RequestBody String[] ids) {
         psiBatchService.deleteBatch(ids);

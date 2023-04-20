@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -57,11 +58,10 @@ public class PsiGoodsMockTest {
             item.setBrandId (id);
             item.setNo (id);
             item.setName (id);
-            item.setCreateDate (new Date());
+            item.setCreateDate (LocalDateTime.now());
             item.setUnitId (id);
             item.setPicUrls (id);
             item.setMemo (id);
-            item.setStatus (id);
             controller.save(item);
         }
     }
@@ -75,15 +75,14 @@ public class PsiGoodsMockTest {
         item.setBrandId (id);
         item.setNo (id);
         item.setName (id);
-        item.setCreateDate (new Date());
+        item.setCreateDate (LocalDateTime.now());
         item.setUnitId (id);
         item.setPicUrls (id);
         item.setMemo (id);
-        item.setStatus (id);
         controller.save(item);
         controller.update(item);
         controller.info(id);
-        controller.queryAll(new HashMap<>());
+        controller .listAll(new HashMap<>());
         controller.list(1,10,new HashMap<>());
         controller.delete(new String[]{id});
     }

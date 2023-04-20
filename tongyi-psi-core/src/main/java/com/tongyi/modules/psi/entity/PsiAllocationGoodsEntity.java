@@ -9,6 +9,7 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -52,6 +53,16 @@ public class PsiAllocationGoodsEntity implements Serializable {
      * 备注
      */
     private String memo;
+
+    @TableField(exist = false)
+    private String goodsName;
+    @TableField(exist = false)
+    private String unitName;
+    @TableField(exist = false)
+    private String specName;
+    @TableField(exist = false)
+    private String specValue;
+
 
     public static PsiAllocationGoodsEntity newEntity(String allocationId,String goodsId,String skuId,BigDecimal num,String memo){
         PsiAllocationGoodsEntity entity = new PsiAllocationGoodsEntity();

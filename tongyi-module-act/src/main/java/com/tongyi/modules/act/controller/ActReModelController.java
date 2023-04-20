@@ -87,7 +87,7 @@ public class ActReModelController {
      * @return RestResponse
      */
     @SysLog("部署流程文件")
-    @PostMapping("/deploy")
+    @RequestMapping("/deploy")
     @RequiresPermissions("act:remodel:deploy")
     public RestResponse deploy(String id) {
         String msg = actReModelService.deploy(id);
@@ -100,7 +100,7 @@ public class ActReModelController {
      * @param id       model标识
      * @param response 响应
      */
-    @PostMapping(value = "export")
+    @RequestMapping(value = "export")
     public void export(String id, HttpServletResponse response) {
         try {
             response.setContentType("text/xml; charset=utf-8");

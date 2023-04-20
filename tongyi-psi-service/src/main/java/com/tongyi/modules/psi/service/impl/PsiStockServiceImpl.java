@@ -8,14 +8,11 @@
  */
 package com.tongyi.modules.psi.service.impl;
 import com.tongyi.common.exception.BusinessException;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiStockDao;
-import com.tongyi.modules.psi.entity.PsiAllocationEntity;
-import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiStockService;
 import org.springframework.stereotype.Service;
@@ -54,6 +51,7 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addEntity(PsiStockEntity entity) {
+        entity.setStatus(PsiStockEntity.Status.RUN.getCode());
         return super.save(entity);
     }
 
@@ -76,16 +74,22 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
-        return super.removeByIds(Arrays.asList(ids));
+        Arrays.asList(ids).forEach(id->{
+            PsiStockEntity entity = this.getById(id);
+            if (PsiStockEntity.Catalog.TIAOZHENG != PsiStockEntity.Catalog.valueOf(entity.getCatalog())){
+                throw new BusinessException("库存调整数据才可以删除");
+            }
+        });
+        return true;
     }
 
     @Override
     public BigDecimal stockNum(String warehouseId, String goodsId) {
-        return baseMapper.sumStockByGoods(warehouseId,goodsId);
+        return baseMapper.sumStockBySku(null,null,warehouseId,goodsId,null);
     }
 
     @Override
     public BigDecimal stockNum(String warehouseId, String goodsId, String skuId) {
-        return baseMapper.sumStockBySku(warehouseId,goodsId,skuId);
+        return baseMapper.sumStockBySku(null,null,warehouseId,goodsId,skuId);
     }
 }

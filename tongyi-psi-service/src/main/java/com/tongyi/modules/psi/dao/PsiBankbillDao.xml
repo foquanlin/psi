@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiBankbillDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiBankbillDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.supplier_id,
+            t.type,
+            t.bank_id,
+            t.no,
+            t.amount,
+            t.create_date,
+            t.create_uid,
+            t.owner_uid,
+            t.memo,
+            t.attach_urls
+        from psi_bankbill t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.supplierId != null and params.supplierId != ''">
+                and t.supplier_id = #{params.supplierId}
+            </if>
+            <if test="params.type != null and params.type != ''">
+                and t.type = #{params.type}
+            </if>
+            <if test="params.bankId != null and params.bankId != ''">
+                and t.bank_id = #{params.bankId}
+            </if>
+            <if test="params.no != null and params.no != ''">
+                and t.no = #{params.no}
+            </if>
+            <if test="params.createDateStart != null and params.createDateEnd != null">
+                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.createUid != null and params.createUid != ''">
+                and t.create_uid = #{params.createUid}
+            </if>
+            <if test="params.ownerUid != null and params.ownerUid != ''">
+                and t.owner_uid = #{params.ownerUid}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+            <if test="params.attachUrls != null and params.attachUrls != ''">
+                and t.attach_urls = #{params.attachUrls}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiBankbillEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiBankbillEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

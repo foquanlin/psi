@@ -129,7 +129,6 @@
               this.getDataList()
             }
           })
-        }).catch(() => {
         })
       }
     }

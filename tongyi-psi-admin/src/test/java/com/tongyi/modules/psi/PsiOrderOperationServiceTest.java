@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Date;
@@ -48,7 +49,7 @@ public class PsiOrderOperationServiceTest {
             item.setId(id);
             item.setOrderId (id);
             item.setDesc (id);
-            item.setCreateDate (new Date());
+            item.setCreateDate (LocalDateTime.now());
             item.setOperationUid (id);
             service.addEntity(item);
         }
@@ -62,7 +63,7 @@ public class PsiOrderOperationServiceTest {
         item.setId(id);
         item.setOrderId (id);
         item.setDesc (id);
-        item.setCreateDate (new Date());
+        item.setCreateDate (LocalDateTime.now());
         item.setOperationUid (id);
         service.addEntity(item);
         service.updateEntity(item);

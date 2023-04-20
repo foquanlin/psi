@@ -10,10 +10,12 @@
 
 #### 项目说明
 
+# 项目会持续不断完善更新,欢迎关注star,fork
+  - gitee源码地址: https://gitee.com/foquanlin/psi
+  - github源码地址: https://github.com/foquanlin/psi
 ### 使用案例
 
 以下为部分案例：
-
 
 #### 优势
 - 严格遵循阿里编码规约开发，便于阅读及二次开发
@@ -34,36 +36,65 @@
 
 #### 技术选型：
 ```
-- Spring Boot 2.1.0.RELEASE
-- Apache Shiro 1.4.0
+- Spring Boot 2.7.0.RELEASE
+- Apache Shiro 1.9.1
 - Spring MVC 5.1.2
-- MyBatis 3.5.0、MyBatis-Plus 3.1.0
-- weixin-java-mp 3.4.0
-- weixin-java-miniapp 3.4.0
-- weixin-java-pay 3.4.0
-- weixin-java-open 3.4.0
-- alipay-sdk 3.7.110.ALL
+- MyBatis 3.5.0、MyBatis-Plus 3.5.2
+- weixin-java-mp 4.4.0
+- weixin-java-miniapp 4.4.0
+- weixin-java-pay 4.4.0
+- weixin-java-open 4.4.0
+- alipay-sdk 4.31.28.ALL
 - Quartz 2.3.0
-- Druid 1.1.10
-- lombok 1.18.4
-- swagger 2.9.2
+- Gson 2.9.0
+- jedis 3.8.0
+- lombok 1.18.24
+- swagger 3.0.0
 - jwt 0.9.1
-- easypoi 4.0.0
-- Activiti6.0.0
+- easypoi 4.4.0
+- Activiti 6.0.0
+- Mysql 5.7+
 ```
 
 #### 项目结构
 ```
-platform-plus
-├─sql  项目SQL语句
-│
-├─platform-admin 管理后台(port:8888)
-│ 
-├─platform-api 接口服务(port:8889)
-│ 
-├─platform-biz 业务、数据处理
-│ 
-└─platform-common 公共类
+*** 项目结构分组件和模块,可灵活引用
+*** 例如:在二次开发中需要使用支付宝接口,在项目pom文件引用相关组件即可
+psi
+├─ sql  项目SQL语句
+├─ init-project 初始化项目脚本
+├─ tongyi-component-activemq 消息中间件
+├─ tongyi-component-alibaba 阿里云SDK组件
+├─ tongyi-component-alipay 支付宝SDK组件
+├─ tongyi-component-common 项目通用组件
+├─ tongyi-component-elasticsearch 搜索引擎组件
+├─ tongyi-component-elk 日志分析组件
+├─ tongyi-component-excel excel文件导入导出组件
+├─ tongyi-component-freemarker 模板组件(邮件模板,PDF模板,文本模板等等)
+├─ tongyi-component-kafka 消息中间件
+├─ tongyi-component-mssql mssql jdbc组件
+├─ tongyi-component-mybatis mybatis组件
+├─ tongyi-component-redis 缓存组件
+├─ tongyi-component-shiro 权限组件
+├─ tongyi-component-starter-admin 管理后台配置组件
+├─ tongyi-component-starter-api api配置组件
+├─ tongyi-component-swagger swagger文档组件2.0版本
+├─ tongyi-component-tencentcloud 腾讯云SDK组件
+├─ tongyi-component-tester 测试配置组件
+├─ tongyi-component-utils 工具包组件
+├─ tongyi-component-webconfig web服务配置组件
+├─ tongyi-core 系统框架核心
+├─ tongyi-module-act activiti模块
+├─ tongyi-module-gencode 代码生成模块
+├─ tongyi-module-job 任务调度模块
+├─ tongyi-module-mail 邮件模块
+├─ tongyi-module-sys 系统基础模块(系统用户,权限,部门,字典,日志,菜单等)
+├─ tongyi-module-thirdstorage 第三方存储模块(阿里云,腾讯云,本地)
+├─ tongyi-module-wechatmp 微信公众号模块
+├─ tongyi-psi-admin 进销存管理后台(port:8801)
+├─ tongyi-psi-api 进销存外部接口(port:8802)
+├─ tongyi-psi-core 进销存核心类
+├─ tongyi-psi-service 进销存业务逻辑模块
 
 ```
 
@@ -71,12 +102,50 @@ platform-plus
 ## 实现功能
 ```
 - 系统管理
-    - 菜单管理
-    - 组织机构
-    - 系统参数
-    - 字典管理
-    - 文件上传
-    - 系统日志
+  - 单位管理
+  - 仓库管理
+  - 邮件系统
+  - 菜单管理
+  - 组织机构
+  - 系统参数
+  - 字典管理
+  - 文件上传
+  - 系统日志
+- 库存管理
+  - 调拨单管理
+  - 批次管理
+  - 品牌管理
+  - 商品分类
+  - 盘点管理
+  - 库存明细
+  - 商品库存
+- 采购管理
+  - 供应商管理
+  - 采购订单
+  - 采购退单
+  - 供应商对账
+- 销售管理
+  - 客户管理
+  - 销售订单
+  - 销售退单
+  - 客户对账
+  - 客户订购统计
+- 财务管理
+  - 银行账户管理
+  - 运杂费管理
+  - 非销售收入
+  - 非采购支出
+- 报表统计
+  - 分类统计
+  - 采购销售统计
+  - 销售排行
+  - 序列号销售统计
+  - 客户销售统计
+  - 商品销售统计
+  - 商品分类统计
+  - 销售货款统计
+  - 采购货款统计
+  - 员工销售统计
 - 权限管理
     - 管理员列表
     - 角色管理
@@ -99,30 +168,60 @@ platform-plus
 ```
 
 **项目演示**
-- 演示地址：http://www.wxngrok.com/platform-plus/#/login
+- 演示地址：http://psi.wxngrok.com/#/login
 - 账号密码：
+  - admin/admin 
   - test/888888
 
 **效果图：**
+- 系统管理
+  !['商品单位管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品单位管理.png)
+  !['仓库管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/仓库管理.png)
+  !['品牌管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/品牌管理.png)
+  !['商品分类.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品分类.png)
+  !['菜单管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/菜单管理.png)
+- 库存管理
+  !['库存调拨.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/库存调拨.png)
+  !['新增调拨单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/新增调拨单.png)
+  !['盘点管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/盘点管理.png)
+  !['盘点详情.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/盘点详情.png)
+  !['商品入库.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品入库.png)
+  !['商品出库.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品出库.png)
+  !['商品库存.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品库存.png)
+  !['商品明细.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品明细.png)
+  !['商品详情.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/商品详情.png)
+  !['规格管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/规格管理.png)
+  !['库存明细.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/库存明细.png)
+- 采购管理
+  !['供应商管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/供应商管理.png)
+  !['采购订单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/采购订单.png)
+  !['采购退单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/采购退单.png)
+- 销售管理
+  !['客户管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/客户管理.png)
+  !['销售订单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/销售订单.png)
+  !['销售退单.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/销售退单.png)
+- 财务管理
+  !['银行账户管理.jpg'](https://kutian-cms.oss-cn-zhangjiakou.aliyuncs.com/psi/进销存截图/银行账户管理.png)
+- 报表统计
 
 #### 后端部署
 - 通过git下载源码
-- 创建数据库plaftorm-plus
+- 创建数据库tongyi-psi
 - mysql执行sql/mysql.sql文件(oracle执行sql/oracle.sql)，初始化数据
 - 修改admin、api模块下application-dev.yml，修改MySQL、Oracle驱动、账号和密码
-- 运行PlatformAdminApplication.java启动后台管理接口服务
+- 运行AdminApplication.java启动后台管理接口服务
        
-      -接口：http://localhost:8888/admin
-- 运行PlatformApiApplication.java启动api接口服务
+      -接口：http://localhost:8801/admin
+- 运行ApiApplication.java启动api接口服务
  
-      -接口：http://localhost:8889/api
+      -接口：http://localhost:8802/api
         
-- Swagger路径：http://localhost:8889/api/doc.html
+- Swagger路径：http://localhost:8802/api/doc.html
 
 #### 提交反馈
 1. 欢迎提交 issue，请写清楚遇到问题的原因，开发环境，复显步骤。
 
-2. 官方QQ群：
+### 官方QQ群：425910002
 
 #### 常用API
 - [Mybatis-Plus](https://baomidou.gitee.io/mybatis-plus-doc/#/quick-start)

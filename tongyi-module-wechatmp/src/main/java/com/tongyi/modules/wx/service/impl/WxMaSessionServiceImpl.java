@@ -44,7 +44,7 @@ public class WxMaSessionServiceImpl extends ServiceImpl<WxMaSessionDao, WxMaSess
 
     @Override
     public List<WxMaSessionEntity> listAll(Map<String, Object> params) {
-        return baseMapper.listAll(params);
+        return baseMapper .listAll(params);
     }
 
     @Override

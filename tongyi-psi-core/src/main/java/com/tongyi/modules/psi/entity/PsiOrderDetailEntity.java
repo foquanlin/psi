@@ -56,16 +56,37 @@ public class PsiOrderDetailEntity implements Serializable {
     /**
      * 入库数量
      */
-    private BigDecimal inStockNum;
+    @TableField(exist = false)
+    private BigDecimal stockNum;
     /**
      * 备注
      */
     private String memo;
 
     @TableField(exist = false)
-    private PsiOrderEntity order;
+    private String goodsName;
     @TableField(exist = false)
-    private PsiGoodsSkuEntity sku;
+    private String specName;
     @TableField(exist = false)
-    private PsiGoodsEntity goods;
+    private String specValue;
+    @TableField(exist = false)
+    private String unitName;
+    @TableField(exist = false)
+    private String catalogName;
+
+    public static PsiOrderDetailEntity newEntity(String orderId,String goodsId, String skuId, BigDecimal costPrice, BigDecimal num, BigDecimal stockNum) {
+        PsiOrderDetailEntity entity = new PsiOrderDetailEntity();
+        entity.setOrderId(orderId);
+        entity.setGoodsId(goodsId);
+        entity.setSkuId(skuId);
+        entity.setPrice(costPrice);
+        entity.setNum(num);
+        entity.setStockNum(stockNum);
+        return entity;
+    }
+
+    public PsiStockEntity newStockRecord(PsiStockEntity.Catalog catalog,PsiStockEntity.Type type,String warehouseId) {
+        PsiStockEntity stock = PsiStockEntity.newStock(catalog,type,warehouseId,this.goodsId,this.skuId,num,orderId);
+        return stock;
+    }
 }

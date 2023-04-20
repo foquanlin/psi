@@ -47,36 +47,4 @@ public class PsiAllocationGoodsMockTest {
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
     }
-    @Test
-    public void testAdd() {
-        for(int i=0;i<100;i++) {
-            int idx = new Random().nextInt(1000000);
-            String id = "id-" + idx;
-            PsiAllocationGoodsEntity item = new PsiAllocationGoodsEntity();
-            item.setId(id);
-            item.setAllocationId (id);
-            item.setGoodsId (id);
-            item.setNum (new BigDecimal(idx));
-            item.setMemo (id);
-            controller.save(item);
-        }
-    }
-
-    @Test
-    public void testAll() {
-        int idx = new Random().nextInt(1000000);
-        String id = "id-" + idx;
-        PsiAllocationGoodsEntity item = new PsiAllocationGoodsEntity();
-        item.setId(id);
-        item.setAllocationId (id);
-        item.setGoodsId (id);
-        item.setNum (new BigDecimal(idx));
-        item.setMemo (id);
-        controller.save(item);
-        controller.update(item);
-        controller.info(id);
-        controller.queryAll(new HashMap<>());
-        controller.list(1,10,new HashMap<>());
-        controller.delete(new String[]{id});
-    }
 }

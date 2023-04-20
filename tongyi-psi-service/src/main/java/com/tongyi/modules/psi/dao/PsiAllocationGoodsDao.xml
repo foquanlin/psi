@@ -11,8 +11,16 @@
             t.goods_id,
             t.sku_id,
             t.num,
-            t.memo
+            t.memo,
+            pg.name as goods_name,
+            pu.name as unit_name,
+            pgs.spec_name as spec_name,
+            pgs.spec_value as spec_value
+
         from psi_allocation_goods t
+        left join psi_goods pg on pg.id = t.goods_id
+        left join psi_unit pu on pu.id = pg.unit_id
+        left join psi_goods_sku pgs on pgs.id = t.sku_id
     </sql>
     <sql id="selectWhere">
         <where>
@@ -38,5 +46,18 @@
     <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
+    </select>
+
+    <select id="sumBySku" resultType="java.math.BigDecimal">
+        select count(1) as num
+        from psi_allocation_goods t
+        <where>
+            <if test="goodsId != null and goodsId!= ''">
+                and t.goods_id= #{goodsId}
+            </if>
+            <if test="skuId != null and skuId!= ''">
+                and t.sku_id = #{skuId}
+            </if>
+        </where>
     </select>
 </mapper>

@@ -11,35 +11,36 @@
         <el-input v-model="searchForm.barcode" placeholder="条形码" clearable suffix-icon="el-icon-search"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="searchForm.catalogId" placeholder="分类" clearable>
-          <el-option v-for="item in catalogList" :key="item.value" :label="item.name" :value="item.id"/>
-        </el-select>
+        <select-catalog v-model="searchForm" field="catalogId"/>
+      </el-form-item>
+      <el-form-item>
+        <select-warehouse v-model="searchForm" field="warehouseId" v-if="selectWarehouseId"></select-warehouse>
       </el-form-item>
       <el-form-item>
         <el-button @click="pageIndex = 1; getDataList()">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table border :data="dataList" ref="fileTable" style="margin-left:10px;margin-right:10px;width: 80%;" @selection-change="selectionChangeHandle" row-key="id">
+    <el-table border :data="dataList" ref="fileTable" style="margin-left:10px;margin-right:10px;width: 95%;" @selection-change="selectionChangeHandle" row-key="id">
       <el-table-column type="selection" header-align="center" align="center" width="50" :reserve-selection="true"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称">
         <template v-slot="scope">
-          {{scope.row.goods.name}}
+          {{scope.row.goodsName}}
         </template>
       </el-table-column>
-      <el-table-column prop="name" header-align="center" align="center" label="规格">
+      <el-table-column prop="name" header-align="center" align="left" label="规格" width="280">
         <template v-slot="scope">
-          <el-tag type="info" v-if="scope.row.specName" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;margin-bottom: 10px">{{item}}</el-tag>
+          <el-tag type="info" v-if="scope.row.specName" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="catalogId" header-align="center" align="left" label="分类">
         <template v-slot="scope">
-          <span>{{scope.row.goods.catalog.name}}</span>
+          <span>{{scope.row.catalogName}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="warehouseNum" header-align="center" align="right" label="库存"/>
       <el-table-column prop="unitId" header-align="center" align="left" label="单位">
         <template v-slot="scope">
-          <span>{{scope.row.goods.unit.name}}</span>
+          <span>{{scope.row.unitName}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -60,6 +61,9 @@
 </template>
 
 <script>
+  import SelectWarehouse from './component/select-warehouse'
+  import SelectCatalog from './component/select-catalog'
+
   export default {
     data () {
       return {
@@ -71,9 +75,8 @@
           barcode: '',
           status: ''
         },
+        selectWarehouseId: true,
         dataList: [],
-        warehouseList: [],
-        catalogList: [],
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
@@ -82,19 +85,8 @@
       }
     },
     components: {
-    },
-    mounted () {
-      this.$http({
-        url: '/psi/catalog/listAll',
-        method: 'get',
-        params: {}
-      }).then(({data}) => {
-        if (data && data.code === 0) {
-          this.catalogList = data.list
-        } else {
-          this.catalogList = []
-        }
-      })
+      SelectWarehouse,
+      SelectCatalog
     },
     watch: {
       dataList: function () {
@@ -112,13 +104,15 @@
     },
     methods: {
       init (warehouseId, list) {
-        console.log('warehouseId', warehouseId)
+        console.log('warehouseId=', warehouseId)
+        this.selectWarehouseId = !warehouseId
+        console.log('this.selectWarehouseId=', this.selectWarehouseId)
         this.visible = true
         if (warehouseId) {
-          this.dataListSelections = list
+          this.dataListSelections = list || []
           this.searchForm.warehouseId = warehouseId
-          this.getDataList()
         }
+        this.getDataList()
       },
       // 获取数据列表
       getDataList () {

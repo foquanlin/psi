@@ -11,8 +11,12 @@
             t.warehouse_id,
             t.create_date,
             t.memo,
-            t.create_uid
+            t.create_uid,
+            pw.name as warehouse_name,
+            su.real_name as create_name
         from psi_check t
+        left join psi_warehouse pw on pw.id = t.warehouse_id
+        left join sys_user su on su.user_id = t.create_uid
     </sql>
     <sql id="selectWhere">
         <where>
@@ -36,24 +40,24 @@
             </if>
         </where>
     </sql>
-    <select id="listPage" resultMap="resultMap">
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiCheckEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <select id="listAll" resultMap="resultMap">
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiCheckEntity">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
     </select>
 
-    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiCheckEntity">
-        <result column="warehouse_id" property="warehouseId"></result>
-        <result column="create_uid" property="createUid"></result>
-        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>
-        <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>
-        <collection property="details" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity" select="com.tongyi.modules.psi.dao.PsiCheckDetailDao.selectByCid" column="{cid=id}"></collection>
-    </resultMap>
-    <select id="selectById" resultMap="resultMap">
+<!--    <resultMap id="resultMap" type="com.tongyi.modules.psi.entity.PsiCheckEntity">-->
+<!--        <result column="warehouse_id" property="warehouseId"></result>-->
+<!--        <result column="create_uid" property="createUid"></result>-->
+<!--        <association property="warehouse" javaType="com.tongyi.modules.psi.entity.PsiWarehouseEntity" select="com.tongyi.modules.psi.dao.PsiWarehouseDao.selectById" column="warehouse_id"/>-->
+<!--        <association property="createUser" javaType="com.tongyi.modules.sys.entity.SysUserEntity" select="com.tongyi.modules.sys.dao.SysUserDao.selectById" column="create_uid"/>-->
+<!--        <collection property="details" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiCheckDetailEntity" select="com.tongyi.modules.psi.dao.PsiCheckDetailDao.selectByCid" column="{cid=id}"></collection>-->
+<!--    </resultMap>-->
+    <select id="selectById" resultType="com.tongyi.modules.psi.entity.PsiCheckEntity">
         <include refid="selectSql"></include>
         where t.id= #{id}
     </select>
