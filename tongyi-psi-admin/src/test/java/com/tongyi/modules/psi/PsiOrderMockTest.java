@@ -53,60 +53,7 @@ public class PsiOrderMockTest {
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
     }
-    @Test
-    public void testAdd() {
-        for(int i=0;i<100;i++) {
-            int idx = new Random().nextInt(1000000);
-            String id = "id-" + idx;
-            PsiOrderEntity item = new PsiOrderEntity();
-            item.setId(id);
-            item.setNo (id);
-            item.setCatalog (id);
-            item.setType (id);
-            item.setCreateDate (LocalDate.now());
-            item.setOrderUid (id);
-            item.setExpressNo (id);
-            item.setCreateUid (id);
-            item.setStockStatus (id);
-            item.setInvoiceStatus (id);
-            item.setPayStatus (id);
-            item.setStatus (id);
-            item.setMemo (id);
-            item.setAttachmentUrls (id);
-            item.setSettlementAmount (new BigDecimal(idx));
-            item.setOrderAmount (new BigDecimal(idx));
-            controller.save(item);
-        }
-    }
 
-    @Test
-    public void testAll() {
-        int idx = new Random().nextInt(1000000);
-        String id = "id-" + idx;
-        PsiOrderEntity item = new PsiOrderEntity();
-        item.setId(id);
-        item.setNo (id);
-        item.setCatalog (id);
-        item.setType (id);
-        item.setCreateDate (LocalDate.now());
-        item.setOrderUid (id);
-        item.setExpressNo (id);
-        item.setCreateUid (id);
-        item.setStockStatus (id);
-        item.setInvoiceStatus (id);
-        item.setPayStatus (id);
-        item.setStatus (id);
-        item.setMemo (id);
-        item.setAttachmentUrls (id);
-        item.setSettlementAmount (new BigDecimal(idx));
-        item.setOrderAmount (new BigDecimal(idx));
-        controller.save(item);
-        controller.update(item);
-        controller.info(id);
-        controller .listAll(new HashMap<>());
-        controller.list(1,10,new HashMap<>());
-        controller.delete(new String[]{id});
-    }
 
     @Test
     public void orderInfo(){

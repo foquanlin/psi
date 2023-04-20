@@ -87,6 +87,6 @@ public class PsiOrderAmountMockTest {
         controller.info(id);
         controller .listAll(new HashMap<>());
         controller.list(1,10,new HashMap<>());
-        controller.delete(new String[]{id});
+        controller.delete(id);
     }
 }
