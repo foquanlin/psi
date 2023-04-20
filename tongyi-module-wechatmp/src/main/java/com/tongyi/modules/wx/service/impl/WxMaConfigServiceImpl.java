@@ -57,8 +57,8 @@ public class WxMaConfigServiceImpl extends ServiceImpl<WxMaConfigDao, WxMaConfig
     private WxMaService wxMaService;
 
     @Override
-    public List<WxMaConfigEntity> queryAll(Map<String, Object> params) {
-        return baseMapper.queryAll(params);
+    public List<WxMaConfigEntity> listAll(Map<String, Object> params) {
+        return baseMapper .listAll(params);
     }
 
     @Override

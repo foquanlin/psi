@@ -42,7 +42,7 @@ public interface WxMaSessionDao extends BaseMapper<WxMaSessionEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<WxMaSessionEntity> queryAll(@Param("params") Map<String, Object> params);
+    List<WxMaSessionEntity> listAll(@Param("params") Map<String, Object> params);
 
     /**
      * 自定义分页查询

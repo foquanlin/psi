@@ -39,7 +39,7 @@ public interface WxMaSessionService extends IService<WxMaSessionEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<WxMaSessionEntity> queryAll(Map<String, Object> params);
+    List<WxMaSessionEntity> listAll(Map<String, Object> params);
 
     /**
      * 分页查询

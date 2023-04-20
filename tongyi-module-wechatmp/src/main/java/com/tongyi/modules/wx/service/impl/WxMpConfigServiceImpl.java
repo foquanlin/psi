@@ -43,8 +43,8 @@ import java.util.Map;
 public class WxMpConfigServiceImpl extends ServiceImpl<WxMpConfigDao, WxMpConfigEntity> implements WxMpConfigService {
 
     @Override
-    public List<WxMpConfigEntity> queryAll(Map<String, Object> params) {
-        return baseMapper.queryAll(params);
+    public List<WxMpConfigEntity> listAll(Map<String, Object> params) {
+        return baseMapper .listAll(params);
     }
 
     @Override

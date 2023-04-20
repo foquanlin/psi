@@ -33,7 +33,7 @@ public class SysCacheServiceImpl implements SysCacheService {
 //    private JedisUtil jedisUtil;
     private Gson gson = new Gson();
     @Override
-    public List<SysCacheEntity> queryAll(Map<String, String> params) {
+    public List<SysCacheEntity> listAll(Map<String, String> params) {
         SysCacheEntity sysCacheEntity;
         List<SysCacheEntity> result = new ArrayList<>();
 

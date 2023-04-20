@@ -39,7 +39,7 @@ public interface WxMpConfigService extends IService<WxMpConfigEntity> {
      * @param params 查询参数
      * @return List
      */
-    List<WxMpConfigEntity> queryAll(Map<String, Object> params);
+    List<WxMpConfigEntity> listAll(Map<String, Object> params);
 
     /**
      * 分页查询微信公众号配置

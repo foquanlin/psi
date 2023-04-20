@@ -76,7 +76,7 @@ public class SysCacheController {
             //查询业务缓存
             params.put("pattern", MTM_CACHE + "*");
         }
-        List<SysCacheEntity> list = sysCacheService.queryAll(params);
+        List<SysCacheEntity> list = sysCacheService .listAll(params);
 
         return RestResponse.success().put("list", list);
     }

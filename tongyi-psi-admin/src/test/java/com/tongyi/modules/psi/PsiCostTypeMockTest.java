@@ -1,14 +1,14 @@
 /*
  * 项目名称:项目名称
- * 类名称:PsiOrderDetailMockTest.java
+ * 类名称:PsiCostTypeMockTest.java
  * 包名称:com.tongyi.modules.psi.Mocktest
  * @author 惠州市酷天科技有限公司
- * @date 2022-10-12 01:48:52
+ * @date 2023-03-28 00:14:03
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi;
-import com.tongyi.modules.psi.controller.PsiOrderDetailController;
-import com.tongyi.modules.psi.entity.PsiOrderDetailEntity;
+import com.tongyi.modules.psi.controller.PsiCostTypeController;
+import com.tongyi.modules.psi.entity.PsiCostTypeEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,22 +26,22 @@ import java.util.Date;
 import java.math.BigDecimal;
 
 /**
- * 订单明细Controller
+ * 收支类型Controller
  *
  * @author 惠州市酷天科技有限公司
- * @date 2022-10-12 01:48:52
+ * @date 2023-03-28 00:14:03
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 @ActiveProfiles("junit")
-public class PsiOrderDetailMockTest {
+public class PsiCostTypeMockTest {
     @Autowired
     protected WebApplicationContext wac;
 
     protected MockMvc mockMvc;
 
     @Autowired
-    protected PsiOrderDetailController controller; // 把要测试的controller注入进来
+    protected PsiCostTypeController controller; // 把要测试的controller注入进来
 
     @Before
     public void setup() throws Exception {
@@ -52,15 +52,12 @@ public class PsiOrderDetailMockTest {
         for(int i=0;i<100;i++) {
             int idx = new Random().nextInt(1000000);
             String id = "id-" + idx;
-            PsiOrderDetailEntity item = new PsiOrderDetailEntity();
+            PsiCostTypeEntity item = new PsiCostTypeEntity();
             item.setId(id);
-            item.setOrderId (id);
-            item.setGoodsId (id);
-            item.setNum (new BigDecimal(idx));
-            item.setSkuId (id);
-            item.setPrice (new BigDecimal(idx));
-            item.setStockNum (new BigDecimal(idx));
-            item.setMemo (id);
+            item.setType (id);
+            item.setName (id);
+            item.setStatus (idx % 2 == 1);
+            item.setProfited (idx % 2 == 1);
             controller.save(item);
         }
     }
@@ -69,15 +66,12 @@ public class PsiOrderDetailMockTest {
     public void testAll() {
         int idx = new Random().nextInt(1000000);
         String id = "id-" + idx;
-        PsiOrderDetailEntity item = new PsiOrderDetailEntity();
+        PsiCostTypeEntity item = new PsiCostTypeEntity();
         item.setId(id);
-        item.setOrderId (id);
-        item.setGoodsId (id);
-        item.setNum (new BigDecimal(idx));
-        item.setSkuId (id);
-        item.setPrice (new BigDecimal(idx));
-        item.setStockNum (new BigDecimal(idx));
-        item.setMemo (id);
+        item.setType (id);
+        item.setName (id);
+        item.setStatus (idx % 2 == 1);
+        item.setProfited (idx % 2 == 1);
         controller.save(item);
         controller.update(item);
         controller.info(id);

@@ -71,7 +71,7 @@ public class PsiOrderInvoiceMockTest {
         controller.save(item);
         controller.update(item);
         controller.info(id);
-        controller.queryAll(new HashMap<>());
+        controller .listAll(new HashMap<>());
         controller.list(1,10,new HashMap<>());
         controller.delete(new String[]{id});
     }
