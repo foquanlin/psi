@@ -11,3 +11,7 @@ spring:
     port: 465
     username:
     password:
+logging:
+  level:
+    com:
+      tongyi: info
