@@ -1,3 +1,10 @@
+**项目演示**
+- 演示地址：http://admin.psi.wxngrok.com/#/login
+- 账号密码：
+  - admin/admin
+  - test/888888
+
+
 ## 联系方式
 !['我的二维码.jpg'](我的二维码.jpg)
 
@@ -166,12 +173,6 @@ psi
     - 发送记录
 - ELK日志
 ```
-
-**项目演示**
-- 演示地址：http://admin.psi.wxngrok.com/#/login
-- 账号密码：
-  - admin/admin 
-  - test/888888
 
 **效果图：**
 - 系统管理
