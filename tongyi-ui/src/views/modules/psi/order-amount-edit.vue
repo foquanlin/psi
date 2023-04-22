@@ -16,7 +16,10 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
+      <el-button type="primary" @click="dataFormSubmit()"
+        v-if="isAuth('psi:buyorder:addAmount') || isAuth('psi:buyrefundorder:addAmount') || isAuth('psi:saleorder:addAmount') || isAuth('psi:salerefundorder:addAmount') ||
+        isAuth('psi:buyorder:updateAmount') || isAuth('psi:buyrefundorder:updateAmount') || isAuth('psi:saleorder:updateAmount') || isAuth('psi:salerefundorder:updateAmount')"
+      >确定</el-button>
     </span>
   </el-dialog>
 </template>

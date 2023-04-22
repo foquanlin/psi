@@ -19,7 +19,7 @@
 <!--        </el-menu-item>-->
         <el-menu-item index="1">
           <el-badge value="hot">
-            <a href="//wxngrok.com/" target="_blank">官方社区</a>
+            <a href="http://admin.psi.wxngrok.com/" target="_blank">官方社区</a>
           </el-badge>
         </el-menu-item>
         <el-menu-item index="2" @click="$router.push({ name: 'theme' })">
@@ -106,7 +106,7 @@
         }).then(() => {
           this.$http({
             url: '/sys/logout',
-            method: 'post'
+            method: 'get'
           }).then(({data}) => {
             if (data && data.code === 0) {
               clearLoginInfo()

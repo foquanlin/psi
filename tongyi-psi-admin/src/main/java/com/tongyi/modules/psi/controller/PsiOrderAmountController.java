@@ -39,7 +39,7 @@ public class PsiOrderAmountController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/listAll")
-    @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list","psi:buyrefundorder:list","psi:salerefundorder:list"},logical = Logical.OR)
     public RestResponse listAll(@RequestParam Map<String, Object> params) {
         List<PsiOrderAmountEntity> list = psiOrderAmountService.listAll(params);
         return RestResponse.success("list", list);
@@ -52,7 +52,7 @@ public class PsiOrderAmountController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/list")
-    @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:list","psi:buyorder:list","psi:saleorder:list","psi:buyrefundorder:list","psi:salerefundorder:list"},logical = Logical.OR)
     public RestResponse list(@RequestParam(value = "page",defaultValue = "1") int current,@RequestParam(value = "limit",defaultValue = "10")int size,@RequestParam Map<String, Object> params) {
         PageInfo page = psiOrderAmountService.listPage(current,size,params);
         return RestResponse.success("page", page);
@@ -65,7 +65,7 @@ public class PsiOrderAmountController extends AbstractController {
      * @return RestResponse
      */
     @GetMapping("/info/{id}")
-    @RequiresPermissions(value={"psi:order:info","psi:buyorder:info","psi:saleorder:info"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:info","psi:buyorder:info","psi:saleorder:info","psi:buyrefundorder:info","psi:salerefundorder:info"},logical = Logical.OR)
     public RestResponse info(@PathVariable("id") String id) {
         PsiOrderAmountEntity psiOrderAmount = psiOrderAmountService.getById(id);
         return RestResponse.success("info", psiOrderAmount);
@@ -79,7 +79,7 @@ public class PsiOrderAmountController extends AbstractController {
      */
     @SysLog("新增订单账目")
     @PostMapping("/save")
-    @RequiresPermissions(value={"psi:order:save","psi:buyorder:save","psi:saleorder:save"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:addAmount","psi:buyorder:addAmount","psi:saleorder:addAmount","psi:buyrefundorder:addAmount","psi:salerefundorder:addAmount"},logical = Logical.OR)
     public RestResponse save(@RequestBody PsiOrderAmountEntity entity) {
         entity.setCreateUid(getUserId());
         psiOrderAmountService.addEntity(entity);
@@ -94,7 +94,7 @@ public class PsiOrderAmountController extends AbstractController {
      */
     @SysLog("修改订单账目")
     @PostMapping("/update")
-    @RequiresPermissions(value={"psi:order:update","psi:buyorder:update","psi:saleorder:update"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:updateAmount","psi:buyorder:updateAmount","psi:saleorder:updateAmount","psi:buyrefundorder:updateAmount","psi:salerefundorder:updateAmount"},logical = Logical.OR)
     public RestResponse update(@RequestBody PsiOrderAmountEntity entity) {
         psiOrderAmountService.updateEntity(entity);
         return RestResponse.success();
@@ -108,7 +108,7 @@ public class PsiOrderAmountController extends AbstractController {
      */
     @SysLog("删除订单账目")
     @GetMapping("/delete/{id}")
-    @RequiresPermissions(value={"psi:order:delete","psi:buyorder:delete","psi:saleorder:delete"},logical = Logical.OR)
+    @RequiresPermissions(value={"psi:order:deleteAmount","psi:buyorder:deleteAmount","psi:saleorder:deleteAmount","psi:buyrefundorder:deleteAmount","psi:salerefundorder:deleteAmount"},logical = Logical.OR)
     public RestResponse delete(@PathVariable("id") String id) {
         psiOrderAmountService.deleteEntity(id);
         return RestResponse.success();
