@@ -26,4 +26,5 @@ hs_err_pid*
 target
 /tongyi-psi-admin/src/main/resources/application-dev.yml
 /tongyi-psi-admin/src/main/resources/application-test.yml
+/tongyi-psi-api/src/main/resources/application-dev.yml
 /tongyi-psi-api/src/main/resources/application-test.yml
