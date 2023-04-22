@@ -106,7 +106,7 @@
         }).then(() => {
           this.$http({
             url: '/sys/logout',
-            method: 'post'
+            method: 'get'
           }).then(({data}) => {
             if (data && data.code === 0) {
               clearLoginInfo()
