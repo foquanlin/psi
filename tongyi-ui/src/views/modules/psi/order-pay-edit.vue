@@ -25,13 +25,18 @@
           <el-button type="text" size="small" @click="savePay(scope.row, scope.$index)" v-if="scope.row.edited">{{ descriptions.save }}</el-button>
           <el-button type="text" size="small" @click="cancelPay(scope.row, scope.$index)" v-if="scope.row.id && scope.row.edited">
             {{descriptions.cancel}}</el-button>
-          <el-button type="text" size="small" @click="editPay(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited">
+          <el-button type="text" size="small" @click="editPay(scope.row, scope.$index)" v-if="scope.row.id && !scope.row.edited &&
+          (isAuth('psi:buyorder:updateAmount') || isAuth('psi:buyrefundorder:updateAmount') || isAuth('psi:saleorder:updateAmount') || isAuth('psi:salerefundorder:updateAmount'))">
             {{ descriptions.edit }}</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)">{{ descriptions.delete }}</el-button>
+          <el-button type="text" size="small" @click="deleteHandle(scope.row, scope.$index)"
+            v-if="isAuth('psi:buyorder:deleteAmount') || isAuth('psi:buyrefundorder:deleteAmount') || isAuth('psi:saleorder:deleteAmount') || isAuth('psi:salerefundorder:deleteAmount')">
+            {{ descriptions.delete }}</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-button type="text" @click="addRow()" size="mini" icon="el-icon-plus">{{ descriptions.add }}{{payName}}</el-button>
+    <el-button type="text" @click="addRow()" size="mini" icon="el-icon-plus"
+      v-if="isAuth('psi:buyorder:addAmount') || isAuth('psi:buyrefundorder:addAmount') || isAuth('psi:saleorder:addAmount') || isAuth('psi:salerefundorder:addAmount')">
+      {{ descriptions.add }}{{payName}}</el-button>
   </div>
 </template>
 
@@ -111,7 +116,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: `psi/orderamount/delete/${row.id}`,
+          url: `/psi/orderamount/delete/${row.id}`,
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === 0) {

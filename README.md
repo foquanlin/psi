@@ -1,8 +1,14 @@
 **项目演示**
 - 演示地址：http://admin.psi.wxngrok.com/#/login
 - 账号密码：
-  - admin/admin
   - test/888888
+  - test2/888888
+  - test3/888888
+  - test4/888888
+  - test5/888888
+  - test6/888888
+  - test7/888888
+  - test8/888888
 
 
 ## 联系方式

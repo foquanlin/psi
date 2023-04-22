@@ -8,7 +8,8 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" v-if="edited === false" @click="modifyHandle">{{ descriptions.edit }}</el-button>
+      <el-button type="primary" @click="modifyHandle" v-if="edited === false &&
+      (isAuth('psi:buyorder:update') || isAuth('psi:buyrefundorder:update') || isAuth('psi:saleorder:update') || isAuth('psi:salerefundorder:update'))">{{ descriptions.edit }}</el-button>
       <el-button type="primary" v-if="edited === true" @click="saveHandle()">{{ descriptions.save }}</el-button>
       <el-button v-if="edited === true" @click="cancelHandle">{{ descriptions.cancel }}</el-button>
     </el-form-item>
