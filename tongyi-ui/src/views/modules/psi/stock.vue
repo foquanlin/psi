@@ -80,6 +80,8 @@
       <el-table-column prop="orderNo" header-align="center" align="left" label="关联单号" width="140">
         <template v-slot="scope">
           <el-button v-if="scope.row.catalog ==='CAIGOU' || scope.row.catalog ==='XIAOSHOU' || scope.row.catalog ==='DINGDAN'" type="text" size="small" @click="viewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
+          <el-button v-else-if="scope.row.catalog ==='DIAOBO'" type="text" size="small" @click="allocationViewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
+          <el-button v-else-if="scope.row.catalog ==='PANDIAN'" type="text" size="small" @click="checkDetailHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="num" header-align="center" align="right" label="数量"/>
@@ -102,6 +104,8 @@
     <!-- 弹窗, 新增 / 修改 -->
     <goods-detail v-if="detailVisible" ref="goodsDetail"/>
     <order-view v-if="orderViewVisible" ref="orderView"/>
+    <allocation-view v-if="allocationViewVisible" ref="allocationView"/>
+    <check-detail v-if="checkDetailVisible" ref="checkDetail"/>
   </div>
 </template>
 
@@ -115,6 +119,8 @@
   import SelectSkuStatus from './component/select-sku-status'
   import SelectStockCatalog from './component/select-stock-catalog'
   import OrderView from './order-view'
+  import AllocationView from './allocation-view'
+  import CheckDetail from './check-detail'
   export default {
     data () {
       return {
@@ -136,7 +142,9 @@
         pageSize: 10,
         totalPage: 0,
         detailVisible: false,
-        orderViewVisible: false
+        orderViewVisible: false,
+        allocationViewVisible: false,
+        checkDetailVisible: false
       }
     },
     components: {
@@ -148,7 +156,9 @@
       SelectStockType,
       SelectSkuStatus,
       SelectStockCatalog,
-      OrderView
+      OrderView,
+      AllocationView,
+      CheckDetail
     },
     activated () {
       this.getDataList()
@@ -219,6 +229,18 @@
         this.orderViewVisible = true
         this.$nextTick(() => {
           this.$refs.orderView.init(row.orderId)
+        })
+      },
+      allocationViewHandle (row) {
+        this.allocationViewVisible = true
+        this.$nextTick(() => {
+          this.$refs.allocationView.init(row.orderId)
+        })
+      },
+      checkDetailHandle (row) {
+        this.checkDetailVisible = true
+        this.$nextTick(() => {
+          this.$refs.checkDetail.init(row.orderId)
         })
       }
     }
