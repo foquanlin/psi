@@ -15,7 +15,7 @@ export default {
   data () {
     return {
       loading: false,
-      supplierType: '',
+      supplierType: 'SUPPLIER',
       supplierList: []
     }
   },

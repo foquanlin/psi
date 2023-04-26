@@ -78,6 +78,19 @@
       }
       return name
     },
+    payType (catalog, type) {
+      let name = ''
+      if (catalog === 'BUY' && type === 'ORDER') {
+        name = 'PAY'
+      } else if (catalog === 'BUY' && type === 'REFUND') {
+        name = 'RECEIPTS'
+      } else if (catalog === 'SALE' && type === 'ORDER') {
+        name = 'PAY'
+      } else if (catalog === 'SALE' && type === 'REFUND') {
+        name = 'RECEIPTS'
+      }
+      return name
+    },
     numberName (catalog, type) {
       let name = ''
       if (catalog === 'BUY' && type === 'ORDER') {

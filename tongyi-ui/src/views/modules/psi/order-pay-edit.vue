@@ -49,6 +49,7 @@ export default {
       edited: false,
       amountEditVisible: false,
       bankList: [],
+      payType: '',
       payName: ''
     }
   },
@@ -91,6 +92,7 @@ export default {
       immediate: true,
       handler (value) {
         this.payName = Options.payName(this.catalog, this.type)
+        this.payType = Options.payType(this.catalog, this.type)
       }
     },
     type: {
@@ -127,7 +129,7 @@ export default {
       })
     },
     addRow () {
-      this.dataList.push({edited: true, createDate: '', amount: 0, type: 'PAY'})
+      this.dataList.push({edited: true, createDate: '', amount: 0, type: this.payType})
     },
     savePay (row, index) {
       this.$http({
