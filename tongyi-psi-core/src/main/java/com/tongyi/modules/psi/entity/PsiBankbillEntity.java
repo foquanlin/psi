@@ -9,14 +9,14 @@
 package com.tongyi.modules.psi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.sql.Time;
 
 /**
  * 银行账单实体
@@ -25,18 +25,12 @@ import java.sql.Time;
  * @date 2023-03-28 02:05:34
  */
 @Data
-@TableName(value = "psi_bankbill",autoResultMap = true)
 public class PsiBankbillEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    /**
-     * id
-     */
-    @TableId
-    private String id;
     /**
      * 客户供应商
      */
+    @TableField(exist = false)
     private String supplierId;
     /**
      * 类型
@@ -57,6 +51,7 @@ public class PsiBankbillEntity implements Serializable {
     /**
      * 日期
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private Date createDate;
     /**
      * 制单人
@@ -66,12 +61,20 @@ public class PsiBankbillEntity implements Serializable {
      * 负责人
      */
     private String ownerUid;
-    /**
-     * 备注
-     */
-    private String memo;
-    /**
-     * 附件
-     */
-    private String attachUrls;
+    private BigDecimal inAmount;
+    private BigDecimal outAmount;
+    @TableField(exist = false)
+    private String supplierType;
+    @TableField(exist = false)
+    private String supplierName;
+    @TableField(exist = false)
+    private String bankName;
+    @TableField(exist = false)
+    private String orderNo;
+    @TableField(exist = false)
+    private String orderId;
+    @TableField(exist = false)
+    private String orderCatalog;
+    @TableField(exist = false)
+    private String orderType;
 }

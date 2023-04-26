@@ -171,16 +171,9 @@ public class OrderCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObj
             JsonObject json = ait.next().getAsJsonObject();
             String bankId = json.get("bankId").getAsString();
             BigDecimal amount = json.get("amount").getAsBigDecimal();
-            PsiOrderAmountEntity amountEntity = new PsiOrderAmountEntity();
-            amountEntity.setOrderId(module.getId());
-            amountEntity.setBankId(bankId);
-            amountEntity.setAmount(amount);
-            amountEntity.setCreateDate(LocalDate.now());
-            amountEntity.setCreateUid(createUid);
-            amountEntity.setType(PsiOrderAmountEntity.Type.PAY.getCode());
+            PsiOrderAmountEntity amountEntity = module.newOrderAmount(bankId,amount);
             orderAmountService.addEntity(amountEntity);
         }
-        // module.setPayAmount(payAmount);
         module.setOrderAmount(total);
         orderService.updateEntity(module);
         return null;

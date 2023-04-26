@@ -9,6 +9,7 @@
 package com.tongyi.modules.psi.controller;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.service.PsiOrderService;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiBankbillEntity;
 import com.tongyi.modules.psi.service.PsiBankbillService;
@@ -30,6 +31,8 @@ import java.util.Map;
 public class PsiBankbillController extends AbstractController {
     @Autowired
     private PsiBankbillService psiBankbillService;
+    @Autowired
+    private PsiOrderService orderService;
 
     /**
      * 查看所有列表

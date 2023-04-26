@@ -13,15 +13,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.tongyi.common.utils.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.sql.Time;
 
 /**
  * 订单账目实体
@@ -77,6 +73,18 @@ public class PsiOrderAmountEntity implements Serializable {
 
     @TableField(exist = false)
     private PsiBankEntity bank;
+
+    public static PsiOrderAmountEntity newEntity(PsiOrderEntity module,String bankId,BigDecimal amount) {
+        PsiOrderAmountEntity entity = new PsiOrderAmountEntity();
+        entity.setOrderId(module.getId());
+        entity.setBankId(bankId);
+        entity.setAmount(amount);
+        entity.setCreateDate(LocalDate.now());
+        entity.setCreateUid(module.getCreateUid());
+        entity.setType(module.getPayType().getCode());
+        return entity;
+    }
+
     public enum Type {
         PAY("PAY","付款"),
         RECEIPTS("RECEIPTS","收款");
