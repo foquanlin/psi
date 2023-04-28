@@ -90,7 +90,8 @@ import {
   Descriptions,
   DescriptionsItem,
   Result,
-  Statistic
+  Statistic,
+  Empty
 } from 'element-ui'
 
 Vue.use(Pagination)
@@ -171,6 +172,7 @@ Vue.use(Descriptions)
 Vue.use(DescriptionsItem)
 Vue.use(Result)
 Vue.use(Statistic)
+Vue.use(Empty)
 
 Vue.use(Loading.directive)
 
