@@ -79,7 +79,7 @@
       <el-table-column prop="supplierName" header-align="center" align="left" label="客户/供应商"/>
       <el-table-column prop="orderNo" header-align="center" align="left" label="关联单号" width="140">
         <template v-slot="scope">
-          <el-button v-if="scope.row.catalog ==='CAIGOU' || scope.row.catalog ==='XIAOSHOU' || scope.row.catalog ==='DINGDAN'" type="text" size="small" @click="viewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
+          <el-button v-if="scope.row.catalog ==='CAIGOU' || scope.row.catalog ==='XIAOSHOU'" type="text" size="small" @click="viewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
           <el-button v-else-if="scope.row.catalog ==='DIAOBO'" type="text" size="small" @click="allocationViewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
           <el-button v-else-if="scope.row.catalog ==='PANDIAN'" type="text" size="small" @click="checkDetailHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
         </template>
@@ -103,7 +103,7 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <goods-detail v-if="detailVisible" ref="goodsDetail"/>
-    <order-view v-if="orderViewVisible" ref="orderView"/>
+    <order-view v-if="orderViewVisible" ref="orderView" :descriptions="{}" />
     <allocation-view v-if="allocationViewVisible" ref="allocationView"/>
     <check-detail v-if="checkDetailVisible" ref="checkDetail"/>
   </div>
@@ -121,6 +121,7 @@
   import OrderView from './order-view'
   import AllocationView from './allocation-view'
   import CheckDetail from './check-detail'
+  import Options from './options'
   export default {
     data () {
       return {
@@ -228,6 +229,22 @@
       viewHandle (row) {
         this.orderViewVisible = true
         this.$nextTick(() => {
+          let catalog = 'BUY'
+          let type = 'ORDER'
+          if (row.catalog === 'CAIGOU' && row.type === 'IN') {
+            catalog = 'BUY'
+            type = 'ORDER'
+          } else if (row.catalog === 'CAIGOU' && row.type === 'OUT') {
+            catalog = 'BUY'
+            type = 'REFUND'
+          } else if (row.catalog === 'XIAOSHOU' && row.type === 'IN') {
+            catalog = 'SALE'
+            type = 'REFUND'
+          } else if (row.catalog === 'XIAOSHOU' && row.type === 'OUT') {
+            catalog = 'SALE'
+            type = 'ORDER'
+          }
+          this.$refs.orderView.descriptions = Options.descriptions(catalog, type)
           this.$refs.orderView.init(row.orderId)
         })
       },
