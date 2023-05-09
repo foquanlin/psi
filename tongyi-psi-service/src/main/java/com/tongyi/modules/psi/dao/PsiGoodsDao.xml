@@ -85,4 +85,18 @@
         <collection property="specList" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiGoodsSpecEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSpecDao.selectByGoodsId" column="{goodsId=id}"></collection>
         <collection property="skuList" javaType="java.util.List" ofType="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity" select="com.tongyi.modules.psi.dao.PsiGoodsSkuDao.selectByGoodsId" column="{goodsId=id}"></collection>
     </resultMap>
+    <select id="selectById" resultMap="resultMap">
+        select
+            t.id,
+            t.brand_id,
+            t.catalog_id,
+            t.unit_id,
+            t.no,
+            t.name,
+            t.create_date,
+            t.pic_urls,
+            t.memo
+        from psi_goods t
+        where t.id = #{id}
+    </select>
 </mapper>
