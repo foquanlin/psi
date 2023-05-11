@@ -62,7 +62,7 @@ public class StockAllocationExecute implements ModuleExecute<PsiAllocationEntity
             BigDecimal stockNum = stockService.stockNum(entity.getOutWarehouseId(),goodsId,skuId);
             if (stockNum.compareTo(num)<0){
                 log.info("调拨商品库存不足:warehouseId={},goodsId={},skuId={}",outWarehouseId);
-                throw new ServiceException("库存不足!");
+                throw new BusinessException("库存不足!");
             }
         }
         log.info("创建调拨单,数据检查正常:inWarehouseId={},outWarehouseId={},dataList={}",inWarehouseId,outWarehouseId,list);
