@@ -27,9 +27,9 @@
         left join psi_goods pg on pg.id = t.goods_id
         left join psi_catalog pc on pc.id = pg.catalog_id
         left join psi_unit pu on pu.id = pg.unit_id
-        left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id<if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if>
-        left join psi_warehouse pw on pw.id = ps.warehouse_id
     </sql>
+<!--    left join psi_warehouse pw on pw.id = ps.warehouse_id-->
+<!--    &#45;&#45; left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id<if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if>-->
     <sql id="selectWhere">
         <where>
             <if test="params.id != null and params.id != ''">

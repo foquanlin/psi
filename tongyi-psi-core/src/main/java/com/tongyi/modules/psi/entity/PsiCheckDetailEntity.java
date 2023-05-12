@@ -13,16 +13,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.google.gson.JsonObject;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.sql.Time;
-import java.util.Map;
 
 /**
  * 盘点明细实体
@@ -67,8 +62,8 @@ public class PsiCheckDetailEntity implements Serializable {
     /**
      * 盘点日期
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate createDate;
     /**
      * 备注
      */
@@ -113,7 +108,7 @@ public class PsiCheckDetailEntity implements Serializable {
         entity.setGoodsId(item.getGoodsId());
         entity.setBeforeNum(item.getBeforeNum());
         entity.setAfterNum(item.getAfterNum());
-        entity.setCreateDate(LocalDateTime.now());
+        entity.setCreateDate(LocalDate.now());
         entity.setMemo(item.getMemo());
         return entity;
     }
@@ -131,7 +126,7 @@ public class PsiCheckDetailEntity implements Serializable {
         entity.setBeforeNum(beforeNum);
         entity.setAfterNum(afterNum);
         entity.setMemo(memo);
-        entity.setCreateDate(LocalDateTime.now());
+        entity.setCreateDate(LocalDate.now());
         return entity;
     }
 

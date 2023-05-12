@@ -152,7 +152,7 @@
       updownHandle (row) {
         this.$http({
           url: `/psi/goodssku/updown`,
-          method: 'post',
+          method: 'get',
           params: {id: row.id}
         }).then(({data}) => {
           if (data && data.code === 0) {

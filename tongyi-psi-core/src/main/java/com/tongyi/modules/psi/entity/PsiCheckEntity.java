@@ -14,16 +14,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tongyi.common.utils.StringUtils;
-import com.tongyi.modules.sys.entity.SysUserEntity;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.sql.Time;
-import java.util.List;
 
 /**
  * 盘点实体
@@ -52,8 +47,8 @@ public class PsiCheckEntity implements Serializable {
     /**
      * 盘点日期
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate createDate;
     /**
      * 备注
      */
@@ -79,7 +74,7 @@ public class PsiCheckEntity implements Serializable {
         item.setCreateUid(userId);
         item.setWarehouseId(warehouseId);
         item.setMemo(memo);
-        item.setCreateDate(LocalDateTime.now());
+        item.setCreateDate(LocalDate.now());
         item.setNo(StringUtils.generateOrderNumber("PD"));
         return item;
     }
