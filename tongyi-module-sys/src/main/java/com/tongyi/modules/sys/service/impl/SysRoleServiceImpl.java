@@ -84,8 +84,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
     @Override
     public PageInfo<SysRoleEntity> listPage(int current, int size, Map<String, Object> params) {
         //排序
-//        params.put("sidx", "t.create_time");
-//        params.put("asc", false);
+        params.put("sidx", "t.create_time");
+        params.put("asc", false);
         Page<SysRoleEntity> page = new Query<SysRoleEntity>(current,size,params).getPage();
         List<SysRoleEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysRoleEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
