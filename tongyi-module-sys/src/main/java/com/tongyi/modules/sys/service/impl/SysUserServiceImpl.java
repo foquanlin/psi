@@ -141,8 +141,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     @Override
     public PageInfo<SysUserEntity> listPage(int current, int size, Map<String, Object> params) {
         //排序
-        params.put("sidx", "t.create_time");
-        params.put("asc", false);
+//        params.put("sidx", "t.create_time");
+//        params.put("asc", false);
         Page<SysUserEntity> page = new Query<SysUserEntity>(current,size,params).getPage();
         List<SysUserEntity> list = super.baseMapper.listPage(page, params);
         return new PageInfo<SysUserEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
