@@ -11,6 +11,7 @@
  */
 package com.tongyi.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
@@ -37,7 +38,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleM
     @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdate(String roleId, List<String> menuIdList) {
         //先删除角色与菜单关系
-        deleteBatch(new String[]{roleId});
+        baseMapper.delete(new LambdaQueryWrapper<SysRoleMenuEntity>().eq(SysRoleMenuEntity::getRoleId,roleId));
 
         if (menuIdList.size() == 0) {
             return;
