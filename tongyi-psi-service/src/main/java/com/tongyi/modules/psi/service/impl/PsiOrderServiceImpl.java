@@ -9,7 +9,6 @@
 package com.tongyi.modules.psi.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tongyi.common.exception.BusinessException;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
-import java.util.Objects;
+
 
 /**
  * 采购单Service实现类

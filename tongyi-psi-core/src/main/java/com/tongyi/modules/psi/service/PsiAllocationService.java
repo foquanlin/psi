@@ -9,7 +9,6 @@
 package com.tongyi.modules.psi.service;
 
 import com.tongyi.core.IService;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.modules.psi.entity.PsiAllocationEntity;
 
 import java.util.Map;

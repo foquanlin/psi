@@ -9,7 +9,6 @@
 package com.tongyi.modules.psi.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tongyi.common.exception.BusinessException;
-import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,7 +17,6 @@ import com.tongyi.modules.psi.dao.PsiOrderDao;
 import com.tongyi.modules.psi.dao.PsiOrderDetailDao;
 import com.tongyi.modules.psi.dao.PsiStockDao;
 import com.tongyi.modules.psi.entity.PsiOrderDetailEntity;
-import com.tongyi.modules.psi.entity.PsiOrderEntity;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
-import java.util.Objects;
+
 
 /**
  * 订单明细Service实现类
