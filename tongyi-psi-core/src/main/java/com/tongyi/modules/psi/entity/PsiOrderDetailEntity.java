@@ -66,6 +66,8 @@ public class PsiOrderDetailEntity implements Serializable {
     @TableField(exist = false)
     private String goodsName;
     @TableField(exist = false)
+    private String goodsPicUrls;
+    @TableField(exist = false)
     private String specName;
     @TableField(exist = false)
     private String specValue;

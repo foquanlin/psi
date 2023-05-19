@@ -16,6 +16,7 @@
             (select coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) from psi_stock ps where ps.detail_id = t.id) as stock_num,
             pu.name as unit_name,
             pg.name as goods_name,
+            pg.pic_urls as goods_pic_urls,
             pgs.spec_name as spec_name,
             pgs.spec_value as spec_value,
             pc.name as catalog_name
