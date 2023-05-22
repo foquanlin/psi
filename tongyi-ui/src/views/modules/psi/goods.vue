@@ -33,7 +33,7 @@
         <template v-slot="scope">
           <div style="display: flex">
             <el-popover placement="right-start" trigger="hover" v-if="scope.row.picUrls">
-              <el-image fit="contain" style="width:400px" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
+              <el-image fit="contain" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
               <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.picUrls"/>
             </el-popover>
             <div style="flex: 9;text-align: left;margin-left: 5px" >{{scope.row.name}}</div>
