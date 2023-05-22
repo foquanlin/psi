@@ -31,13 +31,13 @@
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称" width="250">
         <template v-slot="scope">
-          <div style="display: flex">
-            <el-popover placement="right-start" trigger="hover" v-if="scope.row.picUrls">
-              <el-image fit="contain" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
-              <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.picUrls"/>
-            </el-popover>
-            <div style="flex: 9;text-align: left;margin-left: 5px" >{{scope.row.name}}</div>
-          </div>
+            <div style="text-align: left;margin-left: 1px;width: 100%">
+              <el-popover placement="right-start" trigger="hover" style="width: 100%;" v-if="scope.row.picUrls">
+                <el-image fit="contain" style="width: 400px;" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
+                <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.picUrls"/>
+              </el-popover>
+              {{scope.row.name}}
+            </div>
         </template>
       </el-table-column>
       <el-table-column prop="catalogName" header-align="center" align="left" label="分类"/>

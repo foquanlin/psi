@@ -40,12 +40,12 @@
     <el-table border :data="dataList" style="width: 100%;">
       <el-table-column prop="goodsName" header-align="center" align="left" fixed="left" label="商品" width="250">
         <template v-slot="scope">
-          <div style="display: flex;">
-            <el-popover placement="right-start" trigger="hover" v-if="scope.row.goodsPicUrls">
-              <el-image fit="contain" @click="openImg(scope.row.goodsPicUrls)" :src="scope.row.goodsPicUrls"/>
+          <div style="text-align: left;margin-left: 1px;width: 100%">
+            <el-popover placement="right-start" trigger="hover" style="width: 100%;" v-if="scope.row.goodsPicUrls">
+              <el-image fit="contain" style="width: 400px;" @click="openImg(scope.row.goodsPicUrls)" :src="scope.row.goodsPicUrls"/>
               <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.goodsPicUrls"/>
             </el-popover>
-            <div style="flex: 9;text-align: left;margin-left: 5px" >{{scope.row.goodsName}}</div>
+            {{scope.row.goodsName}}
           </div>
         </template>
 <!--        <template v-slot="scope">-->
