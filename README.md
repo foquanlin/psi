@@ -231,6 +231,7 @@ psi
 ### 官方QQ群：425910002
 
 #### 常用API
+- node 版本 v10.23.1
 - [Mybatis-Plus](https://baomidou.gitee.io/mybatis-plus-doc/#/quick-start)
 - [Vue](https://cn.vuejs.org/v2/api/)
 - [element-ui](http://element-cn.eleme.io/#/zh-CN/component/installation)

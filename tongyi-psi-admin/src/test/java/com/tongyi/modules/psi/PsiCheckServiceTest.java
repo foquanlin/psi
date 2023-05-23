@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
@@ -49,7 +50,7 @@ public class PsiCheckServiceTest {
             item.setId(id);
             item.setNo (id);
             item.setWarehouseId (id);
-            item.setCreateDate (LocalDateTime.now());
+            item.setCreateDate (LocalDate.now());
             item.setMemo (id);
             service.addEntity(item);
         }
@@ -63,7 +64,7 @@ public class PsiCheckServiceTest {
         item.setId(id);
         item.setNo (id);
         item.setWarehouseId (id);
-        item.setCreateDate (LocalDateTime.now());
+        item.setCreateDate (LocalDate.now());
         item.setMemo (id);
         service.addEntity(item);
         service.updateEntity(item);
