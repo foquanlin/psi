@@ -46,7 +46,7 @@ public class PsiOrderOperationEntity implements Serializable {
     /**
      * 日期
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDateTime createDate;
     /**
      * 操作人

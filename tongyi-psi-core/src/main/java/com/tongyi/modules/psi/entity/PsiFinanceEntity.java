@@ -12,11 +12,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.sql.Time;
 
 /**
  * 非销售实体
@@ -49,6 +49,7 @@ public class PsiFinanceEntity implements Serializable {
     /**
      * 日期
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private Date createDate;
     /**
      * 创建人
