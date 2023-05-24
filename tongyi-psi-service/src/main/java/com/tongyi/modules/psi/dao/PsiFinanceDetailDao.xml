@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiFinanceDetailDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiFinanceDetailDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.fid,
+            t.create_uid,
+            t.create_date,
+            t.amount,
+            t.memo
+        from psi_finance_detail t
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.fid != null and params.fid != ''">
+                and t.fid = #{params.fid}
+            </if>
+            <if test="params.createUid != null and params.createUid != ''">
+                and t.create_uid = #{params.createUid}
+            </if>
+            <if test="params.createDateStart != null and params.createDateEnd != null">
+                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiFinanceDetailEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiFinanceDetailEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>

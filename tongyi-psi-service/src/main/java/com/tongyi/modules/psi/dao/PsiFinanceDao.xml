@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongyi.modules.psi.dao.PsiFinanceDao">
+<!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiFinanceDao"/>-->
+
+    <sql id="selectSql">
+        select
+            t.id,
+            t.no,
+            t.type_id,
+            t.supplier_id,
+            t.create_date,
+            t.create_uid,
+            t.owner_uid,
+            t.memo,
+            pct.name as type_name,
+            suc.real_name as create_name,
+            suo.real_name as owner_name,
+            ps.name as supplier_name
+        from psi_finance t
+        left join psi_cost_type pct on pct.id = t.type_id
+        left join sys_user suc on suc.user_id = t.create_uid
+        left join sys_user suo on suo.user_id = t.owner_uid
+        left join psi_supplier ps on ps.id = t.supplier_id
+    </sql>
+    <sql id="selectWhere">
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and t.id = #{params.id}
+            </if>
+            <if test="params.no != null and params.no != ''">
+                and t.no = #{params.no}
+            </if>
+            <if test="params.typeId != null and params.typeId != ''">
+                and t.type_id = #{params.typeId}
+            </if>
+            <if test="params.supplierId != null and params.supplierId != ''">
+                and t.supplier_id = #{params.supplierId}
+            </if>
+            <if test="params.createDateStart != null and params.createDateEnd != null">
+                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.createUid != null and params.createUid != ''">
+                and t.create_uid = #{params.createUid}
+            </if>
+            <if test="params.ownerUid != null and params.ownerUid != ''">
+                and t.owner_uid = #{params.ownerUid}
+            </if>
+            <if test="params.memo != null and params.memo != ''">
+                and t.memo = #{params.memo}
+            </if>
+        </where>
+    </sql>
+    <select id="listPage" resultType="com.tongyi.modules.psi.entity.PsiFinanceEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="listAll" resultType="com.tongyi.modules.psi.entity.PsiFinanceEntity">
+        <include refid="selectSql"/>
+        <include refid="selectWhere"/>
+    </select>
+</mapper>
