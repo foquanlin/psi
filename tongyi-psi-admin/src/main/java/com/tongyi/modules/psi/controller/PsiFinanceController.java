@@ -7,8 +7,12 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.controller;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.service.PsiFinanceDetailService;
+import com.tongyi.modules.psi.service.execute.FinanceCreateExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiFinanceEntity;
 import com.tongyi.modules.psi.service.PsiFinanceService;
@@ -17,6 +21,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +37,11 @@ import java.util.Map;
 public class PsiFinanceController extends AbstractController {
     @Autowired
     private PsiFinanceService psiFinanceService;
+    @Autowired
+    private PsiFinanceDetailService financeDetailService;
 
+    @Autowired
+    private FinanceCreateExecute financeCreateExecute;
     /**
      * 查看所有列表
      *
@@ -68,20 +78,26 @@ public class PsiFinanceController extends AbstractController {
     @RequiresPermissions(value = {"psi:nosalein:info","psi:nobuyout:info"},logical = Logical.OR)
     public RestResponse info(@PathVariable("id") String id) {
         PsiFinanceEntity psiFinance = psiFinanceService.getById(id);
+        Map<String,Object> params = new HashMap<>();
+        params.put("fid",psiFinance.getId());
+        financeDetailService.listAll(params);
         return RestResponse.success("info", psiFinance);
     }
 
     /**
      * 新增非销售
      *
-     * @param entity
+     * @param json
      * @return RestResponse
      */
     @SysLog("新增非销售")
     @PostMapping("/save")
     @RequiresPermissions(value = {"psi:nosalein:save","psi:nobuyout:save"},logical = Logical.OR)
-    public RestResponse save(@RequestBody PsiFinanceEntity entity) {
-        psiFinanceService.addEntity(entity);
+    public RestResponse save(@RequestBody String json) {
+        String createUid = getUserId();
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        PsiFinanceEntity entity = PsiFinanceEntity.newEntity(createUid);
+        financeCreateExecute.apply(entity,jsonObject);
         return RestResponse.success();
     }
 

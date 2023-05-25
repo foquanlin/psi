@@ -13,9 +13,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tongyi.common.utils.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -50,7 +52,7 @@ public class PsiFinanceEntity implements Serializable {
      * 日期
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
-    private Date createDate;
+    private LocalDate createDate;
     /**
      * 创建人
      */
@@ -72,4 +74,43 @@ public class PsiFinanceEntity implements Serializable {
     private String ownerName;
     @TableField(exist = false)
     private String supplierName;
+
+    public static PsiFinanceEntity newEntity(String userId) {
+        PsiFinanceEntity entity  =new PsiFinanceEntity();
+        entity.setCreateUid(userId);
+        entity.setCreateDate(LocalDate.now());
+        return entity;
+    }
+
+    public enum Type {
+        IN("IN","收入"),
+        OUT("OUT","支出");
+
+        private String code;
+        private String name;
+
+        Type(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String newNo(){
+            return StringUtils.generateOrderNumber(this.code);
+        }
+    }
 }

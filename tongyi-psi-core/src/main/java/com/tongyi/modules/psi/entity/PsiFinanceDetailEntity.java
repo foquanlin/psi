@@ -11,10 +11,12 @@ package com.tongyi.modules.psi.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.sql.Time;
 
@@ -45,7 +47,8 @@ public class PsiFinanceDetailEntity implements Serializable {
     /**
      * 日期
      */
-    private Date createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+    private LocalDate createDate;
     /**
      * 金额
      */
@@ -54,4 +57,14 @@ public class PsiFinanceDetailEntity implements Serializable {
      * 备注
      */
     private String memo;
+
+    public static PsiFinanceDetailEntity newEntity(String fid,String createUid,BigDecimal amount,String memo){
+        PsiFinanceDetailEntity entity = new PsiFinanceDetailEntity();
+        entity.setFid(fid);
+        entity.setCreateUid(createUid);
+        entity.setCreateDate(LocalDate.now());
+        entity.setAmount(amount);
+        entity.setMemo(memo);
+        return entity;
+    }
 }

@@ -7,13 +7,18 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.tongyi.common.utils.StringUtils;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiFinanceDao;
+import com.tongyi.modules.psi.dao.PsiFinanceDetailDao;
+import com.tongyi.modules.psi.entity.PsiFinanceDetailEntity;
 import com.tongyi.modules.psi.entity.PsiFinanceEntity;
 import com.tongyi.modules.psi.service.PsiFinanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +35,9 @@ import java.io.Serializable;
  */
 @Service("psiFinanceService")
 public class PsiFinanceServiceImpl extends ServiceImpl<PsiFinanceDao, PsiFinanceEntity> implements PsiFinanceService{
+
+    @Autowired
+    private PsiFinanceDetailDao financeDetailDao;
 
     @Override
     public PsiFinanceEntity getById(Serializable id){
@@ -63,12 +71,14 @@ public class PsiFinanceServiceImpl extends ServiceImpl<PsiFinanceDao, PsiFinance
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
+        financeDetailDao.delete(new LambdaQueryWrapper<PsiFinanceDetailEntity>().eq(PsiFinanceDetailEntity::getFid,id));
         return super.removeById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
+        financeDetailDao.delete(new LambdaQueryWrapper<PsiFinanceDetailEntity>().in(PsiFinanceDetailEntity::getFid,ids));
         return super.removeByIds(Arrays.asList(ids));
     }
 }

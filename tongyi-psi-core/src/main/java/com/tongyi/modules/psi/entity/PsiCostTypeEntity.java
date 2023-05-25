@@ -11,6 +11,7 @@ package com.tongyi.modules.psi.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tongyi.common.utils.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -47,4 +48,36 @@ public class PsiCostTypeEntity implements Serializable {
      * 是否计入利润
      */
     private Boolean profited;
+
+    public enum Type {
+        IN("IN","收入"),
+        OUT("OUT","支出");
+
+        private String code;
+        private String name;
+
+        Type(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String newNo(){
+            return StringUtils.generateOrderNumber(this.code);
+        }
+    }
 }
