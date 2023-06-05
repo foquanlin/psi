@@ -71,14 +71,14 @@ public class PsiFinanceServiceImpl extends ServiceImpl<PsiFinanceDao, PsiFinance
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteEntity(Serializable id) {
-        financeDetailDao.delete(new LambdaQueryWrapper<PsiFinanceDetailEntity>().eq(PsiFinanceDetailEntity::getFid,id));
+//        financeDetailDao.delete(new LambdaQueryWrapper<PsiFinanceDetailEntity>().eq(PsiFinanceDetailEntity::getFid,id));
         return super.removeById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBatch(Serializable[] ids) {
-        financeDetailDao.delete(new LambdaQueryWrapper<PsiFinanceDetailEntity>().in(PsiFinanceDetailEntity::getFid,ids));
+//        financeDetailDao.delete(new LambdaQueryWrapper<PsiFinanceDetailEntity>().in(PsiFinanceDetailEntity::getFid,ids));
         return super.removeByIds(Arrays.asList(ids));
     }
 }

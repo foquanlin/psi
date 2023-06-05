@@ -49,6 +49,15 @@ public class PsiCostTypeEntity implements Serializable {
      */
     private Boolean profited;
 
+    public PsiOrderAmountEntity.Type getAmountType(){
+        if (Type.IN == Type.valueOf(type)){
+            return PsiOrderAmountEntity.Type.RECEIPTS;
+        }
+        if (Type.OUT == Type.valueOf(type)){
+            return PsiOrderAmountEntity.Type.PAY;
+        }
+        return null;
+    }
     public enum Type {
         IN("IN","收入"),
         OUT("OUT","支出");

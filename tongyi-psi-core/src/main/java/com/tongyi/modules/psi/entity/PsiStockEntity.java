@@ -182,6 +182,7 @@ public class PsiStockEntity implements Serializable {
      * 出入库分类
      */
     public enum Catalog {
+        NONE("NONE","无"),
         TIAOZHENG("TIAOZHENG","库存调整"),
         DIAOBO("DIAOBO","库存调拨"),
         PANDIAN("PANDIAN","库存盘点"),

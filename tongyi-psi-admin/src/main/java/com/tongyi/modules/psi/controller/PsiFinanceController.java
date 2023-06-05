@@ -11,7 +11,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.entity.PsiOrderAmountEntity;
+import com.tongyi.modules.psi.entity.PsiOrderEntity;
 import com.tongyi.modules.psi.service.PsiFinanceDetailService;
+import com.tongyi.modules.psi.service.PsiOrderAmountService;
+import com.tongyi.modules.psi.service.PsiOrderService;
 import com.tongyi.modules.psi.service.execute.FinanceCreateExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiFinanceEntity;
@@ -38,7 +42,9 @@ public class PsiFinanceController extends AbstractController {
     @Autowired
     private PsiFinanceService psiFinanceService;
     @Autowired
-    private PsiFinanceDetailService financeDetailService;
+    private PsiOrderService orderService;
+    @Autowired
+    private PsiOrderAmountService psiOrderAmountService;
 
     @Autowired
     private FinanceCreateExecute financeCreateExecute;
@@ -77,11 +83,10 @@ public class PsiFinanceController extends AbstractController {
     @GetMapping("/info/{id}")
     @RequiresPermissions(value = {"psi:nosalein:info","psi:nobuyout:info"},logical = Logical.OR)
     public RestResponse info(@PathVariable("id") String id) {
-        PsiFinanceEntity psiFinance = psiFinanceService.getById(id);
+        PsiOrderEntity psiOrder = orderService.getById(id);
         Map<String,Object> params = new HashMap<>();
-        params.put("fid",psiFinance.getId());
-        financeDetailService.listAll(params);
-        return RestResponse.success("info", psiFinance);
+        params.put("orderId",psiOrder.getId());
+        return RestResponse.success("info", psiOrder);
     }
 
     /**
@@ -96,7 +101,8 @@ public class PsiFinanceController extends AbstractController {
     public RestResponse save(@RequestBody String json) {
         String createUid = getUserId();
         JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-        PsiFinanceEntity entity = PsiFinanceEntity.newEntity(createUid);
+        jsonObject.addProperty("createUid",createUid);
+        PsiOrderEntity entity = PsiOrderEntity.newOrder(PsiOrderEntity.Catalog.IN,PsiOrderEntity.Type.NONE);
         financeCreateExecute.apply(entity,jsonObject);
         return RestResponse.success();
     }

@@ -7,20 +7,20 @@
     <sql id="selectSql">
         select
             t.id,
-            t.fid,
+            t.order_id,
             t.create_uid,
             t.create_date,
             t.amount,
             t.memo
-        from psi_finance_detail t
+        from psi_order_amount t
     </sql>
     <sql id="selectWhere">
         <where>
             <if test="params.id != null and params.id != ''">
                 and t.id = #{params.id}
             </if>
-            <if test="params.fid != null and params.fid != ''">
-                and t.fid = #{params.fid}
+            <if test="params.orderId != null and params.orderId != ''">
+                and t.order_id = #{params.orderId}
             </if>
             <if test="params.createUid != null and params.createUid != ''">
                 and t.create_uid = #{params.createUid}

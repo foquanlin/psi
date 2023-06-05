@@ -39,7 +39,7 @@ public class PsiFinanceDetailEntity implements Serializable {
     /**
      * 主id
      */
-    private String fid;
+    private String orderId;
     /**
      * 创建人
      */
@@ -60,7 +60,7 @@ public class PsiFinanceDetailEntity implements Serializable {
 
     public static PsiFinanceDetailEntity newEntity(String fid,String createUid,BigDecimal amount,String memo){
         PsiFinanceDetailEntity entity = new PsiFinanceDetailEntity();
-        entity.setFid(fid);
+        entity.setOrderId(fid);
         entity.setCreateUid(createUid);
         entity.setCreateDate(LocalDate.now());
         entity.setAmount(amount);

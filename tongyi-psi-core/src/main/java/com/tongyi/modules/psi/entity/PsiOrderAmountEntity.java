@@ -48,6 +48,7 @@ public class PsiOrderAmountEntity implements Serializable {
      * 类型
      */
     private String type;
+
     /**
      * 银行账户
      */
@@ -81,10 +82,19 @@ public class PsiOrderAmountEntity implements Serializable {
         entity.setAmount(amount);
         entity.setCreateDate(LocalDate.now());
         entity.setCreateUid(module.getCreateUid());
-        entity.setType(module.getPayType().getCode());
+        entity.setType(module.getPayType()!=null?module.getPayType().getCode():null);
         return entity;
     }
-
+    public static PsiOrderAmountEntity newEntity(String orderId,String createUid ,PsiOrderEntity.Type type,String bankId,BigDecimal amount) {
+        PsiOrderAmountEntity entity = new PsiOrderAmountEntity();
+        entity.setOrderId(orderId);
+        entity.setBankId(bankId);
+        entity.setAmount(amount);
+        entity.setCreateDate(LocalDate.now());
+        entity.setCreateUid(createUid);
+        entity.setType(type.getCode());
+        return entity;
+    }
     public enum Type {
         PAY("PAY","付款"),
         RECEIPTS("RECEIPTS","收款");

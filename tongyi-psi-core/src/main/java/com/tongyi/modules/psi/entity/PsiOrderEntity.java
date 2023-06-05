@@ -107,6 +107,10 @@ public class PsiOrderEntity implements Serializable {
      */
     private String ownerUid;
     /**
+     * 收入类型
+     */
+    private String typeId;
+    /**
      * 已付款金额
      */
     @TableField(exist = false)
@@ -244,7 +248,9 @@ public class PsiOrderEntity implements Serializable {
      */
     public enum Catalog {
         BUY("BUY","采购订单"),
-        SALE("SALE","销售订单");
+        SALE("SALE","销售订单"),
+        IN("IN","非销售收入"),
+        OUT("OUT","非采购支出");
 
         private String code;
         private String name;
@@ -295,6 +301,12 @@ public class PsiOrderEntity implements Serializable {
             if (this == SALE) {
                 return PsiStockEntity.Catalog.XIAOSHOU;
             }
+            if (this == IN) {
+                return PsiStockEntity.Catalog.NONE;
+            }
+            if (this == OUT) {
+                return PsiStockEntity.Catalog.NONE;
+            }
             return null;
         }
 
@@ -339,6 +351,7 @@ public class PsiOrderEntity implements Serializable {
      * 订单类型
      */
     public enum Type {
+        NONE("NONE","无"),
         ORDER("ORDER","订单"),
         REFUND("REFUND","退单");
 

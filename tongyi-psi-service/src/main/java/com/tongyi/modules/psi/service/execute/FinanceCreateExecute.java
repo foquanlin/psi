@@ -1,16 +1,12 @@
 package com.tongyi.modules.psi.service.execute;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.StringUtils;
 import com.tongyi.core.ModuleExecute;
 import com.tongyi.core.ServiceException;
 import com.tongyi.modules.psi.entity.*;
-import com.tongyi.modules.psi.service.PsiCostTypeService;
-import com.tongyi.modules.psi.service.PsiFinanceDetailService;
-import com.tongyi.modules.psi.service.PsiFinanceService;
+import com.tongyi.modules.psi.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,59 +16,63 @@ import java.util.Iterator;
 
 @Slf4j
 @Service
-public class FinanceCreateExecute implements ModuleExecute<PsiFinanceEntity, JsonObject,Void> {
+public class FinanceCreateExecute implements ModuleExecute<PsiOrderEntity, JsonObject,Void> {
     @Autowired
     private PsiFinanceService psiFinanceService;
-    @Autowired
-    private PsiFinanceDetailService psiFinanceDetailService;
+
     @Autowired
     private PsiCostTypeService costTypeService;
+
+    @Autowired
+    private PsiOrderService orderService;
+    @Autowired
+    private PsiOrderAmountService orderAmountService;
     @Override
-    public boolean checker(PsiFinanceEntity module, JsonObject params) {
-        String supplierId = params.get("supplierId").getAsString();
+    public boolean checker(PsiOrderEntity module, JsonObject params) {
+        String orderUid = params.get("orderUid").getAsString();
         String ownerUid = params.get("ownerUid").getAsString();
+        String bankId = params.get("bankId").getAsString();
+        BigDecimal amount = params.get("amount").getAsBigDecimal();
         PsiCostTypeEntity type = costTypeService.getById(params.get("typeId").getAsString());
-        if (StringUtils.isBlank(supplierId)){
+        if (StringUtils.isBlank(orderUid)){
             throw new BusinessException("请选择收款方或付款方");
+        }
+        if (StringUtils.isBlank(bankId)){
+            throw new BusinessException("请选择首付款账号");
+        }
+        if ( null == amount || BigDecimal.ZERO.compareTo(amount)>=0){
+            throw new BusinessException("请输入金额");
         }
         if (StringUtils.isBlank(ownerUid)){
             throw new BusinessException("请选择责任人");
-        }
-        JsonArray list = params.getAsJsonArray("dataList");
-        Iterator<JsonElement> it = list.iterator(); // 检查选择的商品是否合法
-        while (it.hasNext()){
-            JsonObject item = it.next().getAsJsonObject();
-            BigDecimal amount = item.get("amount").getAsBigDecimal();
-            if(BigDecimal.ZERO.compareTo(amount)>=0){
-                throw new BusinessException("金额必须大于0");
-            }
         }
         return true;
     }
 
     @Override
-    public Void execute(PsiFinanceEntity module, JsonObject params) throws ServiceException {
-        String supplierId = params.get("supplierId").getAsString();
+    public Void execute(PsiOrderEntity module, JsonObject params) throws ServiceException {
+        String orderUid = params.get("orderUid").getAsString();
+        String createUid = params.get("createUid").getAsString();
         String ownerUid = params.get("ownerUid").getAsString();
         String memo = params.get("memo").getAsString();
+        String bankId = params.get("bankId").getAsString();
+        BigDecimal amount = params.get("amount").getAsBigDecimal();
+
         PsiCostTypeEntity type = costTypeService.getById(params.get("typeId").getAsString());
         String no = PsiCostTypeEntity.Type.valueOf(type.getType()).newNo();
         module.setNo(no);
+        module.setTypeId(type.getId());
         module.setOwnerUid(ownerUid);
         module.setMemo(memo);
-        module.setTypeId(type.getId());
-        module.setSupplierId(supplierId);
-        JsonArray list = params.getAsJsonArray("dataList");
+        module.setOrderUid(orderUid);
+        module.setCreateUid(createUid);
+        module.setOrderAmount(amount);
 
-        psiFinanceService.addEntity(module);
-
-        Iterator<JsonElement> it = list.iterator(); // 检查选择的商品是否合法
-        while (it.hasNext()){
-            JsonObject item = it.next().getAsJsonObject();
-            BigDecimal amount = item.get("amount").getAsBigDecimal();
-            String memo2 = item.get("memo").getAsString();
-            psiFinanceDetailService.addEntity(PsiFinanceDetailEntity.newEntity(module.getId(), module.getCreateUid(), amount,memo2));
-        }
+        orderService.addEntity(module);
+        PsiOrderAmountEntity entity = PsiOrderAmountEntity.newEntity(module,bankId,amount);
+        entity.setType(type.getAmountType().getCode());
+        orderAmountService.addEntity(entity);
+        // psiFinanceDetailService.addEntity(PsiFinanceDetailEntity.newEntity(module.getId(), module.getCreateUid(), amount,null));
         return null;
     }
 }
