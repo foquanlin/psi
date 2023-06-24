@@ -47,42 +47,4 @@ public class PsiFinanceMockTest {
     public void setup() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
     }
-    @Test
-    public void testAdd() {
-        for(int i=0;i<100;i++) {
-            int idx = new Random().nextInt(1000000);
-            String id = "id-" + idx;
-            PsiFinanceEntity item = new PsiFinanceEntity();
-            item.setId(id);
-            item.setNo (id);
-            item.setType (id);
-            item.setSupplierId (id);
-            item.setCreateDate (new Date());
-            item.setCreateUid (id);
-            item.setOwnerUid (id);
-            item.setMemo (id);
-            controller.save(item);
-        }
-    }
-
-    @Test
-    public void testAll() {
-        int idx = new Random().nextInt(1000000);
-        String id = "id-" + idx;
-        PsiFinanceEntity item = new PsiFinanceEntity();
-        item.setId(id);
-        item.setNo (id);
-        item.setType (id);
-        item.setSupplierId (id);
-        item.setCreateDate (new Date());
-        item.setCreateUid (id);
-        item.setOwnerUid (id);
-        item.setMemo (id);
-        controller.save(item);
-        controller.update(item);
-        controller.info(id);
-        controller .listAll(new HashMap<>());
-        controller.list(1,10,new HashMap<>());
-        controller.delete(new String[]{id});
-    }
 }

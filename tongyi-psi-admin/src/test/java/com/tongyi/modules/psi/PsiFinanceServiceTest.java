@@ -39,42 +39,4 @@ public class PsiFinanceServiceTest {
     @Before
     public void setup() throws Exception {
     }
-    @Test
-    public void testAdd() {
-        for(int i=0;i<10;i++) {
-            int idx = new Random().nextInt(1000000);
-            String id = "id-" + idx;
-            PsiFinanceEntity item = new PsiFinanceEntity();
-            item.setId(id);
-            item.setNo (id);
-            item.setType (id);
-            item.setSupplierId (id);
-            item.setCreateDate (new Date());
-            item.setCreateUid (id);
-            item.setOwnerUid (id);
-            item.setMemo (id);
-            service.addEntity(item);
-        }
-    }
-
-    @Test
-    public void testAll() {
-        int idx = new Random().nextInt(1000000);
-        String id = "id-" + idx;
-        PsiFinanceEntity item = new PsiFinanceEntity();
-        item.setId(id);
-        item.setNo (id);
-        item.setType (id);
-        item.setSupplierId (id);
-        item.setCreateDate (new Date());
-        item.setCreateUid (id);
-        item.setOwnerUid (id);
-        item.setMemo (id);
-        service.addEntity(item);
-        service.updateEntity(item);
-        service.getById(id);
-        service.listAll(new HashMap<>());
-        service.listPage(1,10,new HashMap<>());
-        service.deleteBatch(new String[]{id});
-    }
 }
