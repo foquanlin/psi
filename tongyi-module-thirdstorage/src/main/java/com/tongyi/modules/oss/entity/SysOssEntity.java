@@ -39,4 +39,12 @@ public class SysOssEntity implements Serializable {
      * 创建时间
      */
     private Date createDate;
+
+
+    public static SysOssEntity newEntity(String url){
+        SysOssEntity item = new SysOssEntity();
+        item.setUrl(url);
+        item.setCreateDate(new Date());
+        return item;
+    }
 }
