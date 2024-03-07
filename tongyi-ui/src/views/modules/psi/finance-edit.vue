@@ -4,7 +4,7 @@
     :close-on-click-modal="false" width="50%" :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item :label="(type==='IN'?'收入':'支出') +'类型'" prop="typeId">
-        <select-finance-type v-model="dataForm" field="typeId" type="IN" :placeholder="(type==='IN'?'收入':'支出') +'类型'"/>
+        <select-finance-type v-model="dataForm" field="typeId" :type="type" :placeholder="(type==='IN'?'收入':'支出') +'类型'"/>
       </el-form-item>
       <el-form-item label="日期" prop="createDate">
         <el-date-picker v-model="dataForm.createDate" placeholder="日期" clearable value-format="yyyy-MM-dd"/>
