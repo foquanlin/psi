@@ -17,7 +17,7 @@
     <el-table border :data="dataList" style="width: 100%;">
       <el-table-column prop="orderNo" header-align="center" align="center" label="订单编号" width="200">
         <template v-slot="scope">
-          <el-button type="text" size="mini" @click="orderViewHandle(scope.row.orderId)">{{scope.row.orderNo}}</el-button>
+          <el-button type="text" size="mini" @click="orderViewHandle(scope.row)">{{scope.row.orderNo}}</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="createDate" header-align="center" align="center" label="收付款日期"/>
@@ -51,7 +51,13 @@
   import SelectSupplier from './component/select-supplier'
   import SelectBank from './component/select-bank'
   import OrderView from './order-view'
+  import Options from './options.vue'
   export default {
+    computed: {
+      Options() {
+        return Options
+      }
+    },
     data () {
       return {
         searchForm: {
@@ -115,10 +121,11 @@
       selectionChangeHandle (val) {
         this.dataListSelections = val
       },
-      orderViewHandle (id) {
+      orderViewHandle (row) {
         this.orderViewVisible = true
         this.$nextTick(() => {
-          this.$refs.orderView.init(id)
+          this.$refs.orderView.descriptions = Options.descriptions(row.orderCatalog, row.orderType)
+          this.$refs.orderView.init(row.orderId)
         })
       }
     }
