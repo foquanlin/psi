@@ -22,8 +22,18 @@
       <el-table-column prop="weight" header-align="center" align="center" label="权重"/>
       <el-table-column prop="status" header-align="center" align="center" label="状态">
         <template v-slot="scope">
-          <el-tag v-if="scope.row.status ==='RUN'">启用</el-tag>
-          <el-tag v-else>停用</el-tag>
+          <span v-if="isAuth(rightStatus)">
+            <el-popover v-if="scope.row.status === 'RUN'" placement="top-start" title="提示" width="200" trigger="hover" content="点击停用">
+              <el-tag slot="reference" type="success">启用</el-tag>
+            </el-popover>
+            <el-popover v-else placement="top-start" title="提示" width="200" trigger="hover" content="点击启用">
+              <el-tag slot="reference">停用</el-tag>
+            </el-popover>
+          </span>
+          <span v-else>
+            <el-tag v-if="scope.row.status ==='RUN'">启用</el-tag>
+            <el-tag v-else>停用</el-tag>
+          </span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
@@ -59,7 +69,8 @@
         rightSave: 'psi:' + this.type.toLowerCase() + ':save',
         rightUpdate: 'psi:' + this.type.toLowerCase() + ':update',
         rightDelete: 'psi:' + this.type.toLowerCase() + ':delete',
-        rightInfo: 'psi:' + this.type.toLowerCase() + ':info'
+        rightInfo: 'psi:' + this.type.toLowerCase() + ':info',
+        rightStatus: 'psi:' + this.type.toLowerCase() + ':status'
       }
     },
     props: {
