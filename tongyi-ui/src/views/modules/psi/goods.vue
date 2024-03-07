@@ -31,13 +31,7 @@
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称" width="250">
         <template v-slot="scope">
-            <div style="text-align: left;margin-left: 1px;width: 100%">
-              <el-popover placement="right-start" trigger="hover" style="width: 100%;" v-if="scope.row.picUrls">
-                <el-image fit="contain" style="width: 400px;" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
-                <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.picUrls"/>
-              </el-popover>
-              {{scope.row.name}}
-            </div>
+          <img-popover :name="scope.row.name" :urls="scope.row.picUrls"/>
         </template>
       </el-table-column>
       <el-table-column prop="catalogName" header-align="center" align="left" label="分类"/>
@@ -85,6 +79,7 @@
   import GoodsSpec from './goodsspec'
   import SelectWarehouse from './component/select-warehouse'
   import SelectCatalog from './component/select-catalog'
+  import ImgPopover from './component/img-popover'
   export default {
     data () {
       return {
@@ -112,6 +107,7 @@
       }
     },
     components: {
+      ImgPopover,
       GoodsAdd,
       GoodsEdit,
       Options,

@@ -40,13 +40,7 @@
     <el-table border :data="dataList" style="width: 100%;">
       <el-table-column prop="goodsName" header-align="center" align="left" fixed="left" label="商品" width="250">
         <template v-slot="scope">
-          <div style="text-align: left;margin-left: 1px;width: 100%">
-            <el-popover placement="right-start" trigger="hover" style="width: 100%;" v-if="scope.row.goodsPicUrls">
-              <el-image fit="contain" style="width: 400px;" @click="openImg(scope.row.goodsPicUrls)" :src="scope.row.goodsPicUrls"/>
-              <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.goodsPicUrls"/>
-            </el-popover>
-            {{scope.row.goodsName}}
-          </div>
+          <img-popover :name="scope.row.goodsName" :urls="scope.row.goodsPicUrls"/>
         </template>
 <!--        <template v-slot="scope">-->
 <!--          <span @click="showDetails(scope.row)">{{scope.row.goodsName}}</span>-->
@@ -122,6 +116,7 @@
   import AllocationView from './allocation-view'
   import CheckDetail from './check-detail'
   import Options from './options'
+  import ImgPopover from './component/img-popover'
   export default {
     data () {
       return {
@@ -149,6 +144,7 @@
       }
     },
     components: {
+      ImgPopover,
       GoodsDetail,
       SelectSupplier,
       SelectWarehouse,

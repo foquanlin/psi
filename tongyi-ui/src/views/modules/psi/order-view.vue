@@ -35,13 +35,7 @@
     <el-table border :data="dataList" style="align-content: center;align-items: center; margin-bottom: 20px" empty-text="暂无内容">
       <el-table-column prop="goodsName" header-align="center" align="center" :label="descriptions.goodsId" width="180px">
         <template v-slot="scope">
-          <div style="display: flex">
-            <el-popover placement="right-start" trigger="hover" v-if="scope.row.goodsPicUrls">
-              <el-image fit="contain" style="width:400px" @click="openImg(scope.row.goodsPicUrls)" :src="scope.row.goodsPicUrls"/>
-              <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.goodsPicUrls"/>
-            </el-popover>
-            <div style="flex: 9;text-align: left;margin-left: 5px" >{{scope.row.goodsName}}</div>
-          </div>
+          <img-popover :name="scope.row.goodsName" :urls="scope.row.goodsPicUrls"/>
         </template>
       </el-table-column>
       <el-table-column prop="skuid" header-align="center" align="left" :label="descriptions.skuId">
@@ -78,7 +72,10 @@
 </template>
 
 <script>
+import ImgPopover from './component/img-popover'
+
 export default {
+  components: {ImgPopover},
   data () {
     return {
       disabled: true,

@@ -15,13 +15,7 @@
       <el-table-column type="selection" header-align="center" align="center" width="50"/>
       <el-table-column prop="name" header-align="center" align="center" label="名称">
         <template v-slot="scope">
-          <div style="display: flex">
-            <el-popover placement="right-start" trigger="hover">
-              <el-image fit="contain" style="width:400px" @click="openImg(scope.row.picUrls)" :src="scope.row.picUrls"/>
-              <img slot="reference" style="height: 50px;width: 50px;" :src="scope.row.picUrls"/>
-            </el-popover>
-            <div style="flex: 9;text-align: left;margin-left: 5px" >{{scope.row.name}}</div>
-          </div>
+          <img-popover :name="scope.row.name" :urls="scope.row.picUrls"/>
         </template>
       </el-table-column>
       <el-table-column prop="status" header-align="center" align="center" label="状态">
@@ -49,6 +43,7 @@
 <script>
   import brandEdit from './brand-edit'
   import Options from '../sys/options'
+  import ImgPopover from './component/img-popover'
   export default {
     data () {
       return {
@@ -64,6 +59,7 @@
       }
     },
     components: {
+      ImgPopover,
       brandEdit,
       Options
     },
