@@ -25,14 +25,14 @@
         <el-input v-model="dataForm.memo" :disabled="disabled" placeholder="备注" clearable/>
       </el-form-item>
       <el-form-item label="权重" prop="weight">
-        <el-input v-model="dataForm.weight" :disabled="disabled" placeholder="权重" clearable type="number"/>
+        <el-input-number v-model="dataForm.weight" :disabled="disabled" placeholder="权重" clearable type="number"/>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-radio-group v-model="dataForm.status" :disabled="disabled">
-          <el-radio-button label="RUN">启用</el-radio-button>
-          <el-radio-button label="STOP">停用</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
+<!--      <el-form-item label="状态" prop="status">-->
+<!--        <el-radio-group v-model="dataForm.status" :disabled="disabled">-->
+<!--          <el-radio-button label="RUN">启用</el-radio-button>-->
+<!--          <el-radio-button label="STOP">停用</el-radio-button>-->
+<!--        </el-radio-group>-->
+<!--      </el-form-item>-->
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
@@ -64,6 +64,8 @@
           name: [{required: true, message: '名称不能为空', trigger: 'blur'}],
           status: [{required: true, message: '状态不能为空', trigger: 'blur'}],
           type: [{required: true, message: '类型不能为空', trigger: 'blur'}],
+          phone: [{ required: true, message: '请输入手机号', trigger: 'change' }, { pattern: /^1[3|4|5|6|7|8|9]\d{9}$/, message: '请输入正确的号码格式', trigger: 'change' }],
+          email: [{ required: false, message: '请输入邮箱', trigger: 'change' }, { pattern: /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/, message: '请输入正确的邮箱格式', trigger: 'change' }],
           other: []
         }
       }

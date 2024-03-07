@@ -53,11 +53,6 @@
   import OrderView from './order-view'
   import Options from './options.vue'
   export default {
-    computed: {
-      Options() {
-        return Options
-      }
-    },
     data () {
       return {
         searchForm: {
