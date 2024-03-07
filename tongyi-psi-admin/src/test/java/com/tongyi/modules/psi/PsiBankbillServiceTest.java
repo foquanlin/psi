@@ -45,7 +45,6 @@ public class PsiBankbillServiceTest {
             int idx = new Random().nextInt(1000000);
             String id = "id-" + idx;
             PsiBankbillEntity item = new PsiBankbillEntity();
-            item.setId(id);
             item.setSupplierId (id);
             item.setType (id);
             item.setBankId (id);
@@ -54,8 +53,6 @@ public class PsiBankbillServiceTest {
             item.setCreateDate (new Date());
             item.setCreateUid (id);
             item.setOwnerUid (id);
-            item.setMemo (id);
-            item.setAttachUrls (id);
             service.addEntity(item);
         }
     }
@@ -65,7 +62,6 @@ public class PsiBankbillServiceTest {
         int idx = new Random().nextInt(1000000);
         String id = "id-" + idx;
         PsiBankbillEntity item = new PsiBankbillEntity();
-        item.setId(id);
         item.setSupplierId (id);
         item.setType (id);
         item.setBankId (id);
@@ -74,8 +70,6 @@ public class PsiBankbillServiceTest {
         item.setCreateDate (new Date());
         item.setCreateUid (id);
         item.setOwnerUid (id);
-        item.setMemo (id);
-        item.setAttachUrls (id);
         service.addEntity(item);
         service.updateEntity(item);
         service.getById(id);

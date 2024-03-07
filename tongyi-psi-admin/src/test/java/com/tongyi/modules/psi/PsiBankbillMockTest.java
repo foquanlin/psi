@@ -53,7 +53,6 @@ public class PsiBankbillMockTest {
             int idx = new Random().nextInt(1000000);
             String id = "id-" + idx;
             PsiBankbillEntity item = new PsiBankbillEntity();
-            item.setId(id);
             item.setSupplierId (id);
             item.setType (id);
             item.setBankId (id);
@@ -62,8 +61,6 @@ public class PsiBankbillMockTest {
             item.setCreateDate (new Date());
             item.setCreateUid (id);
             item.setOwnerUid (id);
-            item.setMemo (id);
-            item.setAttachUrls (id);
             controller.save(item);
         }
     }
@@ -73,7 +70,6 @@ public class PsiBankbillMockTest {
         int idx = new Random().nextInt(1000000);
         String id = "id-" + idx;
         PsiBankbillEntity item = new PsiBankbillEntity();
-        item.setId(id);
         item.setSupplierId (id);
         item.setType (id);
         item.setBankId (id);
@@ -82,8 +78,6 @@ public class PsiBankbillMockTest {
         item.setCreateDate (new Date());
         item.setCreateUid (id);
         item.setOwnerUid (id);
-        item.setMemo (id);
-        item.setAttachUrls (id);
         controller.save(item);
         controller.update(item);
         controller.info(id);
