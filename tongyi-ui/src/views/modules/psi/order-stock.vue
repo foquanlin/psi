@@ -33,7 +33,7 @@
     </el-table-column>
 
   </el-table>
-  <order-stock-inout v-if="inStockVisible" ref="orderStockInout" :descriptions="descriptions" :order="order" :catalog="catalog" :type="type"/>
+  <order-stock-inout v-if="inStockVisible" ref="orderStockInout" :descriptions="descriptions" :order="order" :catalog="catalog" :type="type"  @refreshDataList="getDataList"/>
 </div>
 </template>
 

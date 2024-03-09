@@ -48,6 +48,9 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
     private PsiOrderInvoiceDao orderInvoiceDao;
     @Autowired
     private PsiStockDao stockDao;
+
+    @Autowired
+    private PsiOrderDao orderDao;
     @Override
     public PsiOrderEntity getById(Serializable id){
         return super.getById(id);
@@ -140,6 +143,7 @@ public class PsiOrderServiceImpl extends ServiceImpl<PsiOrderDao, PsiOrderEntity
         PsiOrderEntity order = baseMapper.selectById(detail.getOrderId());
         order.setStockStatus(orderStockNum,orderNum);
         baseMapper.updateById(order);
+        orderDao.updateById(order);
     }
     @Transactional(rollbackFor = Exception.class)
     @Override

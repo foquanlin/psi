@@ -62,7 +62,7 @@
         <el-button type="text" @click="appendGoods"><i class="el-icon-plus"></i>{{descriptions.add+descriptions.goodsId}}</el-button>
       </el-form>
       <el-form-item style="margin-top:20px;text-align: center">
-        <el-button type="primary" v-if="isAuth('psi:buyorder:update') || isAuth('psi:buyrefundorder:update') || isAuth('psi:saleorder:update') || isAuth('psi:salerefundorder:update')"  @click="dataFormSubmit()">{{ descriptions.edit }}</el-button>
+        <el-button type="primary" v-if="isAuth('psi:buyorder:update') || isAuth('psi:buyrefundorder:update') || isAuth('psi:saleorder:update') || isAuth('psi:salerefundorder:update')"  @click="dataFormSubmit()" :disabled="!edited">{{ descriptions.edit }}</el-button>
       </el-form-item>
     </el-form>
     <goods-select v-if="selectVisible" ref="goodsSelect" @select="onSelect"/>
@@ -254,6 +254,7 @@ export default {
       item.goodsName = goods.name
       item.catalogName = goods.catalogName
       item.unitName = goods.unitName
+      this.changeData()
     },
     selectSku (sku) {
       console.log(sku)
@@ -265,9 +266,9 @@ export default {
         this.deleteList.push(this.dataList[index])
       }
       this.dataList.splice(index, 1)
+      this.changeData()
     },
     changeData () {
-      console.log('----------------------->')
       this.edited = true
     }
   }

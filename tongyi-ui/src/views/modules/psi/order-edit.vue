@@ -33,10 +33,7 @@ export default {
         id: ''
       },
       accountList: [],
-      detailList: [],
-      orderEdit: 0,
-      detailEdit: 0,
-      accountEdit: 0
+      detailList: []
     }
   },
   props: {
@@ -67,30 +64,6 @@ export default {
         this.type = value
         console.log('watch.type')
       }
-    },
-    order: {
-      deep: true,
-      immediate: true,
-      handler (value) {
-        this.orderEdit += 1
-        console.log('watch.order', this.orderEdit)
-      }
-    },
-    detailList: {
-      immediate: true,
-      handler (value) {
-        this.detailEdit += 1
-        console.log('watch.detailList', this.detailEdit)
-      },
-      deep: true
-    },
-    accountList: {
-      immediate: true,
-      handler (value) {
-        this.accountEdit += 1
-        console.log('watch.accountList', this.accountEdit)
-      },
-      deep: true
     }
   },
   components: {
@@ -106,9 +79,6 @@ export default {
       this.accountList = []
       this.detailList = []
       this.visible = true
-      this.orderEdit = 0
-      this.detailEdit = 0
-      this.accountEdit = 0
       this.defaultTab = 'detail'
       this.loadDetails()
       this.loadAccountList()
@@ -142,8 +112,6 @@ export default {
               })
               this.detailList = datalist
               this.order = data.info
-              this.detailEdit = 0
-              this.orderEdit = 0
             }
           })
         }
@@ -163,7 +131,6 @@ export default {
               item.edited = false
             })
             this.accountList = data.list
-            this.accountEdit = 0
           }
         })
       })
@@ -172,38 +139,8 @@ export default {
       this.visible = false
       this.$emit('refreshDataList')
     },
-    onDetailAppend (row) {
-      this.detailList.push(row)
-    },
-    onDetailEdit (row, index) {
-      this.detailList[index].edited = true
-    },
-    onDetailSave (row, index) {
-    },
-    onDetailDelete (row, index) {
-      if (!row.id) {
-        this.detailList.splice(index, 1)
-        return
-      }
-      this.$confirm(`确定进行[删除]操作?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$http({
-          url: '/psi/orderdetail/delete',
-          method: 'post',
-          data: [row.id]
-        }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.$message({ message: '操作成功', type: 'success', duration: 1500 })
-            this.detailList.splice(index, 1)
-          }
-        })
-      })
-    },
     onChangeTab (newName, current) {
-      console.log('changeTab', newName, current, this.$refs.orderDetailEdit.edited, this.$refs.orderStock.edited, this.$refs.orderPayEdit.edited(), this.$refs.orderInvoiceEdit.edited)
+      // console.log('changeTab', newName, current, this.$refs.orderDetailEdit.edited, this.$refs.orderStock.edited, this.$refs.orderPayEdit.edited(), this.$refs.orderInvoiceEdit.edited)
       if (this.$refs.orderDetailEdit.edited || this.$refs.orderStock.edited || this.$refs.orderPayEdit.edited() || this.$refs.orderInvoiceEdit.edited) {
         this.$message({ message: '请先提交已修改的内容', type: 'error', duration: 1500 })
         return false

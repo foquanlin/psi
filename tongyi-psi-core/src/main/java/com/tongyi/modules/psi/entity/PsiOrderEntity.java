@@ -129,11 +129,12 @@ public class PsiOrderEntity implements Serializable {
     public void setStockStatus(BigDecimal orderStockNum,BigDecimal orderNum) {
         if (orderStockNum.compareTo(BigDecimal.ZERO)==0){
             this.setStockStatus(PsiOrderEntity.StockStatus.UNFINISH.getCode());
-        }else if (orderNum.compareTo(orderStockNum)>0){
+        }else if (orderNum.compareTo(orderStockNum.abs())>0){
             this.setStockStatus(PsiOrderEntity.StockStatus.PARTS.getCode());
         }else{
             this.setStockStatus(PsiOrderEntity.StockStatus.FINISH.getCode());
         }
+        this.setStatus();
     }
     public static PsiOrderEntity newOrder(Catalog catalog, Type type) {
         PsiOrderEntity entity = new PsiOrderEntity();
@@ -241,8 +242,15 @@ public class PsiOrderEntity implements Serializable {
         }else {
             this.payStatus = PayStatus.FINISH.getCode();
         }
+        this.setStatus();
     }
-
+    public void setInvoiceStatus(String status){
+        this.invoiceStatus = InvoiceStatus.valueOf(status).code;
+        this.setStatus();
+    }
+    private void setStatus(){
+        this.status = (PayStatus.FINISH.equals(this.payStatus) && StockStatus.FINISH.equals(this.stockStatus) && InvoiceStatus.FINISH.equals(this.invoiceStatus))?OrderStatus.FINISH.code:OrderStatus.UNFINISH.code;
+    }
     /**
      * 订单分类
      */
@@ -378,6 +386,13 @@ public class PsiOrderEntity implements Serializable {
         public void setName(String name) {
             this.name = name;
         }
+
+        public boolean equals(String code){
+            if (StringUtils.isBlank(code))
+                return false;
+            return this.code.equals(code);
+        }
+
     }
     /**
      * 订单状态
@@ -409,6 +424,13 @@ public class PsiOrderEntity implements Serializable {
         public void setName(String name) {
             this.name = name;
         }
+
+        public boolean equals(String code){
+            if (StringUtils.isBlank(code))
+                return false;
+            return this.code.equals(code);
+        }
+
     }
 
     /**
@@ -441,6 +463,12 @@ public class PsiOrderEntity implements Serializable {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public boolean equals(String code){
+            if (StringUtils.isBlank(code))
+                return false;
+            return this.code.equals(code);
         }
 
     }
@@ -476,7 +504,11 @@ public class PsiOrderEntity implements Serializable {
         public void setName(String name) {
             this.name = name;
         }
-
+        public boolean equals(String code){
+            if (StringUtils.isBlank(code))
+                return false;
+            return this.code.equals(code);
+        }
     }
 
     /**
@@ -508,6 +540,12 @@ public class PsiOrderEntity implements Serializable {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public boolean equals(String code){
+            if (StringUtils.isBlank(code))
+                return false;
+            return this.code.equals(code);
         }
     }
 

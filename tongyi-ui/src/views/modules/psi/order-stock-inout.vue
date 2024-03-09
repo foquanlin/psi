@@ -64,7 +64,7 @@
       </el-table-column>
     </el-table>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">{{descriptions.cancel}}</el-button>
+      <el-button @click="clickClose">{{descriptions.cancel}}</el-button>
       <el-button type="primary" v-if="isAuth('psi:buyorder:addStock') || isAuth('psi:buyrefundorder:addStock') || isAuth('psi:saleorder:addStock') || isAuth('psi:salerefundorder:addStock')" @click="addRow">新增{{descriptions.stockName}}</el-button>
     </span>
   </el-dialog>
@@ -265,6 +265,10 @@ export default {
           this.getDataList()
         }
       })
+    },
+    clickClose () {
+      this.visible = false
+      this.$emit('refreshDataList')
     }
   }
 }
