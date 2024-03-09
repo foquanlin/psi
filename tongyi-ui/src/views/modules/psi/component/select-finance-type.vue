@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="value[field]" :placeholder="placeholder" clearable :loading="loading" @focus="loadData">
+  <el-select v-model="value[field]" :placeholder="placeholder" clearable :loading="loading" @focus="loadData" @change="changeHandler">
     <el-option v-for="item in dataList" :key="item.id" :value="item.id" :label="item.name"/>
   </el-select>
 </template>
@@ -70,6 +70,9 @@ export default {
         }
         this.loading = false
       })
+    },
+    changeHandler () {
+      this.$emit('change')
     }
   }
 }

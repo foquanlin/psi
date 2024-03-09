@@ -3,19 +3,19 @@
   <div>
     <el-form :model="dataForm" :inline="true" :rules="dataRule" ref="dataForm" label-width="100px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item :label="descriptions.createDate" prop="createDate">
-        <el-date-picker v-model="dataForm.createDate" :placeholder="descriptions.createDate" type="date" value-format="yyyy-MM-dd" clearable/>
+        <el-date-picker v-model="dataForm.createDate" :placeholder="descriptions.createDate" type="date" value-format="yyyy-MM-dd" clearable @change="changeData"/>
       </el-form-item>
       <el-form-item :label="descriptions.orderUid" prop="orderUid">
-        <select-supplier2 v-model="dataForm" field="orderUid" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'" />
+        <select-supplier2 v-model="dataForm" field="orderUid" :type="catalog==='BUY'?'SUPPLIER':'CUSTOMER'" @change="changeData" />
       </el-form-item>
       <el-form-item :label="descriptions.expressNo" prop="expressNo">
-        <el-input v-model="dataForm.expressNo" :placeholder="descriptions.expressNo" clearable/>
+        <el-input v-model="dataForm.expressNo" :placeholder="descriptions.expressNo" clearable @change="changeData"/>
       </el-form-item>
       <el-form-item :label="descriptions.ownerUid" prop="ownerUid">
-        <select-user v-model="dataForm" field="ownerUid" :placeholder="descriptions.ownerUid"/>
+        <select-user v-model="dataForm" field="ownerUid" :placeholder="descriptions.ownerUid" @change="changeData"/>
       </el-form-item>
       <el-form-item :label="descriptions.memo" prop="memo">
-        <el-input v-model="dataForm.memo" :placeholder="descriptions.memo" clearable/>
+        <el-input v-model="dataForm.memo" :placeholder="descriptions.memo" clearable @change="changeData"/>
       </el-form-item>
       <el-form>
         <el-table border :data="dataList" style="align-content: center;align-items: center;" >
@@ -27,7 +27,7 @@
           </el-table-column>
           <el-table-column prop="skuId" header-align="center" align="left" :label="descriptions.skuId" width="250">
             <template v-slot="scope">
-              <select-sku v-if="scope.row.append" v-model="scope.row" :goods-id="scope.row.goodsId" field="skuId" size="mini"/>
+              <select-sku v-if="scope.row.append" v-model="scope.row" :goods-id="scope.row.goodsId" field="skuId" size="mini" @change="changeData"/>
               <span  v-else="scope.row.specName">
                 <el-tag type="info" v-for="item in scope.row.specName.split(':')" :key="item" style="margin-right: 10px;">{{item}}</el-tag>
               </span>
@@ -40,12 +40,12 @@
           </el-table-column>
           <el-table-column prop="price" header-align="center" align="center" :label="priceName" width="150px">
             <template v-slot="scope">
-              <el-input-number v-model="scope.row.price" :placeholder="priceName" size="mini" style="width:100%"/>
+              <el-input-number v-model="scope.row.price" :placeholder="priceName" size="mini" style="width:100%" @change="changeData"/>
             </template>
           </el-table-column>
           <el-table-column prop="num" header-align="center" align="center" :label="numberName+descriptions.num" width="150px">
             <template v-slot="scope">
-              <el-input-number v-model="scope.row.num" :placeholder="numberName+descriptions.num" size="mini" style="width:100%"/>
+              <el-input-number v-model="scope.row.num" :placeholder="numberName+descriptions.num" size="mini" style="width:100%" @change="changeData"/>
             </template>
           </el-table-column>
           <el-table-column prop="total" header-align="center" align="center" :label="descriptions.subtotal">
@@ -80,6 +80,7 @@ import Options from './options'
 export default {
   data () {
     return {
+      edited: false,
       dataForm: {
         id: '',
         no: '',
@@ -149,6 +150,7 @@ export default {
       handler (value) {
         this.order = value
         this.dataForm = this.order
+        this.edited = false
       }
     },
     dataList: {
@@ -175,6 +177,9 @@ export default {
   comments: {
     Options
   },
+  created () {
+    this.edited = false
+  },
   methods: {
     // 表单提交
     dataFormSubmit () {
@@ -191,6 +196,7 @@ export default {
               }
             }).then(({data}) => {
               if (data && data.code === 0) {
+                this.edited = false
                 this.$message({message: '操作成功', type: 'success', duration: 1500})
                 this.$emit('refreshDataList')
               }
@@ -214,9 +220,11 @@ export default {
           price: 0,
           warehouseNum: 0,
           stockNum: 0,
-          memo: ''
+          memo: '',
+          edited: true
         }
       )
+      this.edited = true
     },
 
     onSelect (list) { // 选中的商品
@@ -240,6 +248,7 @@ export default {
       this.dataList = datalist
     },
     selectGoods (id, goods) {
+      this.edited = true
       let item = this.dataList[this.dataList.length - 1]
       item.goodsId = goods.id
       item.goodsName = goods.name
@@ -250,11 +259,16 @@ export default {
       console.log(sku)
     },
     delRowHandle (index) { // 删除一行
+      this.edited = true
       if (this.dataList[index].id) {
         this.dataList[index].deleted = true
         this.deleteList.push(this.dataList[index])
       }
       this.dataList.splice(index, 1)
+    },
+    changeData () {
+      console.log('----------------------->')
+      this.edited = true
     }
   }
 }

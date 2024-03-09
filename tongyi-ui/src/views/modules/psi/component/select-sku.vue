@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="value[field]" :disabled="!goodsId" placeholder="规格" clearable filterable loading-text="加载中..." :loading="loading" :size="size" @focus="loadData">
+  <el-select v-model="value[field]" :disabled="!goodsId" placeholder="规格" clearable filterable loading-text="加载中..." :loading="loading" :size="size" @focus="loadData" @change="changeHandler">
     <el-option v-for="item in skuList" :key="item.id" :label="item.specName" :value="item.id"/>
   </el-select>
 </template>
@@ -69,6 +69,9 @@ export default {
           this.loading = false
         })
       })
+    },
+    changeHandler () {
+      this.$emit('change')
     }
   }
 }

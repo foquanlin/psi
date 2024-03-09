@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="value[field]" placeholder="出入类型" clearable>
+  <el-select v-model="value[field]" placeholder="出入类型" clearable @change="changeHandler">
     <el-option value="TIAOZHENG" label="库存调整"></el-option>
     <el-option value="DIAOBO" label="库存调拨"></el-option>
     <el-option value="PANDIAN" label="库存盘点"></el-option>
@@ -33,6 +33,11 @@ export default {
         this.value = value
         console.log('watch.searchForm')
       }
+    }
+  },
+  methods: {
+    changeHandler () {
+      this.$emit('change')
     }
   }
 }

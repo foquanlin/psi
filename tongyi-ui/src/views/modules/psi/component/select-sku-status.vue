@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="value[field]" placeholder="上架/下架" clearable>
+  <el-select v-model="value[field]" placeholder="上架/下架" clearable @change="changeHandler">
     <el-option value="UP" label="上架"></el-option>
     <el-option value="DOWN" label="下架"></el-option>
   </el-select>
@@ -7,6 +7,7 @@
 
 
 <script>
+
 export default {
   data () {
     return {
@@ -29,6 +30,11 @@ export default {
         this.value = value
         console.log('watch.searchForm')
       }
+    }
+  },
+  methods: {
+    changeHandler () {
+      this.$emit('change')
     }
   }
 }

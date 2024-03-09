@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value[field]" :placeholder="placeholder" clearable :loading="loading" @focus="loadData">
+    <el-select v-model="value[field]" :placeholder="placeholder" clearable :loading="loading" @focus="loadData" @change="changeHandler">
       <el-option v-for="item in userList" :key="item.userId" :value="item.userId" :label="item.realName"/>
     </el-select>
   </div>
@@ -66,6 +66,9 @@ export default {
         }
         this.loading = false
       })
+    },
+    changeHandler () {
+      this.$emit('change')
     }
   }
 }

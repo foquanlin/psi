@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value[field]" :placeholder="type==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." :loading="loading" @focus="loadData">
+    <el-select v-model="value[field]" :placeholder="type==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." :loading="loading" @focus="loadData" @change="changeHandler">
       <el-option v-for="item in supplierList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>
@@ -68,6 +68,9 @@ export default {
         }
         this.loading = false
       })
+    },
+    changeHandler () {
+      this.$emit('change')
     }
   }
 }

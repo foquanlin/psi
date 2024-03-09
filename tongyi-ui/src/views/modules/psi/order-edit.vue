@@ -203,8 +203,8 @@ export default {
       })
     },
     onChangeTab (newName, current) {
-      console.log('changeTab', newName, current, this.orderEdit, this.detailEdit, this.accountEdit)
-      if (this.orderEdit > 1 || this.detailEdit > 1 || this.accountEdit > 1) {
+      console.log('changeTab', newName, current, this.$refs.orderDetailEdit.edited, this.$refs.orderStock.edited, this.$refs.orderPayEdit.edited(), this.$refs.orderInvoiceEdit.edited)
+      if (this.$refs.orderDetailEdit.edited || this.$refs.orderStock.edited || this.$refs.orderPayEdit.edited() || this.$refs.orderInvoiceEdit.edited) {
         this.$message({ message: '请先提交已修改的内容', type: 'error', duration: 1500 })
         return false
       }

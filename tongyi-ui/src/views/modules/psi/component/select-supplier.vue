@@ -4,7 +4,7 @@
       <el-radio-button label="CUSTOMER">客户</el-radio-button>
       <el-radio-button label="SUPPLIER">供应商</el-radio-button>
     </el-radio-group>
-    <el-select v-model="value[field]" :placeholder="supplierType==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." :loading="loading" @focus="loadData">
+    <el-select v-model="value[field]" :placeholder="supplierType==='SUPPLIER'?'供应商':'客户'" clearable filterable loading-text="加载中..." :loading="loading" @focus="loadData" @change="changeHandler">
       <el-option v-for="item in supplierList" :key="item.id" :label="item.name" :value="item.id"/>
     </el-select>
   </div>
@@ -66,6 +66,10 @@ export default {
     changeSupplier () {
       this.value[this.field] = ''
       this.supplierList = []
+      this.$emit('change')
+    },
+    changeHandler () {
+      this.$emit('change')
     }
   }
 }

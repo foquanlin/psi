@@ -46,7 +46,15 @@ import Options from './options'
 export default {
   data () {
     return {
-      edited: false,
+      edited: function () {
+        let ed = false
+        this.dataList.forEach(item => {
+          if (item.edited) {
+            ed = true
+          }
+        })
+        return ed
+      },
       amountEditVisible: false,
       bankList: [],
       payType: '',
