@@ -16,7 +16,6 @@
             t.spec_name,
             t.spec_value,
         <if test="params.warehouseId != null and params.warehouseId != ''">
-            pw.name as warehouse_name,
             (select coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) from psi_stock ps where ps.goods_id = t.goods_id and ps.sku_id = t.id <if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if> ) as warehouse_num,
         </if>
             pg.name as goods_name,
@@ -28,8 +27,6 @@
         left join psi_catalog pc on pc.id = pg.catalog_id
         left join psi_unit pu on pu.id = pg.unit_id
     </sql>
-<!--    left join psi_warehouse pw on pw.id = ps.warehouse_id-->
-<!--    &#45;&#45; left join psi_stock ps on ps.goods_id = t.goods_id and ps.sku_id = t.id<if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if>-->
     <sql id="selectWhere">
         <where>
             <if test="params.id != null and params.id != ''">
