@@ -62,14 +62,22 @@
     <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
-        group by pgs.id, pgs.goods_id, pgs.no, pgs.barcode, pgs.cost_price, pgs.sale_price, pgs.status, pgs.spec_name, pgs.spec_value,pw.name, pg.name, pg.pic_urls, pu.name, pc.name
+        group by pgs.id, pgs.goods_id, pgs.no, pgs.barcode, pgs.cost_price, pgs.sale_price, pgs.status, pgs.spec_name, pgs.spec_value,
+        <if test="params.warehouseId != null and params.warehouseId != ''">
+        pw.name,
+        </if>
+        pg.name, pg.pic_urls, pu.name, pc.name
 
     </select>
 
     <select id="listAll" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
-        group by pgs.id, pgs.goods_id, pgs.no, pgs.barcode, pgs.cost_price, pgs.sale_price, pgs.status, pgs.spec_name, pgs.spec_value,pw.name, pg.name, pg.pic_urls, pu.name, pc.name
+        group by pgs.id, pgs.goods_id, pgs.no, pgs.barcode, pgs.cost_price, pgs.sale_price, pgs.status, pgs.spec_name, pgs.spec_value,
+        <if test="params.warehouseId != null and params.warehouseId != ''">
+            pw.name,
+        </if>
+        pg.name, pg.pic_urls, pu.name, pc.name
     </select>
 
     <select id="selectByGoodsId" resultMap="resultMap">
