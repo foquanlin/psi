@@ -116,7 +116,7 @@ public class PsiSupplierController extends AbstractController {
     @SysLog("设置供应商状态")
     @GetMapping("/status")
     @RequiresPermissions(value = {"psi:supplier:status","psi:customer:status"})
-    public RestResponse statusWarehouse(@RequestParam("id") String id,@RequestParam("status")String status) {
+    public RestResponse statusSupplier(@RequestParam("id") String id,@RequestParam("status")String status) {
         psiSupplierService.supplierStatus(id,status);
         return RestResponse.success();
     }

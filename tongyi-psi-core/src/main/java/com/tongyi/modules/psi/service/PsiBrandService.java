@@ -19,4 +19,5 @@ import com.tongyi.modules.psi.entity.PsiBrandEntity;
  */
 public interface PsiBrandService extends IService<PsiBrandEntity>{
 
+    void brandStatus(String id, String status);
 }

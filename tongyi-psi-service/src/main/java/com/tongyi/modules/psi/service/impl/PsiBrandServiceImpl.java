@@ -72,4 +72,11 @@ public class PsiBrandServiceImpl extends ServiceImpl<PsiBrandDao, PsiBrandEntity
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(ids));
     }
+
+    @Override
+    public void brandStatus(String id, String status) {
+        PsiBrandEntity item = baseMapper.selectById(id);
+        item.setStatus(status);
+        baseMapper.updateById(item);
+    }
 }

@@ -111,4 +111,12 @@ public class PsiBrandController extends AbstractController {
         psiBrandService.deleteBatch(ids);
         return RestResponse.success();
     }
+
+    @SysLog("设置品牌状态")
+    @GetMapping("/status")
+    @RequiresPermissions("psi:brand:status")
+    public RestResponse statusWarehouse(@RequestParam("id") String id,@RequestParam("status")String status) {
+        psiBrandService.brandStatus(id,status);
+        return RestResponse.success();
+    }
 }
