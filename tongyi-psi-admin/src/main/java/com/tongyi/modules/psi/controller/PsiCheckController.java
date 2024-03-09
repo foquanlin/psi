@@ -7,17 +7,12 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.controller;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tongyi.common.annotation.SysLog;
-import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.RestResponse;
 import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
 import com.tongyi.modules.psi.service.PsiCheckDetailService;
-import com.tongyi.modules.psi.service.PsiStockService;
 import com.tongyi.modules.psi.service.execute.StockCheckExecute;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiCheckEntity;
@@ -44,8 +39,6 @@ public class PsiCheckController extends AbstractController {
     private PsiCheckDetailService checkDetailService;
     @Autowired
     private StockCheckExecute stockCheckExecute;
-    @Autowired
-    private PsiStockService stockService;
 
     /**
      * 查看所有列表

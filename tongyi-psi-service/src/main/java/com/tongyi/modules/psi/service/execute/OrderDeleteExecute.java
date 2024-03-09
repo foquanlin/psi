@@ -7,7 +7,6 @@ import com.tongyi.core.ServiceException;
 import com.tongyi.modules.psi.entity.PsiOrderEntity;
 import com.tongyi.modules.psi.service.PsiOrderDetailService;
 import com.tongyi.modules.psi.service.PsiOrderService;
-import com.tongyi.modules.psi.service.PsiStockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class OrderDeleteExecute implements ModuleExecute<PsiOrderEntity, JsonObject,Void> {
-    @Autowired
-    private PsiStockService stockService;
     @Autowired
     private PsiOrderService orderService;
     @Autowired

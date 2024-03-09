@@ -5,61 +5,71 @@
 <!--        <cache-ref namespace="com.tongyi.modules.psi.dao.PsiGoodsSkuDao"/>-->
 
     <sql id="selectSql">
-        select
-            t.id,
-            t.goods_id,
-            t.no,
-            t.barcode,
-            t.cost_price,
-            t.sale_price,
-            t.status,
-            t.spec_name,
-            t.spec_value,
+        SELECT pgs.id,
+        pgs.goods_id,
+        pgs.no,
+        pgs.barcode,
+        pgs.cost_price,
+        pgs.sale_price,
+        pgs.status,
+        pgs.spec_name,
+        pgs.spec_value,
         <if test="params.warehouseId != null and params.warehouseId != ''">
-            (select coalesce(sum(case ps.type when 'IN' then ps.num when 'OUT' then -ps.num else 0 end),0) from psi_stock ps where ps.goods_id = t.goods_id and ps.sku_id = t.id <if test="params.warehouseId != null and params.warehouseId != ''"> and ps.warehouse_id = #{params.warehouseId}</if> ) as warehouse_num,
+        pw.name AS warehouse_name,
         </if>
-            pg.name as goods_name,
-            pg.pic_urls as pic_urls,
-            pu.name as unit_name,
-            pc.name as catalog_name
-        from psi_goods_sku t
-        left join psi_goods pg on pg.id = t.goods_id
-        left join psi_catalog pc on pc.id = pg.catalog_id
-        left join psi_unit pu on pu.id = pg.unit_id
+        (SELECT coalesce(sum(CASE ps.type WHEN 'IN' THEN ps.num WHEN 'OUT' THEN -ps.num ELSE 0 END), 0) FROM psi_stock ps WHERE ps.goods_id = pgs.goods_id AND ps.sku_id = pgs.id) AS warehouse_num,
+        pg.name AS goods_name,
+        pg.pic_urls AS pic_urls,
+        pu.name AS unit_name,
+        pc.name AS catalog_name
+        FROM psi_stock ps
+        LEFT JOIN psi_goods pg ON pg.id = ps.goods_id
+        LEFT JOIN psi_catalog pc ON pc.id = pg.catalog_id
+        LEFT JOIN psi_unit pu ON pu.id = pg.unit_id
+        LEFT JOIN psi_goods_sku pgs ON ps.goods_id = pgs.goods_id AND ps.sku_id = pgs.id
+        <if test="params.warehouseId != null and params.warehouseId != ''">
+        LEFT JOIN psi_warehouse pw ON pw.id = ps.warehouse_id
+        </if>
     </sql>
     <sql id="selectWhere">
         <where>
             <if test="params.id != null and params.id != ''">
-                and t.id = #{params.id}
+                and pgs.id = #{params.id}
             </if>
             <if test="params.goodsId != null and params.goodsId != ''">
-                and t.goods_id = #{params.goodsId}
+                and pgs.goods_id = #{params.goodsId}
             </if>
             <if test="params.no != null and params.no != ''">
-                and t.no = #{params.no}
+                and pgs.no = #{params.no}
             </if>
             <if test="params.barcode != null and params.barcode != ''">
-                and t.barcode = #{params.barcode}
+                and pgs.barcode = #{params.barcode}
             </if>
             <if test="params.status != null and params.status != ''">
-                and t.status = #{params.status}
+                and pgs.status = #{params.status}
             </if>
             <if test="params.specName != null and params.specName != ''">
-                and t.spec_name = #{params.specName}
+                and pgs.spec_name = #{params.specName}
             </if>
             <if test="params.specValue != null and params.specValue != ''">
-                and t.spec_value = #{params.specValue}
+                and pgs.spec_value = #{params.specValue}
+            </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and ps.warehouse_id = #{params.warehouseId}
             </if>
         </where>
     </sql>
     <select id="listPage" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
+        group by pgs.id, pgs.goods_id, pgs.no, pgs.barcode, pgs.cost_price, pgs.sale_price, pgs.status, pgs.spec_name, pgs.spec_value,pw.name, pg.name, pg.pic_urls, pu.name, pc.name
+
     </select>
 
     <select id="listAll" resultMap="resultMap">
         <include refid="selectSql"/>
         <include refid="selectWhere"/>
+        group by pgs.id, pgs.goods_id, pgs.no, pgs.barcode, pgs.cost_price, pgs.sale_price, pgs.status, pgs.spec_name, pgs.spec_value,pw.name, pg.name, pg.pic_urls, pu.name, pc.name
     </select>
 
     <select id="selectByGoodsId" resultMap="resultMap">
@@ -126,6 +136,7 @@
         <result column="spec_value" property="specValue"/>
         <result column="unit_name" property="unitName"/>
         <result column="catalog_name" property="catalogName"/>
-        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.sumStockBySku" column="{goodsId=goods_id,skuId=id}"/>
+        <result column="warehouse_num" property="warehouseNum"/>
+<!--        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.sumStockBySku" column="{goodsId=goods_id,skuId=id}"/>-->
     </resultMap>
 </mapper>
