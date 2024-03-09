@@ -9,16 +9,15 @@
 package com.tongyi.modules.psi.controller;
 import com.tongyi.common.annotation.SysLog;
 import com.tongyi.common.utils.RestResponse;
+import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
 import com.tongyi.modules.sys.controller.AbstractController;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiStockService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.tongyi.core.PageInfo;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -145,5 +144,21 @@ public class PsiStockController extends AbstractController {
         entity.setCatalog(PsiStockEntity.Catalog.TIAOZHENG.getCode());
         psiStockService.addEntity(entity);
         return RestResponse.success();
+    }
+
+    @SysLog("查询库存商品")
+    @PostMapping("/skulist")
+//    @RequiresPermissions("psi:stock:skulist")
+    public RestResponse selectSkuList(@RequestBody Map<String, Object> params) {
+        Integer current = (Integer)params.get("page");
+        Integer size = (Integer)params.get("limit");
+        if (current == null){
+            current =1;
+        }
+        if (size == null) {
+            size = 10;
+        }
+        PageInfo<PsiGoodsSkuEntity> page = psiStockService.selectSkuList(current,size,params);
+        return RestResponse.success("page", page);
     }
 }

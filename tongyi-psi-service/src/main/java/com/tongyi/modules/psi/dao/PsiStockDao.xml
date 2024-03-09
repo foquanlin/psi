@@ -157,4 +157,78 @@
             </if>
         </where>
     </select>
+
+    <select id="selectSkuList" resultMap="skuMap">
+        SELECT pgs.id,
+        pgs.goods_id,
+        pgs.no,
+        pgs.barcode,
+        pgs.cost_price,
+        pgs.sale_price,
+        pgs.status,
+        pgs.spec_name,
+        pgs.spec_value,
+        <if test="params.warehouseId != null and params.warehouseId != ''">
+            pw.name AS warehouse_name,
+        </if>
+        (SELECT coalesce(sum(CASE ps.type WHEN 'IN' THEN ps.num WHEN 'OUT' THEN -ps.num ELSE 0 END), 0) FROM psi_stock ps WHERE ps.goods_id = pgs.goods_id AND ps.sku_id = pgs.id) AS warehouse_num,
+        pg.name AS goods_name,
+        pg.pic_urls AS pic_urls,
+        pu.name AS unit_name,
+        pc.name AS catalog_name
+        FROM psi_stock ps
+        LEFT JOIN psi_goods pg ON pg.id = ps.goods_id
+        LEFT JOIN psi_catalog pc ON pc.id = pg.catalog_id
+        LEFT JOIN psi_unit pu ON pu.id = pg.unit_id
+        LEFT JOIN psi_goods_sku pgs ON ps.goods_id = pgs.goods_id AND ps.sku_id = pgs.id
+        <if test="params.warehouseId != null and params.warehouseId != ''">
+            LEFT JOIN psi_warehouse pw ON pw.id = ps.warehouse_id
+        </if>
+        <where>
+            <if test="params.id != null and params.id != ''">
+                and pgs.id = #{params.id}
+            </if>
+            <if test="params.goodsId != null and params.goodsId != ''">
+                and pgs.goods_id = #{params.goodsId}
+            </if>
+            <if test="params.no != null and params.no != ''">
+                and pgs.no = #{params.no}
+            </if>
+            <if test="params.barcode != null and params.barcode != ''">
+                and pgs.barcode = #{params.barcode}
+            </if>
+            <if test="params.status != null and params.status != ''">
+                and pgs.status = #{params.status}
+            </if>
+            <if test="params.specName != null and params.specName != ''">
+                and pgs.spec_name = #{params.specName}
+            </if>
+            <if test="params.specValue != null and params.specValue != ''">
+                and pgs.spec_value = #{params.specValue}
+            </if>
+            <if test="params.warehouseId != null and params.warehouseId != ''">
+                and ps.warehouse_id = #{params.warehouseId}
+            </if>
+        </where>
+        group by pgs.id, pgs.goods_id, pgs.no, pgs.barcode, pgs.cost_price, pgs.sale_price, pgs.status, pgs.spec_name, pgs.spec_value,
+        <if test="params.warehouseId != null and params.warehouseId != ''">
+            pw.name,
+        </if>
+        pg.name, pg.pic_urls, pu.name, pc.name
+
+    </select>
+    <resultMap id="skuMap" type="com.tongyi.modules.psi.entity.PsiGoodsSkuEntity">
+        <id column="id" property="id"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="cost_price" property="costPrice"/>
+        <result column="sale_price" property="salePrice"/>
+        <result column="spec_name" property="specName"/>
+        <result column="spec_value" property="specValue"/>
+        <result column="unit_name" property="unitName"/>
+        <result column="catalog_name" property="catalogName"/>
+        <result column="warehouse_num" property="warehouseNum"/>
+        <!--        <association property="warehouseNum" javaType="java.math.BigDecimal" select="com.tongyi.modules.psi.dao.PsiStockDao.sumStockBySku" column="{goodsId=goods_id,skuId=id}"/>-->
+    </resultMap>
+
 </mapper>

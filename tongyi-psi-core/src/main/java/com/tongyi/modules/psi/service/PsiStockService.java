@@ -9,13 +9,11 @@
 package com.tongyi.modules.psi.service;
 
 import com.tongyi.core.IService;
-import com.tongyi.modules.psi.entity.PsiAllocationEntity;
-import com.tongyi.modules.psi.entity.PsiAllocationGoodsEntity;
-import com.tongyi.modules.psi.entity.PsiCheckDetailEntity;
-import com.tongyi.modules.psi.entity.PsiStockEntity;
+import com.tongyi.core.PageInfo;
+import com.tongyi.modules.psi.entity.*;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 库存Service接口
@@ -43,5 +41,7 @@ public interface PsiStockService extends IService<PsiStockEntity> {
      * @return
      */
     public BigDecimal stockNum(String warehouseId, String goodsId, String skuId);
+
+    public PageInfo<PsiGoodsSkuEntity> selectSkuList(int current, int size, Map<String,Object> params);
 }
 

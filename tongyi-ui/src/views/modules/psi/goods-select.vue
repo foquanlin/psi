@@ -117,9 +117,9 @@
       // 获取数据列表
       getDataList () {
         this.$http({
-          url: '/psi/goodssku/list',
-          method: 'get',
-          params: {
+          url: '/psi/stock/skulist',
+          method: 'post',
+          data: {
             page: this.pageIndex,
             limit: this.pageSize,
             ...this.searchForm

@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tongyi.common.utils.Query;
 import com.tongyi.modules.psi.dao.PsiStockDao;
+import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
 import com.tongyi.modules.psi.service.PsiStockService;
 import org.springframework.stereotype.Service;
@@ -91,5 +92,12 @@ public class PsiStockServiceImpl extends ServiceImpl<PsiStockDao, PsiStockEntity
     @Override
     public BigDecimal stockNum(String warehouseId, String goodsId, String skuId) {
         return baseMapper.sumStockBySku(null,null,warehouseId,goodsId,skuId);
+    }
+
+    @Override
+    public PageInfo<PsiGoodsSkuEntity> selectSkuList(int current, int size,Map<String, Object> params) {
+        Page<PsiStockEntity> page = new Query<PsiStockEntity>(current,size,params).getPage();
+        List<PsiGoodsSkuEntity> list = super.baseMapper.selectSkuList(page, params);
+        return new PageInfo<PsiGoodsSkuEntity>(page.getCurrent(),page.getSize(),page.getTotal()).setList(list);
     }
 }

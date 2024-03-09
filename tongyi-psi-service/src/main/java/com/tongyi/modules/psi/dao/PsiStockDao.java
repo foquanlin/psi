@@ -10,6 +10,7 @@ package com.tongyi.modules.psi.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.tongyi.modules.psi.entity.PsiGoodsSkuEntity;
 import com.tongyi.modules.psi.entity.PsiStockEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -53,4 +54,11 @@ public interface PsiStockDao extends BaseMapper<PsiStockEntity> {
      * @return
      */
     public BigDecimal sumStockBySku(@Param("orderId")String orderId,@Param("detailId")String detailId,@Param("warehouseId")String warehouseId,@Param("goodsId")String goodsId,@Param("skuId")String skuId);
+
+    /**
+     * 查询库存商品信息
+     * @param params
+     * @return
+     */
+    public List<PsiGoodsSkuEntity> selectSkuList(IPage page,@Param("params") Map<String,Object> params);
 }
