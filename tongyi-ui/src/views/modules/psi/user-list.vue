@@ -24,10 +24,10 @@
         <template v-slot="scope">
           <span v-if="isAuth(rightStatus)">
             <el-popover v-if="scope.row.status === 'RUN'" placement="top-start" title="提示" width="200" trigger="hover" content="点击停用">
-              <el-tag slot="reference" type="success">启用</el-tag>
+              <el-tag slot="reference" type="success" @click="statusHandler(scope.row)">启用</el-tag>
             </el-popover>
             <el-popover v-else placement="top-start" title="提示" width="200" trigger="hover" content="点击启用">
-              <el-tag slot="reference">停用</el-tag>
+              <el-tag slot="reference" @click="statusHandler(scope.row)">停用</el-tag>
             </el-popover>
           </span>
           <span v-else>
@@ -162,6 +162,27 @@
           }).then(({data}) => {
             if (data && data.code === 0) {
               this.$message({ message: '操作成功', type: 'success', duration: 1500 })
+              this.getDataList()
+            }
+          })
+        })
+      },
+      statusHandler (row) {
+        this.$confirm(`确定对[${row.name}]进行[${row.status === 'RUN' ? '停用' : '启用'}]操作?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http({
+            url: '/psi/supplier/status',
+            method: 'get',
+            params: {
+              id: row.id,
+              status: row.status === 'RUN' ? 'STOP' : 'RUN'
+            }
+          }).then(({data}) => {
+            if (data && data.code === 0) {
+              this.$message({message: '操作成功', type: 'success', duration: 1500})
               this.getDataList()
             }
           })

@@ -72,4 +72,11 @@ public class PsiSupplierServiceImpl extends ServiceImpl<PsiSupplierDao, PsiSuppl
     public boolean deleteBatch(Serializable[] ids) {
         return super.removeByIds(Arrays.asList(ids));
     }
+
+    @Override
+    public void supplierStatus(String id, String status) {
+        PsiSupplierEntity item = baseMapper.selectById(id);
+        item.setStatus(status);
+        baseMapper.updateById(item);
+    }
 }

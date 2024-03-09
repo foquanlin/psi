@@ -27,7 +27,7 @@ import java.util.Map;
  * @date 2022-10-12 01:48:55
  */
 @RestController
-@RequestMapping("psi/supplier")
+@RequestMapping(value = {"psi/supplier","psi/customer"})
 public class PsiSupplierController extends AbstractController {
     @Autowired
     private PsiSupplierService psiSupplierService;
@@ -110,6 +110,14 @@ public class PsiSupplierController extends AbstractController {
     @RequiresPermissions(value = {"psi:supplier:delete","psi:customer:delete"},logical = Logical.OR)
     public RestResponse delete(@RequestBody String[] ids) {
         psiSupplierService.deleteBatch(ids);
+        return RestResponse.success();
+    }
+
+    @SysLog("设置供应商状态")
+    @GetMapping("/status")
+    @RequiresPermissions(value = {"psi:supplier:status","psi:customer:status"})
+    public RestResponse statusWarehouse(@RequestParam("id") String id,@RequestParam("status")String status) {
+        psiSupplierService.supplierStatus(id,status);
         return RestResponse.success();
     }
 }

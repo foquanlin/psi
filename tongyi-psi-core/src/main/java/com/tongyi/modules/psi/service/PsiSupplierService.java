@@ -19,4 +19,10 @@ import com.tongyi.modules.psi.entity.PsiSupplierEntity;
  */
 public interface PsiSupplierService extends IService<PsiSupplierEntity>{
 
+    /**
+     * 设置客户供应商状态
+     * @param id
+     * @param status
+     */
+    void supplierStatus(String id, String status);
 }
