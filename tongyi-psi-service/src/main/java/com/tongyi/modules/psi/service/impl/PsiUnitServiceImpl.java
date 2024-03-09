@@ -7,6 +7,8 @@
  * Copyright (c) 2019-2021 惠州市酷天科技有限公司
  */
 package com.tongyi.modules.psi.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.tongyi.common.exception.BusinessException;
 import com.tongyi.core.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -58,6 +60,10 @@ public class PsiUnitServiceImpl extends ServiceImpl<PsiUnitDao, PsiUnitEntity> i
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateEntity(PsiUnitEntity entity) {
+        Long count = baseMapper.selectCount(new LambdaQueryWrapper<PsiUnitEntity>().eq(PsiUnitEntity::getUnit,entity.getUnit()).ne(PsiUnitEntity::getId,entity.getId()));
+        if (count!=null && count>0){
+            throw new BusinessException("单位代码重复");
+        }
         return super.updateById(entity);
     }
 

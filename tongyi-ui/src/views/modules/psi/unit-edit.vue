@@ -10,7 +10,7 @@
         <el-input v-model="dataForm.name" :disabled="disabled" placeholder="名称" clearable/>
       </el-form-item>
       <el-form-item label="权重" prop="weight">
-        <el-input v-model="dataForm.weight" :disabled="disabled" placeholder="权重" clearable type="number"/>
+        <el-input-number v-model="dataForm.weight" :disabled="disabled" placeholder="权重" clearable type="number"/>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
