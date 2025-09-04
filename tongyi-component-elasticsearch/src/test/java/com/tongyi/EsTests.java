@@ -9,7 +9,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+
+import org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -21,7 +22,7 @@ import java.util.Iterator;
 public class EsTests {
 
     @Autowired
-    ElasticsearchRestTemplate template;
+    ElasticsearchTemplate template;
     @Autowired
     RestHighLevelClient restHighLevelClient;
 

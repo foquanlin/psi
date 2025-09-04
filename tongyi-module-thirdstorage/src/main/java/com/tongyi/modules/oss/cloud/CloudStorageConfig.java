@@ -19,8 +19,8 @@ import com.tongyi.common.validator.group.QiniuGroup;
 //import org.hibernate.validator.constraints.Range;
 //import org.hibernate.validator.constraints.URL;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

@@ -1,20 +1,23 @@
 package com.tongyi.common.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
+
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 飞鹅打印机工具类
@@ -40,7 +43,7 @@ public class PrintUtils {
         this.user = user;
         this.ukey = ukey;
         //通过POST请求，发送打印信息到服务器
-        this.requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build();
+        this.requestConfig = RequestConfig.custom().setResponseTimeout(30, TimeUnit.SECONDS).setConnectionRequestTimeout(30, TimeUnit.SECONDS).build();
     }
     /**
      * 测试时，打开下面注释掉方法的即可,更多接口文档信息,请访问官网开放平台查看
@@ -241,9 +244,9 @@ public class PrintUtils {
         CloseableHttpResponse response = null;
         String result = null;
         try {
-            post.setEntity(new UrlEncodedFormEntity(nvps, "utf-8"));
+            post.setEntity(new UrlEncodedFormEntity(nvps, Charset.forName("UTF-8")));
             response = httpClient.execute(post);
-            int statecode = response.getStatusLine().getStatusCode();
+            int statecode = response.getCode();
             if (statecode == 200) {
                 HttpEntity httpentity = response.getEntity();
                 if (httpentity != null) {

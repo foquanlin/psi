@@ -13,9 +13,9 @@ package com.tongyi.common.validator;
 
 import com.tongyi.common.exception.BusinessException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import java.util.Set;
 
 /**

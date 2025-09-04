@@ -11,10 +11,10 @@
  */
 package com.tongyi.common.utils;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * IP地址

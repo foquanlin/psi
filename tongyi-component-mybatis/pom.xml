@@ -51,12 +51,17 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>
-            <version>${mybatisplus.extension.version}</version>
+            <version>${mybatisplus.boot.version}</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-annotation</artifactId>
-            <version>${mybatisplus.extension.version}</version>
+            <version>${mybatisplus.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>${mybatisplus.boot.version}</version>
         </dependency>
         <dependency>
             <groupId>com.tongyi</groupId>
