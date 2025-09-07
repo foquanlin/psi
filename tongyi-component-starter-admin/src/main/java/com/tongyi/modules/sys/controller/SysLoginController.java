@@ -20,14 +20,15 @@ import com.tongyi.modules.sys.form.SysLoginForm;
 import com.tongyi.modules.sys.service.SysCaptchaService;
 import com.tongyi.modules.sys.service.SysUserService;
 import com.tongyi.modules.sys.service.SysUserTokenService;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
