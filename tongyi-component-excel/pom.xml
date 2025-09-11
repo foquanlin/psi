@@ -32,17 +32,7 @@
         <!-- easypoi依赖 ，处理EXCEL WORD  PDF-->
         <dependency>
             <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-base</artifactId>
-            <version>${easypoi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-web</artifactId>
-            <version>${easypoi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-annotation</artifactId>
+            <artifactId>easypoi-spring-boot-starter</artifactId>
             <version>${easypoi.version}</version>
         </dependency>
     </dependencies>

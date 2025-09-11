@@ -11,10 +11,9 @@
  */
 package com.tongyi.common.utils;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,9 +26,8 @@ import java.lang.reflect.Method;
  *
  * @author 林佛权
  */
-public class ObjectUtils extends org.apache.commons.lang.ObjectUtils {
-
-    private static Log logger = LogFactory.getLog(ObjectUtils.class);
+@Slf4j
+public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 注解到对象复制，只复制能匹配上的方法。
@@ -75,7 +73,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils {
                 return baos.toByteArray();
             }
         } catch (Exception e) {
-            logger.error(ExceptionUtils.getStackTrace(e));
+            log.error(ExceptionUtils.getStackTrace(e));
         }
         return null;
     }
@@ -95,7 +93,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils {
                 return ois.readObject();
             }
         } catch (Exception e) {
-            logger.error(ExceptionUtils.getStackTrace(e));
+            log.error(ExceptionUtils.getStackTrace(e));
         }
         return null;
     }

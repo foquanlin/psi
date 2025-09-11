@@ -40,8 +40,8 @@
         </dependency>
         <!-- Velocity视图所需 -->
         <dependency>
-            <artifactId>velocity</artifactId>
             <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
             <version>${velocity.version}</version>
         </dependency>
         <dependency>
@@ -112,6 +112,11 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>${commons.configuration.version}</version>
         </dependency>
     </dependencies>
     <build>
