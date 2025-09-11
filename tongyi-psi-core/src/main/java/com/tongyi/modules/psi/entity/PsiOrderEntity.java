@@ -212,11 +212,17 @@ public class PsiOrderEntity implements Serializable {
         entity.setCreateDate(createDate);
         return entity;
     }
-
+    public PsiOrderAmountEntity newOrderAmount(String bankId,BigDecimal amount){
+        PsiOrderAmountEntity entity = PsiOrderAmountEntity.newEntity(this,bankId,amount);
+        return entity;
+    }
     public PsiStockEntity.Catalog getStockCatalog(){
         return PsiOrderEntity.Catalog.valueOf(catalog).stockCatalog();
     }
     public PsiStockEntity.Type getStockType(){
+        return PsiOrderEntity.Catalog.valueOf(catalog).getStockType(PsiOrderEntity.Type.valueOf(type));
+    }
+    public PsiStockEntity.Type getPayType(){
         return PsiOrderEntity.Catalog.valueOf(catalog).getStockType(PsiOrderEntity.Type.valueOf(type));
     }
     public void setPayStatus(String status) {
@@ -264,6 +270,10 @@ public class PsiOrderEntity implements Serializable {
             this.name = name;
         }
 
+        /**
+         * 根据订单类型,生成订单号
+         * @return
+         */
         public String newNo(){// 根据订单分类生成不同订单号
             if (this == BUY) {
                 return StringUtils.generateOrderNumber("CG");
@@ -273,6 +283,11 @@ public class PsiOrderEntity implements Serializable {
             }
             return null;
         }
+
+        /**
+         * 根据订单类型,取得出入库分类
+         * @return
+         */
         public PsiStockEntity.Catalog stockCatalog(){
             if (this == BUY) {
                 return PsiStockEntity.Catalog.CAIGOU;
@@ -282,6 +297,12 @@ public class PsiOrderEntity implements Serializable {
             }
             return null;
         }
+
+        /**
+         * 根据订单类型取得出入库类型
+         * @param type
+         * @return
+         */
         public PsiStockEntity.Type getStockType(PsiOrderEntity.Type type){
             if (this == BUY && Type.ORDER == type) {
                 return PsiStockEntity.Type.IN;
@@ -291,6 +312,24 @@ public class PsiOrderEntity implements Serializable {
                 return PsiStockEntity.Type.OUT;
             }else if (this == SALE && Type.REFUND == type) {
                 return PsiStockEntity.Type.IN;
+            }
+            return null;
+        }
+
+        /**
+         * 根据订单类型取得订单首付款类型
+         * @param type
+         * @return
+         */
+        public PsiOrderAmountEntity.Type getPayType(PsiOrderEntity.Type type){
+            if (this == BUY && Type.ORDER == type) {
+                return PsiOrderAmountEntity.Type.PAY;
+            }else if (this == BUY && Type.REFUND == type) {
+                return PsiOrderAmountEntity.Type.RECEIPTS;
+            }else if (this == SALE && Type.ORDER == type) {
+                return PsiOrderAmountEntity.Type.PAY.RECEIPTS;
+            }else if (this == SALE && Type.REFUND == type) {
+                return PsiOrderAmountEntity.Type.PAY;
             }
             return null;
         }

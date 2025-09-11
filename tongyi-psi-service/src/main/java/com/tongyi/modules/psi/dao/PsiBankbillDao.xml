@@ -6,50 +6,50 @@
 
     <sql id="selectSql">
         select
-            t.id,
-            t.supplier_id,
-            t.type,
-            t.bank_id,
-            t.no,
-            t.amount,
-            t.create_date,
-            t.create_uid,
-            t.owner_uid,
-            t.memo,
-            t.attach_urls
-        from psi_bankbill t
+            ps.id as supplier_id,
+            ps.type as supplier_type,
+            ps.`name` as supplier_name,
+            pb.bank_name as bank_name,
+
+            poa.id,
+            poa.order_id,
+            po.no as order_no,
+            po.catalog as order_catalog,
+            po.type as order_type,
+            poa.create_date,
+            poa.type,
+            poa.bank_id,
+            poa.create_uid,
+            (case poa.type when 'PAY' then poa.amount else 0 end) as in_amount,
+            (case poa.type when 'RECEIPTS' then poa.amount else 0 end) as out_amount
+
+        from psi_order_amount poa
+        left join psi_order po on po.id = poa.order_id
+        left join psi_supplier ps on ps.id = po.order_uid
+        left join psi_bank pb on pb.id = poa.bank_id
     </sql>
     <sql id="selectWhere">
         <where>
-            <if test="params.id != null and params.id != ''">
-                and t.id = #{params.id}
-            </if>
             <if test="params.supplierId != null and params.supplierId != ''">
-                and t.supplier_id = #{params.supplierId}
-            </if>
-            <if test="params.type != null and params.type != ''">
-                and t.type = #{params.type}
+                and po.order_uid = #{params.supplierId}
             </if>
             <if test="params.bankId != null and params.bankId != ''">
-                and t.bank_id = #{params.bankId}
+                and poa.bank_id = #{params.bankId}
             </if>
             <if test="params.no != null and params.no != ''">
-                and t.no = #{params.no}
+                and po.no = #{params.no}
             </if>
             <if test="params.createDateStart != null and params.createDateEnd != null">
-                and t.create_date between #{params.createDateStart} and #{params.createDateEnd}
+                and poa.create_date between #{params.createDateStart} and #{params.createDateEnd}
+            </if>
+            <if test="params.createDateStart != null and params.createDateEnd == null">
+                and poa.create_date >= #{params.createDateStart}
+            </if>
+            <if test="params.createDateStart == null and params.createDateEnd != null">
+                and poa.create_date &lt;= #{params.createDateEnd}
             </if>
             <if test="params.createUid != null and params.createUid != ''">
-                and t.create_uid = #{params.createUid}
-            </if>
-            <if test="params.ownerUid != null and params.ownerUid != ''">
-                and t.owner_uid = #{params.ownerUid}
-            </if>
-            <if test="params.memo != null and params.memo != ''">
-                and t.memo = #{params.memo}
-            </if>
-            <if test="params.attachUrls != null and params.attachUrls != ''">
-                and t.attach_urls = #{params.attachUrls}
+                and poa.create_uid = #{params.createUid}
             </if>
         </where>
     </sql>
