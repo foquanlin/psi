@@ -103,8 +103,8 @@ public class WxAssetsManageController {
             return RestResponse.error("图文列表不得为空");
         }
         wxMpService.switchoverTo(appid);
-        WxMpMaterialUploadResult res = wxAssetsService.materialNewsUpload(articles);
-        return RestResponse.success(res);
+//        WxMpMaterialUploadResult res = wxAssetsService.materialNewsUpload(articles);
+        return RestResponse.success();
     }
 
     /**
@@ -121,7 +121,7 @@ public class WxAssetsManageController {
             return RestResponse.error("文章不得为空");
         }
         wxMpService.switchoverTo(appid);
-        wxAssetsService.materialArticleUpdate(form);
+//        wxAssetsService.materialArticleUpdate(form);
         return RestResponse.success();
     }
 

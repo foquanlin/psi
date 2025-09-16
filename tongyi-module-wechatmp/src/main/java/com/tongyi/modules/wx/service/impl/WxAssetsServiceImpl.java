@@ -59,26 +59,26 @@ public class WxAssetsServiceImpl implements WxAssetsService {
         return wxMpService.getMaterialService().materialNewsBatchGet(offset, pageSize);
     }
 
-    @Override
-    @CacheEvict(allEntries = true)
-    public WxMpMaterialUploadResult materialNewsUpload(List<WxMpNewsArticle> articles) throws WxErrorException {
-        log.info("上传图文素材...");
-        Assert.notEmpty(articles,"图文列表不得为空");
-        WxMpMaterialNews news = new WxMpMaterialNews();
-        news.setArticles(articles);
-        return wxMpService.getMaterialService().materialNewsUpload(news);
-    }
-
-    /**
-     * 更新图文素材中的某篇文章
-     * @param form
-     */
-    @Override
-    @CacheEvict(allEntries = true)
-    public void materialArticleUpdate(WxMpMaterialArticleUpdate form)  throws WxErrorException{
-        log.info("更新图文素材...");
-        wxMpService.getMaterialService().materialNewsUpdate(form);
-    }
+//    @Override
+//    @CacheEvict(allEntries = true)
+//    public WxMpMaterialUploadResult materialNewsUpload(List<WxMpNewsArticle> articles) throws WxErrorException {
+//        log.info("上传图文素材...");
+//        Assert.notEmpty(articles,"图文列表不得为空");
+//        WxMpMaterialNews news = new WxMpMaterialNews();
+//        news.setArticles(articles);
+//        return wxMpService.getMaterialService().materialNewsUpload(news);
+//    }
+//
+//    /**
+//     * 更新图文素材中的某篇文章
+//     * @param form
+//     */
+//    @Override
+//    @CacheEvict(allEntries = true)
+//    public void materialArticleUpdate(WxMpMaterialArticleUpdate form)  throws WxErrorException{
+//        log.info("更新图文素材...");
+//        wxMpService.getMaterialService().materialNewsUpdate(form);
+//    }
     @Override
     @CacheEvict(allEntries = true)
     public WxMpMaterialUploadResult materialFileUpload(String mediaType, String fileName, MultipartFile file) throws WxErrorException, IOException {

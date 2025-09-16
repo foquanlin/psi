@@ -3,7 +3,7 @@ package com.tongyi.modules.wx.form;
 import lombok.Data;
 
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 @Data
 public class WxUserBatchTaggingForm {
     @NotNull(message = "标签ID不得为空")

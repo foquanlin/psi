@@ -2,7 +2,6 @@ package com.tongyi.tencentcloud.rtc.service;
 
 import com.tongyi.common.exception.TongyiException;
 import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 
@@ -44,10 +43,6 @@ public interface ICallQualityService {
         private Long DestroyTime;
         private Boolean IsFinished;
         private String UserId;
-
-        public String toString(){
-            return ToStringBuilder.reflectionToString(this);
-        }
     }
 
     @Data

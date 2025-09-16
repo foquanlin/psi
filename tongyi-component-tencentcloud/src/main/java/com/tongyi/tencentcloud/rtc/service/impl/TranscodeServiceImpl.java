@@ -24,14 +24,13 @@ public class TranscodeServiceImpl implements ITranscodeService {
         this.appid = appid;
     }
     @Override
-    public String startMCUMixTranscode(Integer roomId, OutputParams outputParams, EncodeParams encodeParams, LayoutParams layoutParams, PublishCdnParams publishCdnParams) throws TongyiException {
+    public String startMCUMixTranscode(Integer roomId, OutputParams outputParams, EncodeParams encodeParams, LayoutParams layoutParams) throws TongyiException {
         StartMCUMixTranscodeRequest req = new StartMCUMixTranscodeRequest();
         req.setSdkAppId(appid);
         req.setRoomId(roomId.longValue());
         req.setOutputParams(outputParams);
         req.setEncodeParams(encodeParams);
         req.setLayoutParams(layoutParams);
-        req.setPublishCdnParams(publishCdnParams);
         try {
             StartMCUMixTranscodeResponse rsp = client.StartMCUMixTranscode(req);
             return rsp.getRequestId();
@@ -58,14 +57,13 @@ public class TranscodeServiceImpl implements ITranscodeService {
     }
 
     @Override
-    public String startMCUMixTranscodeByStrRoomId(String roomId, OutputParams outputParams, EncodeParams encodeParams, LayoutParams layoutParams, PublishCdnParams publishCdnParams) throws TongyiException {
+    public String startMCUMixTranscodeByStrRoomId(String roomId, OutputParams outputParams, EncodeParams encodeParams, LayoutParams layoutParams) throws TongyiException {
         StartMCUMixTranscodeByStrRoomIdRequest req = new StartMCUMixTranscodeByStrRoomIdRequest();
         req.setSdkAppId(appid);
         req.setStrRoomId(roomId);
         req.setOutputParams(outputParams);
         req.setEncodeParams(encodeParams);
         req.setLayoutParams(layoutParams);
-        req.setPublishCdnParams(publishCdnParams);
         try {
             StartMCUMixTranscodeByStrRoomIdResponse rsp = client.StartMCUMixTranscodeByStrRoomId(req);
             return rsp.getRequestId();

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 /**

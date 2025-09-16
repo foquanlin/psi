@@ -3,7 +3,7 @@ package com.tongyi.modules.wx.form;
 import com.tongyi.common.utils.JsonUtils;
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 @Data
 public class WxH5OuthrizeForm {
     @NotEmpty(message = "code不得为空")

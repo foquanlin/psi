@@ -28,7 +28,7 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <classifier>jakarta</classifier>
-            <version>1.13.0</version>
+            <version>${shiro.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.shiro</groupId>
@@ -45,14 +45,14 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <classifier>jakarta</classifier>
-            <version>1.13.0</version>
+            <version>${shiro.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
             <classifier>jakarta</classifier>
-            <version>1.13.0</version>
+            <version>${shiro.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.shiro</groupId>
