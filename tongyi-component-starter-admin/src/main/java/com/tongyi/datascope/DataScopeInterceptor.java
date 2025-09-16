@@ -37,7 +37,8 @@ import java.util.Properties;
 @Slf4j
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
 public class DataScopeInterceptor implements Interceptor {
-
+    private static final String orderby = "order by " ;
+    private static final String groupby = "group by ";
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         StatementHandler statementHandler = PluginUtils.realTarget(invocation.getTarget());
@@ -68,9 +69,8 @@ public class DataScopeInterceptor implements Interceptor {
                     String orgAlias = dataScope.getOrgAlias();
                     String alias = dataScope.getOrgNos();
                     boolean self = dataScope.getSelf();
-                    String sql = filterSql.toString().toLowerCase();
-                    int start = sql.lastIndexOf("limit");
                     StringBuilder sb = new StringBuilder();
+                    String sql = filterSql.toString().toLowerCase();
                     if (sql.indexOf("where")==-1){
                         sb.append(" where 1=1");
                     }
@@ -87,7 +87,15 @@ public class DataScopeInterceptor implements Interceptor {
                             sb.append(" and ").append(userAlias).append("='").append(user.getUserId()).append("' ");
                         }
                     }
-                    if (start>0){
+                    int start = sql.lastIndexOf("limit");
+                    if (sql.lastIndexOf(orderby) !=-1  && sql.lastIndexOf(orderby) < start) {
+                        start = sql.lastIndexOf(orderby);
+                    }
+                    if (sql.lastIndexOf(groupby) !=-1  &&  sql.lastIndexOf(groupby) < start) {
+                        start = sql.lastIndexOf(groupby);
+                    }
+
+                    if (start>=0){
                         filterSql.insert(start,sb,0,sb.length());
                     }else{
                         filterSql.append(sb);

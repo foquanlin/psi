@@ -1,5 +1,7 @@
 package com.tongyi.config.activemq;
 
+import jakarta.jms.Queue;
+import jakarta.jms.Topic;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
@@ -9,8 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 
-import javax.jms.Queue;
-import javax.jms.Topic;
+
 
 @Configuration
 @ConfigurationProperties(prefix = "spring.activemq")

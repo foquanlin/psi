@@ -13,6 +13,7 @@ package com.tongyi.config;
 
 import com.tongyi.modules.sys.oauth2.Oauth2Filter;
 import com.tongyi.modules.sys.oauth2.Oauth2Realm;
+import jakarta.servlet.Filter;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -24,7 +25,6 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

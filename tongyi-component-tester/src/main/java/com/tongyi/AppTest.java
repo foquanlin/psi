@@ -1,6 +1,7 @@
 package com.tongyi;
 
-import org.apache.shiro.util.Assert;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -8,8 +9,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+
 /**
  * Unit test for simple App.
  */

@@ -2,6 +2,7 @@ package com.tongyi.config.elasticsearch;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
-import org.springframework.data.elasticsearch.client.RestClients;
-import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
+import org.springframework.data.elasticsearch.client.elc.ElasticsearchClients;
+import org.springframework.data.elasticsearch.config.ElasticsearchConfigurationSupport;
 
 import java.net.InetSocketAddress;
 
@@ -18,7 +19,7 @@ import java.net.InetSocketAddress;
  * @author 林佛权
  */
 @Configuration
-public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
+public class ElasticSearchConfig extends ElasticsearchConfigurationSupport {
     private static final Logger logger = LoggerFactory.getLogger(ElasticSearchConfig.class);
     private static final int ADDRESS_LENGTH = 2;
     private static final String HTTP_SCHEME = "http";
@@ -47,12 +48,10 @@ public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
 //    }
 
     @Bean
-    @Override
     public RestHighLevelClient elasticsearchClient() {
-        final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                .connectedTo(new InetSocketAddress(hostName,transport))
-                .build();
-        return RestClients.create(clientConfiguration).rest();
+        return new RestHighLevelClient(
+                RestClient.builder(new HttpHost(hostName, transport, "http"))
+        );
     }
 
     private HttpHost makeHttpHost(String s) {

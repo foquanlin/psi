@@ -12,12 +12,12 @@
 package com.tongyi.config;
 
 import com.tongyi.common.xss.XssFilter;
+import jakarta.servlet.DispatcherType;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-import javax.servlet.DispatcherType;
 
 /**
  * 过滤器配置
