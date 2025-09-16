@@ -42,7 +42,6 @@
         <spring.boot.version>3.5.5</spring.boot.version>
         <mybatisplus.boot.version>3.5.12</mybatisplus.boot.version>
         <mysql.version>9.3.0</mysql.version>
-        <commons.lang3.version>3.18.0</commons.lang3.version>
         <gson.version>2.13.1</gson.version>
         <lombok.version>1.18.38</lombok.version>
         <logstash.version>7.3</logstash.version>
@@ -57,26 +56,26 @@
         <activation.version>1.1.1</activation.version>
         <oracle.version>11.2.0.3</oracle.version>
         <quartz.version>2.3.2</quartz.version>
-        <commons.lang.version>2.6</commons.lang.version>
+        <commons.lang3.version>3.18.0</commons.lang3.version>
         <commons.fileupload.version>1.6.0</commons.fileupload.version>
-        <commons.io.version>1.3.2</commons.io.version>
+        <commons.io.version>2.20.0</commons.io.version>
         <commons.codec.version>1.15</commons.codec.version>
         <commons.configuration.version>1.10</commons.configuration.version>
-        <shiro.version>2.0.5</shiro.version>
+        <shiro.version>1.13.0</shiro.version>
         <jwt.version>0.9.1</jwt.version>
         <kaptcha.version>0.0.9</kaptcha.version>
 
-        <qiniu.version>7.11.0</qiniu.version>
-        <aliyun.oss.version>3.16.2</aliyun.oss.version>
-        <qcloud.cos.version>5.6.139</qcloud.cos.version>
+        <qiniu.version>7.19.0</qiniu.version>
+        <aliyun.oss.version>3.18.3</aliyun.oss.version>
+        <qcloud.cos.version>5.6.253</qcloud.cos.version>
 
         <swagger.version>3.0.0</swagger.version>
         <joda.time.version>2.12.5</joda.time.version>
         <velocity.version>1.7</velocity.version>
         <velocity.tools.version>2.0</velocity.tools.version>
-        <easypoi.version>4.4.0</easypoi.version>
+        <easypoi.version>4.5.0</easypoi.version>
         <activiti.version>6.0.0</activiti.version>
-        <batik.version>1.16</batik.version>
+        <batik.version>1.19</batik.version>
         <javamail.version>1.6.2</javamail.version>
         <actable.version>1.5.0.RELEASE</actable.version>
         <zxing.version>3.5.1</zxing.version>
@@ -85,13 +84,13 @@
         <spring.redis.version>1.4.7.RELEASE</spring.redis.version>
 
 
-        <weixin-java-cp.version>4.4.0</weixin-java-cp.version>
-        <weixin-java-mp.version>4.4.0</weixin-java-mp.version>
-        <weixin-java-miniapp.version>4.4.0</weixin-java-miniapp.version>
-        <weixin-java-pay.version>4.4.0</weixin-java-pay.version>
-        <weixin-java-open.version>4.4.0</weixin-java-open.version>
-        <alipay-sdk.version>4.31.28.ALL</alipay-sdk.version>
-        <alipay-easysdk.version>2.2.1</alipay-easysdk.version>
+        <weixin-java-cp.version>4.7.7-20250904.091948</weixin-java-cp.version>
+        <weixin-java-mp.version>4.7.7-20250904.091948</weixin-java-mp.version>
+        <weixin-java-miniapp.version>4.7.7-20250904.091948</weixin-java-miniapp.version>
+        <weixin-java-pay.version>4.7.7-20250904.091948</weixin-java-pay.version>
+        <weixin-java-open.version>4.7.7-20250904.091948</weixin-java-open.version>
+        <alipay-sdk.version>4.40.440.ALL</alipay-sdk.version>
+        <alipay-easysdk.version>2.2.3</alipay-easysdk.version>
         <dist.release.server>release-server</dist.release.server>
         <dist.snapshot.server>snapshot-server</dist.snapshot.server>
         <dist.release.url>http://nexus.wxngrok.com/nexus/content/repositories/releases</dist.release.url>

@@ -13,7 +13,7 @@ package com.tongyi.modules.job.utils;
 
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.SpringContextUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;

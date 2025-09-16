@@ -71,7 +71,7 @@ public class ScheduleJobController {
     @SysLog("新增定时任务")
     @PostMapping("/save")
     @RequiresPermissions("sys:schedule:save")
-    public RestResponse save(@RequestBody ScheduleJobEntity scheduleJob) {
+    public RestResponse save(@RequestBody ScheduleJobEntity scheduleJob) throws Exception {
         ValidatorUtils.validateEntity(scheduleJob);
 
         scheduleJobService.addEntity(scheduleJob);
@@ -88,7 +88,7 @@ public class ScheduleJobController {
     @SysLog("修改定时任务")
     @PostMapping("/update")
     @RequiresPermissions("sys:schedule:update")
-    public RestResponse update(@RequestBody ScheduleJobEntity scheduleJob) {
+    public RestResponse update(@RequestBody ScheduleJobEntity scheduleJob) throws Exception {
         ValidatorUtils.validateEntity(scheduleJob);
 
         scheduleJobService.updateEntity(scheduleJob);

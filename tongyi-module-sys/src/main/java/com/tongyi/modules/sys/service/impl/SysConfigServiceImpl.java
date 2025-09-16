@@ -21,7 +21,7 @@ import com.tongyi.core.PageInfo;
 import com.tongyi.modules.sys.dao.SysConfigDao;
 import com.tongyi.modules.sys.entity.SysConfigEntity;
 import com.tongyi.modules.sys.service.SysConfigService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;

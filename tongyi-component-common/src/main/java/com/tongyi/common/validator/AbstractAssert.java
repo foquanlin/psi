@@ -12,7 +12,7 @@
 package com.tongyi.common.validator;
 
 import com.tongyi.common.exception.BusinessException;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 数据校验

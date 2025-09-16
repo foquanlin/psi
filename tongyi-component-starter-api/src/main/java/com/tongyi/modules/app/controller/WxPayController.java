@@ -232,7 +232,7 @@ public class WxPayController {
      * @param sideLength 要生成的二维码的边长，如果为空，则取默认值400
      * @return 生成的二维码的字节数组
      */
-    public byte[] createScanPayQrcodeMode1(String productId, File logoFile, Integer sideLength) {
+    public byte[] createScanPayQrcodeMode1(String productId, File logoFile, Integer sideLength) throws Exception {
         return this.wxPayService.createScanPayQrcodeMode1(productId, logoFile, sideLength);
     }
 
@@ -265,7 +265,7 @@ public class WxPayController {
      * @param sideLength 要生成的二维码的边长，如果为空，则取默认值400
      * @return 生成的二维码的字节数组
      */
-    public byte[] createScanPayQrcodeMode2(String codeUrl, File logoFile, Integer sideLength) {
+    public byte[] createScanPayQrcodeMode2(String codeUrl, File logoFile, Integer sideLength) throws Exception {
         return this.wxPayService.createScanPayQrcodeMode2(codeUrl, logoFile, sideLength);
     }
 

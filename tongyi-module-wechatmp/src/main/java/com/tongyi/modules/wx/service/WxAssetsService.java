@@ -39,19 +39,19 @@ public interface WxAssetsService {
      */
     WxMpMaterialNewsBatchGetResult materialNewsBatchGet(int page) throws WxErrorException;
 
-    /**
-     * 添加图文永久素材
-     * @param articles
-     * @return
-     * @throws WxErrorException
-     */
-    WxMpMaterialUploadResult materialNewsUpload(List<WxMpNewsArticle> articles)throws WxErrorException;
+//    /**
+//     * 添加图文永久素材
+//     * @param articles
+//     * @return
+//     * @throws WxErrorException
+//     */
+//    WxMpMaterialUploadResult materialNewsUpload(List<WxMpNewsArticle> articles)throws WxErrorException;
 
-    /**
-     * 更新图文素材中的某篇文章
-     * @param form
-     */
-    void materialArticleUpdate(WxMpMaterialArticleUpdate form) throws WxErrorException;
+//    /**
+//     * 更新图文素材中的某篇文章
+//     * @param form
+//     */
+//    void materialArticleUpdate(WxMpMaterialArticleUpdate form) throws WxErrorException;
 
     /**
      * 添加多媒体永久素材

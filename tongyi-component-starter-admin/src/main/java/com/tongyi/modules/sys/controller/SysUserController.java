@@ -23,7 +23,7 @@ import com.tongyi.modules.sys.entity.SysUserEntity;
 import com.tongyi.modules.sys.form.PasswordForm;
 import com.tongyi.modules.sys.service.SysUserRoleService;
 import com.tongyi.modules.sys.service.SysUserService;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
