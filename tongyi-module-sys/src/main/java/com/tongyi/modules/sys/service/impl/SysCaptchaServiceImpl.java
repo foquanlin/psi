@@ -19,7 +19,7 @@ import com.tongyi.common.utils.DateUtils;
 import com.tongyi.modules.sys.dao.SysCaptchaDao;
 import com.tongyi.modules.sys.entity.SysCaptchaEntity;
 import com.tongyi.modules.sys.service.SysCaptchaService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

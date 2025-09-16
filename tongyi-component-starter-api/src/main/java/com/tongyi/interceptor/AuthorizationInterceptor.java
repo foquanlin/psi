@@ -15,15 +15,15 @@ import com.tongyi.annotation.IgnoreAuth;
 import com.tongyi.common.exception.BusinessException;
 import com.tongyi.common.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
-import org.apache.commons.lang.StringUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 权限(Token)验证
@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author 林佛权
  */
 @Component
-public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
+public class AuthorizationInterceptor implements HandlerInterceptor {
     @Autowired
     private JwtUtils jwtUtils;
 

@@ -3,6 +3,8 @@ package com.tongyi.modules.wx.controller;
 import com.tongyi.modules.wx.entity.WxUser;
 import com.tongyi.modules.wx.form.WxH5OuthrizeForm;
 import com.tongyi.common.utils.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
@@ -14,8 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;

@@ -2,8 +2,8 @@ package com.tongyi.modules.wx.form;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Data
 public class WxUserTagForm {

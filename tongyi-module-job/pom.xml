@@ -41,12 +41,12 @@
         </dependency>
         <dependency>
             <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-common</artifactId>
+            <artifactId>tongyi-component-mybatis</artifactId>
             <version>${component.version}</version>
         </dependency>
         <dependency>
             <groupId>com.tongyi</groupId>
-            <artifactId>tongyi-component-mybatis</artifactId>
+            <artifactId>tongyi-component-common</artifactId>
             <version>${component.version}</version>
         </dependency>
         <dependency>

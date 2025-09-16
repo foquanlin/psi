@@ -76,6 +76,8 @@
           <el-button v-if="scope.row.catalog ==='CAIGOU' || scope.row.catalog ==='XIAOSHOU'" type="text" size="small" @click="viewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
           <el-button v-else-if="scope.row.catalog ==='DIAOBO'" type="text" size="small" @click="allocationViewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
           <el-button v-else-if="scope.row.catalog ==='PANDIAN'" type="text" size="small" @click="checkDetailHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
+          <el-button v-else-if="scope.row.catalog ==='DIAOBO'" type="text" size="small" @click="allocationViewHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
+          <el-button v-else-if="scope.row.catalog ==='PANDIAN'" type="text" size="small" @click="checkDetailHandle(scope.row)">{{ scope.row.orderNo }}</el-button>
         </template>
       </el-table-column>
       <el-table-column prop="num" header-align="center" align="right" label="数量"/>
@@ -98,6 +100,8 @@
     <!-- 弹窗, 新增 / 修改 -->
     <goods-detail v-if="detailVisible" ref="goodsDetail"/>
     <order-view v-if="orderViewVisible" ref="orderView" :descriptions="{}" />
+    <allocation-view v-if="allocationViewVisible" ref="allocationView"/>
+    <check-detail v-if="checkDetailVisible" ref="checkDetail"/>
     <allocation-view v-if="allocationViewVisible" ref="allocationView"/>
     <check-detail v-if="checkDetailVisible" ref="checkDetail"/>
   </div>

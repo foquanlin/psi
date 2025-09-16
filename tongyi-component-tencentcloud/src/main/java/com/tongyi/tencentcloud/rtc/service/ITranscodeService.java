@@ -3,7 +3,6 @@ package com.tongyi.tencentcloud.rtc.service;
 import com.tencentcloudapi.trtc.v20190722.models.EncodeParams;
 import com.tencentcloudapi.trtc.v20190722.models.LayoutParams;
 import com.tencentcloudapi.trtc.v20190722.models.OutputParams;
-import com.tencentcloudapi.trtc.v20190722.models.PublishCdnParams;
 import com.tongyi.common.exception.TongyiException;
 
 /**
@@ -23,12 +22,11 @@ public interface ITranscodeService {
      * OutputParams 	是 	OutputParams 	混流输出控制参数。
      * EncodeParams 	是 	EncodeParams 	混流输出编码参数。
      * LayoutParams 	是 	LayoutParams 	混流输出布局参数。
-     * PublishCdnParams 	否 	PublishCdnParams 	第三方CDN转推参数。
      */
-    String startMCUMixTranscode(Integer roomId, OutputParams outputParams, EncodeParams encodeParams, LayoutParams layoutParams, PublishCdnParams publishCdnParams) throws TongyiException;
+    String startMCUMixTranscode(Integer roomId, OutputParams outputParams, EncodeParams encodeParams, LayoutParams layoutParams) throws TongyiException;
 
     String stopMCUMixTranscode(Integer roomId) throws TongyiException;
 
-    String startMCUMixTranscodeByStrRoomId(String roomId,OutputParams outputParams, EncodeParams encodeParams, LayoutParams layoutParams, PublishCdnParams publishCdnParams) throws TongyiException;
+    String startMCUMixTranscodeByStrRoomId(String roomId,OutputParams outputParams, EncodeParams encodeParams, LayoutParams layoutParams) throws TongyiException;
     String stopMCUMixTranscodeByStrRoomId(String roomId) throws TongyiException;
 }

@@ -14,16 +14,18 @@ package com.tongyi.modules.sys.oauth2;
 import com.google.gson.Gson;
 import com.tongyi.common.utils.HttpContextUtils;
 import com.tongyi.common.utils.RestResponse;
-import org.apache.commons.lang.StringUtils;
+import jakarta.servlet.Filter;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -31,7 +33,7 @@ import java.io.IOException;
  *
  * @author 林佛权
  */
-public class Oauth2Filter extends AuthenticatingFilter {
+public class Oauth2Filter extends AuthenticatingFilter implements Filter {
 
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
@@ -103,6 +105,4 @@ public class Oauth2Filter extends AuthenticatingFilter {
 
         return token;
     }
-
-
 }

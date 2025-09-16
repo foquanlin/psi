@@ -18,6 +18,7 @@ import com.tongyi.common.utils.IpUtils;
 import com.tongyi.modules.sys.entity.SysLogEntity;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import com.tongyi.modules.sys.service.SysLogService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -28,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
 

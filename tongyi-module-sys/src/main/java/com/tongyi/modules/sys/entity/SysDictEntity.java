@@ -19,7 +19,7 @@ import com.tongyi.common.validator.group.AddGroup;
 import com.tongyi.common.validator.group.UpdateGroup;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**

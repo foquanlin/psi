@@ -17,7 +17,7 @@ import com.tongyi.modules.job.entity.ScheduleJobEntity;
 import com.tongyi.modules.job.entity.ScheduleJobLogEntity;
 import com.tongyi.modules.job.service.ScheduleJobLogService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.scheduling.quartz.QuartzJobBean;

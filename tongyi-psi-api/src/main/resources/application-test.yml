@@ -1,0 +1,13 @@
+server:
+  port: 8804
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.30.100:3307/tongyi-psi?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: sendmiss
+  mail:
+    host: smtp.qq.com
+    protocol: smtp
+    port: 465
+    username: 147657060@qq.com
+    password: # hlxamiafvwotcahf

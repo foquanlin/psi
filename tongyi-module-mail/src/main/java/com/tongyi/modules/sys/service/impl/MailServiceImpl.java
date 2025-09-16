@@ -18,6 +18,8 @@ import com.tongyi.modules.sys.entity.SysMailLogEntity;
 import com.tongyi.modules.sys.entity.SysUserEntity;
 import com.tongyi.modules.sys.service.SysMailLogService;
 import com.tongyi.modules.sys.service.SysUserService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,8 +29,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+
 import java.io.File;
 import java.util.Date;
 import java.util.Properties;
